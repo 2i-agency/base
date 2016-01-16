@@ -8,7 +8,13 @@ class AdminServiceProvider extends ServiceProvider
 {
 	public function boot()
 	{
-		//
+		$this->commands([
+			Commands\Clear::class
+		]);
+
+		$this->publishes([
+			__DIR__ . '/migrations' => database_path('migrations')
+		], 'migrations');
 	}
 
 
