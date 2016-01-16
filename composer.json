@@ -1,0 +1,22 @@
+{
+	"name": "Chunker/Admin",
+	"type": "package",
+	"description": "Base of administrator's panel",
+	"authors": [
+		{
+			"name": "Studio 2i",
+			"email": "mail@studio2i.ru",
+			"homepage": "studio2i.ru",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"illuminate/support": "~5.1",
+		"php" : ">=5.4.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Chunker\\Admin\\": "src"
+		}
+	}
+}
