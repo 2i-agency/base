@@ -25,6 +25,11 @@ class CreateUsers extends Migration
 			// Remember token
 			$table->rememberToken();
 
+			// Email
+			$table
+				->string('email')
+				->index();
+
 			// Name
 			$table
 				->string('name')

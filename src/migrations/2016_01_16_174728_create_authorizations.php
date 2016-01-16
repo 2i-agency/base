@@ -3,11 +3,11 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersAuthorizations extends Migration
+class CreateAuthorizations extends Migration
 {
 	public function up()
 	{
-		Schema::create('users_authorizations', function (Blueprint $table) {
+		Schema::create('authorizations', function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
 
@@ -42,6 +42,6 @@ class CreateUsersAuthorizations extends Migration
 
 	public function down()
 	{
-		Schema::drop('users_authorizations');
+		Schema::drop('authorizations');
 	}
 }
