@@ -31,7 +31,7 @@
 		@include('Admin::_navigation')
 
 		{{--User's form--}}
-		<form class="navbar-form navbar-right" method="POST">
+		<form class="navbar-form navbar-right" method="POST" action="{{ route('logout') }}">
 			{!! csrf_field() !!}
 			<div class="btn-group">
 				<a href="" class="btn btn-default">

@@ -1,8 +1,38 @@
 <?php
 
+/*
+ * Authorization
+ */
+
+Route::group([
+	'prefix' => 'auth',
+	'namespace' => 'Chunker\Admin\Controllers',
+	'middleware' => ['web']
+], function(){
+
+	// Login
+	Route::post('login', [
+		'uses' => 'AuthController@login',
+		'as' => 'login'
+	]);
+
+	// Logout
+	Route::post('logout', [
+		'uses' => 'AuthController@logout',
+		'as' => 'logout'
+	]);
+
+});
+
+
+/*
+ * Admin sections
+ */
+
 Route::group([
 	'prefix' => 'admin',
-	'namespace' => 'Chunker\Admin\Controllers'
+	'namespace' => 'Chunker\Admin\Controllers',
+	'middleware' => ['admin']
 ], function(){
 
 	/*
@@ -40,6 +70,13 @@ Route::group([
 		Route::get('/', [
 			'uses' => 'UserController@index',
 			'as' => 'admin.users'
+		]);
+
+
+		// Profile
+		Route::get('{user}', [
+			'uses' => 'UserController@edit',
+			'as' => 'admin.users.edit'
 		]);
 
 	});

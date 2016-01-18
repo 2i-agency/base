@@ -2,10 +2,10 @@
 
 namespace Chunker\Admin\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 use Chunker\Admin\Models\Traits\LinkedWithEditors;
 
-class User extends Authenticatable
+class User extends Model
 {
 	use LinkedWithEditors;
 
@@ -20,6 +20,15 @@ class User extends Authenticatable
 		'password',
 		'remember_token',
 	];
+
+
+	/*
+	 * Hashing password
+	 */
+	public function setPasswordAttribute($password)
+	{
+		$this->attributes['password'] = bcrypt($password);
+	}
 
 
 	/*

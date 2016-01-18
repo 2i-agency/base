@@ -2,8 +2,8 @@
 require 'compass/import-once/activate'
 
 # Directories
+sass_dir = "src/resources/styles"
 css_dir = "src/assets/css"
-sass_dir = "src/styles"
 
 # Output style (:expanded or :nested or :compact or :compressed)
 # output_style = :expanded
