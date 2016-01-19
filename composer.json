@@ -1,5 +1,5 @@
 {
-	"name": "Chunker/Admin",
+	"name": "chunker/admin",
 	"type": "package",
 	"description": "Base of administrator's panel",
 	"authors": [
