@@ -1,4 +1,4 @@
-@extends('Admin::template')
+@extends('Admin::auth.template')
 
 
 @section('page.title', 'Авторизация')
