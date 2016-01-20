@@ -23,7 +23,7 @@ class AdminServiceProvider extends ServiceProvider
 				\Illuminate\Session\Middleware\StartSession::class,
 				\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 				\App\Http\Middleware\VerifyCsrfToken::class,
-				\Chunker\Admin\Middleware\CheckAuth::class
+				\Chunker\Admin\Middleware\CheckAuth::class,
 			]);
 
 

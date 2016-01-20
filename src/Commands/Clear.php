@@ -26,5 +26,14 @@ class Clear extends Command
 		}
 
 		$this->line('Unnecessary files deleted');
+
+
+		// Replacing class in auth config
+		$auth_config_filename = config_path('auth.php');
+		$auth_config_content = file_get_contents($auth_config_filename);
+		$auth_config_content = str_replace('App\User::class', 'Chunker\Admin\Models\User::class', $auth_config_content);
+		file_put_contents($auth_config_filename, $auth_config_content);
+
+		$this->line('Class of User\'s model has been replaced in auth config');
 	}
 }

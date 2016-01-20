@@ -2,10 +2,10 @@
 
 namespace Chunker\Admin\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Chunker\Admin\Models\Traits\LinkedWithEditors;
 
-class User extends Model
+class User extends Authenticatable
 {
 	use LinkedWithEditors;
 
@@ -36,6 +36,6 @@ class User extends Model
 	 */
 	public function authorizations()
 	{
-		return $this->hasMany(Chunker\Admin\Models\Authorization::class);
+		return $this->hasMany(\Chunker\Admin\Models\Authorization::class);
 	}
 }

@@ -2,6 +2,9 @@
 
 namespace Chunker\Admin\Controllers;
 
+use Chunker\Admin\Events\UserLoggedIn;
+use Chunker\Admin\Events\UserRequestedApp;
+use Chunker\Admin\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -15,9 +18,24 @@ class AuthController extends Controller
 	public function login(Request $request)
 	{
 		$credentials = $request->only(['login', 'password']);
-		$redirect = redirect()->back();
 
-		return Auth::attempt($credentials) ? $redirect : $redirect->withInput();
+
+		if (Auth::attempt($credentials))
+		{
+			event(new UserLoggedIn(Auth::user(), false));
+			return redirect()->back();
+		}
+		else
+		{
+			$user = User::where('login', $credentials['login'])->first();
+
+			if ($user)
+			{
+				event(new UserLoggedIn($user, true));
+			}
+
+			return redirect()->back()->withInput();
+		}
 	}
 
 
@@ -26,6 +44,7 @@ class AuthController extends Controller
 	 */
 	public function logout()
 	{
+		event(new UserRequestedApp(Auth::user()));
 		Auth::logout();
 		return redirect()->back();
 	}

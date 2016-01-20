@@ -31,10 +31,19 @@ class CreateAuthorizations extends Migration
 			// Error flag
 			$table
 				->boolean('failed')
-				->default(false);
+				->default(false)
+				->index();
 
-			// Time of creating
-			$table->timestamp('created_at');
+			// Time of login
+			$table
+				->timestamp('logged_in_at')
+				->index();
+
+			// Time of last request
+			$table
+				->timestamp('last_request_at')
+				->nullable()
+				->index();
 
 		});
 	}
