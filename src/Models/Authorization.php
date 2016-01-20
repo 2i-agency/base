@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Admin\Models;
+namespace Chunker\Base\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -40,6 +40,6 @@ class Authorization extends Model
 	 */
 	public function user()
 	{
-		return $this->belongsTo(\Chunker\Admin\Models\User::class);
+		return $this->belongsTo(\Chunker\Base\Models\User::class);
 	}
 }

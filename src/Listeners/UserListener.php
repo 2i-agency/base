@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Admin\Listeners;
+namespace Chunker\Base\Listeners;
 
 use Carbon\Carbon;
 
@@ -42,13 +42,13 @@ class UserListener
 	public function subscribe($events)
 	{
 		$events->listen(
-			'Chunker\Admin\Events\UserLoggedIn',
-			'Chunker\Admin\Listeners\UserListener@onUserLogin'
+			'Chunker\Base\Events\UserLoggedIn',
+			'Chunker\Base\Listeners\UserListener@onUserLogin'
 		);
 
 		$events->listen(
-			'Chunker\Admin\Events\UserRequestedApp',
-			'Chunker\Admin\Listeners\UserListener@onUserAppRequest'
+			'Chunker\Base\Events\UserRequestedApp',
+			'Chunker\Base\Listeners\UserListener@onUserAppRequest'
 		);
 	}
 

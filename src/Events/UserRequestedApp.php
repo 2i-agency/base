@@ -1,9 +1,9 @@
 <?php
 
-namespace Chunker\Admin\Events;
+namespace Chunker\Base\Events;
 
 use App\Events\Event;
-use Chunker\Admin\Models\User;
+use Chunker\Base\Models\User;
 
 class UserRequestedApp extends Event
 {

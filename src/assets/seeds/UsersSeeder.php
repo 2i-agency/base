@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Chunker\Admin\Models\User;
+use Chunker\Base\Models\User;
 
-class AdminUserSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
 	public function run()
 	{

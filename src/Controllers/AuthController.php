@@ -1,10 +1,10 @@
 <?php
 
-namespace Chunker\Admin\Controllers;
+namespace Chunker\Base\Controllers;
 
-use Chunker\Admin\Events\UserLoggedIn;
-use Chunker\Admin\Events\UserRequestedApp;
-use Chunker\Admin\Models\User;
+use Chunker\Base\Events\UserLoggedIn;
+use Chunker\Base\Events\UserRequestedApp;
+use Chunker\Base\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;

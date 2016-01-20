@@ -1,4 +1,4 @@
-@extends('Admin::...base')
+@extends('Base::base')
 
 
 @section('page.body')

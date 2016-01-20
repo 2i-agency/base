@@ -1,8 +1,8 @@
 <?php
 
-namespace Chunker\Admin\Middleware;
+namespace Chunker\Base\Middleware;
 
-use Chunker\Admin\Events\UserRequestedApp;
+use Chunker\Base\Events\UserRequestedApp;
 use Closure;
 use Auth;
 
@@ -18,7 +18,7 @@ class CheckAuth
 			}
 			else
 			{
-				return response()->view('Admin::auth.login', [], 401);
+				return response()->view('Base::auth.login', [], 401);
 			}
 		}
 		else

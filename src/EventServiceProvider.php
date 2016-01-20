@@ -1,10 +1,10 @@
 <?php
 
-namespace Chunker\Admin;
+namespace Chunker\Base;
 
-use Chunker\Admin\Listeners\UserListener;
-use Chunker\Admin\Models\Authorization;
-use Chunker\Admin\Models\Observers\AuthorizationObserver;
+use Chunker\Base\Listeners\UserListener;
+use Chunker\Base\Models\Authorization;
+use Chunker\Base\Models\Observers\AuthorizationObserver;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 

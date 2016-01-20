@@ -6,7 +6,7 @@
 
 Route::group([
 	'prefix' => 'auth',
-	'namespace' => 'Chunker\Admin\Controllers',
+	'namespace' => 'Chunker\Base\Controllers',
 	'middleware' => ['web']
 ], function(){
 
@@ -31,7 +31,7 @@ Route::group([
 
 Route::group([
 	'prefix' => 'admin',
-	'namespace' => 'Chunker\Admin\Controllers',
+	'namespace' => 'Chunker\Base\Controllers',
 	'middleware' => ['admin']
 ], function(){
 

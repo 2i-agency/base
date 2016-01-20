@@ -1,4 +1,4 @@
-@extends('Admin::...template')
+@extends('Base::template')
 
 
 @section('page.title', 'Уведомления админцентра')

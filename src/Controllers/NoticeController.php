@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Admin\Controllers;
+namespace Chunker\Base\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -11,7 +11,7 @@ class NoticeController extends Controller
 {
 	public function index()
 	{
-		return view('Admin::notice.index', [
+		return view('Base::notice.index', [
 			'notices' => []
 		]);
 	}

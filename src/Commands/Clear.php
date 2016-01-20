@@ -1,13 +1,13 @@
 <?php
 
-namespace Chunker\Admin\Commands;
+namespace Chunker\Base\Commands;
 
 use Illuminate\Console\Command;
 
 class Clear extends Command
 {
-	protected $signature = 'admin:clear';
-	protected $description = 'Clear files which will be replaced by package \'Admin\'';
+	protected $signature = 'chunker:clear';
+	protected $description = 'Clear files which will be replaced by Chunker';
 
 
 	public function handle()
@@ -31,7 +31,7 @@ class Clear extends Command
 		// Replacing class in auth config
 		$auth_config_filename = config_path('auth.php');
 		$auth_config_content = file_get_contents($auth_config_filename);
-		$auth_config_content = str_replace('App\User::class', 'Chunker\Admin\Models\User::class', $auth_config_content);
+		$auth_config_content = str_replace('App\User::class', 'Chunker\Base\Models\User::class', $auth_config_content);
 		file_put_contents($auth_config_filename, $auth_config_content);
 
 		$this->line('Class of User\'s model has been replaced in auth config');

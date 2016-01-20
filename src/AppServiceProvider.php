@@ -1,10 +1,10 @@
 <?php
 
-namespace Chunker\Admin;
+namespace Chunker\Base;
 
 use Illuminate\Support\ServiceProvider;
 
-class AdminServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider
 {
 	public function boot()
 	{
@@ -23,7 +23,7 @@ class AdminServiceProvider extends ServiceProvider
 				\Illuminate\Session\Middleware\StartSession::class,
 				\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 				\App\Http\Middleware\VerifyCsrfToken::class,
-				\Chunker\Admin\Middleware\CheckAuth::class,
+				\Chunker\Base\Middleware\CheckAuth::class,
 			]);
 
 
@@ -32,7 +32,7 @@ class AdminServiceProvider extends ServiceProvider
 
 
 		// Views
-		$this->loadViewsFrom(__DIR__ . '/resources/views', 'Admin');
+		$this->loadViewsFrom(__DIR__ . '/resources/views', 'Base');
 
 
 		// Publishing assets

@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Admin\Controllers;
+namespace Chunker\Base\Controllers;
 
 use Illuminate\Http\Request;
 

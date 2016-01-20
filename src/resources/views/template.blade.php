@@ -1,4 +1,4 @@
-@extends('Admin::base')
+@extends('Base::base')
 
 
 @section('page.body')
@@ -28,7 +28,7 @@
 	<div class="collapse navbar-collapse" id="collapsable">
 
 		{{--Navigation--}}
-		@include('Admin::_navigation')
+		@include('Base::_navigation')
 
 		{{--User's form--}}
 		<form class="navbar-form navbar-right" method="POST" action="{{ route('logout') }}">

@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Admin\Models\Traits;
+namespace Chunker\Base\Models\Traits;
 
 trait LinkedWithEditors
 {
@@ -9,7 +9,7 @@ trait LinkedWithEditors
 	 */
 	public function creator()
 	{
-		return $this->belongsTo(Chunker\Admin\Models\User::class, 'creator_id');
+		return $this->belongsTo(Chunker\Base\Models\User::class, 'creator_id');
 	}
 
 
@@ -18,6 +18,6 @@ trait LinkedWithEditors
 	 */
 	public function updater()
 	{
-		return $this->belongsTo(Chunker\Admin\Models\User::class, 'updater_id');
+		return $this->belongsTo(Chunker\Base\Models\User::class, 'updater_id');
 	}
 }

@@ -1,7 +1,7 @@
 {
-	"name": "chunker/admin",
+	"name": "chunker/base",
 	"type": "package",
-	"description": "Base of administrator's panel",
+	"description": "Base of the Chunker",
 	"authors": [
 		{
 			"name": "Studio 2i",
@@ -16,7 +16,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Chunker\\Admin\\": "src"
+			"Chunker\\Base\\": "src"
 		}
 	}
 }

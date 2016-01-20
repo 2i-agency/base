@@ -1,9 +1,9 @@
 <?php
 
-namespace Chunker\Admin\Models;
+namespace Chunker\Base\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Chunker\Admin\Models\Traits\LinkedWithEditors;
+use Chunker\Base\Models\Traits\LinkedWithEditors;
 
 class User extends Authenticatable
 {
@@ -36,6 +36,6 @@ class User extends Authenticatable
 	 */
 	public function authorizations()
 	{
-		return $this->hasMany(\Chunker\Admin\Models\Authorization::class);
+		return $this->hasMany(\Chunker\Base\Models\Authorization::class);
 	}
 }

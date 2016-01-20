@@ -1,9 +1,9 @@
 <?php
 
-namespace Chunker\Admin\Models\Observers;
+namespace Chunker\Base\Models\Observers;
 
 use Carbon\Carbon;
-use Chunker\Admin\Models\Authorization;
+use Chunker\Base\Models\Authorization;
 use Illuminate\Support\Facades\Input;
 
 class AuthorizationObserver
