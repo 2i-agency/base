@@ -5,6 +5,13 @@
 
 <h3>Пользователи</h3>
 
+<div class="mb20px">
+	<a href="{{ route('admin.users.create') }}" class="btn btn-default">
+		<span class="glyphicon glyphicon-plus"></span>
+		Добавление пользователя
+	</a>
+</div>
+
 <ul class="nav nav-tabs">
 	<li class="active"><a href="#active" data-toggle="tab">Активные</a></li>
 	<li><a href="#deleted" data-toggle="tab">Удалённые</a></li>

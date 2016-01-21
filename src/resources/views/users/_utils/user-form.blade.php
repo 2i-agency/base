@@ -9,7 +9,7 @@
 		<input
 			type="text"
 			name="login"
-			value="{{ $user->login }}"
+			value="{{ isset($user) ? $user->login : NULL }}"
 			class="form-control"
 			required
 			autofocus
@@ -30,7 +30,7 @@
 		<input
 			type="email"
 			name="email"
-			value="{{ $user->email }}"
+			value="{{ isset($user) ? $user->email : NULL }}"
 			class="form-control"
 			required
 			autocomplete="off">
@@ -41,7 +41,7 @@
 		<input
 			type="text"
 			name="name"
-			value="{{ $user->name }}"
+			value="{{ isset($user) ? $user->name : NULL }}"
 			class="form-control"
 			autocomplete="off">
 	</div>

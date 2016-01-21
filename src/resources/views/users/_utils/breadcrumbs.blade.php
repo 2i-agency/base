@@ -1,4 +1,8 @@
 <ul class="breadcrumb">
 	<li><a href="{{ route('admin.users.index') }}">Пользователи</a></li>
-	<li class="active">{{ $user->getName() }}</li>
+	@if (isset($user))
+		<li class="active">{{ $user->getName() }}</li>
+	@else
+		<li class="active">Добавление пользователя</li>
+	@endif
 </ul>

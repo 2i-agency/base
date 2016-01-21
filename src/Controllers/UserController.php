@@ -24,8 +24,30 @@ class UserController extends Controller
 
 
 	/*
+	 * Show page for adding user
+	 */
+	public function create()
+	{
+		return view('Base::users.create');
+	}
+
+
+	/*
 	 * Storing user
 	 */
+	public function store(Request $request)
+	{
+		$data = $request->only([
+			'login',
+			'password',
+			'email',
+			'name'
+		]);
+
+		$user = User::create($data);
+
+		return redirect()->route('admin.users.edit', $user);
+	}
 
 
 	/*
