@@ -36,7 +36,7 @@
 			<div class="btn-group">
 				<a href="{{ route('admin.users.edit', Auth::user()) }}" class="btn btn-default">
 					<span class="glyphicon glyphicon-user"></span>
-					{{ Auth::user()->name }}
+					{{ Auth::user()->getName() }}
 				</a>
 				<button type="submit" class="btn btn-default" title="Выход">
 					<span class="glyphicon glyphicon-log-out"></span>

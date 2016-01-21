@@ -35,6 +35,34 @@ class User extends Authenticatable
 
 
 	/*
+	 * Preparing login
+	 */
+	public function setLoginAttribute($login)
+	{
+		$this->attributes['login'] = str_slug($login);
+	}
+
+
+	/*
+	 * Triming name
+	 */
+	public function setNameAttribute($name)
+	{
+		$name = trim($name);
+		$this->attributes['name'] = strlen($name) ? $name : NULL;
+	}
+
+
+	/*
+	 * Getting name, which may be empty
+	 */
+	public function getName()
+	{
+		return is_null($this->name) ? $this->login : $this->name;
+	}
+
+
+	/*
 	 * User's authorizations
 	 */
 	public function authorizations()
