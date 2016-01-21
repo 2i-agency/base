@@ -33,7 +33,8 @@ class UserController extends Controller
 	 */
 	public function edit(User $user)
 	{
-		return view('Base::users.edit', compact('user'));
+		$total = User::count();
+		return view('Base::users.edit', compact('user', 'total'));
 	}
 
 

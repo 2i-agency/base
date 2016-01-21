@@ -47,6 +47,9 @@
 	</div>
 
 	@include('Base::_utils.buttons.save')
-	@include('Base::_utils.buttons.delete', ['url' => route('admin.users.delete', $user)])
+
+	@if (isset($user) && ($total > 1))
+		@include('Base::_utils.buttons.delete', ['url' => route('admin.users.delete', $user)])
+	@endif
 
 </div>
