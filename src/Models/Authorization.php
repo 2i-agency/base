@@ -46,7 +46,7 @@ class Authorization extends Model
 	 */
 	public function scopeRecent(Builder $query)
 	{
-		return $query->latest('logged_in_at');
+		return $query->latest('logged_in_at')->latest('id');
 	}
 
 

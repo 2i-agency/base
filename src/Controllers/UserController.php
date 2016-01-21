@@ -66,6 +66,7 @@ class UserController extends Controller
 	 */
 	public function authorizations(User $user)
 	{
-		return view('Base::users.authorizations', compact('user'));
+		$authorizations = $user->authorizations()->recent()->paginate();
+		return view('Base::users.authorizations', compact('user', 'authorizations'));
 	}
 }
