@@ -4,9 +4,9 @@ namespace Chunker\Base\Commands;
 
 use Illuminate\Console\Command;
 
-class Clear extends Command
+class Init extends Command
 {
-	protected $signature = 'chunker:clear';
+	protected $signature = 'chunker:init';
 	protected $description = 'Clear files which will be replaced by Chunker';
 
 

@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
 
 		// Commands
 		$this->commands([
-			Commands\Clear::class
+			Commands\Init::class
 		]);
 
 
