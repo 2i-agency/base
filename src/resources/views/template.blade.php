@@ -34,9 +34,9 @@
 		<form class="navbar-form navbar-right" method="POST" action="{{ route('logout') }}">
 			{!! csrf_field() !!}
 			<div class="btn-group">
-				<a href="" class="btn btn-default">
+				<a href="{{ route('admin.users.edit', Auth::user()) }}" class="btn btn-default">
 					<span class="glyphicon glyphicon-user"></span>
-					Пользователь
+					{{ Auth::user()->name }}
 				</a>
 				<button type="submit" class="btn btn-default" title="Выход">
 					<span class="glyphicon glyphicon-log-out"></span>

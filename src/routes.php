@@ -52,7 +52,7 @@ Route::group([
 		// Index
 		Route::get('/', [
 			'uses' => 'NoticeController@index',
-			'as' => 'admin.notices'
+			'as' => 'admin.notices.index'
 		]);
 
 	});
@@ -69,7 +69,7 @@ Route::group([
 		// Index
 		Route::get('/', [
 			'uses' => 'UserController@index',
-			'as' => 'admin.users'
+			'as' => 'admin.users.index'
 		]);
 
 

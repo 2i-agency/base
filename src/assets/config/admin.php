@@ -6,8 +6,8 @@ return [
 	 * Structure
 	 */
 	'structure' => [
-		'Уведомления' => 'admin.notices',
-		'Пользователи' => 'admin.users'
+		'Уведомления' => 'admin.notices.index',
+		'Пользователи' => 'admin.users.index'
 	]
 
 ];

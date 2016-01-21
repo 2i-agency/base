@@ -2,12 +2,17 @@
 
 namespace Chunker\Base;
 
+use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
 	public function boot()
 	{
+		// Configuration of time string
+		Carbon::setToStringFormat('d.m.Y H:i:s');
+
+
 		// Commands
 		$this->commands([
 			Commands\Clear::class
@@ -40,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
 			__DIR__ . '/assets/config' => config_path(),
 			__DIR__ . '/assets/migrations' => database_path('migrations'),
 			__DIR__ . '/assets/seeds' => database_path('seeds'),
-			__DIR__ . '/assets/css' => storage_path('app/admin')
+			__DIR__ . '/assets/css' => storage_path('app/admin/css')
 		], 'assets');
 
 

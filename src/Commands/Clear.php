@@ -28,12 +28,34 @@ class Clear extends Command
 		$this->line('Unnecessary files deleted');
 
 
-		// Replacing class in auth config
-		$auth_config_filename = config_path('auth.php');
-		$auth_config_content = file_get_contents($auth_config_filename);
-		$auth_config_content = str_replace('App\User::class', 'Chunker\Base\Models\User::class', $auth_config_content);
-		file_put_contents($auth_config_filename, $auth_config_content);
+		// Replacing locale in app config
+		if ($this->replaceInConfig('app', 'UTC', 'Europe/Moscow'))
+		{
+			$this->line('Locale set for Europe/Moscow');
+		}
 
-		$this->line('Class of User\'s model has been replaced in auth config');
+
+		// Replacing user's model class in auth config
+		if ($this->replaceInConfig('auth', 'App\User::class', 'Chunker\Base\Models\User::class'))
+		{
+			$this->line('Class of User\'s model has been replaced in auth config');
+		}
+	}
+
+
+	protected function replaceInConfig($config, $oldString, $newString)
+	{
+		$filename = config_path($config . '.php');
+		$content = file_get_contents($filename);
+
+		if (mb_strpos($content, $oldString) !== false)
+		{
+			$content = str_replace($oldString, $newString, $content);
+			file_put_contents($filename, $content);
+
+			return true;
+		}
+
+		return false;
 	}
 }

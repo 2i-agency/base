@@ -4,10 +4,13 @@ namespace Chunker\Base\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Chunker\Base\Models\Traits\LinkedWithEditors;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-	use LinkedWithEditors;
+	use LinkedWithEditors, SoftDeletes;
+
+	protected $dates = ['deleted_at'];
 
 	protected $fillable = [
 		'login',

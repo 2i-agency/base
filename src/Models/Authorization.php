@@ -2,13 +2,19 @@
 
 namespace Chunker\Base\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Authorization extends Model
 {
 	public $timestamps = false;
 	protected $timeFormat = 'd.m.Y H:i:s';
-	protected $dates = ['logged_in_at', 'last_request_at'];
+
+	protected $dates = [
+		'logged_in_at',
+		'last_request_at'
+	];
+
 	protected $fillable = [
 		'failed',
 		'logged_in_at',
@@ -32,6 +38,24 @@ class Authorization extends Model
 	public function getIpAddressAttribute($number)
 	{
 		return long2ip($number);
+	}
+
+
+	/*
+	 * Ordering by time
+	 */
+	public function scopeRecent(Builder $query)
+	{
+		return $query->latest('logged_in_at');
+	}
+
+
+	/*
+	 * Last
+	 */
+	public function last()
+	{
+		return $this->recent()->first();
 	}
 
 
