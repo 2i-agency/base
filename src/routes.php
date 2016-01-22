@@ -112,6 +112,13 @@ Route::group([
 			]);
 
 
+			// Restoring user
+			Route::get('restore', [
+				'uses' => 'UserController@restore',
+				'as' => 'admin.users.restore'
+			]);
+
+
 			// List of user's authorizations
 			Route::get('authorizations', [
 				'uses' => 'UserController@authorizations',

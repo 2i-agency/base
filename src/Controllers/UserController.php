@@ -81,6 +81,23 @@ class UserController extends Controller
 	/*
 	 * Deleting user
 	 */
+	public function delete(User $user)
+	{
+		$user->delete();
+		return redirect()->route('admin.users.index');
+	}
+
+
+	/*
+	 * Restoring user
+	 */
+	public function restore($userId)
+	{
+		$user = User::withTrashed()->find($userId);
+		$user->restore();
+
+		return redirect()->route('admin.users.edit', $user);
+	}
 
 
 	/*

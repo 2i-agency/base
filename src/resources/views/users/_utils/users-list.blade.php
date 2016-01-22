@@ -26,10 +26,17 @@
 					@endif
 
 					<td class="text-right">
-						<a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-xs">
-							<span class="glyphicon glyphicon-pencil"></span>
-							Редактировать
-						</a>
+						@if ($user->trashed())
+							<a href="{{ route('admin.users.restore', $user) }}" class="btn btn-warning btn-xs">
+								<span class="glyphicon glyphicon-repeat"></span>
+								Восстановить
+							</a>
+						@else
+							<a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-xs">
+								<span class="glyphicon glyphicon-pencil"></span>
+								Редактировать
+							</a>
+						@endif
 					</td>
 				</tr>
 			@endforeach
