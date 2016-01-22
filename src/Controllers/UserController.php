@@ -55,8 +55,7 @@ class UserController extends Controller
 	 */
 	public function edit(User $user)
 	{
-		$total = User::count();
-		return view('Base::users.edit', compact('user', 'total'));
+		return view('Base::users.edit', compact('user'));
 	}
 
 
@@ -83,7 +82,11 @@ class UserController extends Controller
 	 */
 	public function delete(User $user)
 	{
-		$user->delete();
+		if ($user->isCanBeDeleted())
+		{
+			$user->delete();
+		}
+
 		return redirect()->route('admin.users.index');
 	}
 

@@ -3,12 +3,14 @@
 namespace Chunker\Base\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Chunker\Base\Models\Traits\HasEditors;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Chunker\Base\Models\Traits\HasEditors;
+use Chunker\Base\Models\Traits\Comparison;
+use Auth;
 
 class User extends Authenticatable
 {
-	use SoftDeletes, HasEditors;
+	use SoftDeletes, HasEditors, Comparison;
 
 	protected $dates = ['deleted_at'];
 
@@ -62,6 +64,18 @@ class User extends Authenticatable
 	public function getName()
 	{
 		return is_null($this->name) ? $this->login : $this->name;
+	}
+
+
+	/*
+	 * Checking deleting opportunity
+	 */
+	public function isCanBeDeleted()
+	{
+		$is_can = !$this->is(Auth::user());
+		$is_can = $is_can && static::count() > 1;
+
+		return $is_can;
 	}
 
 

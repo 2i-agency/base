@@ -48,7 +48,7 @@
 
 	@include('Base::_utils.buttons.save')
 
-	@if (isset($user) && ($total > 1))
+	@if (isset($user) && $user->isCanBeDeleted())
 		@include('Base::_utils.buttons.delete', ['url' => route('admin.users.delete', $user)])
 	@endif
 
