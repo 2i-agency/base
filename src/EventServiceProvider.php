@@ -5,6 +5,8 @@ namespace Chunker\Base;
 use Chunker\Base\Listeners\UserListener;
 use Chunker\Base\Models\Authorization;
 use Chunker\Base\Models\Observers\AuthorizationObserver;
+use Chunker\Base\Models\Observers\EditorObserver;
+use Chunker\Base\Models\User;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -20,5 +22,6 @@ class EventServiceProvider extends ServiceProvider
 		parent::boot($events);
 
 		Authorization::observe(AuthorizationObserver::class);
+		User::observe(EditorObserver::class);
 	}
 }

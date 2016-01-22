@@ -3,12 +3,12 @@
 namespace Chunker\Base\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Chunker\Base\Models\Traits\LinkedWithEditors;
+use Chunker\Base\Models\Traits\HasEditors;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-	use LinkedWithEditors, SoftDeletes;
+	use SoftDeletes, HasEditors;
 
 	protected $dates = ['deleted_at'];
 
@@ -30,7 +30,10 @@ class User extends Authenticatable
 	 */
 	public function setPasswordAttribute($password)
 	{
-		$this->attributes['password'] = bcrypt($password);
+		if (strlen($password))
+		{
+			$this->attributes['password'] = bcrypt($password);
+		}
 	}
 
 
