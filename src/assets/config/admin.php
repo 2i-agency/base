@@ -3,11 +3,13 @@
 return [
 
 	/*
-	 * Structure
+	 * Structure of admin navigation
 	 */
-	'structure' => [
-		'Уведомления' => 'admin.notices.index',
-		'Пользователи' => 'admin.users.index'
+	'navigation' => [
+		[
+			'name' => 'Пользователи',
+			'route' => 'admin.users'
+		]
 	]
 
 ];

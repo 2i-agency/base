@@ -44,15 +44,15 @@ Route::group([
 
 
 	/*
-	 * Notice
+	 * Home
 	 */
 
 	Route::group([], function(){
 
 		// Index
 		Route::get('/', [
-			'uses' => 'NoticeController@index',
-			'as' => 'admin.notices.index'
+			'uses' => 'HomeController@index',
+			'as' => 'admin.home'
 		]);
 
 	});
@@ -69,7 +69,7 @@ Route::group([
 		// List of users
 		Route::get('/', [
 			'uses' => 'UserController@index',
-			'as' => 'admin.users.index'
+			'as' => 'admin.users'
 		]);
 
 

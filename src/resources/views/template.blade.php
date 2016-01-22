@@ -1,3 +1,4 @@
+@inject('navigation', 'Chunker\Base\Helpers\AdminNavigation')
 @extends('Base::base')
 
 
@@ -15,11 +16,7 @@
 			<span class="icon-bar"></span>
 		</button>
 
-		@if (is_array($home = current(config('admin.structure'))))
-			<a class="navbar-brand" href="{{ route(current($home['children'])) }}">Админцентр</a>
-		@else
-			<a class="navbar-brand" href="{{ route($home) }}">Админцентр</a>
-		@endif
+		<a class="navbar-brand" href="{{ $navigation->home() }}">Админцентр</a>
 
 	</div>
 
@@ -28,7 +25,7 @@
 	<div class="collapse navbar-collapse" id="collapsable">
 
 		{{--Navigation--}}
-		@include('Base::_navigation')
+		{!! $navigation->render() !!}
 
 		{{--User's form--}}
 		<form class="navbar-form navbar-right" method="POST" action="{{ route('logout') }}">
