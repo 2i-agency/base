@@ -24,6 +24,9 @@ h3:first-child {
 	}
 }
 
-.help-block:last-child {
-	margin-bottom: 0;
+.help-block,
+.form-group {
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
