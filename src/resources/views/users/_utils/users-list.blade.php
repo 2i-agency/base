@@ -20,7 +20,7 @@
 					@endif
 
 					@if ($user->authorizations()->count())
-						<td>{{ $user->authorizations()->getRelated()->last()->logged_in_at }}</td>
+						<td>{{ $user->authorizations()->latest('logged_in_at')->first()->logged_in_at }}</td>
 					@else
 						<td class="text-muted">Пока не авторизовывался</td>
 					@endif
