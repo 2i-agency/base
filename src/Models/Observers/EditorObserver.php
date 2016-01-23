@@ -23,6 +23,9 @@ class EditorObserver
 	}
 
 
+	/*
+	 * Shorthand to traits list of model
+	 */
 	protected function getTraits($model)
 	{
 		$reflection = new \ReflectionClass($model);
@@ -30,7 +33,29 @@ class EditorObserver
 	}
 
 
+	/*
+	 * Then model is creating
+	 */
 	public function creating(Model $model)
+	{
+		$this->associateCreator($model);
+		$this->associateUpdater($model);
+	}
+
+
+	/*
+	 * Then model is updating
+	 */
+	public function updating(Model $model)
+	{
+		$this->associateUpdater($model);
+	}
+
+
+	/*
+	 * Associate with creator
+	 */
+	public function associateCreator(Model $model)
 	{
 		$traits = $this->getTraits($model);
 
@@ -43,7 +68,10 @@ class EditorObserver
 	}
 
 
-	public function saving(Model $model)
+	/*
+	 * Associate with updater
+	 */
+	public function associateUpdater(Model $model)
 	{
 		$traits = $this->getTraits($model);
 
