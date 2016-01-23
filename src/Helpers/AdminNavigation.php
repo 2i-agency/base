@@ -79,7 +79,7 @@ class AdminNavigation
 		$markup = '
 		<li class="dropdown' . ($active ? ' active' : NULL) . '">
 			<a
-				href="' . route($data['route']) . '"
+				href="#"
 				class="dropdown-toggle"
 				data-toggle="dropdown">
 				' . $data['name'] . ' <span class="caret"></span>
