@@ -50,7 +50,7 @@ class AdminNavigation
 	// Check element activity
 	protected function isElementActive($route)
 	{
-		return starts_with($this->currentRoute, $route);
+		return starts_with($this->currentRoute, $route . '.') || $this->currentRoute == $route;
 	}
 
 
