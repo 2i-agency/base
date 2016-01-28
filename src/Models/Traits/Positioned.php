@@ -75,7 +75,6 @@ trait Positioned
 		// Pulling
 		$query->decrement($this->positionField());
 
-
 		return $this;
 	}
 
@@ -88,7 +87,6 @@ trait Positioned
 		$this
 			->pullSiblings()
 			[$this->positionField()] = $position;
-		$this->save();
 
 		// Selecting siblings after new position
 		$query = static::where($this->positionField(), '>=', $this[$this->positionField()]);
@@ -101,6 +99,8 @@ trait Positioned
 
 		// Pushing next siblings
 		$query->increment($this->positionField());
+
+		$this->save();
 	}
 
 
