@@ -45,7 +45,8 @@ class AppServiceProvider extends ServiceProvider
 			__DIR__ . '/assets/config' => config_path(),
 			__DIR__ . '/assets/migrations' => database_path('migrations'),
 			__DIR__ . '/assets/seeds' => database_path('seeds'),
-			__DIR__ . '/assets/css' => storage_path('app/admin/css')
+			__DIR__ . '/assets/css' => storage_path('app/admin/css'),
+			__DIR__ . '/assets/js' => storage_path('app/admin/js')
 		], 'assets');
 
 
