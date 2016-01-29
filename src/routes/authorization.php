@@ -10,13 +10,13 @@ Route::group([
 	'middleware' => ['web']
 ], function(){
 
-	// Login
+	// Авторизация
 	Route::post('login', [
 		'uses' => 'AuthController@login',
 		'as' => 'login'
 	]);
 
-	// Logout
+	// Деавторизация
 	Route::post('logout', [
 		'uses' => 'AuthController@logout',
 		'as' => 'logout'

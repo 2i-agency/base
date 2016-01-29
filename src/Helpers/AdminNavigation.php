@@ -17,13 +17,14 @@ class AdminNavigation
 	}
 
 
-	public function home()
+	// Получение ссылки на контрольную панель админцентра
+	public function dashboard()
 	{
-		return route('admin.home');
+		return route('admin.dashboard');
 	}
 
 
-	// Rendering markup of navigation
+	// Визуализация разметки навигации
 	public function render()
 	{
 		$markup = '';
@@ -47,14 +48,14 @@ class AdminNavigation
 	}
 
 
-	// Check element activity
+	// Проверка активности элемента
 	protected function isElementActive($route)
 	{
 		return starts_with($this->currentRoute, $route . '.') || $this->currentRoute == $route;
 	}
 
 
-	// Rendering markup of alone link
+	// Визуализация разметки отдельного элемента
 	protected function renderElement($data)
 	{
 		return '
@@ -64,7 +65,7 @@ class AdminNavigation
 	}
 
 
-	// Rendering markup of dropdown
+	// Визуализация разметки выпадающего списка раздела
 	protected function renderSection($data)
 	{
 		$markup = '';

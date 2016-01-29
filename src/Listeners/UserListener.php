@@ -7,37 +7,42 @@ use Carbon\Carbon;
 class UserListener
 {
 	/*
-	 * User logged in
+	 * При авторизации пользователя
 	 */
 	public function onUserLogin($event)
 	{
-		// Creating authorization
+		// Добавление записи об авторизации
 		$event
 			->user
 			->authorizations()
-			->create(['failed' => $event->failed]);
+			->create(['is_failed' => $event->isFailed]);
 	}
 
 
 	/*
-	 * User sent http request to app
+	 * При направлении запросу приложения от пользователя
 	 */
 	public function onUserAppRequest($event)
 	{
-		// Adding data to last authorization
-		$authorization = $event
+		// Добавление данных в последнюю авторизацию, если таковая имеется
+		$authorizations = $event
 			->user
-			->authorizations()
-			->latest('logged_in_at')
-			->first();
+			->authorizations();
 
-		$authorization->last_request_at = Carbon::now();
-		$authorization->save();
+		if ($authorizations->count())
+		{
+			$authorization = $authorizations
+				->latest('logged_in_at')
+				->first();
+
+			$authorization->last_request_at = Carbon::now();
+			$authorization->save();
+		}
 	}
 
 
 	/*
-	 * Register the listeners
+	 * Регистрация слушателей
 	 */
 	public function subscribe($events)
 	{

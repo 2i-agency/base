@@ -7,7 +7,7 @@ class UsersSeeder extends Seeder
 {
 	public function run()
 	{
-		// Adding admin user
+		// Добавление администратора
 		User::create([
 			'login' => 'admin',
 			'password' => '000000',

@@ -8,12 +8,12 @@ use Chunker\Base\Models\User;
 class UserLoggedIn extends Event
 {
 	public $user;
-	public $failed;
+	public $isFailed;
 
 
-	public function __construct(User $user, $failed)
+	public function __construct(User $user, $isFailed)
 	{
 		$this->user = $user;
-		$this->failed = $failed;
+		$this->isFailed = $isFailed;
 	}
 }

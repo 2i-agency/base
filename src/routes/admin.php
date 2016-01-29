@@ -12,7 +12,7 @@ Route::group([
 
 	$files = [
 		'assets',
-		'home',
+		'dashboard',
 		'users'
 	];
 

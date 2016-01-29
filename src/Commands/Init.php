@@ -13,7 +13,7 @@ class Init extends Command
 	public function handle()
 	{
 		$files = [
-			// Old users migration
+			// Старая миграция таблицы с пользователями
 			database_path('migrations/2014_10_12_000000_create_users_table.php')
 		];
 
@@ -28,14 +28,14 @@ class Init extends Command
 		$this->line('Unnecessary files deleted');
 
 
-		// Replacing locale in app config
+		// Конфигурация локали
 		if ($this->replaceInConfig('app', 'UTC', 'Europe/Moscow'))
 		{
 			$this->line('Locale set for Europe/Moscow');
 		}
 
 
-		// Replacing user's model class in auth config
+		// Замена модели, используемой механизмом авторизации
 		if ($this->replaceInConfig('auth', 'App\User::class', 'Chunker\Base\Models\User::class'))
 		{
 			$this->line('Class of User\'s model has been replaced in auth config');
@@ -43,6 +43,9 @@ class Init extends Command
 	}
 
 
+	/*
+	 * Замена строки в файле-конфиге
+	 */
 	protected function replaceInConfig($config, $oldString, $newString)
 	{
 		$filename = config_path($config . '.php');
@@ -55,6 +58,7 @@ class Init extends Command
 
 			return true;
 		}
+
 
 		return false;
 	}

@@ -1,4 +1,5 @@
 @inject('navigation', 'Chunker\Base\Helpers\AdminNavigation')
+@inject('request', 'Illuminate\Http\Request')
 @extends('Base::base')
 
 
@@ -17,7 +18,14 @@
 			</button>
 
 			{{--Логотип--}}
-			<a class="navbar-brand" href="{{ $navigation->home() }}">Админцентр</a>
+			@if ($request->url() == $navigation->dashboard())
+				<a class="navbar-brand active" href="{{ $navigation->dashboard() }}">
+			@else
+				<a class="navbar-brand" href="{{ $navigation->dashboard() }}">
+			@endif
+				<span class="glyphicon glyphicon-dashboard"></span>
+				Админцентр
+			</a>
 
 		</div>
 

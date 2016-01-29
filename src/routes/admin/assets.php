@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Сопутствующие файлы админцентра
+ * Ассеты админцентра
  */
 
 Route::get('css/{filename}', 'AssetController@css');

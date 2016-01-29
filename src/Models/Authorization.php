@@ -16,7 +16,7 @@ class Authorization extends Model
 	];
 
 	protected $fillable = [
-		'failed',
+		'is_failed',
 		'logged_in_at',
 		'ip_address',
 		'user_agent',

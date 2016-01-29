@@ -24,7 +24,7 @@ class UserController extends Controller
 
 
 	/*
-	 * Страница добавление пользователя
+	 * Страница добавления пользователя
 	 */
 	public function create()
 	{

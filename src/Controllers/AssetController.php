@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class AssetController extends Controller
 {
 	/*
-	 * Getting admin's asset
+	 * Скачивание ассета админцентра
 	 */
 	protected function download($filename, $headers = [])
 	{
@@ -26,7 +26,7 @@ class AssetController extends Controller
 
 
 	/*
-	 * Getting admin's CSS file
+	 * Скачивание CSS-ассета
 	 */
 	public function css($filename)
 	{
@@ -36,11 +36,11 @@ class AssetController extends Controller
 
 
 	/*
-	 * Getting admin's JS file
+	 * Скачивание JS-ассета
 	 */
-	public function js($direcrory, $filename)
+	public function js($directory, $filename)
 	{
-		$filename = storage_path('app/admin/js/' . $direcrory . '/' . $filename);
+		$filename = storage_path('app/admin/js/' . $directory . '/' . $filename);
 		return $this->download($filename, ['Content-type' => 'text/javascript']);
 	}
 }

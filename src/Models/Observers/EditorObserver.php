@@ -24,7 +24,7 @@ class EditorObserver
 
 
 	/*
-	 * Shorthand to traits list of model
+	 * Вспомогательный метод для получения массива трейтов класса
 	 */
 	protected function getTraits($model)
 	{
@@ -33,9 +33,6 @@ class EditorObserver
 	}
 
 
-	/*
-	 * Then model is creating
-	 */
 	public function creating(Model $model)
 	{
 		$this->associateCreator($model);
@@ -43,18 +40,12 @@ class EditorObserver
 	}
 
 
-	/*
-	 * Then model is updating
-	 */
 	public function updating(Model $model)
 	{
 		$this->associateUpdater($model);
 	}
 
 
-	/*
-	 * Associate with creator
-	 */
 	public function associateCreator(Model $model)
 	{
 		$traits = $this->getTraits($model);
@@ -68,9 +59,6 @@ class EditorObserver
 	}
 
 
-	/*
-	 * Associate with updater
-	 */
 	public function associateUpdater(Model $model)
 	{
 		$traits = $this->getTraits($model);

@@ -3,7 +3,7 @@
 return [
 
 	/*
-	 * Structure of admin navigation
+	 * Структура меню админцентра
 	 */
 	'navigation' => [
 		[

@@ -11,35 +11,35 @@ class CreateAuthorizations extends Migration
 
 			$table->engine = 'MyISAM';
 
-			// ID
+			// Ключ
 			$table->increments('id');
 
-			// User's ID
+			// Ключ пользователя
 			$table
 				->integer('user_id')
 				->unsigned()
 				->index();
 
-			// Agent's string
+			// Идентификатор браузера
 			$table->string('user_agent');
 
-			// IP address
+			// IP-адрес
 			$table
 				->bigInteger('ip_address')
 				->unsigned();
 
-			// Error flag
+			// Флаг проваленной авторизации
 			$table
-				->boolean('failed')
+				->boolean('is_failed')
 				->default(false)
 				->index();
 
-			// Time of login
+			// Время авторизации
 			$table
 				->timestamp('logged_in_at')
 				->index();
 
-			// Time of last request
+			// Время последнего запроса на сервер в сеансе
 			$table
 				->timestamp('last_request_at')
 				->nullable()

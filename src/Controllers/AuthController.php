@@ -13,18 +13,20 @@ use Auth;
 class AuthController extends Controller
 {
 	/*
-	 * Login user
+	 * Авторизация
 	 */
 	public function login(Request $request)
 	{
 		$credentials = $request->only(['login', 'password']);
 
 
+		// Успешная авторизация
 		if (Auth::attempt($credentials))
 		{
 			event(new UserLoggedIn(Auth::user(), false));
 			return redirect()->back();
 		}
+		// Авторизация провалена
 		else
 		{
 			$user = User::where('login', $credentials['login'])->first();
@@ -40,12 +42,13 @@ class AuthController extends Controller
 
 
 	/*
-	 * Logout user
+	 * Деавторизация
 	 */
 	public function logout()
 	{
 		event(new UserRequestedApp(Auth::user()));
 		Auth::logout();
+
 		return redirect()->back();
 	}
 }

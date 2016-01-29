@@ -24,35 +24,25 @@ trait Bounded
 
 
 	/*
-	 * Название поля, в котором хранится путь из ID родительских моделей.
-	 * Позволяет организовывать древовидные связи между моделями одного класса
-	 */
-	protected function pathField()
-	{
-		return property_exists($this, 'path_field') ? $this->path_field : NULL;
-	}
-
-
-	/*
-	 * Получение пути в формате массива
+	 * Получение ключей родительских моделей при древовидной связи
 	 */
 	public function getParentsIds()
 	{
-		if (!is_null($this->pathField()))
+		$ids = [];
+
+		if (!is_null($this->parentField()))
 		{
-			// У корневого элемента нет родителей
-			if (is_null($this[$this->pathField()]))
+			$model = $this;
+
+			while ($model[$this->parentField()])
 			{
-				return [];
-			}
-			// Конвертация пути в массив
-			else
-			{
-				return explode('/', trim($this[$this->pathField()], '/'));
+				$ids[] = $model[$this->parentField()];
+				$model = static::findOrNew($model[$this->parentField()]);
 			}
 		}
 
-		return NULL;
+
+		return array_reverse($ids);
 	}
 
 
@@ -181,15 +171,6 @@ trait Bounded
 
 			// Привязка к новому родителю
 			$this[$this->parentField()] = $parentId;
-		}
-
-
-		// Формирование пути модели
-		if (!is_null($this->pathField()) && !is_null($parentId))
-		{
-			$parents = static::find($parentId)->getParentsIds();
-			array_push($parents, $parentId);
-			$this[$this->pathField()] = '/' . implode('/', $parents) . '/';
 		}
 
 

@@ -11,48 +11,48 @@ class CreateUsers extends Migration
 
 			$table->engine = 'MyISAM';
 
-			// ID
+			// Ключ
 			$table->increments('id');
 
-			// Login
+			// Логин
 			$table
 				->string('login')
 				->unique();
 
-			// Password's hash
+			// Хеш пароля
 			$table->string('password', 60);
 
-			// Remember token
+			// Токен для запоминания
 			$table->rememberToken();
 
-			// Email
+			// Электронный адрес
 			$table
 				->string('email')
 				->index();
 
-			// Name
+			// Имя
 			$table
 				->string('name')
 				->nullable();
 
-			// Creator's ID
+			// Ключ создателя
 			$table
 				->integer('creator_id')
-				->index()
 				->unsigned()
-				->nullable();
+				->nullable()
+				->index();
 
-			// Updater's ID
+			// Ключ обновителя
 			$table
 				->integer('updater_id')
-				->index()
 				->unsigned()
-				->nullable();
+				->nullable()
+				->index();
 
-			// Time of creating and updating
+			// Время создания и обновления
 			$table->timestamps();
 
-			// Time of deleting
+			// Время удаления
 			$table->softDeletes();
 
 		});
