@@ -18,6 +18,9 @@
 	<link rel="stylesheet" href="{{ asset('admin/css/general.css') }}">
 	@yield('page.assets')
 
+	{{--Иконка--}}
+	<link rel="shortcut icon" href="{{ asset('admin/img/favicon.png') }}">
+
 	<title>@yield('page.title', 'Админцентр')</title>
 
 </head>
