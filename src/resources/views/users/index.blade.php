@@ -1,28 +1,38 @@
 @extends('Base::template')
 
 
+@section('page.title', 'Пользователи')
+
+
 @section('page.content')
 
-<h3>Пользователи</h3>
+	<h3>Пользователи</h3>
 
-<div class="mb20px">
-	<a href="{{ route('admin.users.create') }}" class="btn btn-default">
-		<span class="glyphicon glyphicon-plus"></span>
-		Добавление пользователя
-	</a>
-</div>
+	{{--Ссылка на страницу добавления пользователя--}}
+	<div class="mb20px">
+		<a href="{{ route('admin.users.create') }}" class="btn btn-default">
+			<span class="glyphicon glyphicon-plus"></span>
+			Добавление пользователя
+		</a>
+	</div>
 
-<ul class="nav nav-tabs">
-	<li class="active"><a href="#active" data-toggle="tab">Активные</a></li>
-	<li><a href="#deleted" data-toggle="tab">Удалённые</a></li>
-</ul>
-<div class="tab-content">
-	<div class="tab-pane active" id="active">
-		@include('Base::users._utils.users-list', ['users' => $active_users])
+	{{--Табы--}}
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#active" data-toggle="tab">Активные</a></li>
+		<li><a href="#deleted" data-toggle="tab">Удалённые</a></li>
+	</ul>
+	<div class="tab-content">
+
+		{{--Действующие пользователи--}}
+		<div class="tab-pane active" id="active">
+			@include('Base::users._utils.users-list', ['users' => $active_users])
+		</div>
+
+		{{--Удалённые пользователи--}}
+		<div class="tab-pane" id="deleted">
+			@include('Base::users._utils.users-list', ['users' => $deleted_users])
+		</div>
+
 	</div>
-	<div class="tab-pane" id="deleted">
-		@include('Base::users._utils.users-list', ['users' => $deleted_users])
-	</div>
-</div>
 
 @stop

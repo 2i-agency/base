@@ -7,7 +7,7 @@ use Chunker\Base\Models\User;
 trait HasCreator
 {
 	/*
-	 * User which created
+	 * Пользователь-создатель
 	 */
 	public function creator()
 	{

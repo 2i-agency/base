@@ -1,5 +1,8 @@
 @if ($users->count())
+
+	{{--Список пользователей--}}
 	<table class="table table-striped table-hover">
+
 		<thead>
 			<tr>
 				<th>Логин</th>
@@ -8,23 +11,33 @@
 				<th>Последняя авторизация</th>
 				<th></th>
 			</tr>
+		</thead>
+
+		<tbody>
 			@foreach($users as $user)
 				<tr>
+
+					{{--Логин--}}
 					<td>{{ $user->login }}</td>
+
+					{{--Электронный адрес--}}
 					<td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
 
+					{{--Имя--}}
 					@if ($user->name)
 						<td>{{ $user->name }}</td>
 					@else
 						<td class="text-muted">Имя не указано</td>
 					@endif
 
+					{{--Время последней авторизации--}}
 					@if ($user->authorizations()->count())
-						<td>{{ $user->authorizations()->latest('logged_in_at')->first()->logged_in_at }}</td>
+						<td>{{ $user->authorizations()->recent()->first()->logged_in_at }}</td>
 					@else
 						<td class="text-muted">Пока не авторизовывался</td>
 					@endif
 
+					{{--Ссылки на страницу редактирования--}}
 					<td class="text-right">
 						@if ($user->trashed())
 							<a href="{{ route('admin.users.restore', $user) }}" class="btn btn-warning btn-xs">
@@ -38,10 +51,16 @@
 							</a>
 						@endif
 					</td>
+
 				</tr>
 			@endforeach
-		</thead>
+		</tbody>
+
 	</table>
+
 @else
+
+	{{--Уведомление об отсутствии пользователей--}}
 	@include('Base::_utils.alert', ['message' => 'Пользователи отсутствуют'])
+
 @endif

@@ -14,14 +14,12 @@
 	<script src="https://yastatic.net/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://yastatic.net/bootstrap/3.3.4/css/bootstrap.min.css">
 
-	{{--Own assets--}}
+	{{--Собственные оформление и поведение страницы--}}
 	<link rel="stylesheet" href="{{ asset('admin/css/general.css') }}">
 	@yield('page.assets')
 
 	<title>@yield('page.title', 'Админцентр')</title>
 
 </head>
-<body>
-@yield('page.body')
-</body>
+<body>@yield('page.body')</body>
 </html>

@@ -9,17 +9,31 @@ class AppServiceProvider extends ServiceProvider
 {
 	public function boot()
 	{
-		// Configuration of time string
+		// Настройка форматирования времени по умолчанию
 		Carbon::setToStringFormat('d.m.Y H:i:s');
 
 
-		// Commands
+		// Команды пакета
 		$this->commands([
 			Commands\Init::class
 		]);
 
 
-		// Middlewares
+		// Шаблоны пакета
+		$this->loadViewsFrom(__DIR__ . '/resources/views', 'Base');
+
+
+		// Настройка публикации сопутствующих файлов пакета
+		$this->publishes([
+			__DIR__ . '/assets/config' => config_path(),
+			__DIR__ . '/assets/migrations' => database_path('migrations'),
+			__DIR__ . '/assets/seeds' => database_path('seeds'),
+			__DIR__ . '/assets/css' => storage_path('app/admin/css'),
+			__DIR__ . '/assets/js' => storage_path('app/admin/js')
+		]);
+
+
+		// Конфигурация группы посредников `admin`
 		$this
 			->app['router']
 			->middlewareGroup('admin', [
@@ -32,38 +46,11 @@ class AppServiceProvider extends ServiceProvider
 			]);
 
 
-		// Routes
-		require_once __DIR__ . '/routes.php';
-
-
-		// Views
-		$this->loadViewsFrom(__DIR__ . '/resources/views', 'Base');
-
-
-		// Publishing assets
-		$this->publishes([
-			__DIR__ . '/assets/config' => config_path(),
-			__DIR__ . '/assets/migrations' => database_path('migrations'),
-			__DIR__ . '/assets/seeds' => database_path('seeds'),
-			__DIR__ . '/assets/css' => storage_path('app/admin/css'),
-			__DIR__ . '/assets/js' => storage_path('app/admin/js')
-		], 'assets');
-
-
-		// Publishing parts of app
-		$this->publishes([
-			__DIR__ . '/resources/views' => base_path('resources/views/admin'),
-			__DIR__ . '/resources/styles' => base_path('resources/assets/styles'),
-			__DIR__ . '/Commands' => app_path('Console/Commands'),
-			__DIR__ . '/Controllers' => app_path('Http/Controllers'),
-			__DIR__ . '/Middleware' => app_path('Http/Middleware'),
-			__DIR__ . '/Models' => app_path('Models'),
-		], 'app');
+		// Маршруты пакета
+		require_once __DIR__ . '/routes/authorization.php';
+		require_once __DIR__ . '/routes/admin.php';
 	}
 
 
-	public function register()
-	{
-		//
-	}
+	public function register() {}
 }

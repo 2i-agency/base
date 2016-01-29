@@ -1,7 +1,7 @@
 {
 	"name": "chunker/base",
 	"type": "package",
-	"description": "Base of the Chunker",
+	"description": "Базовый пакет Chunker",
 	"authors": [
 		{
 			"name": "Studio 2i",

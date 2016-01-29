@@ -7,7 +7,7 @@ use Chunker\Base\Models\User;
 trait HasUpdater
 {
 	/*
-	 * User which updated last
+	 * Пользователь-редактор
 	 */
 	public function updater()
 	{

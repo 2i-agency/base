@@ -24,7 +24,7 @@ class Authorization extends Model
 
 
 	/*
-	 * Converting ip_address to number for storing in database
+	 * Конвертация IP-адреса в число для сохранения в базе данных
 	 */
 	public function setIpAddressAttribute($ipAddress)
 	{
@@ -33,7 +33,7 @@ class Authorization extends Model
 
 
 	/*
-	 * Converting number from database to ip_address
+	 * Конвертация числа из базы данных в IP-адреса
 	 */
 	public function getIpAddressAttribute($number)
 	{
@@ -42,28 +42,10 @@ class Authorization extends Model
 
 
 	/*
-	 * Ordering by time
+	 * Сортировка по времени авторизации
 	 */
 	public function scopeRecent(Builder $query)
 	{
 		return $query->latest('logged_in_at')->latest('id');
-	}
-
-
-	/*
-	 * Last
-	 */
-	public function last()
-	{
-		return $this->recent()->first();
-	}
-
-
-	/*
-	 * Owner of authorization
-	 */
-	public function user()
-	{
-		return $this->belongsTo(\Chunker\Base\Models\User::class);
 	}
 }

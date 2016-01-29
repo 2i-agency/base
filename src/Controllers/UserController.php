@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
 	/*
-	 * Show list of users
+	 * Список пользователей
 	 */
 	public function index()
 	{
@@ -24,7 +24,7 @@ class UserController extends Controller
 
 
 	/*
-	 * Show page for adding user
+	 * Страница добавление пользователя
 	 */
 	public function create()
 	{
@@ -33,25 +33,23 @@ class UserController extends Controller
 
 
 	/*
-	 * Storing user
+	 * Добавление пользователя
 	 */
 	public function store(Request $request)
 	{
-		$data = $request->only([
+		$user = User::create($request->only([
 			'login',
 			'password',
 			'email',
 			'name'
-		]);
-
-		$user = User::create($data);
+		]));
 
 		return redirect()->route('admin.users.edit', $user);
 	}
 
 
 	/*
-	 * Show user's data for edit
+	 * Страница редактирования пользователя
 	 */
 	public function edit(User $user)
 	{
@@ -60,27 +58,25 @@ class UserController extends Controller
 
 
 	/*
-	 * Updating user
+	 * Обновление пользователя
 	 */
 	public function update(Request $request, User $user)
 	{
-		$data = $request->only([
+		$user->update($request->only([
 			'login',
 			'password',
 			'email',
 			'name'
-		]);
-
-		$user->update($data);
+		]));
 
 		return redirect()->back();
 	}
 
 
 	/*
-	 * Deleting user
+	 * Удаление пользователя
 	 */
-	public function delete(User $user)
+	public function destroy(User $user)
 	{
 		if ($user->isCanBeDeleted())
 		{
@@ -92,7 +88,7 @@ class UserController extends Controller
 
 
 	/*
-	 * Restoring user
+	 * Восстановление пользователя
 	 */
 	public function restore($userId)
 	{
@@ -104,11 +100,15 @@ class UserController extends Controller
 
 
 	/*
-	 * Show user's authorizations journal
+	 * Список авторизаций пользователя
 	 */
 	public function authorizations(User $user)
 	{
-		$authorizations = $user->authorizations()->recent()->paginate();
+		$authorizations = $user
+			->authorizations()
+			->recent()
+			->paginate();
+
 		return view('Base::users.authorizations', compact('user', 'authorizations'));
 	}
 }

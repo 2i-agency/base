@@ -28,7 +28,7 @@ class User extends Authenticatable
 
 
 	/*
-	 * Hashing password
+	 * Хеширование пароля
 	 */
 	public function setPasswordAttribute($password)
 	{
@@ -40,7 +40,7 @@ class User extends Authenticatable
 
 
 	/*
-	 * Preparing login
+	 * Подготовка логина
 	 */
 	public function setLoginAttribute($login)
 	{
@@ -49,7 +49,7 @@ class User extends Authenticatable
 
 
 	/*
-	 * Triming name
+	 * Подготовка имени
 	 */
 	public function setNameAttribute($name)
 	{
@@ -59,7 +59,7 @@ class User extends Authenticatable
 
 
 	/*
-	 * Getting name, which may be empty
+	 * Если для пользователя не задано имя, то возвращается логин
 	 */
 	public function getName()
 	{
@@ -68,19 +68,16 @@ class User extends Authenticatable
 
 
 	/*
-	 * Checking deleting opportunity
+	 * Пользователь не может удалить сам себя
 	 */
 	public function isCanBeDeleted()
 	{
-		$is_can = !$this->is(Auth::user());
-		$is_can = $is_can && static::count() > 1;
-
-		return $is_can;
+		return !$this->is(Auth::user());
 	}
 
 
 	/*
-	 * User's authorizations
+	 * Авторизации
 	 */
 	public function authorizations()
 	{

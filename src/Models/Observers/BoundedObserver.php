@@ -4,7 +4,7 @@ namespace Chunker\Base\Models\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PositionObserver
+class BoundedObserver
 {
 	public function creating(Model $model)
 	{

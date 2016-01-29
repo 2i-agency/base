@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Comparison
 {
+	// Сравнение с другой моделью
 	public function is(Model $model)
 	{
 		$is_class_equivalent = get_class($this) == get_class($model);

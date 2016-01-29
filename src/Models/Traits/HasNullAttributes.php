@@ -5,7 +5,7 @@ namespace Chunker\Base\Models\Traits;
 trait HasNullAttributes
 {
 	/*
-	 * Set null if value not contains meaning chars
+	 * Установка NULL вместо пустой или пробельной строки
 	 */
 	protected function nullingAttribute($attribute, $value)
 	{

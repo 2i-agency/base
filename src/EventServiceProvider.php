@@ -12,6 +12,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 class EventServiceProvider extends ServiceProvider
 {
+	// Регистрация слушателей событий
 	protected $subscribe = [
 		UserListener::class,
 	];
@@ -21,6 +22,7 @@ class EventServiceProvider extends ServiceProvider
 	{
 		parent::boot($events);
 
+		// Регистрация наблюдателей моделей
 		Authorization::observe(AuthorizationObserver::class);
 		User::observe(EditorObserver::class);
 	}
