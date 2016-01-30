@@ -149,8 +149,6 @@ trait Bounded
 		// то модель помещается в конец текущего стека
 		if (is_null($parentId))
 		{
-			$parentId = $this[$this->parentField()];
-
 			// Расчёт новой позиции
 			if (is_null($this->parentField()))
 			{
