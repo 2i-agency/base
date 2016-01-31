@@ -9,7 +9,7 @@ trait Bounded
 	 */
 	protected function positionField()
 	{
-		return property_exists($this, 'position_field') ? $this->position_field : 'position';
+		return property_exists($this, 'positionField') ? $this->positionField : 'position';
 	}
 
 
@@ -19,7 +19,7 @@ trait Bounded
 	 */
 	protected function parentField()
 	{
-		return property_exists($this, 'parent_field') ? $this->parent_field : NULL;
+		return property_exists($this, 'parentField') ? $this->parentField : NULL;
 	}
 
 
@@ -30,7 +30,7 @@ trait Bounded
 	{
 		$ids = [];
 
-		if (!is_null($this->parentField()))
+		if ($this->hasTreeBounding && !is_null($this->parentField()))
 		{
 			$model = $this;
 
@@ -51,7 +51,7 @@ trait Bounded
 	 */
 	public function deleteChildren()
 	{
-		if (!is_null($this->parentField()))
+		if ($this->hasTreeBounding && !is_null($this->parentField()))
 		{
 			$children = static::where($this->parentField(), $this->id)->get();
 
@@ -60,6 +60,7 @@ trait Bounded
 				$child->delete();
 			}
 		}
+
 
 		return $this;
 	}
