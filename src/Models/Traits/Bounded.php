@@ -2,6 +2,8 @@
 
 namespace Chunker\Base\Models\Traits;
 
+use Illuminate\Database\Eloquent\Collection;
+
 trait Bounded
 {
 	/*
@@ -24,11 +26,11 @@ trait Bounded
 
 
 	/*
-	 * Получение ключей родительских моделей при древовидной связи
+	 * Получение коллекции родительских моделей при древовидной связи
 	 */
-	public function getParentsIds()
+	public function getParents()
 	{
-		$ids = [];
+		$parents = new Collection();
 
 		if ($this->hasTreeBounding && !is_null($this->parentField()))
 		{
@@ -36,13 +38,16 @@ trait Bounded
 
 			while ($model[$this->parentField()])
 			{
-				$ids[] = $model[$this->parentField()];
-				$model = static::findOrNew($model[$this->parentField()]);
+				$id = $model[$this->parentField()];
+				$model = static::findOrNew($id);
+				$parents->push($model);
 			}
+
+			$parents = $parents->reverse();
 		}
 
 
-		return array_reverse($ids);
+		return $parents;
 	}
 
 
