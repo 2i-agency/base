@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
 
 		// Конфигурация группы посредников `admin`
+		// TODO Избавить админцентр от CSRF-защиты
 		$this
 			->app['router']
 			->middlewareGroup('admin', [
