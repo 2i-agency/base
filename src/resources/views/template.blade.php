@@ -36,6 +36,7 @@
 			{{--Навигация админцентра--}}
 			{!! $navigation->render() !!}
 
+
 			{{--Форма пользователя--}}
 			<form class="navbar-form navbar-right" method="POST" action="{{ route('logout') }}">
 				{!! csrf_field() !!}
@@ -55,6 +56,22 @@
 				</div>
 			</form>
 
+
+			{{--Язык--}}
+			<div class="navbar-form navbar-right dropdown">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					RU
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#">EN</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Языки</a></li>
+				</ul>
+			</div>
+
+
+
 			{{--Вспомогательные ссылки--}}
 			<ul class="nav navbar-nav navbar-right">
 
@@ -66,7 +83,7 @@
 					</a>
 				</li>
 
-				{{--Статистика посещений--}}
+				{{--Метрика--}}
 				<li>
 					<a href="https://metrika.yandex.ru" target="_blank">
 						<span class="glyphicon glyphicon-stats"></span>

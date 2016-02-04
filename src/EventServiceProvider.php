@@ -4,7 +4,10 @@ namespace Chunker\Base;
 
 use Chunker\Base\Listeners\UserListener;
 use Chunker\Base\Models\Authorization;
+use Chunker\Base\Models\Language;
 use Chunker\Base\Models\Observers\AuthorizationObserver;
+use Chunker\Base\Models\Observers\BoundedObserver;
+use Chunker\Base\Models\Observers\LanguageObserver;
 use Chunker\Base\Models\Observers\EditorObserver;
 use Chunker\Base\Models\User;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
@@ -24,6 +27,9 @@ class EventServiceProvider extends ServiceProvider
 
 		// Регистрация наблюдателей моделей
 		Authorization::observe(AuthorizationObserver::class);
+		Language::observe(LanguageObserver::class);
+		Language::observe(BoundedObserver::class);
+		Language::observe(EditorObserver::class);
 		User::observe(EditorObserver::class);
 	}
 }

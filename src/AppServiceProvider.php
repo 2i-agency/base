@@ -17,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
 		// Конфигурация приложения
 		config([
 			'app.timezone' => 'Europe/Moscow',
+			'app.locale' => 'ru',
+			'app.fallback_locale' => 'ru',
 			'auth.providers.users.model' => User::class
 		]);
 
