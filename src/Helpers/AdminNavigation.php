@@ -12,7 +12,7 @@ class AdminNavigation
 
 	public function __construct()
 	{
-		$this->structure = config('admin.navigation');
+		$this->structure = config('admin.menu');
 		$this->currentRoute = Route::currentRouteName();
 	}
 
