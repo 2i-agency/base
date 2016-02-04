@@ -4,7 +4,7 @@ namespace Chunker\Base\Helpers;
 
 use Route;
 
-class AdminNavigation
+class AdminMenu
 {
 	protected $structure;
 	protected $currentRoute;

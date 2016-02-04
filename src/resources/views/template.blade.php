@@ -1,4 +1,4 @@
-@inject('navigation', 'Chunker\Base\Helpers\AdminNavigation')
+@inject('menu', 'Chunker\Base\Helpers\AdminMenu')
 @inject('request', 'Illuminate\Http\Request')
 @extends('Base::base')
 
@@ -18,10 +18,10 @@
 			</button>
 
 			{{--Логотип--}}
-			@if ($request->url() == $navigation->dashboard())
-				<a class="navbar-brand active" href="{{ $navigation->dashboard() }}">
+			@if ($request->url() == $menu->dashboard())
+				<a class="navbar-brand active" href="{{ $menu->dashboard() }}">
 			@else
-				<a class="navbar-brand" href="{{ $navigation->dashboard() }}">
+				<a class="navbar-brand" href="{{ $menu->dashboard() }}">
 			@endif
 				<span class="glyphicon glyphicon-dashboard"></span>
 				Админцентр
@@ -34,7 +34,7 @@
 		<div class="collapse navbar-collapse" id="collapsable">
 
 			{{--Навигация админцентра--}}
-			{!! $navigation->render() !!}
+			{!! $menu->render() !!}
 
 
 			{{--Форма пользователя--}}
