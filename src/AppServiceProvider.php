@@ -29,8 +29,9 @@ class AppServiceProvider extends ServiceProvider
 		]);
 
 
-		// Шаблоны пакета
+		// Шаблоны пакета и локализация интерфейса сайта
 		$this->loadViewsFrom(__DIR__ . '/resources/views', 'Base');
+		$this->loadTranslationsFrom(base_path('interface'), 'Base');
 
 
 		// Настройка публикации сопутствующих файлов пакета
