@@ -4,6 +4,7 @@ namespace Chunker\Base;
 
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
+use Chunker\Base\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,6 +12,13 @@ class AppServiceProvider extends ServiceProvider
 	{
 		// Настройка форматирования времени по умолчанию
 		Carbon::setToStringFormat('d.m.Y H:i:s');
+
+
+		// Конфигурация приложения
+		config([
+			'app.timezone' => 'Europe/Moscow',
+			'auth.providers.users.model' => User::class
+		]);
 
 
 		// Команды пакета

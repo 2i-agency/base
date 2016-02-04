@@ -3,63 +3,39 @@
 namespace Chunker\Base\Commands;
 
 use Illuminate\Console\Command;
+use Storage;
 
 class Init extends Command
 {
 	protected $signature = 'chunker:init';
-	protected $description = 'Clear files which will be replaced by Chunker';
+	protected $description = 'Initialization of the Chunker';
 
 
 	public function handle()
 	{
-		$files = [
-			// Старая миграция таблицы с пользователями
-			database_path('migrations/2014_10_12_000000_create_users_table.php')
-		];
+		// Диск для работы с файлами проекта
+		$disk = Storage::createLocalDriver(['root' => base_path()]);
 
-		foreach ($files as $file)
+
+		// Удаление ненужных файлов
+		if ($disk->delete([
+			// Коробочная миграция таблицы пользователей
+			'database/migrations/2014_10_12_000000_create_users_table.php',
+
+			// Коробочная модель пользователя
+			'app/User.php'
+		]))
 		{
-			if (file_exists($file))
-			{
-				unlink($file);
-			}
-		}
-
-		$this->line('Unnecessary files deleted');
+			$this->line('Deleted unnecessary files');
+		};
 
 
-		// Конфигурация локали
-		if ($this->replaceInConfig('app', 'UTC', 'Europe/Moscow'))
-		{
-			$this->line('Locale set for Europe/Moscow');
-		}
+		// Публикация ассетов пакетов
+		$this->call('vendor:publish', ['--force' => true]);
 
 
-		// Замена модели, используемой механизмом авторизации
-		if ($this->replaceInConfig('auth', 'App\User::class', 'Chunker\Base\Models\User::class'))
-		{
-			$this->line('Class of User\'s model has been replaced in auth config');
-		}
-	}
-
-
-	/*
-	 * Замена строки в файле-конфиге
-	 */
-	protected function replaceInConfig($config, $oldString, $newString)
-	{
-		$filename = config_path($config . '.php');
-		$content = file_get_contents($filename);
-
-		if (mb_strpos($content, $oldString) !== false)
-		{
-			$content = str_replace($oldString, $newString, $content);
-			file_put_contents($filename, $content);
-
-			return true;
-		}
-
-
-		return false;
+		// Миграция и заполнение таблиц
+		$this->call('migrate');
+		$this->call('db:seed', ['--class' => 'UsersSeeder']);
 	}
 }
