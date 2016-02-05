@@ -12,8 +12,18 @@ class Language extends Model
 
 	protected $fillable = [
 		'name',
-		'alias'
+		'alias',
+		'is_published'
 	];
+
+
+	/*
+	 * Настройка ключа для привязки к маршруту
+	 */
+	public function getRouteKeyName()
+	{
+		return 'alias';
+	}
 
 
 	/*

@@ -11,12 +11,15 @@ class Localizator
 
 	public function __construct()
 	{
-		$this->disk = Storage::createLocalDriver(base_path('interface'));
+		$this->disk = Storage::createLocalDriver(['root' => base_path('resources/interface')]);
 	}
 
 
-	public function render()
+	/*
+	 * Запись данных локализации в файл
+	 */
+	public function writeSection($data = [], $locale = NULL)
 	{
-
+		dd($locale, $data);
 	}
 }

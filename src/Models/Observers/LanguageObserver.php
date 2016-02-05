@@ -2,13 +2,40 @@
 
 namespace Chunker\Base\Models\Observers;
 
+use Chunker\Base\Helpers\Localizator;
 use Illuminate\Database\Eloquent\Model;
+use App;
 use Storage;
 
 class LanguageObserver
 {
-	public function created(Model $model)
+	protected $localizator;
+
+
+	public function __construct(Localizator $localizator)
 	{
-		$disk = Storage::createLocalDriver(['root' => base_path('/resources/lang')]);
+		$this->localizator = $localizator;
+	}
+
+
+	public function creating(Model $model)
+	{
+		$this->makeAlias($model);
+	}
+
+
+	public function updat(Model $model)
+	{
+		$this->makeAlias($model);
+	}
+
+
+	/*
+	 * Формирование псевдонима на основе названия
+	 */
+	public function makeAlias(Model $model)
+	{
+		$alias = trim($model->alias);
+		$model->alias = mb_strlen($alias) ? $alias : $model->name;
 	}
 }

@@ -3,6 +3,7 @@
 namespace Chunker\Base;
 
 use Carbon\Carbon;
+use Chunker\Base\ViewComposers\LanguagesComposer;
 use Illuminate\Support\ServiceProvider;
 use Chunker\Base\Models\User;
 
@@ -17,8 +18,6 @@ class AppServiceProvider extends ServiceProvider
 		// Конфигурация приложения
 		config([
 			'app.timezone' => 'Europe/Moscow',
-			'app.locale' => 'ru',
-			'app.fallback_locale' => 'ru',
 			'auth.providers.users.model' => User::class
 		]);
 
@@ -31,7 +30,11 @@ class AppServiceProvider extends ServiceProvider
 
 		// Шаблоны пакета и локализация интерфейса сайта
 		$this->loadViewsFrom(__DIR__ . '/resources/views', 'Base');
-		$this->loadTranslationsFrom(base_path('interface'), 'Base');
+		$this->loadTranslationsFrom(base_path('resources/interface'), 'Base');
+
+
+		// Регистрация композеров шаблонов
+		view()->composer('Base::template', LanguagesComposer::class);
 
 
 		// Настройка публикации сопутствующих файлов пакета
@@ -57,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
 				\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 				\App\Http\Middleware\VerifyCsrfToken::class,
 				\Chunker\Base\Middleware\CheckAuth::class,
+				\Chunker\Base\Middleware\SetLocale::class,
 			]);
 
 

@@ -12,6 +12,9 @@ Route::group([
 
 	$files = [
 		'assets',
+		'languages',
+		'translation',
+		'set-locale',
 		'dashboard',
 		'users'
 	];

@@ -58,17 +58,50 @@
 
 
 			{{--Язык--}}
-			<div class="navbar-form navbar-right dropdown">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					RU
-					<span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="#">EN</a></li>
-					<li class="divider"></li>
-					<li><a href="#">Языки</a></li>
-				</ul>
-			</div>
+			@if (config('languages.multi'))
+				<div class="navbar-form navbar-right dropdown">
+
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						{{ $_languages->where('alias', App::getLocale())->first()->name }}
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+
+						{{--Ссылки на переключение языка--}}
+						@if ($_languages->count() > 1)
+							@foreach ($_languages->reject(function($language){
+								return $language->alias == App::getLocale();
+							}) as $_language)
+								<li>
+									<a href="{{ route('admin.set-locale', $_language) }}">
+										{{ $_language->name }}
+									</a>
+								</li>
+							@endforeach
+							<li class="divider"></li>
+						@endif
+
+						{{--Ссыла на раздел редактирования языков--}}
+						@if (Route::currentRouteName() == 'admin.languages')
+							<li class="active">
+								<a href="{{ route('admin.languages') }}">Языки</a>
+							</li>
+						@else
+							<li><a href="{{ route('admin.languages') }}">Языки</a></li>
+						@endif
+
+						{{--Ссылка на раздел перевода интерфейса--}}
+						@if (Route::currentRouteName() == 'admin.translation')
+							<li class="active">
+								<a href="{{ route('admin.translation') }}">Перевод интерфейса</a>
+							</li>
+						@else
+							<li><a href="{{ route('admin.translation') }}">Перевод интерфейса</a></li>
+						@endif
+
+					</ul>
+				</div>
+			@endif
 
 
 

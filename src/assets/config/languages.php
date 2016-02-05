@@ -28,16 +28,22 @@ return [
 	|
 	*/
 
-	'translation' => [
+	'localization' => [
 
 		// Шапка
 		'header' => [
-			'descriptor' => ['Дескриптор сайта', 'textarea']
+			'Шапка',
+			[
+				'descriptor' => ['Дескриптор сайта', 'textarea']
+			]
 		],
 
 		// Подвал
 		'footer' => [
-			'owner' => 'Название компании'
+			'Подвал',
+			[
+				'owner' => 'Название компании'
+			]
 		]
 	]
 
