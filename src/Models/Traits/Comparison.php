@@ -4,6 +4,7 @@ namespace Chunker\Base\Models\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 
+// TODO Вереименовать трейт Comparison в Comparable
 trait Comparison
 {
 	// Сравнение с другой моделью

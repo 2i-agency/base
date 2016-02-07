@@ -23,6 +23,21 @@ body {
 
 
 /*
+ * Галерея
+ */
+
+.gallery {
+	> * {
+		display: inline-block;
+		margin: {
+			right: 20px;
+			bottom: 20px;
+		};
+	}
+}
+
+
+/*
  * Корректировка компонентов
  */
 
