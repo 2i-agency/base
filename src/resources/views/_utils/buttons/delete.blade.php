@@ -1,7 +1,16 @@
 {{--Кнопка удаления--}}
 <button
 	type="submit"
-	class="btn btn-danger{{ isset($block) && $block ? ' btn-block' : NULL }}"
+	class="
+		btn
+		btn-danger
+		@if (isset($block) && $block)
+			btn-block
+		@endif
+		@if (isset($size))
+			btn-{{ $size }}
+		@endif
+	"
 	@if (isset($url))
 		formmethod="POST"
 		formaction="{{ $url }}"
