@@ -161,4 +161,20 @@ trait Picture
 	{
 		return $this->getPictureConfig($field)['directory'] . '/' . $this[$field];
 	}
+
+
+	/*
+	 * Получение полей, связанных с изображениями
+	 */
+	public function getPicturesFields()
+	{
+		$fields = [];
+
+		foreach ($this->pictures as $key => $value)
+		{
+			$fields[] = is_array($value) ? $key : $value;
+		}
+
+		return $fields;
+	}
 }
