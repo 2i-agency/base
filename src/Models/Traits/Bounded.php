@@ -4,6 +4,7 @@ namespace Chunker\Base\Models\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
 
+// TODO перенести методы-отношения `parent` и `children` в трейт
 trait Bounded
 {
 	/*
@@ -48,6 +49,51 @@ trait Bounded
 
 
 		return $parents;
+	}
+
+
+	/*
+	 * Получение массива ключей потомков при древовидной связи
+	 */
+	public function getChildrenIds()
+	{
+		return $this->fillChildrenIds($this);
+	}
+
+
+	/*
+	 * Наполнение массив ключами потомков при древовидной связи
+	 */
+	protected function fillChildrenIds($parent)
+	{
+		$ids = [];
+
+		if ($this->hasTreeBounding && !is_null($this->parentField()))
+		{
+			// Запрос ключей дочерних моделей
+			$children = static::where($this->parentField(), $parent->getKey())
+				->get([$this->getKeyName()]);
+
+			// Наполнение массива
+			foreach ($children as $child)
+			{
+				$grandchildren_ids = $this->fillChildrenIds($child);
+
+				// Если есть внучатые модели, то добавляются ключи потомков
+				if (count($grandchildren_ids))
+				{
+					$ids = array_merge($ids, $grandchildren_ids);
+				}
+				// Если дочерняя модель не имеет своих потомков, до добавляется её ключ
+				else
+				{
+					$ids[] = $child->id;
+				}
+			}
+		}
+
+
+		return $ids;
 	}
 
 
