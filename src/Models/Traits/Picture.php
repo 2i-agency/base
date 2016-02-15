@@ -128,6 +128,33 @@ trait Picture
 
 
 	/*
+	 * Установка изображения
+	 */
+	public function setPicture($source, $field, Closure $transform = NULL)
+	{
+		// Если файла не существует
+		if (!file_exists($source))
+		{
+			return false;
+		}
+
+		// Удаление старого изображения
+		$this->deletePicture($field);
+
+		// Сохранение изображения
+		$filename = $this->makePictureFilename($field);
+		$this->attributes[$field] = $filename;
+		copy($source, $this->getPictureConfig($field)['directory'] . $filename);
+
+		// Трансформирование
+		$this->doTransform($field, $transform);
+
+
+		return $this;
+	}
+
+
+	/*
 	 * Копирование изображения
 	 */
 	public function copyPicture($fromField, $toField, Closure $transform = NULL)
