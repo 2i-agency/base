@@ -24,7 +24,7 @@ class LanguageObserver
 	}
 
 
-	public function updat(Model $model)
+	public function updating(Model $model)
 	{
 		$this->makeAlias($model);
 	}
