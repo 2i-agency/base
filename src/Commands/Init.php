@@ -38,9 +38,6 @@ class Init extends Command
 		// Миграция и заполнение таблиц
 		$this->call('migrate');
 		$this->call('db:seed', ['--class' => 'UsersSeeder']);
-
-
-		// Добавление первого языка
-		Language::create(['name' => 'RU']);
+		$this->call('db:seed', ['--class' => 'LanguagesSeeder']);
 	}
 }
