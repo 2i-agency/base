@@ -132,8 +132,8 @@ trait Picture
 	 */
 	public function setPicture($source, $field, Closure $transform = NULL)
 	{
-		// Если файла не существует
-		if (!file_exists($source))
+		// Если файла не существует или он битый
+		if (!file_exists($source) || !@getimagesize($source))
 		{
 			return false;
 		}
