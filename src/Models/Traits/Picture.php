@@ -184,7 +184,6 @@ trait Picture
 
 
 		// Трансформирование
-		echo $this[$fromField], $this[$toField], '<br>';
 		$this->doTransform($toField, $transform);
 
 
