@@ -159,21 +159,32 @@ trait Picture
 	 */
 	public function copyPicture($fromField, $toField, Closure $transform = NULL)
 	{
+		// Проверка существования исходного файла
+		$disk = $this->makePictureDisk($fromField);
+		$source = $this[$fromField];
+
+		if (!mb_strlen($source) || !$disk->has($source))
+		{
+			return $this;
+		}
+
+
 		// Удаление старого изображения
 		$this->deletePicture($toField);
+
 
 		// Сохранение копии изображения
 		$filename = $this->makePictureFilename($toField);
 		$this->attributes[$toField] = $filename;
 
-		$content = $this
-			->makePictureDisk($fromField)
-			->get($this[$fromField]);
+		$content = $disk->get($this[$fromField]);
 
 		$this->makePictureDisk($toField)
 			->put($filename, $content);
 
+
 		// Трансформирование
+		echo $this[$fromField], $this[$toField], '<br>';
 		$this->doTransform($toField, $transform);
 
 
