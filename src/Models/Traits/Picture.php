@@ -144,7 +144,7 @@ trait Picture
 		// Сохранение изображения
 		$filename = $this->makePictureFilename($field);
 		$this->attributes[$field] = $filename;
-		copy($source, $this->getPictureConfig($field)['directory'] . $filename);
+		copy($source, $this->getPictureConfig($field)['directory'] . '/' . $filename);
 
 		// Трансформирование
 		$this->doTransform($field, $transform);
