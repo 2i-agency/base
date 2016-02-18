@@ -132,8 +132,8 @@ trait Picture
 	 */
 	public function setPicture($source, $field, Closure $transform = NULL)
 	{
-		// Если файла не существует
-		if (!file_exists($source))
+		// Если файла не существует или он битый
+		if (!file_exists($source) || !@getimagesize($source))
 		{
 			return false;
 		}
@@ -144,7 +144,7 @@ trait Picture
 		// Сохранение изображения
 		$filename = $this->makePictureFilename($field);
 		$this->attributes[$field] = $filename;
-		copy($source, $this->getPictureConfig($field)['directory'] . $filename);
+		copy($source, $this->getPictureConfig($field)['directory'] . '/' . $filename);
 
 		// Трансформирование
 		$this->doTransform($field, $transform);
@@ -159,19 +159,29 @@ trait Picture
 	 */
 	public function copyPicture($fromField, $toField, Closure $transform = NULL)
 	{
+		// Проверка существования исходного файла
+		$disk = $this->makePictureDisk($fromField);
+		$source = $this[$fromField];
+
+		if (!mb_strlen($source) || !$disk->has($source))
+		{
+			return $this;
+		}
+
+
 		// Удаление старого изображения
 		$this->deletePicture($toField);
+
 
 		// Сохранение копии изображения
 		$filename = $this->makePictureFilename($toField);
 		$this->attributes[$toField] = $filename;
 
-		$content = $this
-			->makePictureDisk($fromField)
-			->get($this[$fromField]);
+		$content = $disk->get($this[$fromField]);
 
 		$this->makePictureDisk($toField)
 			->put($filename, $content);
+
 
 		// Трансформирование
 		$this->doTransform($toField, $transform);
