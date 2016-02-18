@@ -88,7 +88,7 @@ trait Picture
 		$disk = $this->makePictureDisk($field);
 		$filename = $this[$field];
 
-		if (!is_null($filename) && $disk->has($filename))
+		if (mb_strlen($filename) && $disk->has($filename))
 		{
 			$disk->delete($filename);
 		}
