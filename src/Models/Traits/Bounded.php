@@ -4,6 +4,7 @@ namespace Chunker\Base\Models\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
 
+// TODO разделить трейт на два: для позиционироввания и древовидной связи
 // TODO перенести методы-отношения `parent` и `children` в трейт
 trait Bounded
 {
@@ -17,12 +18,21 @@ trait Bounded
 
 
 	/*
-	 * Название поля, в котором хранится ключ внешний ключ родительской модели,
+	 * Название поля, в котором хранится внешний ключ родительской модели,
 	 * относительно которой происходит позиционирование
 	 */
 	protected function parentField()
 	{
 		return property_exists($this, 'parentField') ? $this->parentField : NULL;
+	}
+
+
+	/*
+	 * Названия полей, в которых хранятся внешние ключи второстепенных родительских моделей
+	 */
+	protected function secondaryParentsFields()
+	{
+		return property_exists($this, 'secondaryParentsFields') ? $this->secondaryParentsFields : NULL;
 	}
 
 
@@ -71,7 +81,8 @@ trait Bounded
 		if ($this->hasTreeBounding && !is_null($this->parentField()))
 		{
 			// Запрос ключей дочерних моделей
-			$children = static::where($this->parentField(), $parent->getKey())
+			$children = static
+				::where($this->parentField(), $parent->getKey())
 				->get([$this->getKeyName()]);
 
 			// Наполнение массива
@@ -131,20 +142,10 @@ trait Bounded
 	 */
 	public function pullSiblings()
 	{
-		// Выборка соседей
-		$query = static::where($this->positionField(), '>=', $this[$this->positionField()]);
-
-		// Если позиционирование происходит относительно родителя,
-		// то необходима дополнительная фильтрация по его ID,
-		// чтобы остались только соседи
-		if (!is_null($this->parentField()))
-		{
-			$query = $query->where($this->parentField(), $this[$this->parentField()]);
-		}
-
-		// Сдвиг
-		$query->decrement($this->positionField());
-
+		$this
+			->filterByParents()
+			->where($this->positionField(), '>=', $this[$this->positionField()])
+			->decrement($this->positionField());
 
 		return $this;
 	}
@@ -160,19 +161,12 @@ trait Bounded
 		$this->pullSiblings();
 
 
-		// Выборка моделей после новой позиции
-		$query = static::where($this->positionField(), '>=', $position);
-
-		// Дополнительная фильтрация моделей для отсева тех,
-		// которые не являются соседями по стеку
-		if (!is_null($this->parentField()))
-		{
-			$query = $query->where($this->parentField(), $this[$this->parentField()]);
-		}
-
 		// Увеличение позиций соседей после новой позиции,
 		// чтобы создать пробел, который требуется для позиционирования модели
-		$query->increment($this->positionField());
+		$this
+			->filterByParents()
+			->where($this->positionField(), '>=', $position)
+			->increment($this->positionField());
 
 		// Обновление позиции модели
 		$this[$this->positionField()] = $position;
@@ -201,22 +195,16 @@ trait Bounded
 		// то модель помещается в конец текущего стека
 		if (is_null($parentId))
 		{
-			// Расчёт новой позиции
-			if (is_null($this->parentField()))
-			{
-				$position = static::max($this->positionField()) + 1;
-			}
-			else
-			{
-				$position = static::where($this->parentField(), $this[$this->parentField()])
-					->max($this->positionField()) + 1;
-			}
+			$position = $this
+				->filterByParents()
+				->max($this->positionField()) + 1;
 		}
 		// Перемещение модели к новому родителю
 		else
 		{
 			// Расчёт новой позиции
-			$position = static::where($this->parentField(), $parentId)
+			$position = static
+				::where($this->parentField(), $parentId)
 				->max($this->positionField()) + 1;
 
 			// Привязка к новому родителю
@@ -229,5 +217,30 @@ trait Bounded
 
 
 		return $this;
+	}
+
+
+	/*
+	 * Фильтрацией по внешним родительским ключам
+	 */
+	public function scopeFilterByParents($query)
+	{
+		// Фильтрация моделей для отсева тех, которые не являются соседями по стеку...
+		if (!is_null($this->parentField()))
+		{
+			$query = $query->where($this->parentField(), $this[$this->parentField()]);
+		}
+
+		// ...и доплнительным родителям
+		if (!is_null($secondaries = $this->secondaryParentsFields()))
+		{
+			foreach ($secondaries as $secondary)
+			{
+				$query = $query->where($secondary, $this[$secondary]);
+			}
+		}
+
+
+		return $query;
 	}
 }
