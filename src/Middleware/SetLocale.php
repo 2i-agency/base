@@ -20,6 +20,9 @@ class SetLocale
 		// Переключение локали
 		App::setLocale(Session::get('admin.locale'));
 
+		// Выборка модели языка для текущей локали
+		Session::set('admin.language', Language::where('alias', Session::get('admin.locale'))->first());
+
 
 		return $next($request);
 	}
