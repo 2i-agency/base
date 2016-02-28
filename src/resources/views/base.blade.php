@@ -10,6 +10,11 @@
 	<script src="https://yastatic.net/jquery-ui/1.11.2/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://yastatic.net/jquery-ui/1.11.2/themes/smoothness/jquery-ui.min.css">
 
+	{{--Плагин выбора времени--}}
+	<script src="{{ asset('js/jqueryui/timepicker.min.js') }}"></script>
+	<script src="{{ asset('js/jqueryui/datetimepicker-ru.js') }}"></script>
+	<link rel="stylesheet" href="{{ asset('js/jqueryui/timepicker.min.css') }}">
+
 	{{--Bootstrap--}}
 	<script src="https://yastatic.net/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://yastatic.net/bootstrap/3.3.4/css/bootstrap.min.css">
