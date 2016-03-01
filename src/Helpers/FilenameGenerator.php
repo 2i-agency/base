@@ -21,7 +21,7 @@ class FilenameGenerator
 			// Получение расширения по объекту загруженного файла
 			if (is_object($definition) && get_class($definition) == UploadedFile::class)
 			{
-				$extension = $definition->getClientOriginalExtension();
+				$extension = $definition->guessExtension();
 			}
 			// Расширение из переданного определения
 			else
