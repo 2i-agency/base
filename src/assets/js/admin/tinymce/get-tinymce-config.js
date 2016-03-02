@@ -21,7 +21,7 @@ function get_tinymce_config(data){
 			"charmap code fullscreen image link media",
 			"nonbreaking paste searchreplace table"
 		],
-		toolbar: "fullscreen undo redo | copy paste | removeformat | bold italic strikethrough | sup sub | alignleft aligncenter alignright | formatselect | bullist numlist outdent indent | table | link | image media | charmap nonbreaking | searchreplace code"
+		toolbar: "fullscreen undo redo | copy paste | removeformat | bold italic strikethrough | sup sub | alignleft aligncenter alignright | formatselect | bullist numlist outdent indent | table | link unlink | image media | charmap nonbreaking | searchreplace code"
 	};
 
 
