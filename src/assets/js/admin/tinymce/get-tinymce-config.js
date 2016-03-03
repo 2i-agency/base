@@ -7,7 +7,9 @@ function get_tinymce_config(data){
 	var config = {
 		selector: ".tinymce",
 		language: 'ru',
+		content_css: '/css/tinymce.css',
 		height: 400,
+		extended_valid_elements: 'script[language|type|src]',
 
 		block_formats: 'Параграф=p;Заголовок 1=h1;Заголовок 2=h2;Заголовок 3=h3',
 
