@@ -117,12 +117,14 @@
 				</li>
 
 				{{--Метрика--}}
-				<li>
-					<a href="https://metrika.yandex.ru" target="_blank">
-						<span class="glyphicon glyphicon-stats"></span>
-						Метрика
-					</a>
-				</li>
+				@if (env('STATISTICS_URL'))
+					<li>
+						<a href="{{ env('STATISTICS_URL') }}" target="_blank">
+							<span class="glyphicon glyphicon-stats"></span>
+							Метрика
+						</a>
+					</li>
+				@endif
 
 			</ul>
 
