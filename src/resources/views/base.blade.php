@@ -23,6 +23,8 @@
 	<link rel="stylesheet" href="{{ asset('admin/css/general.css') }}">
 	@yield('page.assets')
 
+	<script src="{{ asset('admin/js/base/init.js') }}"></script>
+
 	{{--Иконка--}}
 	<link rel="shortcut icon" href="{{ asset('admin/img/favicon.png') }}">
 
