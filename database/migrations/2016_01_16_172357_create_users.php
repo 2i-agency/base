@@ -1,53 +1,69 @@
 <?php
 
 use Illuminate\Database\Schema\Blueprint;
+use zedisdog\LaravelSchemaExtend\Schema;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateUsers extends Migration
 {
+	public $table = 'users';
+
+
 	public function up()
 	{
-		Schema::create('users', function (Blueprint $table) {
+		Schema::create($this->table, function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
+			$table->comment = 'Пользователи';
 
 			// Ключ
-			$table->increments('id');
+			$table
+				->increments('id')
+				->comment('Ключ');
 
 			// Логин
 			$table
 				->string('login')
-				->unique();
+				->unique()
+				->comment('Логин');
 
 			// Хеш пароля
-			$table->string('password', 60);
+			$table
+				->string('password', 60)
+				->comment('Пароль');
 
 			// Токен для запоминания
-			$table->rememberToken();
+			$table
+				->rememberToken()
+				->comment('Токен для запоминания');
 
 			// Электронный адрес
 			$table
 				->string('email')
-				->index();
+				->index()
+				->comment('Электронный адрес');
 
 			// Имя
 			$table
 				->string('name')
-				->nullable();
+				->nullable()
+				->comment('Имя пользователя');
 
 			// Ключ создателя
 			$table
 				->integer('creator_id')
 				->unsigned()
 				->nullable()
-				->index();
+				->index()
+				->comment('Ключ пользователя');
 
 			// Ключ обновителя
 			$table
 				->integer('updater_id')
 				->unsigned()
 				->nullable()
-				->index();
+				->index()
+				->comment('Ключ обновителя');
 
 			// Время создания и обновления
 			$table->timestamps();
@@ -61,6 +77,6 @@ class CreateUsers extends Migration
 
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::drop($this->table);
 	}
 }

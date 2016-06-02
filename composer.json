@@ -11,8 +11,15 @@
 		}
 	],
 	"require": {
-		"php" : ">=7.0.0"
+		"php" : ">=7.0.0",
+		"zedisdog/laravel-schema-extend" : "~0.6"
 	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/zedisdog/laravel-schema-extend.git"
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"Chunker\\Base\\": "src"

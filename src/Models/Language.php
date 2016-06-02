@@ -12,7 +12,7 @@ class Language extends Model
 
 	protected $fillable = [
 		'name',
-		'alias',
+		'route_key',
 		'is_published'
 	];
 
@@ -22,15 +22,15 @@ class Language extends Model
 	 */
 	public function getRouteKeyName()
 	{
-		return 'alias';
+		return 'route_key';
 	}
 
 
 	/*
-	 * Подготовка псевдонима
+	 * Подготовка ключ маршрута
 	 */
-	public function setAliasAttribute($alias)
+	public function setRouteKeyAttribute($routeKey)
 	{
-		$this->attributes['alias'] = str_slug(trim($alias));
+		$this->attributes['route_key'] = str_slug(trim($routeKey));
 	}
 }
