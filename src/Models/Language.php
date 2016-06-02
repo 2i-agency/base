@@ -16,12 +16,15 @@ class Language extends Model
 		'is_published'
 	];
 
+	protected $casts = [
+		'is_published' => 'boolean'
+	];
+
 
 	/*
 	 * Настройка ключа для привязки к маршруту
 	 */
-	public function getRouteKeyName()
-	{
+	public function getRouteKeyName() {
 		return 'route_key';
 	}
 
@@ -29,8 +32,7 @@ class Language extends Model
 	/*
 	 * Подготовка ключ маршрута
 	 */
-	public function setRouteKeyAttribute($routeKey)
-	{
+	public function setRouteKeyAttribute($routeKey) {
 		$this->attributes['route_key'] = str_slug(trim($routeKey));
 	}
 }

@@ -8,6 +8,9 @@ class LanguagesSeeder extends Seeder
 	public function run()
 	{
 		// Добавление русского языка
-		Language::create(['name' => 'RU']);
+		Language::create([
+			'name' => 'RU',
+			'is_published' => true
+		]);
 	}
 }

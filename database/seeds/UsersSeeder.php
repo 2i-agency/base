@@ -11,7 +11,7 @@ class UsersSeeder extends Seeder
 		User::create([
 			'login' => 'admin',
 			'password' => '000000',
-			'email' => 'mail@mail.net',
+			'email' => 'mail@' . env('APP_URL'),
 			'name' => 'Администратор'
 		]);
 	}

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Chunker\Base\Models\Traits\HasEditors;
 use Chunker\Base\Models\Traits\Comparison;
+use Chunker\Base\Models\Authentication;
 use Auth;
 
 class User extends Authenticatable
@@ -30,8 +31,7 @@ class User extends Authenticatable
 	/*
 	 * Хеширование пароля
 	 */
-	public function setPasswordAttribute($password)
-	{
+	public function setPasswordAttribute($password) {
 		if (strlen($password))
 		{
 			$this->attributes['password'] = bcrypt($password);
@@ -42,8 +42,7 @@ class User extends Authenticatable
 	/*
 	 * Подготовка логина
 	 */
-	public function setLoginAttribute($login)
-	{
+	public function setLoginAttribute($login) {
 		$this->attributes['login'] = str_slug($login);
 	}
 
@@ -51,8 +50,7 @@ class User extends Authenticatable
 	/*
 	 * Подготовка имени
 	 */
-	public function setNameAttribute($name)
-	{
+	public function setNameAttribute($name) {
 		$name = trim($name);
 		$this->attributes['name'] = strlen($name) ? $name : NULL;
 	}
@@ -61,8 +59,7 @@ class User extends Authenticatable
 	/*
 	 * Если для пользователя не задано имя, то возвращается логин
 	 */
-	public function getName()
-	{
+	public function getName() {
 		return is_null($this->name) ? $this->login : $this->name;
 	}
 
@@ -70,17 +67,15 @@ class User extends Authenticatable
 	/*
 	 * Пользователь не может удалить сам себя
 	 */
-	public function isCanBeDeleted()
-	{
+	public function isCanBeDeleted() {
 		return !$this->is(Auth::user());
 	}
 
 
 	/*
-	 * Авторизации
+	 * Аутентификайии
 	 */
-	public function authorizations()
-	{
-		return $this->hasMany(\Chunker\Base\Models\Authorization::class);
+	public function authentications() {
+		return $this->hasMany(Authentication::class);
 	}
 }

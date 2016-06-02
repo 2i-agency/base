@@ -5,7 +5,7 @@ namespace Chunker\Base\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class Authorization extends Model
+class Authentication extends Model
 {
 	public $timestamps = false;
 	protected $timeFormat = 'd.m.Y H:i:s';
@@ -22,12 +22,15 @@ class Authorization extends Model
 		'user_agent',
 	];
 
+	protected $casts = [
+		'is_failed' => 'boolean'
+	];
+
 
 	/*
 	 * Конвертация IP-адреса в число для сохранения в базе данных
 	 */
-	public function setIpAddressAttribute($ipAddress)
-	{
+	public function setIpAddressAttribute($ipAddress) {
 		$this->attributes['ip_address'] = ip2long($ipAddress);
 	}
 
@@ -35,8 +38,7 @@ class Authorization extends Model
 	/*
 	 * Конвертация числа из базы данных в IP-адреса
 	 */
-	public function getIpAddressAttribute($number)
-	{
+	public function getIpAddressAttribute($number) {
 		return long2ip($number);
 	}
 
@@ -44,8 +46,9 @@ class Authorization extends Model
 	/*
 	 * Сортировка по времени авторизации
 	 */
-	public function scopeRecent(Builder $query)
-	{
-		return $query->latest('logged_in_at')->latest('id');
+	public function scopeRecent(Builder $query) {
+		return $query
+			->latest('logged_in_at')
+			->latest('id');
 	}
 }
