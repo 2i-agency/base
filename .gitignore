@@ -1,2 +1,1 @@
-# Compass cache
-*.scssc
+node_modules
