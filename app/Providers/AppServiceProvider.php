@@ -48,9 +48,8 @@ class AppServiceProvider extends ServiceProvider
 		], 'database');
 
 		$this->publishes([
-			static::ROOT . '/resources/assets/css' => public_path('css/admin'),
-			static::ROOT . '/resources/assets/js' => public_path('js/admin'),
-			static::ROOT . '/resources/assets/img' => public_path('img/admin')
+			static::ROOT . '/public/admin' => public_path('admin'),
+			static::ROOT . '/public/.htaccess' => public_path('.htaccess'),
 		], 'public');
 
 
