@@ -1,6 +1,6 @@
 @inject('menu', 'Chunker\Base\Helpers\AdminMenu')
 @inject('request', 'Illuminate\Http\Request')
-@extends('Base::base')
+@extends('chunker.base::base')
 
 
 @section('page.body')
@@ -58,11 +58,11 @@
 
 
 			{{--Язык--}}
-			@if (config('languages.multi'))
+			@if (config('chunker.localization.multi'))
 				<div class="navbar-form navbar-right dropdown">
 
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-						{{ $_languages->where('alias', App::getLocale())->first()->name }}
+						{{ $_languages->where('route_key', App::getLocale())->first()->name }}
 						<span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">
@@ -70,7 +70,7 @@
 						{{--Ссылки на переключение языка--}}
 						@if ($_languages->count() > 1)
 							@foreach ($_languages->reject(function($language){
-								return $language->alias == App::getLocale();
+								return $language->route_key == App::getLocale();
 							}) as $_language)
 								<li>
 									<a href="{{ route('admin.set-locale', $_language) }}">

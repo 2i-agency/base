@@ -7,36 +7,34 @@ use Carbon\Carbon;
 class UserListener
 {
 	/*
-	 * При авторизации пользователя
+	 * При аутентификации пользователя
 	 */
 	public function onUserLogin($event)
 	{
-		// Добавление записи об авторизации
+		// Добавление записи об аутентификации
 		$event
 			->user
-			->authorizations()
+			->authentications()
 			->create(['is_failed' => $event->isFailed]);
 	}
 
 
 	/*
-	 * При направлении запросу приложения от пользователя
+	 * При направлении запроса приложению от пользователя
 	 */
 	public function onUserAppRequest($event)
 	{
 		// Добавление данных в последнюю авторизацию, если таковая имеется
-		$authorizations = $event
+		$authentications = $event
 			->user
-			->authorizations();
+			->authentications();
 
-		if ($authorizations->count())
+		if ($authentications->count())
 		{
-			$authorization = $authorizations
+			$authentications
 				->latest('logged_in_at')
-				->first();
-
-			$authorization->last_request_at = Carbon::now();
-			$authorization->save();
+				->first()
+				->update(['last_request_at' => Carbon::now()]);
 		}
 	}
 

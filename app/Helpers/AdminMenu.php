@@ -12,7 +12,7 @@ class AdminMenu
 
 	public function __construct()
 	{
-		$this->structure = config('admin.menu');
+		$this->structure = config('chunker.admin.menu');
 		$this->currentRoute = Route::currentRouteName();
 	}
 

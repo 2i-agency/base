@@ -6,17 +6,17 @@
 
 Route::group([
 	'prefix' => 'auth',
-	'namespace' => 'Chunker\Base\Controllers',
+	'namespace' => 'Chunker\Base\Http\Controllers',
 	'middleware' => ['web']
 ], function(){
 
-	// Авторизация
+	// Аутентификация
 	Route::post('login', [
 		'uses' => 'AuthController@login',
 		'as' => 'login'
 	]);
 
-	// Деавторизация
+	// Деаутентификация
 	Route::post('logout', [
 		'uses' => 'AuthController@logout',
 		'as' => 'logout'

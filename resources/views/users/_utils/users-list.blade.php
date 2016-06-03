@@ -31,8 +31,8 @@
 					@endif
 
 					{{--Время последней авторизации--}}
-					@if ($user->authorizations()->count())
-						<td>{{ $user->authorizations()->recent()->first()->logged_in_at }}</td>
+					@if ($user->authentications()->count())
+						<td>{{ $user->authentications()->recent()->first()->logged_in_at }}</td>
 					@else
 						<td class="text-muted">Пока не авторизовывался</td>
 					@endif
@@ -61,6 +61,6 @@
 @else
 
 	{{--Уведомление об отсутствии пользователей--}}
-	@include('Base::_utils.alert', ['message' => 'Пользователи отсутствуют'])
+	@include('chunker.base::_utils.alert', ['message' => 'Пользователи отсутствуют'])
 
 @endif

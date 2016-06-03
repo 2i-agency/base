@@ -55,10 +55,10 @@ Route::group([
 			'as' => 'admin.users.restore'
 		]);
 
-		// Страница со списком авторизаций
-		Route::get('authorizations', [
-			'uses' => 'UserController@authorizations',
-			'as' => 'admin.users.authorizations'
+		// Страница со списком аутентификаций
+		Route::get('authentications', [
+			'uses' => 'UserController@authentications',
+			'as' => 'admin.users.authentications'
 		]);
 
 	});

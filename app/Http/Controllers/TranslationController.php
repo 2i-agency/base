@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Base\Controllers;
+namespace Chunker\Base\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ class TranslationController extends Controller
 	 */
 	public function index()
 	{
-		return view('Base::translation.index');
+		return view('chunker.base::translation.index');
 	}
 
 
@@ -25,7 +25,7 @@ class TranslationController extends Controller
 	 */
 	public function section($section)
 	{
-		$data = config('languages.localization')[$section];
+		$data = config('chunker.localization.interface')[$section];
 		$title = $data[0];
 		$fields = [];
 
@@ -52,14 +52,14 @@ class TranslationController extends Controller
 			}
 
 			// Значение поля
-			$trans_id = 'Base::' . $section . '.' . $elem_name;
+			$trans_id = 'chunker::' . $section . '.' . $elem_name;
 			$field['value'] = (trans($trans_id) == $trans_id) ? NULL : trans($trans_id);
 
 			$fields[] = $field;
 		}
 
 
-		return view('Base::translation.section', compact('section', 'title', 'fields'));
+		return view('chunker.base::translation.section', compact('section', 'title', 'fields'));
 	}
 
 
@@ -72,7 +72,7 @@ class TranslationController extends Controller
 		$elements = $request->get('elements');
 
 		// Диск для сохранения файла с локализацией
-		$directory = base_path('resources/interface/' . Session::get('admin.locale'));
+		$directory = base_path('resources/lang/vendor/chunker/' . Session::get('admin.locale'));
 		$disk = Storage::createLocalDriver(['root' => $directory]);
 		$filename = $section . '.php';
 

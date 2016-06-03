@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Base\Controllers;
+namespace Chunker\Base\Http\Controllers;
 
 use Illuminate\Http\Request;
 
@@ -11,6 +11,6 @@ class DashboardController extends Controller
 {
 	public function index()
 	{
-		return view('Base::dashboard.index');
+		return view('chunker.base::dashboard.index');
 	}
 }

@@ -1,4 +1,4 @@
-@extends('Base::base')
+@extends('chunker.base::base')
 
 
 @section('page.body')

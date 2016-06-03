@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Base\Controllers;
+namespace Chunker\Base\Http\Controllers;
 
 use Chunker\Base\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class UserController extends Controller
 		$active_users = $all_users->get();
 		$deleted_users = $all_users->onlyTrashed()->get();
 
-		return view('Base::users.index', compact('active_users', 'deleted_users'));
+		return view('chunker.base::users.index', compact('active_users', 'deleted_users'));
 	}
 
 
@@ -28,7 +28,7 @@ class UserController extends Controller
 	 */
 	public function create()
 	{
-		return view('Base::users.create');
+		return view('chunker.base::users.create');
 	}
 
 
@@ -53,7 +53,7 @@ class UserController extends Controller
 	 */
 	public function edit(User $user)
 	{
-		return view('Base::users.edit', compact('user'));
+		return view('chunker.base::users.edit', compact('user'));
 	}
 
 
@@ -100,15 +100,15 @@ class UserController extends Controller
 
 
 	/*
-	 * Список авторизаций пользователя
+	 * Список аутентификаций пользователя
 	 */
-	public function authorizations(User $user)
+	public function authentications(User $user)
 	{
-		$authorizations = $user
-			->authorizations()
+		$authentications = $user
+			->authentications()
 			->recent()
 			->paginate();
 
-		return view('Base::users.authorizations', compact('user', 'authorizations'));
+		return view('chunker.base::users.authentications', compact('user', 'authentications'));
 	}
 }

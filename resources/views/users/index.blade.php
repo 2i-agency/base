@@ -1,4 +1,4 @@
-@extends('Base::template')
+@extends('chunker.base::template')
 
 
 @section('page.title', 'Пользователи')
@@ -25,12 +25,12 @@
 
 		{{--Действующие пользователи--}}
 		<div class="tab-pane active" id="active">
-			@include('Base::users._utils.users-list', ['users' => $active_users])
+			@include('chunker.base::users._utils.users-list', ['users' => $active_users])
 		</div>
 
 		{{--Удалённые пользователи--}}
 		<div class="tab-pane" id="deleted">
-			@include('Base::users._utils.users-list', ['users' => $deleted_users])
+			@include('chunker.base::users._utils.users-list', ['users' => $deleted_users])
 		</div>
 
 	</div>

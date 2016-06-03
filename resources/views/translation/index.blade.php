@@ -1,4 +1,4 @@
-@extends('Base::template')
+@extends('chunker.base::template')
 
 
 @section('page.title', 'Перевод интерфейса')
@@ -16,7 +16,7 @@
 
 		{{--Список разделов--}}
 		<ul class="list-group">
-			@foreach(config('languages.localization') as $section_name => $section_data)
+			@foreach(config('chunker.localization.interface') as $section_name => $section_data)
 				<li class="list-group-item">
 					<a href="{{ route('admin.translation.section', $section_name) }}">{{ $section_data[0] }}</a>
 				</li>

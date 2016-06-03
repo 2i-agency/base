@@ -51,11 +51,11 @@
 	</div>
 
 	{{--Кнопка сохранения--}}
-	@include('Base::_utils.buttons.save')
+	@include('chunker.base::_utils.buttons.save')
 
 	{{--Кнопка удаления--}}
 	@if (isset($user) && $user->isCanBeDeleted())
-		@include('Base::_utils.buttons.delete', ['url' => route('admin.users.destroy', $user)])
+		@include('chunker.base::_utils.buttons.delete', ['url' => route('admin.users.destroy', $user)])
 	@endif
 
 </div>

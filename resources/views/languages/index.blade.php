@@ -1,4 +1,4 @@
-@extends('Base::template')
+@extends('chunker.base::template')
 
 
 @section('page.assets')
@@ -40,7 +40,7 @@
 				<div class="col-lg-5">
 					<input
 						type="text"
-						name="alias"
+						name="route_key"
 						autocomplete="off"
 						placeholder="Псевдоним"
 						class="form-control"
@@ -49,7 +49,7 @@
 
 				{{--Кнопка добавления--}}
 				<div class="col-lg-2">
-					@include('Base::_utils.buttons.add', ['block' => true])
+					@include('chunker.base::_utils.buttons.add', ['block' => true])
 				</div>
 
 			</div>
@@ -79,7 +79,7 @@
 						<td>{{ $language->name }}</td>
 
 						{{--Псевдоним--}}
-						<td>{{ $language->alias }}</td>
+						<td>{{ $language->route_key }}</td>
 
 						{{--Публикация--}}
 						@if ($language->is_published)
@@ -97,7 +97,7 @@
 								data-target="#modal-edit"
 								data-action_update="{{ route('admin.languages.update', $language) }}"
 								data-name="{{ $language->name }}"
-								data-alias="{{ $language->alias }}"
+								data-route_key="{{ $language->route_key }}"
 								data-is_published="{{ $language->is_published }}">
 								<span class="glyphicon glyphicon-pencil"></span>
 								Редактировать
@@ -134,7 +134,7 @@
 					{{--Псевдоним--}}
 					<div class="form-group">
 						<label>Псевдоним:</label>
-						<input type="text" name="alias" autocomplete="off" class="form-control">
+						<input type="text" name="route_key" autocomplete="off" class="form-control">
 					</div>
 
 					{{--Флаг публикации--}}
@@ -151,7 +151,7 @@
 					</div>
 
 					{{--Кнопка сохранения--}}
-					@include('Base::_utils.buttons.save')
+					@include('chunker.base::_utils.buttons.save')
 
 				</div>
 

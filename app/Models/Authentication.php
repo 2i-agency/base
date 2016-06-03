@@ -20,6 +20,7 @@ class Authentication extends Model
 		'logged_in_at',
 		'ip_address',
 		'user_agent',
+		'last_request_at'
 	];
 
 	protected $casts = [

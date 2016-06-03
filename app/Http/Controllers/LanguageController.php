@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Base\Controllers;
+namespace Chunker\Base\Http\Controllers;
 
 use Chunker\Base\Models\Language;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class LanguageController extends Controller
 	 */
 	public function index()
 	{
-		return view('Base::languages.index', [
+		return view('chunker.base::languages.index', [
 			'languages' => Language::positioned()->get()
 		]);
 	}
@@ -26,7 +26,7 @@ class LanguageController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		Language::create($request->only(['name', 'alias']));
+		Language::create($request->only(['name', 'route_key']));
 		return redirect()->back();
 	}
 
@@ -36,7 +36,7 @@ class LanguageController extends Controller
 	 */
 	public function update(Request $request, Language $language)
 	{
-		$language->update($request->only(['name', 'alias', 'is_published']));
+		$language->update($request->only(['name', 'route_key', 'is_published']));
 		return redirect()->back();
 	}
 

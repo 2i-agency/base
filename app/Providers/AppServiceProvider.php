@@ -2,52 +2,56 @@
 
 namespace Chunker\Base\Providers;
 
-use Carbon\Carbon;
-use Chunker\Base\ViewComposers\LanguagesComposer;
 use Illuminate\Support\ServiceProvider;
+use Carbon\Carbon;
+use Chunker\Base\Commands\Init;
 use Chunker\Base\Models\User;
+use Chunker\Base\ViewComposers\LanguagesComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
+	// Корневая папка пакета
+	const ROOT = __DIR__ . '/../..';
+
+
 	public function boot()
 	{
-		// Настройка форматирования времени по умолчанию
+		// Форматирование времени по умолчанию
 		Carbon::setToStringFormat('d.m.Y H:i:s');
 
 
-		// Конфигурация приложения
-		config([
-			'app.timezone' => 'Europe/Moscow',
-			'auth.providers.users.model' => User::class
-		]);
+		// Замена модели пользователя в конфигурации
+		config(['auth.providers.users.model' => User::class]);
 
 
-		// Команды пакета
-		$this->commands([
-			Commands\Init::class
-		]);
+		// Добавление файлов локализации в пространство имен
+		$this->loadTranslationsFrom(resource_path('lang/vendor/chunker'), 'chunker');
 
 
-		// Шаблоны пакета и локализация интерфейса сайта
-		$this->loadViewsFrom(__DIR__ . '/resources/views', 'Base');
-		$this->loadTranslationsFrom(base_path('resources/interface'), 'Base');
+		// Команды
+		$this->commands([ Init::class ]);
 
 
-		// Регистрация композеров шаблонов
-		view()->composer('Base::template', LanguagesComposer::class);
+		// Шаблоны и композеры
+		$this->loadViewsFrom(static::ROOT . '/resources/views', 'chunker.base');
+		view()->composer('chunker.base::template', LanguagesComposer::class);
 
 
-		// Настройка публикации сопутствующих файлов пакета
+		// Публикация ассетов
+		$this->publishes([static::ROOT . '/config' => config_path('chunker')], 'config');
+
+		$this->publishes([static::ROOT . '/resources/lang' => base_path('resources/lang')]);
+
 		$this->publishes([
-			__DIR__ . '/assets/config' => config_path(),
-			__DIR__ . '/assets/migrations' => database_path('migrations'),
-			__DIR__ . '/assets/seeds' => database_path('seeds'),
-			__DIR__ . '/assets/css' => storage_path('app/admin/css'),
-			__DIR__ . '/assets/js' => storage_path('app/admin/js'),
-			__DIR__ . '/assets/img' => storage_path('app/admin/img'),
-			__DIR__ . '/assets/public' => public_path(),
-			__DIR__ . '/resources/lang' => base_path('resources/lang')
-		]);
+			static::ROOT . '/database/migrations' => database_path('migrations'),
+			static::ROOT . '/database/seeds' => database_path('seeds')
+		], 'database');
+
+		$this->publishes([
+			static::ROOT . '/resources/assets/css' => public_path('css/admin'),
+			static::ROOT . '/resources/assets/js' => public_path('js/admin'),
+			static::ROOT . '/resources/assets/img' => public_path('img/admin')
+		], 'public');
 
 
 		// Конфигурация группы посредников `admin`
@@ -60,14 +64,14 @@ class AppServiceProvider extends ServiceProvider
 				\Illuminate\Session\Middleware\StartSession::class,
 				\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 				\App\Http\Middleware\VerifyCsrfToken::class,
-				\Chunker\Base\Middleware\CheckAuth::class,
-				\Chunker\Base\Middleware\SetLocale::class,
+				\Chunker\Base\Http\Middleware\CheckAuth::class,
+				\Chunker\Base\Http\Middleware\SetLocale::class,
 			]);
 
 
 		// Маршруты пакета
-		require_once __DIR__ . '/routes/authorization.php';
-		require_once __DIR__ . '/routes/admin.php';
+		require_once static::ROOT . '/app/Http/routes/authentication.php';
+		require_once static::ROOT . '/app/Http/routes/admin.php';
 	}
 
 

@@ -1,4 +1,4 @@
-@extends('Base::template')
+@extends('chunker.base::template')
 
 
 @section('page.title', 'Добавление пользователя')
@@ -9,11 +9,11 @@
 	<h3>Добавление пользователя</h3>
 
 	{{--Хлебные крошки--}}
-	@include('Base::users._utils.breadcrumbs')
+	@include('chunker.base::users._utils.breadcrumbs')
 
 	{{--Форма с данными пользователя--}}
 	<form method="POST" action="{{ route('admin.users.store') }}" class="panel panel-default">
-		@include('Base::users._utils.user-form')
+		@include('chunker.base::users._utils.user-form')
 	</form>
 
 @stop

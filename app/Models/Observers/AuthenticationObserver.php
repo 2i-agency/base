@@ -3,12 +3,12 @@
 namespace Chunker\Base\Models\Observers;
 
 use Carbon\Carbon;
-use Chunker\Base\Models\Authorization;
+use Chunker\Base\Models\Authentication;
 use Illuminate\Support\Facades\Input;
 
-class AuthorizationObserver
+class AuthenticationObserver
 {
-	public function creating(Authorization $authorization)
+	public function creating(Authentication $authorization)
 	{
 		$authorization->fill([
 			'logged_in_at' => Carbon::now(),

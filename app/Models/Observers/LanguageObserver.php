@@ -20,22 +20,22 @@ class LanguageObserver
 
 	public function creating(Model $model)
 	{
-		$this->makeAlias($model);
+		$this->makeRouteKey($model);
 	}
 
 
 	public function updating(Model $model)
 	{
-		$this->makeAlias($model);
+		$this->makeRouteKey($model);
 	}
 
 
 	/*
-	 * Формирование псевдонима на основе названия
+	 * Формирование ключа маршрута на основе названия
 	 */
-	public function makeAlias(Model $model)
+	public function makeRouteKey(Model $model)
 	{
-		$alias = trim($model->alias);
-		$model->alias = mb_strlen($alias) ? $alias : $model->name;
+		$route_key = trim($model->route_key);
+		$model->route_key = mb_strlen($route_key) ? $route_key : $model->name;
 	}
 }

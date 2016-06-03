@@ -3,9 +3,9 @@
 namespace Chunker\Base\Providers;
 
 use Chunker\Base\Listeners\UserListener;
-use Chunker\Base\Models\Authorization;
+use Chunker\Base\Models\Authentication;
 use Chunker\Base\Models\Language;
-use Chunker\Base\Models\Observers\AuthorizationObserver;
+use Chunker\Base\Models\Observers\AuthenticationObserver;
 use Chunker\Base\Models\Observers\BoundedObserver;
 use Chunker\Base\Models\Observers\LanguageObserver;
 use Chunker\Base\Models\Observers\EditorObserver;
@@ -26,7 +26,7 @@ class EventServiceProvider extends ServiceProvider
 		parent::boot($events);
 
 		// Регистрация наблюдателей моделей
-		Authorization::observe(AuthorizationObserver::class);
+		Authentication::observe(AuthenticationObserver::class);
 
 		Language::observe(LanguageObserver::class);
 		Language::observe(BoundedObserver::class);

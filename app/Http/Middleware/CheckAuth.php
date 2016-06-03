@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Base\Middleware;
+namespace Chunker\Base\Http\Middleware;
 
 use Chunker\Base\Events\UserRequestedApp;
 use Closure;
@@ -21,7 +21,7 @@ class CheckAuth
 			// Ответ при GET-запросе
 			else
 			{
-				return response()->view('Base::auth.login', [], 401);
+				return response()->view('chunker.base::auth.login', [], 401);
 			}
 		}
 		// Регистрация запроса пользователя

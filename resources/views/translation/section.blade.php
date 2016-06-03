@@ -1,4 +1,4 @@
-@extends('Base::template')
+@extends('chunker.base::template')
 
 
 @section('page.title', $title)
@@ -50,7 +50,7 @@
 				</div>
 			@endforeach
 
-			@include('Base::_utils.buttons.save')
+			@include('chunker.base::_utils.buttons.save')
 
 		</div>
 
