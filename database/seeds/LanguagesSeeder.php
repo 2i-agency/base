@@ -5,8 +5,7 @@ use Chunker\Base\Models\Language;
 
 class LanguagesSeeder extends Seeder
 {
-	public function run()
-	{
+	public function run() {
 		// Добавление русского языка
 		Language::create([
 			'name' => 'RU',

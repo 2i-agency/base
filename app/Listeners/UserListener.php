@@ -9,8 +9,7 @@ class UserListener
 	/*
 	 * При аутентификации пользователя
 	 */
-	public function onUserLogin($event)
-	{
+	public function onUserLogin($event) {
 		// Добавление записи об аутентификации
 		$event
 			->user
@@ -22,15 +21,13 @@ class UserListener
 	/*
 	 * При направлении запроса приложению от пользователя
 	 */
-	public function onUserAppRequest($event)
-	{
+	public function onUserAppRequest($event) {
 		// Добавление данных в последнюю авторизацию, если таковая имеется
 		$authentications = $event
 			->user
 			->authentications();
 
-		if ($authentications->count())
-		{
+		if ($authentications->count()) {
 			$authentications
 				->latest('logged_in_at')
 				->first()
@@ -42,8 +39,7 @@ class UserListener
 	/*
 	 * Регистрация слушателей
 	 */
-	public function subscribe($events)
-	{
+	public function subscribe($events) {
 		$events->listen(
 			'Chunker\Base\Events\UserLoggedIn',
 			'Chunker\Base\Listeners\UserListener@onUserLogin'

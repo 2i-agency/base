@@ -8,7 +8,7 @@ Route::group([
 	'prefix' => 'admin',
 	'namespace' => 'Chunker\Base\Http\Controllers',
 	'middleware' => ['admin']
-], function(){
+], function () {
 
 	$files = [
 		'assets',
@@ -19,8 +19,7 @@ Route::group([
 		'users'
 	];
 
-	foreach ($files as $file)
-	{
+	foreach ($files as $file) {
 		require_once __DIR__ . '/admin/' . $file . '.php';
 	}
 

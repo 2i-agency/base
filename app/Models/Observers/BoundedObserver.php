@@ -6,14 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class BoundedObserver
 {
-	public function creating(Model $model)
-	{
+	public function creating(Model $model) {
 		$model->placeToEnd();
 	}
 
 
-	public function deleting(Model $model)
-	{
+	public function deleting(Model $model) {
 		$model
 			->deleteChildren()
 			->pullSiblings();

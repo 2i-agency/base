@@ -7,8 +7,7 @@ use Illuminate\View\View;
 
 class LanguagesComposer
 {
-	public function compose(View $view)
-	{
+	public function compose(View $view) {
 		$view->with('_languages', Language::positioned()->get(['id', 'name', 'route_key']));
 	}
 }

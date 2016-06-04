@@ -7,8 +7,7 @@ trait HasNullAttributes
 	/*
 	 * Установка NULL вместо пустой или пробельной строки
 	 */
-	protected function nullingAttribute($attribute, $value)
-	{
+	protected function nullingAttribute($attribute, $value) {
 		return $this->attributes[$attribute] = strlen(trim($value)) ? $value : NULL;
 	}
 }

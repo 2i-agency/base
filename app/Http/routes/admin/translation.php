@@ -6,7 +6,7 @@
 
 Route::group([
 	'prefix' => 'translation'
-], function(){
+], function () {
 
 	// Список разделов
 	Route::get('/', [
@@ -17,7 +17,7 @@ Route::group([
 
 	Route::group([
 		'prefix' => '{section}'
-	], function(){
+	], function () {
 
 		// Список элементов интерфейса раздела
 		Route::get('/', [

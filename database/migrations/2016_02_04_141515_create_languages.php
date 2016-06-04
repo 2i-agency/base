@@ -6,8 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateLanguages extends Migration
 {
-	public function up()
-	{
+	public function up() {
 		Schema::create('languages', function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
@@ -65,8 +64,7 @@ class CreateLanguages extends Migration
 	}
 
 
-	public function down()
-	{
+	public function down() {
 		Schema::drop('languages');
 	}
 }

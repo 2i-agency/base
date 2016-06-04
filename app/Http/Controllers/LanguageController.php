@@ -13,8 +13,7 @@ class LanguageController extends Controller
 	/*
 	 * Список языков
 	 */
-	public function index()
-	{
+	public function index() {
 		return view('chunker.base::languages.index', [
 			'languages' => Language::positioned()->get()
 		]);
@@ -24,8 +23,7 @@ class LanguageController extends Controller
 	/*
 	 * Добавление языка
 	 */
-	public function store(Request $request)
-	{
+	public function store(Request $request) {
 		Language::create($request->only(['name', 'route_key']));
 		return redirect()->back();
 	}
@@ -34,8 +32,7 @@ class LanguageController extends Controller
 	/*
 	 * Обновление языка
 	 */
-	public function update(Request $request, Language $language)
-	{
+	public function update(Request $request, Language $language) {
 		$language->update($request->only(['name', 'route_key', 'is_published']));
 		return redirect()->back();
 	}
@@ -44,8 +41,7 @@ class LanguageController extends Controller
 	/*
 	 * Позиционирование языков
 	 */
-	public function positioning(Request $request)
-	{
+	public function positioning(Request $request) {
 		Language::find($request->get('id'))
 			->placeTo($request->get('position'));
 	}

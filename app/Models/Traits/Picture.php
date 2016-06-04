@@ -13,16 +13,12 @@ trait Picture
 	/*
 	 * Получение конфигурации изображения
 	 */
-	protected function getPictureConfig($field)
-	{
+	protected function getPictureConfig($field) {
 		// Подготовка основы из существующей конфигурации
-		if (property_exists($this, 'pictures') && array_has($this['pictures'], $field))
-		{
+		if (property_exists($this, 'pictures') && array_has($this['pictures'], $field)) {
 			$config = $this['pictures'][$field];
-		}
-		// Подготовка чистой основы
-		else
-		{
+		} // Подготовка чистой основы
+		else {
 			$config = [];
 		}
 
@@ -48,8 +44,7 @@ trait Picture
 	/*
 	 * Генерация нового имени файла
 	 */
-	protected function makePictureFilename($field)
-	{
+	protected function makePictureFilename($field) {
 		$config = $this->getPictureConfig($field);
 		return FilenameGenerator::make($config['extension']);
 	}
@@ -58,8 +53,7 @@ trait Picture
 	/*
 	 * Получение диска для работы с папкой
 	 */
-	protected function makePictureDisk($field)
-	{
+	protected function makePictureDisk($field) {
 		$config = $this->getPictureConfig($field);
 		return Storage::createLocalDriver(['root' => public_path($config['directory'])]);
 	}
@@ -68,10 +62,8 @@ trait Picture
 	/*
 	 * Применение трансформации
 	 */
-	protected function doTransform($field, Closure $callback = NULL)
-	{
-		if (!is_null($callback))
-		{
+	protected function doTransform($field, Closure $callback = NULL) {
+		if (!is_null($callback)) {
 			$filename = $this->getPictureConfig($field)['directory'] . '/' . $this[$field];
 			$picture = Image::make($filename);
 			$callback($picture);
@@ -83,13 +75,11 @@ trait Picture
 	/*
 	 * Удаление файла изображения
 	 */
-	public function deletePicture($field)
-	{
+	public function deletePicture($field) {
 		$disk = $this->makePictureDisk($field);
 		$filename = $this[$field];
 
-		if (mb_strlen($filename) && $disk->has($filename))
-		{
+		if (mb_strlen($filename) && $disk->has($filename)) {
 			$disk->delete($filename);
 		}
 
@@ -103,11 +93,9 @@ trait Picture
 	/*
 	 * Сохранение загруженного изображения
 	 */
-	public function uploadPicture(UploadedFile $file, $field, Closure $transform = NULL)
-	{
+	public function uploadPicture(UploadedFile $file, $field, Closure $transform = NULL) {
 		// Если файл загружен с ошибкой, то ничего делать не нужно
-		if (!$file->isValid())
-		{
+		if (!$file->isValid()) {
 			return false;
 		}
 
@@ -130,11 +118,9 @@ trait Picture
 	/*
 	 * Установка изображения
 	 */
-	public function setPicture($source, $field, Closure $transform = NULL)
-	{
+	public function setPicture($source, $field, Closure $transform = NULL) {
 		// Если файла не существует или он битый
-		if (!file_exists($source) || !@getimagesize($source))
-		{
+		if (!file_exists($source) || !@getimagesize($source)) {
 			return false;
 		}
 
@@ -157,14 +143,12 @@ trait Picture
 	/*
 	 * Копирование изображения
 	 */
-	public function copyPicture($fromField, $toField, Closure $transform = NULL)
-	{
+	public function copyPicture($fromField, $toField, Closure $transform = NULL) {
 		// Проверка существования исходного файла
 		$disk = $this->makePictureDisk($fromField);
 		$source = $this[$fromField];
 
-		if (!mb_strlen($source) || !$disk->has($source))
-		{
+		if (!mb_strlen($source) || !$disk->has($source)) {
 			return $this;
 		}
 
@@ -194,8 +178,7 @@ trait Picture
 	/*
 	 * Получение ссылки на изображение
 	 */
-	public function getPictureUrl($field)
-	{
+	public function getPictureUrl($field) {
 		return $this->getPictureConfig($field)['directory'] . '/' . $this[$field];
 	}
 
@@ -203,12 +186,10 @@ trait Picture
 	/*
 	 * Получение полей, связанных с изображениями
 	 */
-	public function getPicturesFields()
-	{
+	public function getPicturesFields() {
 		$fields = [];
 
-		foreach ($this->pictures as $key => $value)
-		{
+		foreach ($this->pictures as $key => $value) {
 			$fields[] = is_array($value) ? $key : $value;
 		}
 

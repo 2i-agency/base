@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Input;
 
 class AuthenticationObserver
 {
-	public function creating(Authentication $authorization)
-	{
+	public function creating(Authentication $authorization) {
 		$authorization->fill([
 			'logged_in_at' => Carbon::now(),
 			'ip_address' => Input::server('REMOTE_ADDR'),

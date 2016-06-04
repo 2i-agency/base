@@ -14,14 +14,11 @@ class CheckAuth
 			// Ответ при асинхронном запросе
 			if ($request->ajax()) {
 				return response('Unauthorized.', 401);
-			}
-			// Ответ при GET-запросе
+			} // Ответ при GET-запросе
 			else {
 				return response()->view('chunker.base::admin.auth.login', [], 401);
 			}
-		}
-
-		// Регистрация запроса пользователя
+		} // Регистрация запроса пользователя
 		else {
 			event(new UserRequestedApp(Auth::user()));
 		}

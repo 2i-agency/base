@@ -9,8 +9,7 @@ class CreateUsers extends Migration
 	public $table = 'users';
 
 
-	public function up()
-	{
+	public function up() {
 		Schema::create($this->table, function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
@@ -75,8 +74,7 @@ class CreateUsers extends Migration
 	}
 
 
-	public function down()
-	{
+	public function down() {
 		Schema::drop($this->table);
 	}
 }

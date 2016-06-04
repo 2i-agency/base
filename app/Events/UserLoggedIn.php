@@ -11,8 +11,7 @@ class UserLoggedIn extends Event
 	public $isFailed;
 
 
-	public function __construct(User $user, $isFailed)
-	{
+	public function __construct(User $user, $isFailed) {
 		$this->user = $user;
 		$this->isFailed = $isFailed;
 	}

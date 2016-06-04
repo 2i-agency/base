@@ -11,8 +11,7 @@ trait Bounded
 	/*
 	 * Названия поля, в котором хранится позиция модели
 	 */
-	protected function positionField()
-	{
+	protected function positionField() {
 		return property_exists($this, 'positionField') ? $this->positionField : 'position';
 	}
 
@@ -21,8 +20,7 @@ trait Bounded
 	 * Название поля, в котором хранится внешний ключ родительской модели,
 	 * относительно которой происходит позиционирование
 	 */
-	protected function parentField()
-	{
+	protected function parentField() {
 		return property_exists($this, 'parentField') ? $this->parentField : NULL;
 	}
 
@@ -30,8 +28,7 @@ trait Bounded
 	/*
 	 * Названия полей, в которых хранятся внешние ключи второстепенных родительских моделей
 	 */
-	protected function secondaryParentsFields()
-	{
+	protected function secondaryParentsFields() {
 		return property_exists($this, 'secondaryParentsFields') ? $this->secondaryParentsFields : NULL;
 	}
 
@@ -39,16 +36,13 @@ trait Bounded
 	/*
 	 * Получение коллекции родительских моделей при древовидной связи
 	 */
-	public function getParents()
-	{
+	public function getParents() {
 		$parents = new Collection();
 
-		if ($this->hasTreeBounding && !is_null($this->parentField()))
-		{
+		if ($this->hasTreeBounding && !is_null($this->parentField())) {
 			$model = $this;
 
-			while ($model[$this->parentField()])
-			{
+			while ($model[$this->parentField()]) {
 				$id = $model[$this->parentField()];
 				$model = static::findOrNew($id);
 				$parents->push($model);
@@ -65,8 +59,7 @@ trait Bounded
 	/*
 	 * Получение массива ключей потомков при древовидной связи
 	 */
-	public function getChildrenIds()
-	{
+	public function getChildrenIds() {
 		return $this->fillChildrenIds($this);
 	}
 
@@ -74,30 +67,24 @@ trait Bounded
 	/*
 	 * Наполнение массив ключами потомков при древовидной связи
 	 */
-	protected function fillChildrenIds($parent)
-	{
+	protected function fillChildrenIds($parent) {
 		$ids = [];
 
-		if ($this->hasTreeBounding && !is_null($this->parentField()))
-		{
+		if ($this->hasTreeBounding && !is_null($this->parentField())) {
 			// Запрос ключей дочерних моделей
 			$children = static
 				::where($this->parentField(), $parent->getKey())
 				->get([$this->getKeyName()]);
 
 			// Наполнение массива
-			foreach ($children as $child)
-			{
+			foreach ($children as $child) {
 				$grandchildren_ids = $this->fillChildrenIds($child);
 
 				// Если есть внучатые модели, то добавляются ключи потомков
-				if (count($grandchildren_ids))
-				{
+				if (count($grandchildren_ids)) {
 					$ids = array_merge($ids, $grandchildren_ids);
-				}
-				// Если дочерняя модель не имеет своих потомков, до добавляется её ключ
-				else
-				{
+				} // Если дочерняя модель не имеет своих потомков, до добавляется её ключ
+				else {
 					$ids[] = $child->id;
 				}
 			}
@@ -111,14 +98,11 @@ trait Bounded
 	/*
 	 * Удаление дочерних элементов модели с древовидными связями
 	 */
-	public function deleteChildren()
-	{
-		if ($this->hasTreeBounding && !is_null($this->parentField()))
-		{
+	public function deleteChildren() {
+		if ($this->hasTreeBounding && !is_null($this->parentField())) {
 			$children = static::where($this->parentField(), $this->id)->get();
 
-			foreach ($children as $child)
-			{
+			foreach ($children as $child) {
 				$child->delete();
 			}
 		}
@@ -131,8 +115,7 @@ trait Bounded
 	/*
 	 * Сортировка по позиции
 	 */
-	public function scopePositioned($query)
-	{
+	public function scopePositioned($query) {
 		return $query->orderBy($this->positionField());
 	}
 
@@ -140,8 +123,7 @@ trait Bounded
 	/*
 	 * Уменьшение позиций соседей по стеку после текущей позиции модели
 	 */
-	public function pullSiblings()
-	{
+	public function pullSiblings() {
 		$this
 			->filterByParents()
 			->where($this->positionField(), '>=', $this[$this->positionField()])
@@ -154,8 +136,7 @@ trait Bounded
 	/*
 	 * Позиционирование модели в стеке
 	 */
-	public function placeTo($position)
-	{
+	public function placeTo($position) {
 		// Уменьшение позиций соседей после текущей позиции,
 		// чтобы заполнить пробел, который появится после обновления
 		$this->pullSiblings();
@@ -180,32 +161,27 @@ trait Bounded
 	/*
 	 * Позиционирование в конце стека
 	 */
-	public function placeToEnd($parentId = NULL)
-	{
+	public function placeToEnd($parentId = NULL) {
 		// Если модель уже спозиционирована,
 		// то её соседей после текущей позиции
 		// нужно сдвинуть к началу
-		if ($this[$this->positionField()])
-		{
+		if ($this[$this->positionField()]) {
 			$this->pullSiblings();
 		}
 
 
 		// Если новый родитель не указывается,
 		// то модель помещается в конец текущего стека
-		if (is_null($parentId))
-		{
+		if (is_null($parentId)) {
 			$position = $this
-				->filterByParents()
-				->max($this->positionField()) + 1;
-		}
-		// Перемещение модели к новому родителю
-		else
-		{
+					->filterByParents()
+					->max($this->positionField()) + 1;
+		} // Перемещение модели к новому родителю
+		else {
 			// Расчёт новой позиции
 			$position = static
-				::where($this->parentField(), $parentId)
-				->max($this->positionField()) + 1;
+					::where($this->parentField(), $parentId)
+					->max($this->positionField()) + 1;
 
 			// Привязка к новому родителю
 			$this[$this->parentField()] = $parentId;
@@ -223,19 +199,15 @@ trait Bounded
 	/*
 	 * Фильтрацией по внешним родительским ключам
 	 */
-	public function scopeFilterByParents($query)
-	{
+	public function scopeFilterByParents($query) {
 		// Фильтрация моделей для отсева тех, которые не являются соседями по стеку...
-		if (!is_null($this->parentField()))
-		{
+		if (!is_null($this->parentField())) {
 			$query = $query->where($this->parentField(), $this[$this->parentField()]);
 		}
 
 		// ...и доплнительным родителям
-		if (!is_null($secondaries = $this->secondaryParentsFields()))
-		{
-			foreach ($secondaries as $secondary)
-			{
+		if (!is_null($secondaries = $this->secondaryParentsFields())) {
+			foreach ($secondaries as $secondary) {
 				$query = $query->where($secondary, $this[$secondary]);
 			}
 		}

@@ -9,8 +9,7 @@ class Localizator
 	protected $disk;
 
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->disk = Storage::createLocalDriver(['root' => base_path('resources/interface')]);
 	}
 
@@ -18,8 +17,7 @@ class Localizator
 	/*
 	 * Запись данных локализации в файл
 	 */
-	public function writeSection($data = [], $locale = NULL)
-	{
+	public function writeSection($data = [], $locale = NULL) {
 		dd($locale, $data);
 	}
 }

@@ -10,8 +10,7 @@ trait BelongsToLanguage
 	/*
 	 * Язык
 	 */
-	public function language()
-	{
+	public function language() {
 		return $this->belongsTo(Language::class);
 	}
 
@@ -19,8 +18,7 @@ trait BelongsToLanguage
 	/*
 	 * Ассоциация с текущей локалью
 	 */
-	public function associateWithCurrentLocale()
-	{
+	public function associateWithCurrentLocale() {
 		$language = Language::where('alias', Session::get('admin.locale'))->first();
 
 		$this

@@ -15,8 +15,7 @@ class EditorObserver
 	protected $hasEditors;
 
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->hasCreator = HasCreator::class;
 		$this->hasUpdater = HasUpdater::class;
 		$this->hasEditors = HasEditors::class;
@@ -26,32 +25,27 @@ class EditorObserver
 	/*
 	 * Вспомогательный метод для получения массива трейтов класса
 	 */
-	protected function getTraits($model)
-	{
+	protected function getTraits($model) {
 		$reflection = new \ReflectionClass($model);
 		return $reflection->getTraits();
 	}
 
 
-	public function creating(Model $model)
-	{
+	public function creating(Model $model) {
 		$this->associateCreator($model);
 		$this->associateUpdater($model);
 	}
 
 
-	public function updating(Model $model)
-	{
+	public function updating(Model $model) {
 		$this->associateUpdater($model);
 	}
 
 
-	public function associateCreator(Model $model)
-	{
+	public function associateCreator(Model $model) {
 		$traits = $this->getTraits($model);
 
-		if (array_key_exists($this->hasEditors, $traits) || array_key_exists($this->hasCreator, $traits))
-		{
+		if (array_key_exists($this->hasEditors, $traits) || array_key_exists($this->hasCreator, $traits)) {
 			$model
 				->creator()
 				->associate(Auth::user());
@@ -59,12 +53,10 @@ class EditorObserver
 	}
 
 
-	public function associateUpdater(Model $model)
-	{
+	public function associateUpdater(Model $model) {
 		$traits = $this->getTraits($model);
 
-		if (array_key_exists($this->hasEditors, $traits) || array_key_exists($this->hasUpdater, $traits))
-		{
+		if (array_key_exists($this->hasEditors, $traits) || array_key_exists($this->hasUpdater, $traits)) {
 			$model
 				->updater()
 				->associate(Auth::user());

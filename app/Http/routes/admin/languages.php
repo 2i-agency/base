@@ -6,7 +6,7 @@
 
 Route::group([
 	'prefix' => 'languages'
-], function(){
+], function () {
 
 	// Список языков
 	Route::get('/', [

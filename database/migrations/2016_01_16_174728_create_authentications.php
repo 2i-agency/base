@@ -6,8 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateAuthentications extends Migration
 {
-	public function up()
-	{
+	public function up() {
 		Schema::create('authentications', function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
@@ -60,8 +59,7 @@ class CreateAuthentications extends Migration
 	}
 
 
-	public function down()
-	{
+	public function down() {
 		Schema::drop('authentications');
 	}
 }

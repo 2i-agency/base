@@ -8,7 +8,7 @@ Route::group([
 	'prefix' => 'auth',
 	'namespace' => 'Chunker\Base\Http\Controllers',
 	'middleware' => ['web']
-], function(){
+], function () {
 
 	// Аутентификация
 	Route::post('login', [

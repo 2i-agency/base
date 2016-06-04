@@ -13,30 +13,31 @@ class UserController extends Controller
 	/*
 	 * Список пользователей
 	 */
-	public function index()
-	{
-		$all_users = User::orderBy('login');
-		$active_users = $all_users->get();
-		$deleted_users = $all_users->onlyTrashed()->get();
+	public function index() {
+		$fields = ['id', 'login', 'email', 'name', 'deleted_at'];
 
-		return view('chunker.base::users.index', compact('active_users', 'deleted_users'));
+		$users_query = User::orderBy('login');
+		$active_users = $users_query->get($fields);
+		$deleted_users = $users_query
+			->onlyTrashed()
+			->get($fields);
+
+		return view('chunker.base::admin.users.list', compact('active_users', 'deleted_users'));
 	}
 
 
 	/*
 	 * Страница добавления пользователя
 	 */
-	public function create()
-	{
-		return view('chunker.base::users.create');
+	public function create() {
+		return view('chunker.base::admin.users.create');
 	}
 
 
 	/*
 	 * Добавление пользователя
 	 */
-	public function store(Request $request)
-	{
+	public function store(Request $request) {
 		$user = User::create($request->only([
 			'login',
 			'password',
@@ -51,17 +52,15 @@ class UserController extends Controller
 	/*
 	 * Страница редактирования пользователя
 	 */
-	public function edit(User $user)
-	{
-		return view('chunker.base::users.edit', compact('user'));
+	public function edit(User $user) {
+		return view('chunker.base::admin.users.edit', compact('user'));
 	}
 
 
 	/*
 	 * Обновление пользователя
 	 */
-	public function update(Request $request, User $user)
-	{
+	public function update(Request $request, User $user) {
 		$user->update($request->only([
 			'login',
 			'password',
@@ -76,10 +75,8 @@ class UserController extends Controller
 	/*
 	 * Удаление пользователя
 	 */
-	public function destroy(User $user)
-	{
-		if ($user->isCanBeDeleted())
-		{
+	public function destroy(User $user) {
+		if ($user->isCanBeDeleted()) {
 			$user->delete();
 		}
 
@@ -90,8 +87,7 @@ class UserController extends Controller
 	/*
 	 * Восстановление пользователя
 	 */
-	public function restore($userId)
-	{
+	public function restore($userId) {
 		$user = User::withTrashed()->find($userId);
 		$user->restore();
 
@@ -102,13 +98,12 @@ class UserController extends Controller
 	/*
 	 * Список аутентификаций пользователя
 	 */
-	public function authentications(User $user)
-	{
+	public function authentications(User $user) {
 		$authentications = $user
 			->authentications()
 			->recent()
 			->paginate();
 
-		return view('chunker.base::users.authentications', compact('user', 'authentications'));
+		return view('chunker.base::admin.users.authentications', compact('user', 'authentications'));
 	}
 }

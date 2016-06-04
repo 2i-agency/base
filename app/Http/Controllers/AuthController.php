@@ -22,9 +22,7 @@ class AuthController extends Controller
 		if (Auth::attempt($credentials)) {
 			event(new UserLoggedIn(Auth::user(), false));
 			return redirect()->back();
-		}
-
-		// Аутентификация провалена
+		} // Аутентификация провалена
 		else {
 			$user = User::where('login', $credentials['login'])->first();
 

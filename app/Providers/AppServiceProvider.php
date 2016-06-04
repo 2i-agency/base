@@ -14,8 +14,7 @@ class AppServiceProvider extends ServiceProvider
 	const ROOT = __DIR__ . '/../..';
 
 
-	public function boot()
-	{
+	public function boot() {
 		// Форматирование времени по умолчанию
 		Carbon::setToStringFormat('d.m.Y H:i:s');
 
@@ -29,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
 
 
 		// Команды
-		$this->commands([ Init::class ]);
+		$this->commands([Init::class]);
 
 
 		// Шаблоны и композеры
@@ -72,5 +71,6 @@ class AppServiceProvider extends ServiceProvider
 	}
 
 
-	public function register() {}
+	public function register() {
+	}
 }

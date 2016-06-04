@@ -32,8 +32,7 @@ class User extends Authenticatable
 	 * Хеширование пароля
 	 */
 	public function setPasswordAttribute($password) {
-		if (strlen($password))
-		{
+		if (strlen($password)) {
 			$this->attributes['password'] = bcrypt($password);
 		}
 	}

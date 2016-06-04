@@ -12,8 +12,7 @@ class Init extends Command
 	protected $description = 'Initialization of the Chunker';
 
 
-	public function handle()
-	{
+	public function handle() {
 		// Диск для работы с файлами проекта
 		$disk = Storage::createLocalDriver(['root' => base_path()]);
 
@@ -25,8 +24,8 @@ class Init extends Command
 
 			// Коробочная модель пользователя
 			'app/User.php'
-		]))
-		{
+		])
+		) {
 			$this->line('Deleted unnecessary files');
 		};
 

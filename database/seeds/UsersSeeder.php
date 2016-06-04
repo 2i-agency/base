@@ -5,8 +5,7 @@ use Chunker\Base\Models\User;
 
 class UsersSeeder extends Seeder
 {
-	public function run()
-	{
+	public function run() {
 		// Добавление администратора
 		User::create([
 			'login' => 'admin',

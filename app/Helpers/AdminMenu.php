@@ -103,8 +103,7 @@ class AdminMenu
 	protected function renderIcon($data) {
 		if (isset($data['icon'])) {
 			return '<span class="fa fa-' . $data['icon'] . '"></span>';
-		}
-		else {
+		} else {
 			return NULL;
 		}
 	}

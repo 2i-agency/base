@@ -14,8 +14,7 @@ class TranslationController extends Controller
 	/*
 	 * Список разделов интерфейса
 	 */
-	public function index()
-	{
+	public function index() {
 		return view('chunker.base::translation.index');
 	}
 
@@ -23,27 +22,22 @@ class TranslationController extends Controller
 	/*
 	 * Список элементов раздела
 	 */
-	public function section($section)
-	{
+	public function section($section) {
 		$data = config('chunker.localization.interface')[$section];
 		$title = $data[0];
 		$fields = [];
 
 		// Подготовка полей
-		foreach ($data[1] as $elem_name => $elem_data)
-		{
+		foreach ($data[1] as $elem_name => $elem_data) {
 			// Если поле описано полностью
-			if (is_array($elem_data))
-			{
+			if (is_array($elem_data)) {
 				$field = [
 					'name' => $elem_name,
 					'title' => $elem_data[0],
 					'type' => $elem_data[1]
 				];
-			}
-			// Если описано в компактной форме
-			else
-			{
+			} // Если описано в компактной форме
+			else {
 				$field = [
 					'name' => $elem_name,
 					'title' => $elem_data,
@@ -66,8 +60,7 @@ class TranslationController extends Controller
 	/*
 	 * Сохранение перевода
 	 */
-	public function save(Request $request, $section)
-	{
+	public function save(Request $request, $section) {
 		// Перевод элементов
 		$elements = $request->get('elements');
 
@@ -80,8 +73,7 @@ class TranslationController extends Controller
 		$content = NULL;
 		$pairs = [];
 
-		foreach ($elements as $name => $value)
-		{
+		foreach ($elements as $name => $value) {
 			$pairs[] = '"' . $name . '" => "' . e($value) . '"';
 		}
 

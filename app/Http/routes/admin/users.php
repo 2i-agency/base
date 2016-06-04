@@ -6,7 +6,7 @@
 
 Route::group([
 	'prefix' => 'users'
-], function(){
+], function () {
 
 	// Страница со списком пользователей
 	Route::get('/', [
@@ -29,7 +29,7 @@ Route::group([
 
 	Route::group([
 		'prefix' => '{user}'
-	], function(){
+	], function () {
 
 		// Страница с формой редактирования пользователя
 		Route::get('/', [
