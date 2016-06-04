@@ -1,3 +1,4 @@
 {
-	"sourcemaps": false
+	"sourcemaps": false,
+	"notifications": false
 }

@@ -13,26 +13,22 @@ use Auth;
 class AuthController extends Controller
 {
 	/*
-	 * Авторизация
+	 * Аутентификация
 	 */
-	public function login(Request $request)
-	{
+	public function login(Request $request) {
 		$credentials = $request->only(['login', 'password']);
 
-
-		// Успешная авторизация
-		if (Auth::attempt($credentials))
-		{
+		// Успешная аутентификация
+		if (Auth::attempt($credentials)) {
 			event(new UserLoggedIn(Auth::user(), false));
 			return redirect()->back();
 		}
-		// Авторизация провалена
-		else
-		{
+
+		// Аутентификация провалена
+		else {
 			$user = User::where('login', $credentials['login'])->first();
 
-			if ($user)
-			{
+			if ($user) {
 				event(new UserLoggedIn($user, true));
 			}
 
@@ -42,10 +38,9 @@ class AuthController extends Controller
 
 
 	/*
-	 * Деавторизация
+	 * Деаутентификация
 	 */
-	public function logout()
-	{
+	public function logout() {
 		event(new UserRequestedApp(Auth::user()));
 		Auth::logout();
 

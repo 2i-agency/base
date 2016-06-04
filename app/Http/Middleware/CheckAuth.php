@@ -8,25 +8,21 @@ use Auth;
 
 class CheckAuth
 {
-	public function handle($request, Closure $next)
-	{
+	public function handle($request, Closure $next) {
 		// Если пользователь не авторизован
-		if (Auth::guest())
-		{
+		if (Auth::guest()) {
 			// Ответ при асинхронном запросе
-			if ($request->ajax())
-			{
+			if ($request->ajax()) {
 				return response('Unauthorized.', 401);
 			}
 			// Ответ при GET-запросе
-			else
-			{
-				return response()->view('chunker.base::auth.login', [], 401);
+			else {
+				return response()->view('chunker.base::admin.auth.login', [], 401);
 			}
 		}
+
 		// Регистрация запроса пользователя
-		else
-		{
+		else {
 			event(new UserRequestedApp(Auth::user()));
 		}
 

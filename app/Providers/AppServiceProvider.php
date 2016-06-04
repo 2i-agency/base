@@ -54,7 +54,6 @@ class AppServiceProvider extends ServiceProvider
 
 
 		// Конфигурация группы посредников `admin`
-		// TODO Избавить админцентр от CSRF-защиты
 		$this
 			->app['router']
 			->middlewareGroup('admin', [
@@ -62,7 +61,6 @@ class AppServiceProvider extends ServiceProvider
 				\Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
 				\Illuminate\Session\Middleware\StartSession::class,
 				\Illuminate\View\Middleware\ShareErrorsFromSession::class,
-				\App\Http\Middleware\VerifyCsrfToken::class,
 				\Chunker\Base\Http\Middleware\CheckAuth::class,
 				\Chunker\Base\Http\Middleware\SetLocale::class,
 			]);
