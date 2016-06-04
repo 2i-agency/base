@@ -24,7 +24,8 @@ return [
 	'menu' => [
 		[
 			'name' => 'Пользователи',
-			'route' => 'admin.users'
+			'route' => 'admin.users',
+			'icon' => 'users'
 		]
 	]
 
