@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('chunker.base::admin.template')
 
 
 @section('page.title', 'Контрольная панель')

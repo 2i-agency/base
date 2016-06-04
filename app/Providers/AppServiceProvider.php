@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
 
 		// Шаблоны и композеры
 		$this->loadViewsFrom(static::ROOT . '/resources/views', 'chunker.base');
-		view()->composer('chunker.base::template', LanguagesComposer::class);
+		view()->composer('chunker.base::admin.template', LanguagesComposer::class);
 
 
 		// Публикация ассетов

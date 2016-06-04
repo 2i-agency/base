@@ -1,16 +1,18 @@
 @inject('menu', 'Chunker\Base\Helpers\AdminMenu')
 @inject('request', 'Illuminate\Http\Request')
-@extends('chunker.base::base')
+
+
+@extends('chunker.base::admin.base')
 
 
 @section('page.body')
 
 	{{--Шапка с навигацией--}}
-	<header class="navbar navbar-default navbar-fixed-top"><div class="container-fluid">
+	<header class="navbar navbar-default"><div class="container-fluid">
 
 		<div class="navbar-header">
 
-			{{--Иконка меню--}}
+			{{--Иконка меню в мобильной версии--}}
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsable">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -18,12 +20,8 @@
 			</button>
 
 			{{--Логотип--}}
-			@if ($request->url() == $menu->dashboard())
-				<a class="navbar-brand active" href="{{ $menu->dashboard() }}">
-			@else
-				<a class="navbar-brand" href="{{ $menu->dashboard() }}">
-			@endif
-				<span class="glyphicon glyphicon-dashboard"></span>
+			<a class="navbar-brand{{ ($request->url() == $menu->dashboard() ? ' active' : NULL) }}" href="{{ $menu->dashboard() }}">
+				<span class="fa fa-dashboard"></span>
 				Админцентр
 			</a>
 
@@ -33,7 +31,7 @@
 		{{--Содержимое, скрываемое в мобильной версии--}}
 		<div class="collapse navbar-collapse" id="collapsable">
 
-			{{--Навигация админцентра--}}
+			{{--Меню админцентра--}}
 			{!! $menu->render() !!}
 
 
@@ -42,29 +40,31 @@
 				{!! csrf_field() !!}
 				<div class="btn-group">
 
-					{{--Ссылка на страницу редактирования авторизованного пользователя--}}
+					{{--Ссылка на страницу профиля авторизованного пользователя--}}
 					<a href="{{ route('admin.users.edit', Auth::user()) }}" class="btn btn-default">
-						<span class="glyphicon glyphicon-user"></span>
+						<span class="fa fa-user"></span>
 						{{ Auth::user()->getName() }}
 					</a>
 
 					{{--Кнопка деавторизации--}}
 					<button type="submit" class="btn btn-default" title="Выход">
-						<span class="glyphicon glyphicon-log-out"></span>
+						<span class="fa fa-sign-out"></span>
 					</button>
 
 				</div>
 			</form>
 
 
-			{{--Язык--}}
+			{{--Языковое меню--}}
 			@if (config('chunker.localization.multi'))
 				<div class="navbar-form navbar-right dropdown">
 
+					{{--Кнопка с текущим языком--}}
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 						{{ $_languages->where('route_key', App::getLocale())->first()->name }}
 						<span class="caret"></span>
 					</button>
+
 					<ul class="dropdown-menu">
 
 						{{--Ссылки на переключение языка--}}
@@ -82,27 +82,24 @@
 						@endif
 
 						{{--Ссыла на раздел редактирования языков--}}
-						@if (Route::currentRouteName() == 'admin.languages')
-							<li class="active">
-								<a href="{{ route('admin.languages') }}">Языки</a>
-							</li>
-						@else
-							<li><a href="{{ route('admin.languages') }}">Языки</a></li>
-						@endif
+						<li{!! (Route::currentRouteName() == 'admin.languages' ? ' class="active"' : NULL) !!} >
+							<a href="{{ route('admin.languages') }}">
+								<span class="fa fa-globe"></span>
+								Языки
+							</a>
+						</li>
 
 						{{--Ссылка на раздел перевода интерфейса--}}
-						@if (Route::currentRouteName() == 'admin.translation')
-							<li class="active">
-								<a href="{{ route('admin.translation') }}">Перевод интерфейса</a>
-							</li>
-						@else
-							<li><a href="{{ route('admin.translation') }}">Перевод интерфейса</a></li>
-						@endif
+						<li{!! (Route::currentRouteName() == 'admin.translation' ? ' class="active"' : NULL) !!}>
+							<a href="{{ route('admin.translation') }}">
+								<span class="fa fa-language"></span>
+								Перевод интерфейса
+							</a>
+						</li>
 
 					</ul>
 				</div>
 			@endif
-
 
 
 			{{--Вспомогательные ссылки--}}
@@ -110,18 +107,18 @@
 
 				{{--Главная страница сайта--}}
 				<li>
-					<a href="{{ url('/') }}" target="_blank">
-						<span class="glyphicon glyphicon-new-window"></span>
+					<a href="{{ asset('') }}" target="_blank">
+						<span class="fa fa-book"></span>
 						Сайт
 					</a>
 				</li>
 
-				{{--Метрика--}}
+				{{--Ссылка на метрику--}}
 				@if (env('STATISTICS_URL'))
 					<li>
 						<a href="{{ env('STATISTICS_URL') }}" target="_blank">
 							<span class="glyphicon glyphicon-stats"></span>
-							Метрика
+							Статистика
 						</a>
 					</li>
 				@endif
