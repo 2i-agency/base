@@ -29,6 +29,7 @@
 				title="Контрольная панель"
 			>
 				<span class="fa fa-dashboard"></span>
+				<span class="hidden-lg hidden-md hidden-sm">Контрольная панель</span>
 			</a>
 
 		</div>
