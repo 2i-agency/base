@@ -1,1 +1,41 @@
-.mb20px,.nav.nav-tabs{margin-bottom:20px}.w1px{width:1px}.form-group:last-child,.help-block:last-child{margin-bottom:0}.navbar-brand.active,.navbar-brand.active:active,.navbar-brand.active:hover{background-color:#e7e7e7;color:#555}
+@charset "UTF-8";
+/*
+ * Вспомогательные классы
+ */
+.mb20px {
+  margin-bottom: 20px; }
+
+.w1px {
+  width: 1px; }
+
+/*
+ * Корректировка компонентов
+ */
+.nav.nav-tabs {
+  margin-bottom: 20px; }
+
+.breadcrumb > li:after {
+  content: "/";
+  padding: 0 5px;
+  color: #ccc; }
+
+.breadcrumb > li + li:before {
+  display: none;
+  content: ""; }
+
+.breadcrumb > li:last-child {
+  display: block;
+  font-size: 2em; }
+  .breadcrumb > li:last-child:after {
+    content: ""; }
+
+.breadcrumb > li.active {
+  color: #333; }
+
+.help-block:last-child,
+.form-group:last-child {
+  margin-bottom: 0; }
+
+.navbar-brand.active, .navbar-brand.active:hover, .navbar-brand.active:active {
+  background-color: #e7e7e7;
+  color: #555; }

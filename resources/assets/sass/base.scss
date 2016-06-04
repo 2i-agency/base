@@ -25,6 +25,35 @@
 	margin-bottom: 20px;
 }
 
+// Хлебные крошки
+.breadcrumb {
+	> li {
+		&:after {
+			content: "/";
+			padding: 0 5px;
+			color: #ccc;
+		}
+
+		+ li:before {
+			display: none;
+			content: "";
+		}
+
+		&:last-child {
+			display: block;
+			font-size: 2em;
+
+			&:after {
+				content: "";
+			}
+		}
+
+		&.active {
+			color: #333;
+		}
+	}
+}
+
 // Вспомогательная информация
 .help-block,
 // Группа элементов формы
