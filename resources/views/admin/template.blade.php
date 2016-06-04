@@ -20,9 +20,15 @@
 			</button>
 
 			{{--Логотип--}}
-			<a class="navbar-brand{{ ($request->url() == $menu->dashboard() ? ' active' : NULL) }}" href="{{ $menu->dashboard() }}">
+			<a
+				class="navbar-brand{{ ($request->url() == $menu->dashboard() ? ' active' : NULL) }}"
+				href="{{ $menu->dashboard() }}"
+				data-toggle="tooltip"
+				data-placement="bottom"
+				data-container="body"
+				title="Контрольная панель"
+			>
 				<span class="fa fa-dashboard"></span>
-				Админцентр
 			</a>
 
 		</div>
@@ -41,13 +47,27 @@
 				<div class="btn-group">
 
 					{{--Ссылка на страницу профиля авторизованного пользователя--}}
-					<a href="{{ route('admin.users.edit', Auth::user()) }}" class="btn btn-default">
+					<a
+						href="{{ route('admin.users.edit', Auth::user()) }}"
+						class="btn btn-default"
+						data-toggle="tooltip"
+						data-placement="bottom"
+						data-container="body"
+						title="Текущая учётная запись"
+					>
 						<span class="fa fa-user"></span>
 						{{ Auth::user()->getName() }}
 					</a>
 
 					{{--Кнопка деавторизации--}}
-					<button type="submit" class="btn btn-default" title="Выход">
+					<button
+						type="submit"
+						class="btn btn-default"
+						data-toggle="tooltip"
+						data-placement="bottom"
+						data-container="body"
+						title="Выход"
+					>
 						<span class="fa fa-sign-out"></span>
 					</button>
 
@@ -107,7 +127,7 @@
 
 				{{--Главная страница сайта--}}
 				<li>
-					<a href="{{ asset('') }}" target="_blank">
+					<a href="{{ asset('') }}" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Откроется в новом окне">
 						<span class="fa fa-book"></span>
 						Сайт
 					</a>
