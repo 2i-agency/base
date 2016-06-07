@@ -14,7 +14,7 @@ class LanguageController extends Controller
 	 * Список языков
 	 */
 	public function index() {
-		return view('chunker.base::languages.index', [
+		return view('chunker.base::admin.languages.list', [
 			'languages' => Language::positioned()->get()
 		]);
 	}
