@@ -2,13 +2,13 @@
 
 namespace Chunker\Base\Models;
 
-use Chunker\Base\Models\Traits\Bounded;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\NodeTrait;
 
 class Language extends Model
 {
-	use BelongsToEditors, Bounded;
+	use BelongsToEditors, NodeTrait;
 
 	protected $fillable = [
 		'name',

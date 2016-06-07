@@ -3,6 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use zedisdog\LaravelSchemaExtend\Schema;
 use Illuminate\Database\Migrations\Migration;
+use Kalnoy\Nestedset\NestedSet;
 
 class CreateLanguages extends Migration
 {
@@ -28,12 +29,8 @@ class CreateLanguages extends Migration
 				->unique()
 				->comment('Ключ маршрута');
 
-			// Позиция
-			$table
-				->tinyInteger('position')
-				->unsigned()
-				->index()
-				->comment('Позиция');
+			// Поля для дерева
+			NestedSet::columns($table);
 
 			// Флаг публикации
 			$table

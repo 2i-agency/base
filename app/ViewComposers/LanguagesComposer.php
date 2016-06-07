@@ -8,6 +8,10 @@ use Illuminate\View\View;
 class LanguagesComposer
 {
 	public function compose(View $view) {
-		$view->with('_languages', Language::positioned()->get(['id', 'name', 'route_key']));
+		$languages = Language
+			::defaultOrder()
+			->get(['id', 'name', 'route_key']);
+
+		$view->with('_languages', $languages);
 	}
 }

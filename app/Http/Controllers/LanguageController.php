@@ -15,7 +15,7 @@ class LanguageController extends Controller
 	 */
 	public function index() {
 		return view('chunker.base::admin.languages.list', [
-			'languages' => Language::positioned()->get()
+			'languages' => Language::defaultOrder()->get()
 		]);
 	}
 
@@ -42,7 +42,14 @@ class LanguageController extends Controller
 	 * Позиционирование языков
 	 */
 	public function positioning(Request $request) {
-		Language::find($request->get('id'))
-			->placeTo($request->get('position'));
+		$ids = json_decode($request->get('ids'), true);
+		$data = [];
+
+		foreach ($ids as $id)
+		{
+			$data[] = ['id' => $id];
+		}
+
+		Language::rebuildTree($data);
 	}
 }

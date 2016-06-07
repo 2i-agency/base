@@ -28,7 +28,6 @@ class EventServiceProvider extends ServiceProvider
 		Authentication::observe(AuthenticationObserver::class);
 
 		Language::observe(LanguageObserver::class);
-		Language::observe(BoundedObserver::class);
 		Language::observe(EditorObserver::class);
 
 		User::observe(EditorObserver::class);
