@@ -1,7 +1,3 @@
-@inject('menu', 'Chunker\Base\Helpers\AdminMenu')
-@inject('request', 'Illuminate\Http\Request')
-
-
 @extends('chunker.base::admin.base')
 
 
@@ -21,8 +17,8 @@
 
 			{{--Логотип--}}
 			<a
-				class="navbar-brand{{ ($request->url() == $menu->dashboard() ? ' active' : NULL) }}"
-				href="{{ $menu->dashboard() }}"
+				class="navbar-brand{{ Route::currentRouteNamed('admin.dashboard') ? ' active' : NULL }}"
+				href="{{ route('admin.dashboard') }}"
 				data-hover="tooltip"
 				data-placement="bottom"
 				data-container="body"
