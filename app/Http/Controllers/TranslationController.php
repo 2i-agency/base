@@ -15,7 +15,7 @@ class TranslationController extends Controller
 	 * Список разделов интерфейса
 	 */
 	public function index() {
-		return view('chunker.base::translation.index');
+		return view('chunker.base::admin.translation.sections');
 	}
 
 
@@ -53,7 +53,7 @@ class TranslationController extends Controller
 		}
 
 
-		return view('chunker.base::translation.section', compact('section', 'title', 'fields'));
+		return view('chunker.base::admin.translation.section', compact('section', 'title', 'fields'));
 	}
 
 
