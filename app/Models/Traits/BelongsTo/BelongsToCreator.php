@@ -4,7 +4,7 @@ namespace Chunker\Base\Models\Traits;
 
 use Chunker\Base\Models\User;
 
-trait HasCreator
+trait BelongsToCreator
 {
 	/*
 	 * Пользователь-создатель

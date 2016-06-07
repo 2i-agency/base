@@ -2,9 +2,9 @@
 
 namespace Chunker\Base\Models\Observers;
 
-use Chunker\Base\Models\Traits\HasCreator;
-use Chunker\Base\Models\Traits\HasUpdater;
-use Chunker\Base\Models\Traits\HasEditors;
+use Chunker\Base\Models\Traits\BelongsToCreator;
+use Chunker\Base\Models\Traits\BelongsToUpdater;
+use Chunker\Base\Models\Traits\BelongsToEditors;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
@@ -16,9 +16,9 @@ class EditorObserver
 
 
 	public function __construct() {
-		$this->hasCreator = HasCreator::class;
-		$this->hasUpdater = HasUpdater::class;
-		$this->hasEditors = HasEditors::class;
+		$this->hasCreator = BelongsToCreator::class;
+		$this->hasUpdater = BelongsToUpdater::class;
+		$this->hasEditors = BelongsToEditors::class;
 	}
 
 
