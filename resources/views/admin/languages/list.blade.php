@@ -20,12 +20,11 @@
 			<h4 class="panel-title">Новый язык</h4>
 		</div>
 
-		<div class="panel-body">
-			<div class="row">
+		<div class="panel-body form-inline">
 
-				{{--Название--}}
-				<div class="col-lg-5">
-					<input
+			{{--Название--}}
+			<div class="form-group">
+				<input
 						type="text"
 						name="name"
 						autofocus
@@ -33,27 +32,27 @@
 						autocomplete="off"
 						placeholder="Название"
 						class="form-control"
-					>
-				</div>
+				>
+			</div>
 
-				{{--Псевдоним--}}
-				<div class="col-lg-5">
-					<input
+			{{--Псевдоним--}}
+			<div class="form-group">
+				<input
 						type="text"
 						name="route_key"
 						autocomplete="off"
 						placeholder="Псевдоним"
 						class="form-control"
-					>
-				</div>
-
-				{{--Кнопка добавления--}}
-				<div class="col-lg-2">
-					@include('chunker.base::admin.utils.buttons.add', ['block' => true])
-				</div>
-
+				>
 			</div>
+
+			{{--Кнопка добавления--}}
+			<div class="form-group">
+				@include('chunker.base::admin.utils.buttons.add')
+			</div>
+
 		</div>
+
 	</form>
 
 
