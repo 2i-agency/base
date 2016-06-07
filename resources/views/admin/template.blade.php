@@ -23,7 +23,7 @@
 			<a
 				class="navbar-brand{{ ($request->url() == $menu->dashboard() ? ' active' : NULL) }}"
 				href="{{ $menu->dashboard() }}"
-				data-toggle="tooltip"
+				data-hover="tooltip"
 				data-placement="bottom"
 				data-container="body"
 				title="Контрольная панель"
@@ -51,7 +51,7 @@
 					<a
 						href="{{ route('admin.users.edit', Auth::user()) }}"
 						class="btn btn-default"
-						data-toggle="tooltip"
+						data-hover="tooltip"
 						data-placement="bottom"
 						data-container="body"
 						title="Текущая учётная запись"
@@ -64,7 +64,7 @@
 					<button
 						type="submit"
 						class="btn btn-default"
-						data-toggle="tooltip"
+						data-hover="tooltip"
 						data-placement="bottom"
 						data-container="body"
 						title="Выход"
@@ -128,7 +128,7 @@
 
 				{{--Главная страница сайта--}}
 				<li>
-					<a href="{{ asset('') }}" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Откроется в новом окне">
+					<a href="{{ asset('') }}" target="_blank">
 						<span class="fa fa-book"></span>
 						Сайт
 					</a>

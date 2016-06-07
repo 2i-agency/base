@@ -1,6 +1,6 @@
 $(function(){
 
 	// Всплывающие подсказки
-	$('[data-toggle="tooltip"]').tooltip();
+	$('[data-hover="tooltip"]').tooltip();
 
 });

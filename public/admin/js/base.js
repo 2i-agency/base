@@ -42,7 +42,7 @@ function get_tinymce_config(data){
 $(function(){
 
 	// Всплывающие подсказки
-	$('[data-toggle="tooltip"]').tooltip();
+	$('[data-hover="tooltip"]').tooltip();
 
 });
 $(function(){
