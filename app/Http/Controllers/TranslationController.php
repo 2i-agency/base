@@ -69,17 +69,8 @@ class TranslationController extends Controller
 		$disk = Storage::createLocalDriver(['root' => $directory]);
 		$filename = $section . '.php';
 
-		// Формирование контента файла
-		$content = NULL;
-		$pairs = [];
-
-		foreach ($elements as $name => $value) {
-			$pairs[] = '"' . $name . '" => "' . e($value) . '"';
-		}
-
-		$content = '<?php return [' . implode(',', $pairs) . '];';
-
-		// Запись файла
+		// Запись контента в файл
+		$content = '<?php return ' . var_export($elements, true) . ';';
 		$disk->put($filename, $content);
 
 
