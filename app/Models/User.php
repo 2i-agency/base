@@ -4,14 +4,13 @@ namespace Chunker\Base\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Chunker\Base\Models\Traits\BelongsToEditors;
-use Chunker\Base\Models\Traits\Comparison;
-use Chunker\Base\Models\Authentication;
+use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
+use Chunker\Base\Models\Traits\Comparable;
 use Auth;
 
 class User extends Authenticatable
 {
-	use SoftDeletes, BelongsToEditors, Comparison;
+	use SoftDeletes, BelongsToEditors, Comparable;
 
 	protected $dates = ['deleted_at'];
 

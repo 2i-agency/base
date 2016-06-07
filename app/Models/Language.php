@@ -3,7 +3,7 @@
 namespace Chunker\Base\Models;
 
 use Chunker\Base\Models\Traits\Bounded;
-use Chunker\Base\Models\Traits\BelongsToEditors;
+use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model

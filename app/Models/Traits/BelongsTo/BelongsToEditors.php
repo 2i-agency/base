@@ -1,6 +1,6 @@
 <?php
 
-namespace Chunker\Base\Models\Traits;
+namespace Chunker\Base\Models\Traits\BelongsTo;
 
 trait BelongsToEditors
 {
