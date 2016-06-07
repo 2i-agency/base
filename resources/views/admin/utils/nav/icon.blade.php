@@ -1,1 +1,3 @@
-@include('chunker.base::admin.utils.icon', ['icon' => $item['icon']])
+@if (isset($item['icon']))
+	<span class="fa fa-{{ $item['icon'] }}"></span>
+@endif
