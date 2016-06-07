@@ -39,7 +39,7 @@
 		<div class="collapse navbar-collapse" id="collapsable">
 
 			{{--Меню админцентра--}}
-			{!! $menu->render() !!}
+			@include('chunker.base::admin.utils.nav.menu')
 
 
 			{{--Форма пользователя--}}

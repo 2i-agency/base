@@ -1,0 +1,13 @@
+@php
+
+	$item_url = route($item['route']);
+	$item_is_active = Route::currentRouteNamed($item['route']) || Request::fullUrlIs($item_url . '/*');
+
+@endphp
+
+<li{!! $item_is_active ? ' class="active"' : NULL !!}>
+	<a href="{{ $item_url }}">
+		@include('chunker.base::admin.utils.nav.icon')
+		{{ $item['name'] }}
+	</a>
+</li>

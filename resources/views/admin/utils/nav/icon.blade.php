@@ -1,0 +1,1 @@
+@include('chunker.base::admin.utils.icon', ['icon' => $item['icon']])

@@ -21,7 +21,7 @@ return [
 	|
 	*/
 
-	'menu' => [
+	'structure' => [
 		[
 			'name' => 'Пользователи',
 			'route' => 'admin.users',
