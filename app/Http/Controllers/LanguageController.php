@@ -3,6 +3,7 @@
 namespace Chunker\Base\Http\Controllers;
 
 use Chunker\Base\Models\Language;
+use Chunker\Base\Http\Controllers\Traits\Positioning;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,6 +11,8 @@ use App\Http\Controllers\Controller;
 
 class LanguageController extends Controller
 {
+	use Positioning;
+
 	/*
 	 * Список языков
 	 */
@@ -42,14 +45,6 @@ class LanguageController extends Controller
 	 * Позиционирование языков
 	 */
 	public function positioning(Request $request) {
-		$ids = json_decode($request->get('ids'), true);
-		$data = [];
-
-		foreach ($ids as $id)
-		{
-			$data[] = ['id' => $id];
-		}
-
-		Language::rebuildTree($data);
+		$this->setPositions($request, Language::class);
 	}
 }
