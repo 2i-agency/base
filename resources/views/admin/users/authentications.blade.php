@@ -30,12 +30,6 @@
 				<tbody>
 					@foreach($authentications as $authentication)
 
-						{{--Данные о браузере и ОС--}}
-						@php
-							$browser = new \Sinergi\BrowserDetector\Browser($authentication->user_agent);
-							$os = new \Sinergi\BrowserDetector\Os($authentication->user_agent);
-						@endphp
-
 						{{--Окрашивание строки в соответствии со статусом аутентификации--}}
 						@if ($is_current = ($authentication->last_request_at && $authentication->last_request_at->eq(\Carbon\Carbon::now())))
 							<tr class="info">
@@ -63,10 +57,16 @@
 							<td>{{ $authentication->ip_address }}</td>
 
 							{{--Браузер--}}
-							<td>{{ $browser->getName() . ' ' . $browser->getVersion() }}</td>
+							<td>
+								{{ $authentication->getBrowser()->getName() }}
+								{{ $authentication->getBrowser()->getVersion() }}
+							</td>
 
 							{{--Операционная система--}}
-							<td>{{ $os->getName() . ' ' . $os->getVersion()}}</td>
+							<td>
+								{{ $authentication->getOs()->getName() }}
+								{{ $authentication->getOs()->getVersion() }}
+							</td>
 
 							{{--Статус аутентификации--}}
 							@if ($authentication->is_failed)

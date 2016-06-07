@@ -4,6 +4,8 @@ namespace Chunker\Base\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Sinergi\BrowserDetector\Browser;
+use Sinergi\BrowserDetector\Os;
 
 class Authentication extends Model
 {
@@ -51,5 +53,23 @@ class Authentication extends Model
 		return $query
 			->latest('logged_in_at')
 			->latest('id');
+	}
+	
+	
+	/*
+	 * Информация о браузере
+	 */
+	public function getBrowser()
+	{
+		return new Browser($this->user_agent);
+	}
+	
+	
+	/*
+	 * Информация об ОС
+	 */
+	public function getOs()
+	{
+		return new Os($this->user_agent);
 	}
 }
