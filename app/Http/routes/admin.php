@@ -11,7 +11,6 @@ Route::group([
 ], function () {
 
 	$files = [
-		'assets',
 		'languages',
 		'translation',
 		'set-locale',
