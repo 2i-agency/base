@@ -39,3 +39,7 @@
 .navbar-brand.active, .navbar-brand.active:hover, .navbar-brand.active:active {
   background-color: #e7e7e7;
   color: #555; }
+
+@media (min-width: 768px) {
+  .navbar-right {
+    margin-right: -30px; } }
