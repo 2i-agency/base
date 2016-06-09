@@ -19,6 +19,8 @@
 
 		<div class="panel-body">
 
+			@include('chunker.base::admin.utils.errors')
+
 			{{--Логин--}}
 			<div class="form-group">
 				<input

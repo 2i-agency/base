@@ -5,8 +5,7 @@ namespace Chunker\Base\Http\Controllers;
 use Chunker\Base\Events\UserLoggedIn;
 use Chunker\Base\Events\UserRequestedApp;
 use Chunker\Base\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Requests;
+use Chunker\Base\Http\Requests\AuthenticationRequest;
 use App\Http\Controllers\Controller;
 use Auth;
 
@@ -15,7 +14,7 @@ class AuthController extends Controller
 	/*
 	 * Аутентификация
 	 */
-	public function login(Request $request) {
+	public function login(AuthenticationRequest $request) {
 		$credentials = $request->only(['login', 'password']);
 
 		// Успешная аутентификация
