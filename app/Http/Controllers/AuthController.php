@@ -19,7 +19,7 @@ class AuthController extends Controller
 		$credentials = $request->only(['login', 'password']);
 
 		// Успешная аутентификация
-		if (Auth::attempt($credentials)) {
+		if (Auth::attempt($credentials, $request->has('remember'))) {
 			event(new UserLoggedIn(Auth::user(), false));
 			return redirect()->back();
 		} // Аутентификация провалена
