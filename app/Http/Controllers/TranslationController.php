@@ -74,6 +74,6 @@ class TranslationController extends Controller
 		$disk->put($filename, $content);
 
 
-		return redirect()->back();
+		return back();
 	}
 }

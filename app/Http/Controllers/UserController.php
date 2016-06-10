@@ -68,7 +68,7 @@ class UserController extends Controller
 			'name'
 		]));
 
-		return redirect()->back();
+		return back();
 	}
 
 

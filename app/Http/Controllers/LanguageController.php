@@ -28,7 +28,7 @@ class LanguageController extends Controller
 	 */
 	public function store(Request $request) {
 		Language::create($request->only(['name', 'route_key']));
-		return redirect()->back();
+		return back();
 	}
 
 
@@ -37,7 +37,7 @@ class LanguageController extends Controller
 	 */
 	public function update(Request $request, Language $language) {
 		$language->update($request->only(['name', 'route_key', 'is_published']));
-		return redirect()->back();
+		return back();
 	}
 
 
