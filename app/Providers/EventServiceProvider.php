@@ -26,10 +26,6 @@ class EventServiceProvider extends ServiceProvider
 
 		// Регистрация наблюдателей моделей
 		Authentication::observe(AuthenticationObserver::class);
-
 		Language::observe(LanguageObserver::class);
-		Language::observe(EditorObserver::class);
-
-		User::observe(EditorObserver::class);
 	}
 }

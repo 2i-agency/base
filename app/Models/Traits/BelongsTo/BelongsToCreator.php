@@ -3,6 +3,8 @@
 namespace Chunker\Base\Models\Traits\BelongsTo;
 
 use Chunker\Base\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 trait BelongsToCreator
 {
@@ -11,5 +13,14 @@ trait BelongsToCreator
 	 */
 	public function creator() {
 		return $this->belongsTo(User::class, 'creator_id');
+	}
+
+
+	public static function bootBelongsToCreator() {
+		static::creating(function($model){
+			$model
+				->creator()
+				->associate(Auth::user());
+		});
 	}
 }
