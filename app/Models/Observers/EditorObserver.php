@@ -2,9 +2,9 @@
 
 namespace Chunker\Base\Models\Observers;
 
-use Chunker\Base\Models\Traits\BelongsToCreator;
-use Chunker\Base\Models\Traits\BelongsToUpdater;
-use Chunker\Base\Models\Traits\BelongsToEditors;
+use Chunker\Base\Models\Traits\BelongsTo\BelongsToCreator;
+use Chunker\Base\Models\Traits\BelongsTo\BelongsToUpdater;
+use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
