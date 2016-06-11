@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Schema\Blueprint;
-use zedisdog\LaravelSchemaExtend\Schema;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateUsers extends Migration
