@@ -15,8 +15,9 @@ class AppServiceProvider extends ServiceProvider
 
 
 	public function boot() {
-		// Форматирование времени по умолчанию
+		// Локализация
 		Carbon::setToStringFormat('d.m.Y H:i:s');
+		$this->app->setLocale('ru');
 
 
 		// Замена модели пользователя в конфигурации

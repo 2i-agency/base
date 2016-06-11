@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
 use Storage;
+use App;
 
 class TranslationController extends Controller
 {
@@ -27,6 +28,12 @@ class TranslationController extends Controller
 		$title = $data[0];
 		$fields = [];
 
+
+		// Буферизация текущей локали для корректной работы функции `trans
+		$current_locale = App::getLocale();
+		App::setLocale(Session::get('admin.locale'));
+
+
 		// Подготовка полей
 		foreach ($data[1] as $elem_name => $elem_data) {
 			// Если поле описано полностью
@@ -36,7 +43,8 @@ class TranslationController extends Controller
 					'title' => $elem_data[0],
 					'type' => $elem_data[1]
 				];
-			} // Если описано в компактной форме
+			}
+			// Если описано в компактной форме
 			else {
 				$field = [
 					'name' => $elem_name,
@@ -51,6 +59,10 @@ class TranslationController extends Controller
 
 			$fields[] = $field;
 		}
+
+
+		// Возврат текущей локали
+		App::setLocale($current_locale);
 
 
 		return view('chunker.base::admin.translation.section', compact('section', 'title', 'fields'));

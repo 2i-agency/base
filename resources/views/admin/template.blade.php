@@ -78,7 +78,7 @@
 
 					{{--Кнопка с текущим языком--}}
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-						{{ $_languages->where('route_key', App::getLocale())->first()->name }}
+						{{ $_languages->where('route_key', Session::get('admin.locale'))->first()->name }}
 						<span class="caret"></span>
 					</button>
 
@@ -87,7 +87,7 @@
 						{{--Ссылки на переключение языка--}}
 						@if ($_languages->count() > 1)
 							@foreach ($_languages->reject(function($language){
-								return $language->route_key == App::getLocale();
+								return $language->route_key == Session::get('admin.locale');
 							}) as $_language)
 								<li>
 									<a href="{{ route('admin.set-locale', $_language) }}">
