@@ -88,8 +88,8 @@ return [
 	*/
 
 	'custom' => [
-		'attribute-name' => [
-			'rule-name' => 'custom-message',
+		'login' => [
+			'exists' => 'Пользователя с указанным логином не существует',
 		],
 	],
 
