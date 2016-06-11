@@ -4,7 +4,7 @@
 		<button type="button" class="close" data-dismiss="alert">
 			<span class="fa fa-times"></span>
 		</button>
-		<ul>
+		<ul class="list-unstyled">
 			@foreach($errors->all() as $error)
 				<li>{!! $error !!}</li>
 			@endforeach
