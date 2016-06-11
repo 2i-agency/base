@@ -21,13 +21,12 @@ class AuthController extends Controller
 		if (Auth::attempt($credentials, $request->has('remember'))) {
 			event(new UserLoggedIn(Auth::user(), false));
 			return redirect()->back();
-		} // Аутентификация провалена
+		}
+		// Аутентификация провалена
 		else {
 			$user = User::where('login', $credentials['login'])->first();
-
-			if ($user) {
-				event(new UserLoggedIn($user, true));
-			}
+			event(new UserLoggedIn($user, true));
+			flash()->error('Указан неверный пароль');
 
 			return redirect()->back()->withInput();
 		}

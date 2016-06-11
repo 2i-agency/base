@@ -14,7 +14,8 @@
 		"php" : ">=7.0.0",
 		"zedisdog/laravel-schema-extend" : "~0.6",
 		"kalnoy/nestedset": "~4.1",
-		"sinergi/browser-detector": "^6.0"
+		"sinergi/browser-detector": "~6.0",
+		"laracasts/flash": "~2.0"
 	},
 	"repositories": [
 		{
