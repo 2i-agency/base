@@ -148,6 +148,9 @@
 
 
 	{{--Содержимое страницы--}}
-	<div class="container-fluid">@yield('page.content')</div>
+	<div class="container-fluid">
+		@include('chunker.base::admin.utils.flash.message')
+		@yield('page.content')
+	</div>
 
 @stop

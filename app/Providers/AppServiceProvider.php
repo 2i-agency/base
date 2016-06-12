@@ -40,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
 		// Публикация ассетов
 		$this->publishes([static::ROOT . '/config' => config_path('chunker')], 'config');
 
-		$this->publishes([static::ROOT . '/resources/lang' => base_path('resources/lang')]);
+		$this->publishes([static::ROOT . '/resources/lang' => base_path('resources/lang')], 'lang');
 
 		$this->publishes([
 			static::ROOT . '/database/migrations' => database_path('migrations'),

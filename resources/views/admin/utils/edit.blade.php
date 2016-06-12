@@ -11,6 +11,8 @@
 		$create .= "<br>" . $element->creator->getName();
 	}
 
+	$popover_content = '<p>' . $create . '</p>';
+
 
 	// Информация об обновлении
 	if ($element->created_at->ne($element->updated_at))
@@ -24,9 +26,9 @@
 		{
 			$update .= "<br>" . $element->updater->getName();
 		}
-	}
 
-	$popover_content = '<p>' . $create . '</p><p>' . $update . '</p>';
+		$popover_content .= '<p>' . $update . '</p>';
+	}
 
 @endphp
 

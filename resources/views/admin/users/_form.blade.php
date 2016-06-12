@@ -20,17 +20,26 @@
 		<input
 			type="text"
 			name="login"
-			value="{{ isset($user) ? $user->login : NULL }}"
+			value="{{ old('login') ?: (isset($user) ? $user->login : NULL) }}"
 			class="form-control"
+			pattern="^[A-Za-z-_]+$"
+			maxlength="20"
 			required
 			autofocus
 			autocomplete="off">
+		<div class="help-block">Латинские буквы, дефис и нижнее подчеркивание, не более 20 символов</div>
 	</div>
 
 	{{--Пароль--}}
 	<div class="form-group">
 		<label>Пароль:</label>
-		<input type="password" name="password" class="form-control"{{ isset($user) ? NULL : ' require'}}>
+		<input
+			type="password"
+			name="password"
+			class="form-control"{{ isset($user) ? NULL : ' required'}}
+			minlength="6"
+		>
+		<div class="help-block">Не менее 6 символов</div>
 	</div>
 
 	{{--Электронный адрес--}}
@@ -39,7 +48,7 @@
 		<input
 			type="email"
 			name="email"
-			value="{{ isset($user) ? $user->email : NULL }}"
+			value="{{ old('email') ?: (isset($user) ? $user->email : NULL) }}"
 			class="form-control"
 			required
 			autocomplete="off">
@@ -51,7 +60,7 @@
 		<input
 			type="text"
 			name="name"
-			value="{{ isset($user) ? $user->name : NULL }}"
+			value="{{ old('name') ?: (isset($user) ? $user->name : NULL) }}"
 			class="form-control"
 			autocomplete="off">
 	</div>

@@ -38,14 +38,6 @@ class User extends Authenticatable
 
 
 	/*
-	 * Подготовка логина
-	 */
-	public function setLoginAttribute($login) {
-		$this->attributes['login'] = str_slug($login);
-	}
-
-
-	/*
 	 * Подготовка имени
 	 */
 	public function setNameAttribute($name) {
