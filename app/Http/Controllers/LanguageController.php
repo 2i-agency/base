@@ -5,8 +5,6 @@ namespace Chunker\Base\Http\Controllers;
 use Chunker\Base\Models\Language;
 use Chunker\Base\Http\Controllers\Traits\Positioning;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class LanguageController extends Controller

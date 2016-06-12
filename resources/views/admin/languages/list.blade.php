@@ -1,6 +1,9 @@
 @extends('chunker.base::admin.template')
 
 
+@section('page.title', 'Языки')
+
+
 @section('page.assets')
 	<script src="{{ asset('admin/js/base.js') }}"></script>
 	<script src="{{ asset('admin/js/languages.js') }}"></script>
