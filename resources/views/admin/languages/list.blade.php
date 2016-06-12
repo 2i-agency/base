@@ -29,6 +29,7 @@
 						name="name"
 						autofocus
 						required
+						pattern="^[]$"
 						autocomplete="off"
 						placeholder="Название"
 						class="form-control"
@@ -96,14 +97,15 @@
 							<td class="text-right">
 								@include('chunker.base::admin.utils.edit', ['element' => $language])
 								<button
-										type="button"
-										class="btn btn-primary btn-xs"
-										data-toggle="modal"
-										data-target="#modal-edit"
-										data-action_update="{{ route('admin.languages.update', $language) }}"
-										data-name="{{ $language->name }}"
-										data-route_key="{{ $language->route_key }}"
-										data-is_published="{{ $language->is_published }}">
+									type="button"
+									class="btn btn-primary btn-xs"
+									data-toggle="modal"
+									data-target="#modal-edit"
+									data-action_update="{{ route('admin.languages.update', $language) }}"
+									data-name="{{ $language->name }}"
+									data-route_key="{{ $language->route_key }}"
+									data-is_published="{{ $language->is_published }}"
+								>
 									<span class="glyphicon glyphicon-pencil"></span>
 									Редактировать
 								</button>

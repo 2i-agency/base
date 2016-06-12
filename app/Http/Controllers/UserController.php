@@ -17,6 +17,18 @@ class UserController extends Controller
 		'email' => 'required|email|unique:users,email'
 	];
 
+
+	public function __construct(Request $request) {
+		// Приведение логина в требуемый вид
+		$data = $request->all();
+		if (isset($data['login']))
+		{
+			$data['login'] = trim(str_slug($data['login']), '-_');
+			$request->replace($data);
+		}
+	}
+
+
 	/*
 	 * Список пользователей
 	 */

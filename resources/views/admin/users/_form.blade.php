@@ -22,12 +22,12 @@
 			name="login"
 			value="{{ old('login') ?: (isset($user) ? $user->login : NULL) }}"
 			class="form-control"
-			pattern="^[A-Za-z-_]+$"
+			pattern="^[A-Za-z][A-Za-z-]+[A-Za-z]$"
 			maxlength="20"
 			required
 			autofocus
 			autocomplete="off">
-		<div class="help-block">Латинские буквы, дефис и нижнее подчеркивание, не более 20 символов</div>
+		<div class="help-block">Логин может содержать латинские буквы и дефис, должен начинаться и заканчиваться буквой и содержать не более 20 символов</div>
 	</div>
 
 	{{--Пароль--}}
