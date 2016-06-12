@@ -94,6 +94,7 @@
 
 							{{--Кнопка редактирования--}}
 							<td class="text-right">
+								@include('chunker.base::admin.utils.edit', ['element' => $language])
 								<button
 										type="button"
 										class="btn btn-primary btn-xs"

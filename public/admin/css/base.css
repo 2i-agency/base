@@ -32,6 +32,7 @@
 .breadcrumb > li.active {
   color: #333; }
 
+p:last-child,
 .help-block:last-child,
 .form-group:last-child {
   margin-bottom: 0; }

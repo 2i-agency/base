@@ -6,6 +6,9 @@
 	<h4 class="panel-title">
 		<span class="fa fa-file-text"></span>
 		Данные пользователя
+		@if (isset($user))
+			@include('chunker.base::admin.utils.edit', ['element' => $user, 'right' => true])
+		@endif
 	</h4>
 </div>
 
