@@ -10,7 +10,7 @@ class LanguagesComposer
 	public function compose(View $view) {
 		$languages = Language
 			::defaultOrder()
-			->get(['id', 'name', 'route_key']);
+			->get(['id', 'name', 'locale']);
 
 		$view->with('_languages', $languages);
 	}

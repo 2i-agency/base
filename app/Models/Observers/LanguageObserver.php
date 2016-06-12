@@ -8,18 +8,18 @@ use Storage;
 class LanguageObserver
 {
 	public function creating(Model $model) {
-		$model->route_key = $model->getAttribute('route_key') ?: $model->getAttribute('name');
+		$model->locale = $model->getAttribute('locale') ?: $model->getAttribute('name');
 	}
 
 
 	public function updating(Model $model) {
-		// Переименование папки с переводом в случае смены ключа маршрута
-		$old_directory = $model->getOriginal('route_key');
-		$new_directory = $model->getAttribute('route_key');
+		// Переименование папки с переводом в случае смены локали
+		$old_locale = $model->getOriginal('locale');
+		$new_locale = $model->getAttribute('locale');
 		$disk = Storage::createLocalDriver(['root' => base_path('resources/lang/vendor/chunker')]);
 
-		if ($old_directory != $new_directory && $disk->exists($old_directory)) {
-			$disk->rename($old_directory, $new_directory);
+		if ($old_locale != $new_locale && $disk->exists($old_locale)) {
+			$disk->rename($old_locale, $new_locale);
 		}
 	}
 }

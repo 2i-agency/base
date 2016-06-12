@@ -12,7 +12,7 @@ class Language extends Model
 
 	protected $fillable = [
 		'name',
-		'route_key',
+		'locale',
 		'is_published'
 	];
 
@@ -25,14 +25,14 @@ class Language extends Model
 	 * Настройка ключа для привязки к маршруту
 	 */
 	public function getRouteKeyName() {
-		return 'route_key';
+		return 'locale';
 	}
 
 
 	/*
-	 * Подготовка ключа маршрута
+	 * Подготовка локали
 	 */
-	public function setRouteKeyAttribute($routeKey) {
-		$this->attributes['route_key'] = str_slug(mb_strlen(trim($routeKey)) ? $routeKey : $this->attributes['name']);
+	public function setLocaleAttribute($locale) {
+		$this->attributes['locale'] = str_slug(mb_strlen(trim($locale)) ? $locale : $this->attributes['name']);
 	}
 }

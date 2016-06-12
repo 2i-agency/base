@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Chunker\Base\Libs\Columns;
 
 class CreateUsers extends Migration
 {
@@ -47,21 +48,8 @@ class CreateUsers extends Migration
 				->nullable()
 				->comment('Имя пользователя');
 
-			// Ключ создателя
-			$table
-				->integer('creator_id')
-				->unsigned()
-				->nullable()
-				->index()
-				->comment('Ключ пользователя');
-
-			// Ключ обновителя
-			$table
-				->integer('updater_id')
-				->unsigned()
-				->nullable()
-				->index()
-				->comment('Ключ обновителя');
+			// Ключи создателя и обновителя
+			Columns::editorsIds($table);
 
 			// Время создания и обновления
 			$table->timestamps();

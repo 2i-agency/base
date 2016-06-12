@@ -35,15 +35,15 @@
 				>
 			</div>
 
-			{{--Псевдоним--}}
+			{{--Локаль--}}
 			<div class="form-group">
 				<input
 					type="text"
-					name="route_key"
+					name="locale"
 					pattern="^[\da-z][\da-z-]*[\da-z]$"
 					minlength="2"
 					autocomplete="off"
-					placeholder="Псевдоним"
+					placeholder="Локаль"
 					class="form-control"
 				>
 			</div>
@@ -53,7 +53,7 @@
 				@include('chunker.base::admin.utils.buttons.add')
 			</div>
 
-			<div class="help-block">Псевдоним можно не указывать — в этом случае он будет сгенерирован на основе названия. Псевдоним может содержать буквы, цифры, дефис и нижнее подчёркивание.</div>
+			<div class="help-block">Локаль можно не указывать — в этом случае он будет сгенерирован на основе названия. Локаль может содержать буквы, цифры, дефис и нижнее подчёркивание.</div>
 
 		</div>
 
@@ -73,7 +73,7 @@
 				<thead>
 					<tr>
 						<th>Название</th>
-						<th>Псевдоним</th>
+						<th>Локаль</th>
 						<th>Публикация</th>
 						<th></th>
 					</tr>
@@ -86,8 +86,8 @@
 							{{--Название--}}
 							<td>{{ $language->name }}</td>
 
-							{{--Псевдоним--}}
-							<td>{{ $language->route_key }}</td>
+							{{--Локаль--}}
+							<td>{{ $language->locale }}</td>
 
 							{{--Публикация--}}
 							@if ($language->is_published)
@@ -106,7 +106,7 @@
 									data-target="#modal-edit"
 									data-action_update="{{ route('admin.languages.update', $language) }}"
 									data-name="{{ $language->name }}"
-									data-route_key="{{ $language->route_key }}"
+									data-locale="{{ $language->locale }}"
 									data-is_published="{{ $language->is_published }}"
 								>
 									<span class="glyphicon glyphicon-pencil"></span>
@@ -150,12 +150,12 @@
 						>
 					</div>
 
-					{{--Псевдоним--}}
+					{{--Локаль--}}
 					<div class="form-group">
-						<label>Псевдоним:</label>
+						<label>Локаль:</label>
 						<input
 							type="text"
-							name="route_key"
+							name="locale"
 							autocomplete="off"
 							class="form-control"
 							pattern="^[\da-z][\da-z-]*[\da-z]$"
