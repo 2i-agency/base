@@ -25,25 +25,26 @@
 			{{--Название--}}
 			<div class="form-group">
 				<input
-						type="text"
-						name="name"
-						autofocus
-						required
-						pattern="^[]$"
-						autocomplete="off"
-						placeholder="Название"
-						class="form-control"
+					type="text"
+					name="name"
+					autofocus
+					required
+					autocomplete="off"
+					placeholder="Название"
+					class="form-control"
 				>
 			</div>
 
 			{{--Псевдоним--}}
 			<div class="form-group">
 				<input
-						type="text"
-						name="route_key"
-						autocomplete="off"
-						placeholder="Псевдоним"
-						class="form-control"
+					type="text"
+					name="route_key"
+					pattern="^[\da-z][\da-z-]*[\da-z]$"
+					minlength="2"
+					autocomplete="off"
+					placeholder="Псевдоним"
+					class="form-control"
 				>
 			</div>
 
@@ -51,6 +52,8 @@
 			<div class="form-group">
 				@include('chunker.base::admin.utils.buttons.add')
 			</div>
+
+			<div class="help-block">Псевдоним можно не указывать — в этом случае он будет сгенерирован на основе названия. Псевдоним может содержать буквы, цифры, дефис и нижнее подчёркивание.</div>
 
 		</div>
 
@@ -138,13 +141,26 @@
 					{{--Название--}}
 					<div class="form-group">
 						<label>Название:</label>
-						<input type="text" name="name" autocomplete="off" required class="form-control">
+						<input
+							type="text"
+							name="name"
+							autocomplete="off"
+							required
+							class="form-control"
+						>
 					</div>
 
 					{{--Псевдоним--}}
 					<div class="form-group">
 						<label>Псевдоним:</label>
-						<input type="text" name="route_key" autocomplete="off" class="form-control">
+						<input
+							type="text"
+							name="route_key"
+							autocomplete="off"
+							class="form-control"
+							pattern="^[\da-z][\da-z-]*[\da-z]$"
+							minlength="2"
+						>
 					</div>
 
 					{{--Флаг публикации--}}

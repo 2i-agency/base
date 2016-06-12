@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\Validator;
 
 class UserController extends Controller
 {
@@ -69,7 +68,7 @@ class UserController extends Controller
 		]));
 
 		// Уведомление
-		flash()->success('Пользователь <b>' . $user->login . '</b> добавлен');
+		flash()->success('Пользователь <b>' . e($user->login) . '</b> добавлен');
 
 
 		return redirect()->route('admin.users.edit', $user);
@@ -89,12 +88,11 @@ class UserController extends Controller
 	 */
 	public function update(Request $request, User $user) {
 		// Подготовка правил
-		$rules = $this->rules;
-		$rules['login'] .= ',' . $user->id;
-		$rules['email'] .= ',' . $user->id;
+		$this->rules['login'] .= ',' . $user->id;
+		$this->rules['email'] .= ',' . $user->id;
 
 		// Валидация
-		$this->validate($request, $rules);
+		$this->validate($request, $this->rules);
 
 		// Обновление
 		$user->update($request->only([
@@ -105,7 +103,7 @@ class UserController extends Controller
 		]));
 
 		// Уведомление
-		flash()->success('Данные пользователя <b>' . $user->login . '</b> сохранены');
+		flash()->success('Данные пользователя <b>' . e($user->login) . '</b> сохранены');
 
 
 		return back();
@@ -118,7 +116,7 @@ class UserController extends Controller
 	public function destroy(User $user) {
 		if ($user->isCanBeDeleted()) {
 			$user->delete();
-			flash()->warning('Пользователь <b>' . $user->login . '</b> удалён');
+			flash()->warning('Пользователь <b>' . e($user->login) . '</b> удалён');
 		}
 		else
 		{
@@ -135,7 +133,7 @@ class UserController extends Controller
 	public function restore($userId) {
 		$user = User::withTrashed()->find($userId);
 		$user->restore();
-		flash()->success('Пользователь <b>' . $user->login . '</b> восстановлен');
+		flash()->success('Пользователь <b>' . e($user->login) . '</b> восстановлен');
 
 		return redirect()->route('admin.users.edit', $user);
 	}

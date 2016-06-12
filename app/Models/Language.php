@@ -33,6 +33,6 @@ class Language extends Model
 	 * Подготовка ключа маршрута
 	 */
 	public function setRouteKeyAttribute($routeKey) {
-		$this->attributes['route_key'] = str_slug(trim($routeKey));
+		$this->attributes['route_key'] = str_slug(mb_strlen(trim($routeKey)) ? $routeKey : $this->attributes['name']);
 	}
 }

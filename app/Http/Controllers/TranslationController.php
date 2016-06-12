@@ -85,6 +85,9 @@ class TranslationController extends Controller
 		$content = '<?php return ' . var_export($elements, true) . ';';
 		$disk->put($filename, $content);
 
+		// Уведомления
+		flash()->success('Перевод элементов сохранён');
+
 
 		return redirect()->back();
 	}
