@@ -3,26 +3,23 @@
 namespace Chunker\Base\Models\Observers;
 
 use Illuminate\Database\Eloquent\Model;
-use App;
 use Storage;
 
 class LanguageObserver
 {
 	public function creating(Model $model) {
-		$this->makeRouteKey($model);
+		$model->route_key = $model->getAttribute('route_key') ?: $model->getAttribute('name');
 	}
 
 
 	public function updating(Model $model) {
-		$this->makeRouteKey($model);
-	}
+		// Переименование папки с переводом в случае смены ключа маршрута
+		$old_directory = $model->getOriginal('route_key');
+		$new_directory = $model->getAttribute('route_key');
+		$disk = Storage::createLocalDriver(['root' => base_path('resources/lang/vendor/chunker')]);
 
-
-	/*
-	 * Формирование ключа маршрута на основе названия
-	 */
-	public function makeRouteKey(Model $model) {
-		$route_key = trim($model->route_key);
-		$model->route_key = mb_strlen($route_key) ? $route_key : $model->name;
+		if ($old_directory != $new_directory && $disk->exists($old_directory)) {
+			$disk->rename($old_directory, $new_directory);
+		}
 	}
 }
