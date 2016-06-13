@@ -30,7 +30,16 @@ class UserController extends Controller
 	 * Список пользователей
 	 */
 	public function index() {
-		$fields = ['id', 'login', 'email', 'name', 'deleted_at'];
+		$fields = [
+			'id',
+			'login',
+			'email',
+			'name',
+			'creator_id',
+			'updater_id',
+			'created_at',
+			'updated_at',
+			'deleted_at'];
 
 		$users_query = User::orderBy('login');
 		$active_users = $users_query->get($fields);

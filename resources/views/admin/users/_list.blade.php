@@ -40,6 +40,7 @@
 
 						{{--Ссылки на страницу редактирования--}}
 						<td class="text-right">
+							@include('chunker.base::admin.utils.edit', ['element' => $user])
 							@if ($user->trashed())
 								<a href="{{ route('admin.users.restore', $user) }}" class="btn btn-warning btn-xs">
 									<span class="fa fa-repeat"></span>
