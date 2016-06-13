@@ -1,4 +1,23 @@
 /*
+ * Приведение иконки активатора сворачивания/разворачивания в актуальное состояние
+ */
+function actualize_collapse_indicator($toggler) {
+	$toggler = $($toggler);
+	var $icon = $toggler.find('.fa-chevron-down'),
+		$target = $($toggler.data('target') || $toggler.attr('href'));
+
+	// Цель скрыта, указатель повёрнут вправо
+	if ($target.hasClass('collapse') && $target.hasClass('in'))
+	{
+		$icon.addClass('fa-rotate-270');
+	}
+	// Цель показана, указатель повёрнут вниз
+	else
+	{
+		$icon.removeClass('fa-rotate-270');
+	}
+}
+/*
  * Формирование конфига редактора TInyMCE
  */
 function get_tinymce_config(data){
@@ -47,6 +66,17 @@ $(function(){
 		html: true,
 		trigger: 'hover'
 	});
+
+	// Поворот иконки у инициализатора сворачивания/разворачивания во время срабатывания
+	$('[data-toggle="collapse"]')
+		.each(function(){
+			var $toggler = $(this);
+
+			$($toggler.data('target') || $toggler.attr('href'))
+				.on('hide.bs.collapse show.bs.collapse', function(){
+					actualize_collapse_indicator($toggler);
+				});
+		})
 
 });
 $(function(){
