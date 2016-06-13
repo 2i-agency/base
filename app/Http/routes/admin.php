@@ -11,11 +11,12 @@ Route::group([
 ], function () {
 
 	$files = [
+		'dashboard',
 		'languages',
 		'translation',
 		'set-locale',
-		'dashboard',
-		'users'
+		'users',
+		'settings'
 	];
 
 	foreach ($files as $file) {

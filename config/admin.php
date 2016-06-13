@@ -23,9 +23,14 @@ return [
 
 	'structure' => [
 		[
-			'name' => 'Пользователи',
-			'route' => 'admin.users',
-			'icon' => 'users'
+			'name'	=> 'Пользователи',
+			'icon'	=> 'users',
+			'route'	=> 'admin.users'
+		],
+		[
+			'name'	=> 'Настройки',
+			'icon'	=> 'cogs',
+			'route'	=> 'admin.settings'
 		]
 	]
 

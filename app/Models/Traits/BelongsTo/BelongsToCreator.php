@@ -3,7 +3,6 @@
 namespace Chunker\Base\Models\Traits\BelongsTo;
 
 use Chunker\Base\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Auth;
 
 trait BelongsToCreator
