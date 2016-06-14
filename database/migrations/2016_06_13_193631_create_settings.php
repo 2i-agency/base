@@ -15,11 +15,9 @@ class CreateSettings extends Migration
 
 			// Ключ
 			$table
-				->increments('id')
+				->string('id')
+				->unique()
 				->comment('Ключ');
-
-			// Название
-			Columns::name($table);
 
 			// Заголовок
 			$table
@@ -31,15 +29,23 @@ class CreateSettings extends Migration
 				->string('value')
 				->nullable()
 				->comment('Значение настройки');
+			
+			// Тип элементa управления
+			$table
+				->string('control_type')
+				->comment('Тип элемента управления');
+
+			// Подсказка
+			$table
+				->string('hint')
+				->nullable()
+				->comment('Подсказка');
 
 			// Ключ обновителя
 			Columns::updaterId($table);
 
-			// Время обновления
-			$table
-				->timestamp('updated_at')
-				->index()
-				->comment('Время обновления');
+			// Время создания и обновления
+			$table->timestamps();
 
 		});
 	}
