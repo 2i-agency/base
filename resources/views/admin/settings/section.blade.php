@@ -33,31 +33,35 @@
 				{!! method_field('PUT') !!}
 
 				<div class="panel-body">
-					@foreach ($settings as $setting_id => $setting_data)
+					@foreach ($settings as $setting)
 						<div class="form-group">
 
 							{{--Метка--}}
-							<label>{{ $setting_data['title'] }}:</label>
+							@include('chunker.base::admin.utils.edit', [
+								'element' => $setting,
+								'right' => true
+							])
+							<label>{{ $setting->title }}:</label>
 
 							{{--Многострочное поле--}}
-							@if ($setting_data['control_type'] == 'textarea')
-								<textarea name="settings[{{ $setting_id }}]" class="form-control">{{ $setting_data['value'] }}</textarea>
+							@if ($setting->control_type == 'textarea')
+								<textarea name="settings[{{ $setting->id }}]" class="form-control">{{ $setting->value }}</textarea>
 
 							{{--Переключатель--}}
-							@elseif($setting_data['control_type'] == 'radio')
+							@elseif($setting->control_type == 'radio')
 								<label class="radio-inline">
 									<input
 										type="radio"
-										name="settings[{{ $setting_id }}]"
+										name="settings[{{ $setting->id }}]"
 										value="1"
-										{{ $setting_data['value'] ? ' checked' : NULL }}
+										{{ $setting->value ? ' checked' : NULL }}
 									> Да
 								</label>
 								<label class="radio-inline">
 									<input
 										type="radio"
-										name="settings[{{ $setting_id }}]"
-										{{ $setting_data['value'] ? NULL : ' checked' }}
+										name="settings[{{ $setting->id }}]"
+										{{ $setting->value ? NULL : ' checked' }}
 										value="0"
 									> Нет
 								</label>
@@ -65,17 +69,17 @@
 							{{--Однострочное поле--}}
 							@else
 								<input
-									type="{{ $setting_data['control_type'] }}"
-									name="settings[{{ $setting_id }}]"
-									value="{{ $setting_data['value'] }}"
+									type="{{ $setting->control_type }}"
+									name="settings[{{ $setting->id }}]"
+									value="{{ $setting->value }}"
 									class="form-control"
 									autocomplete="off"
 								>
 							@endif
 
 							{{--Подсказка--}}
-							@if ($setting_data['hint'])
-								<div class="help-block">{{ $setting_data['hint'] }}</div>
+							@if ($setting->hint)
+								<div class="help-block">{{ $setting->hint }}</div>
 							@endif
 
 						</div>

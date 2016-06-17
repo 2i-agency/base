@@ -9,6 +9,8 @@ class Setting extends Model
 {
 	use BelongsToUpdater;
 
+	protected $casts = ['id' => 'string'];
+
 	protected $fillable = [
 		'id',
 		'title',

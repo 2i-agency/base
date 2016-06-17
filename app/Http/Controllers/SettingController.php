@@ -21,21 +21,9 @@ class SettingController extends Controller
 		// Содержимое раздела
 		else
 		{
-			$settings = [];
-
-			foreach (config('chunker.admin.settings')[$section]['options'] as $id) {
-				$settings[$id] = Setting
-					::where('id', $id)
-					->first([
-						'title',
-						'value',
-						'control_type',
-						'hint',
-						'updater_id',
-						'created_at',
-						'updated_at'])
-					->toArray();
-			}
+			$settings = Setting
+				::whereIn('id', config('chunker.admin.settings')[$section]['options'])
+				->get();
 
 			return view('chunker.base::admin.settings.section', compact('section', 'settings'));
 		}
@@ -50,6 +38,9 @@ class SettingController extends Controller
 		{
 			Setting::find($id)->update(['value' => $value]);
 		}
+
+		flash()->success('Настройки сохранены');
+
 
 		return back();
 	}
