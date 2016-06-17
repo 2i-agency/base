@@ -73,5 +73,9 @@ class AppServiceProvider extends ServiceProvider
 
 
 	public function register() {
+		// Подключение хелперов
+		foreach (glob(self::ROOT . '/app/Helpers/*.php') as $filename) {
+			require_once $filename;
+		}
 	}
 }
