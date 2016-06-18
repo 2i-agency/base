@@ -1,3 +1,3 @@
 @if (isset($item['icon']))
-	<span class="fa fa-{{ $item['icon'] }}"></span>
+	<span class="fa fa-fw fa-{{ $item['icon'] }}"></span>
 @endif

@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Schema\Blueprint;
-use zedisdog\LaravelSchemaExtend\Schema;
 use Illuminate\Database\Migrations\Migration;
 use Kalnoy\Nestedset\NestedSet;
+use Chunker\Base\Libs\Columns;
 
 class CreateLanguages extends Migration
 {
@@ -19,15 +19,13 @@ class CreateLanguages extends Migration
 				->comment('Ключ');
 
 			// Название
-			$table
-				->string('name')
-				->comment('Название');
+			Columns::name($table);
 
-			// Ключ маршрута
+			// Локаль
 			$table
-				->string('route_key')
+				->string('locale')
 				->unique()
-				->comment('Ключ маршрута');
+				->comment('Локаль');
 
 			// Поля для дерева
 			NestedSet::columns($table);
@@ -38,21 +36,8 @@ class CreateLanguages extends Migration
 				->index()
 				->comment('Флаг публикации');
 
-			// Ключ создателя
-			$table
-				->integer('creator_id')
-				->unsigned()
-				->nullable()
-				->index()
-				->comment('Ключ создателя');
-
-			// Ключ обновителя
-			$table
-				->integer('updater_id')
-				->unsigned()
-				->nullable()
-				->index()
-				->comment('Ключ обновителя');
+			// Ключи создателя и обновителя
+			Columns::editorsIds($table);
 
 			// Время создания и обновления
 			$table->timestamps();

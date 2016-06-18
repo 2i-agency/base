@@ -15,8 +15,9 @@ class AppServiceProvider extends ServiceProvider
 
 
 	public function boot() {
-		// Форматирование времени по умолчанию
+		// Локализация
 		Carbon::setToStringFormat('d.m.Y H:i:s');
+		$this->app->setLocale('ru');
 
 
 		// Замена модели пользователя в конфигурации
@@ -39,7 +40,7 @@ class AppServiceProvider extends ServiceProvider
 		// Публикация ассетов
 		$this->publishes([static::ROOT . '/config' => config_path('chunker')], 'config');
 
-		$this->publishes([static::ROOT . '/resources/lang' => base_path('resources/lang')]);
+		$this->publishes([static::ROOT . '/resources/lang' => base_path('resources/lang')], 'lang');
 
 		$this->publishes([
 			static::ROOT . '/database/migrations' => database_path('migrations'),
@@ -72,5 +73,9 @@ class AppServiceProvider extends ServiceProvider
 
 
 	public function register() {
+		// Подключение хелперов
+		foreach (glob(self::ROOT . '/app/Helpers/*.php') as $filename) {
+			require_once $filename;
+		}
 	}
 }

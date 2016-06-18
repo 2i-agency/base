@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Models;
 
+use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
@@ -10,9 +11,10 @@ use Auth;
 
 class User extends Authenticatable
 {
-	use SoftDeletes, BelongsToEditors, Comparable;
+	use SoftDeletes, BelongsToEditors, Comparable, Nullable;
 
 	protected $dates = ['deleted_at'];
+	protected $nullable = ['name'];
 
 	protected $fillable = [
 		'login',
@@ -34,23 +36,6 @@ class User extends Authenticatable
 		if (strlen($password)) {
 			$this->attributes['password'] = bcrypt($password);
 		}
-	}
-
-
-	/*
-	 * Подготовка логина
-	 */
-	public function setLoginAttribute($login) {
-		$this->attributes['login'] = str_slug($login);
-	}
-
-
-	/*
-	 * Подготовка имени
-	 */
-	public function setNameAttribute($name) {
-		$name = trim($name);
-		$this->attributes['name'] = strlen($name) ? $name : NULL;
 	}
 
 

@@ -10,13 +10,13 @@ $(function(){
 		// Данные
 		var action_update = $button.data('action_update'),
 			name = $button.data('name'),
-			route_key = $button.data('route_key'),
+			locale = $button.data('locale'),
 			is_published = Number($button.data('is_published'));
 
 		// Настройка окна
 		$modal.attr('action', action_update);
 		$modal.find('input[name="name"]').val(name);
-		$modal.find('input[name="route_key"]').val(route_key);
+		$modal.find('input[name="locale"]').val(locale);
 		$modal.find('input[name="is_published"][value="' + is_published + '"]').attr('checked', '');
 	})
 

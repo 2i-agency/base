@@ -32,9 +32,13 @@
 .breadcrumb > li.active {
   color: #333; }
 
+p:last-child,
 .help-block:last-child,
 .form-group:last-child {
   margin-bottom: 0; }
+
+.navbar {
+  border-radius: 0; }
 
 .navbar-brand.active, .navbar-brand.active:hover, .navbar-brand.active:active {
   background-color: #e7e7e7;

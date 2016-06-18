@@ -19,7 +19,7 @@ trait BelongsToLanguage
 	 * Ассоциация с текущей локалью
 	 */
 	public function associateWithCurrentLocale() {
-		$language = Language::where('alias', Session::get('admin.locale'))->first();
+		$language = Language::where('locale', Session::get('admin.locale'))->first();
 
 		$this
 			->language()

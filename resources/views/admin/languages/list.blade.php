@@ -1,6 +1,9 @@
 @extends('chunker.base::admin.template')
 
 
+@section('page.title', 'Языки')
+
+
 @section('page.assets')
 	<script src="{{ asset('admin/js/base.js') }}"></script>
 	<script src="{{ asset('admin/js/languages.js') }}"></script>
@@ -25,24 +28,26 @@
 			{{--Название--}}
 			<div class="form-group">
 				<input
-						type="text"
-						name="name"
-						autofocus
-						required
-						autocomplete="off"
-						placeholder="Название"
-						class="form-control"
+					type="text"
+					name="name"
+					autofocus
+					required
+					autocomplete="off"
+					placeholder="Название"
+					class="form-control"
 				>
 			</div>
 
-			{{--Псевдоним--}}
+			{{--Локаль--}}
 			<div class="form-group">
 				<input
-						type="text"
-						name="route_key"
-						autocomplete="off"
-						placeholder="Псевдоним"
-						class="form-control"
+					type="text"
+					name="locale"
+					pattern="^[\da-z][\da-z-]*[\da-z]$"
+					minlength="2"
+					autocomplete="off"
+					placeholder="Локаль"
+					class="form-control"
 				>
 			</div>
 
@@ -50,6 +55,8 @@
 			<div class="form-group">
 				@include('chunker.base::admin.utils.buttons.add')
 			</div>
+
+			<div class="help-block">Локаль можно не указывать — в этом случае он будет сгенерирован на основе названия. Локаль может содержать буквы, цифры, дефис и нижнее подчёркивание.</div>
 
 		</div>
 
@@ -69,7 +76,7 @@
 				<thead>
 					<tr>
 						<th>Название</th>
-						<th>Псевдоним</th>
+						<th>Локаль</th>
 						<th>Публикация</th>
 						<th></th>
 					</tr>
@@ -82,8 +89,8 @@
 							{{--Название--}}
 							<td>{{ $language->name }}</td>
 
-							{{--Псевдоним--}}
-							<td>{{ $language->route_key }}</td>
+							{{--Локаль--}}
+							<td>{{ $language->locale }}</td>
 
 							{{--Публикация--}}
 							@if ($language->is_published)
@@ -94,15 +101,17 @@
 
 							{{--Кнопка редактирования--}}
 							<td class="text-right">
+								@include('chunker.base::admin.utils.edit', ['element' => $language])
 								<button
-										type="button"
-										class="btn btn-primary btn-xs"
-										data-toggle="modal"
-										data-target="#modal-edit"
-										data-action_update="{{ route('admin.languages.update', $language) }}"
-										data-name="{{ $language->name }}"
-										data-route_key="{{ $language->route_key }}"
-										data-is_published="{{ $language->is_published }}">
+									type="button"
+									class="btn btn-primary btn-xs"
+									data-toggle="modal"
+									data-target="#modal-edit"
+									data-action_update="{{ route('admin.languages.update', $language) }}"
+									data-name="{{ $language->name }}"
+									data-locale="{{ $language->locale }}"
+									data-is_published="{{ $language->is_published }}"
+								>
 									<span class="glyphicon glyphicon-pencil"></span>
 									Редактировать
 								</button>
@@ -135,13 +144,26 @@
 					{{--Название--}}
 					<div class="form-group">
 						<label>Название:</label>
-						<input type="text" name="name" autocomplete="off" required class="form-control">
+						<input
+							type="text"
+							name="name"
+							autocomplete="off"
+							required
+							class="form-control"
+						>
 					</div>
 
-					{{--Псевдоним--}}
+					{{--Локаль--}}
 					<div class="form-group">
-						<label>Псевдоним:</label>
-						<input type="text" name="route_key" autocomplete="off" class="form-control">
+						<label>Локаль:</label>
+						<input
+							type="text"
+							name="locale"
+							autocomplete="off"
+							class="form-control"
+							pattern="^[\da-z][\da-z-]*[\da-z]$"
+							minlength="2"
+						>
 					</div>
 
 					{{--Флаг публикации--}}

@@ -11,16 +11,9 @@ class SetLocale
 {
 	public function handle($request, Closure $next) {
 		// Определение локали по умолчанию
-		if (!Session::has('admin.locale') || !Language::where('route_key', Session::get('admin.locale'))->count()) {
-			Session::set('admin.locale', Language::defaultOrder()->first(['route_key'])->route_key);
+		if (!Session::has('admin.locale') || !Language::where('locale', Session::get('admin.locale'))->count()) {
+			Session::set('admin.locale', Language::defaultOrder()->first(['locale'])->locale);
 		}
-
-		// Переключение локали
-		App::setLocale(Session::get('admin.locale'));
-
-		// Выборка модели языка для текущей локали
-		Session::set('admin.language', Language::where('route_key', Session::get('admin.locale'))->first());
-
 
 		return $next($request);
 	}

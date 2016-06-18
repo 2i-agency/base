@@ -19,7 +19,7 @@
 
 		<div class="panel-body">
 
-			@include('chunker.base::admin.utils.errors')
+			@include('chunker.base::admin.utils.flash.message')
 
 			{{--Логин--}}
 			<div class="form-group">
@@ -27,7 +27,7 @@
 					type="text"
 					name="login"
 					value="{{ old('login') }}"
-					required
+
 					autofocus
 					class="form-control"
 					autocomplete="off"

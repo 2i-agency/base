@@ -4,17 +4,42 @@ namespace Chunker\Base\Http\Controllers;
 
 use Chunker\Base\Models\User;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+	protected $rules = [
+		'login' => 'required|alpha_dash|max:20|unique:users,login',
+		'password' => 'sometimes|min:6',
+		'email' => 'required|email|unique:users,email'
+	];
+
+
+	public function __construct(Request $request) {
+		// Приведение логина в требуемый вид
+		$data = $request->all();
+		if (isset($data['login']))
+		{
+			$data['login'] = trim(str_slug($data['login']), '-_');
+			$request->replace($data);
+		}
+	}
+
+
 	/*
 	 * Список пользователей
 	 */
 	public function index() {
-		$fields = ['id', 'login', 'email', 'name', 'deleted_at'];
+		$fields = [
+			'id',
+			'login',
+			'email',
+			'name',
+			'creator_id',
+			'updater_id',
+			'created_at',
+			'updated_at',
+			'deleted_at'];
 
 		$users_query = User::orderBy('login');
 		$active_users = $users_query->get($fields);
@@ -38,12 +63,20 @@ class UserController extends Controller
 	 * Добавление пользователя
 	 */
 	public function store(Request $request) {
+		// Валидация
+		$this->validate($request, $this->rules);
+
+		// Добавление
 		$user = User::create($request->only([
 			'login',
 			'password',
 			'email',
 			'name'
 		]));
+
+		// Уведомление
+		flash()->success('Пользователь <b>' . e($user->login) . '</b> добавлен');
+
 
 		return redirect()->route('admin.users.edit', $user);
 	}
@@ -61,12 +94,24 @@ class UserController extends Controller
 	 * Обновление пользователя
 	 */
 	public function update(Request $request, User $user) {
+		// Подготовка правил
+		$this->rules['login'] .= ',' . $user->id;
+		$this->rules['email'] .= ',' . $user->id;
+
+		// Валидация
+		$this->validate($request, $this->rules);
+
+		// Обновление
 		$user->update($request->only([
 			'login',
 			'password',
 			'email',
 			'name'
 		]));
+
+		// Уведомление
+		flash()->success('Данные пользователя <b>' . e($user->login) . '</b> сохранены');
+
 
 		return back();
 	}
@@ -78,6 +123,11 @@ class UserController extends Controller
 	public function destroy(User $user) {
 		if ($user->isCanBeDeleted()) {
 			$user->delete();
+			flash()->warning('Пользователь <b>' . e($user->login) . '</b> удалён');
+		}
+		else
+		{
+			flash()->danger('Вы не можете удалить этого пользователя');
 		}
 
 		return redirect()->route('admin.users');
@@ -90,6 +140,7 @@ class UserController extends Controller
 	public function restore($userId) {
 		$user = User::withTrashed()->find($userId);
 		$user->restore();
+		flash()->success('Пользователь <b>' . e($user->login) . '</b> восстановлен');
 
 		return redirect()->route('admin.users.edit', $user);
 	}
