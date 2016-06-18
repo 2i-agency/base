@@ -57,7 +57,7 @@ class LanguageController extends Controller
 		$language = Language::create($request->only(['name', 'locale']));
 		flash()->success('Язык <b>' . e($language->name) . '</b> добавлен');
 
-		return redirect()->back();
+		return back();
 	}
 
 
@@ -76,7 +76,7 @@ class LanguageController extends Controller
 		flash()->success('Данные языка <b>' . e($language->name) . '</b> сохранены');
 
 
-		return redirect()->back();
+		return back();
 	}
 
 

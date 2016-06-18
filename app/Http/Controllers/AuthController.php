@@ -20,7 +20,7 @@ class AuthController extends Controller
 		// Успешная аутентификация
 		if (Auth::attempt($credentials, $request->has('remember'))) {
 			event(new UserLoggedIn(Auth::user(), false));
-			return redirect()->back();
+			return back();
 		}
 		// Аутентификация провалена
 		else {
@@ -28,7 +28,7 @@ class AuthController extends Controller
 			event(new UserLoggedIn($user, true));
 			flash()->error('Указан неверный пароль');
 
-			return redirect()->back()->withInput();
+			return back()->withInput();
 		}
 	}
 
@@ -40,6 +40,6 @@ class AuthController extends Controller
 		event(new UserRequestedApp(Auth::user()));
 		Auth::logout();
 
-		return redirect()->back();
+		return back();
 	}
 }
