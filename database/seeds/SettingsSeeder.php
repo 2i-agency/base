@@ -6,16 +6,26 @@ use Chunker\Base\Models\Setting;
 class SettingsSeeder extends Seeder
 {
 	public function run() {
+		// Подготовка данных
 		$settings = [
+
+			// Электронная почта
 			[
 				'id' => 'mail_address',
 				'title' => 'Электронный адрес',
 				'control_type' => 'email',
+				'value' => 'mail@' . host(),
 				'hint' => 'Используется сайтом для отправки системных уведомлений'
 			],
 			[
+				'id' => 'mail_author',
+				'title' => 'Имя отправителя',
+				'control_type' => 'text',
+				'value' => 'Система оповещений ' . host()
+			],
+			[
 				'id' => 'mail_host',
-				'title' => 'Адрес почтового сервера',
+				'title' => 'Адрес сервера исходящей почты',
 				'control_type' => 'text'
 			],
 			[
@@ -38,8 +48,15 @@ class SettingsSeeder extends Seeder
 				'title' => 'Шифрование',
 				'control_type' => 'text'
 			]
+
 		];
-		
+
+
+		// Очистка таблицы
+		Setting::truncate();
+
+
+		// Добавление данных
 		foreach ($settings as $setting)
 		{
 			Setting::create($setting);

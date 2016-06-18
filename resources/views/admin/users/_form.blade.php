@@ -65,4 +65,25 @@
 			autocomplete="off">
 	</div>
 
+	{{--Отправка уведомлений--}}
+	<div class="form-group">
+		<label>Отправлять уведомления:</label>
+		<label class="radio-inline">
+			<input
+				type="radio"
+				name="is_subscribed"
+				value="1"
+				{{ !isset($user) || $user->is_subscribed ? ' checked' : NULL }}
+			>Да
+		</label>
+		<label class="radio-inline">
+			<input
+				type="radio"
+				name="is_subscribed"
+				value="0"
+				{{ isset($user) && !$user->is_subscribed ? ' checked' : NULL }}
+			>Нет
+		</label>
+	</div>
+
 </div>

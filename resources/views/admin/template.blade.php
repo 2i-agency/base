@@ -17,15 +17,15 @@
 
 			{{--Логотип--}}
 			<a
-				class="navbar-brand{{ Route::currentRouteNamed('admin.dashboard') ? ' active' : NULL }}"
-				href="{{ route('admin.dashboard') }}"
+				class="navbar-brand{{ Route::currentRouteNamed('admin.notices') ? ' active' : NULL }}"
+				href="{{ route('admin.notices') }}"
 				data-hover="tooltip"
 				data-placement="bottom"
 				data-container="body"
-				title="Контрольная панель"
+				title="Уведомления"
 			>
-				<span class="fa fa-dashboard"></span>
-				<span class="hidden-lg hidden-md hidden-sm">Контрольная панель</span>
+				<span class="fa fa-flash"></span>
+				<span class="hidden-lg hidden-md hidden-sm">Уведомления</span>
 			</a>
 
 		</div>

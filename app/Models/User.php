@@ -20,12 +20,17 @@ class User extends Authenticatable
 		'login',
 		'password',
 		'email',
-		'name'
+		'name',
+		'is_subscribed'
 	];
 
 	protected $hidden = [
 		'password',
 		'remember_token',
+	];
+
+	protected $casts = [
+		'is_subscribed' => 'boolean'
 	];
 
 

@@ -33,8 +33,8 @@ return [
 			'route'	=> 'admin.settings'
 		]
 	],
-	
-	
+
+
 	/*
 	|--------------------------------------------------------------------------
 	| Структура раздела настроек
@@ -52,6 +52,7 @@ return [
 			'icon' => 'envelope',
 			'options' => [
 				'mail_address',
+				'mail_author',
 				'mail_host',
 				'mail_port',
 				'mail_username',

@@ -47,6 +47,11 @@ class CreateUsers extends Migration
 				->string('name')
 				->nullable()
 				->comment('Имя пользователя');
+			
+			// Подписан на уведомления
+			$table
+				->boolean('is_subscribed')
+				->comment('Подписан на уведомления');
 
 			// Ключи создателя и обновителя
 			Columns::editorsIds($table);

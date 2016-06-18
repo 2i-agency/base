@@ -35,6 +35,7 @@ class UserController extends Controller
 			'login',
 			'email',
 			'name',
+			'is_subscribed',
 			'creator_id',
 			'updater_id',
 			'created_at',
@@ -71,7 +72,8 @@ class UserController extends Controller
 			'login',
 			'password',
 			'email',
-			'name'
+			'name',
+			'is_subscribed'
 		]));
 
 		// Уведомление
@@ -106,7 +108,8 @@ class UserController extends Controller
 			'login',
 			'password',
 			'email',
-			'name'
+			'name',
+			'is_subscribed'
 		]));
 
 		// Уведомление
