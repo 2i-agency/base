@@ -5,6 +5,13 @@
  */
 
 function setting($id, $default = NULL) {
-	$setting = \Chunker\Base\Models\Setting::find($id);
-	return $setting && !empty($setting->value) ? $setting->value : $default;
+	if (Schema::hasTable('options'))
+	{
+		$setting = \Chunker\Base\Models\Setting::find($id);
+		return $setting && !empty($setting->value) ? $setting->value : $default;
+	}
+	else
+	{
+		return NULL;
+	}
 }
