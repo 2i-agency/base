@@ -15,7 +15,7 @@ class CreateNotices extends Migration
 			$table->comment = 'Уведомления';
 
 			// Ключ
-			$table->increments('id');
+			Columns::id($table);
 
 			// Содержимое
 			$table->text('content');

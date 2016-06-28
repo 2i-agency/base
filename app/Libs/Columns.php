@@ -7,6 +7,16 @@ use Illuminate\Database\Schema\Blueprint;
 class Columns
 {
 	/*
+	 * Первичный ключ
+	 */
+	public static function id(Blueprint $table) {
+		$table
+			->increments('id')
+			->comment('Ключ');
+	}
+
+
+	/*
 	 * Ключ создателя
 	 */
 	public static function creatorId(Blueprint $table) {
@@ -91,5 +101,17 @@ class Columns
 	public static function baseMeta(Blueprint $table) {
 		static::metaTitle($table);
 		static::metaDescription($table);
+	}
+
+
+	/*
+	 * Время публикации
+	 */
+	public static function publishedAt(Blueprint $table) {
+		$table
+			->timestamp('published_at')
+			->nullable()
+			->index()
+			->comment('Время публикации');
 	}
 }

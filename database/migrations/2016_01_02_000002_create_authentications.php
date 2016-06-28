@@ -15,9 +15,7 @@ class CreateAuthentications extends Migration
 			$table->comment = 'Аутентификации пользователей';
 
 			// Ключ
-			$table
-				->increments('id')
-				->comment('Ключ');
+			Columns::id($table);
 
 			// Ключ пользователя
 			$table

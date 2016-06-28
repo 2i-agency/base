@@ -16,9 +16,7 @@ class CreateUsers extends Migration
 			$table->comment = 'Пользователи';
 
 			// Ключ
-			$table
-				->increments('id')
-				->comment('Ключ');
+			Columns::id($table);
 
 			// Логин
 			$table

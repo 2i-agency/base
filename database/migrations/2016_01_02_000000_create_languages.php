@@ -17,9 +17,7 @@ class CreateLanguages extends Migration
 			$table->comment = 'Языки';
 
 			// Ключ
-			$table
-				->increments('id')
-				->comment('Ключ');
+			Columns::id($table);
 
 			// Название
 			Columns::name($table);
