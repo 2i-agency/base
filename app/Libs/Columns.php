@@ -53,6 +53,17 @@ class Columns
 
 
 	/*
+	 * Контент
+	 */
+	public static function content(Blueprint $table) {
+		$table
+			->longText('content')
+			->nullable()
+			->comment('Контент');
+	}
+
+
+	/*
 	 * Заголовок
 	 */
 	public static function metaTitle(Blueprint $table) {
@@ -64,7 +75,7 @@ class Columns
 
 
 	/*
-	 * Название
+	 * Описание
 	 */
 	public static function metaDescription(Blueprint $table) {
 		$table
