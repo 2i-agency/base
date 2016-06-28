@@ -7,8 +7,11 @@ use Chunker\Base\Libs\Columns;
 
 class CreateLanguages extends Migration
 {
+	protected $table = 'languages';
+
+
 	public function up() {
-		Schema::create('languages', function (Blueprint $table) {
+		Schema::create($this->table, function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
 			$table->comment = 'Языки';
@@ -47,6 +50,6 @@ class CreateLanguages extends Migration
 
 
 	public function down() {
-		Schema::drop('languages');
+		Schema::drop($this->table);
 	}
 }

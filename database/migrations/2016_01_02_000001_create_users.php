@@ -6,7 +6,7 @@ use Chunker\Base\Libs\Columns;
 
 class CreateUsers extends Migration
 {
-	public $table = 'users';
+	protected $table = 'users';
 
 
 	public function up() {
@@ -47,7 +47,7 @@ class CreateUsers extends Migration
 				->string('name')
 				->nullable()
 				->comment('Имя пользователя');
-			
+
 			// Подписан на уведомления
 			$table
 				->boolean('is_subscribed')

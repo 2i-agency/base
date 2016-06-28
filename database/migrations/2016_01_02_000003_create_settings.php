@@ -6,9 +6,11 @@ use Chunker\Base\Libs\Columns;
 
 class CreateSettings extends Migration
 {
-	public function up()
-	{
-		Schema::create('settings', function (Blueprint $table) {
+	protected $table = 'settings';
+
+
+	public function up() {
+		Schema::create($this->table, function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
 			$table->comment = 'Настройки';
@@ -29,7 +31,7 @@ class CreateSettings extends Migration
 				->string('value')
 				->nullable()
 				->comment('Значение настройки');
-			
+
 			// Тип элементa управления
 			$table
 				->string('control_type')
@@ -51,8 +53,7 @@ class CreateSettings extends Migration
 	}
 
 
-	public function down()
-	{
-		Schema::drop('settings');
+	public function down() {
+		Schema::drop($this->table);
 	}
 }

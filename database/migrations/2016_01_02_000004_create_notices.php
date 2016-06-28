@@ -5,9 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateNotices extends Migration
 {
-	public function up()
-	{
-		Schema::create('notices', function (Blueprint $table) {
+	protected $table = 'notices';
+
+
+	public function up() {
+		Schema::create($this->table, function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
 			$table->comment = 'Уведомления';
@@ -30,8 +32,7 @@ class CreateNotices extends Migration
 	}
 
 
-	public function down()
-	{
-		Schema::drop('notices');
+	public function down() {
+		Schema::drop($this->table);
 	}
 }
