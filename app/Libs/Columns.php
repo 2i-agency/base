@@ -64,17 +64,6 @@ class Columns
 
 
 	/*
-	 * Ключевые слова
-	 */
-	public static function metaKeywords(Blueprint $table) {
-		$table
-			->string('meta_keywords')
-			->nullable()
-			->comment('Ключевые слова');
-	}
-
-
-	/*
 	 * Название
 	 */
 	public static function metaDescription(Blueprint $table) {
@@ -90,7 +79,6 @@ class Columns
 	 */
 	public static function baseMeta(Blueprint $table) {
 		static::metaTitle($table);
-		static::metaKeywords($table);
 		static::metaDescription($table);
 	}
 }
