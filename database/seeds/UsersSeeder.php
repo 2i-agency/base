@@ -11,7 +11,8 @@ class UsersSeeder extends Seeder
 			'login' => 'admin',
 			'password' => '000000',
 			'email' => 'mail@' . env('APP_URL'),
-			'name' => 'Администратор'
+			'name' => 'Администратор',
+			'is_subscribed' => true
 		]);
 	}
 }
