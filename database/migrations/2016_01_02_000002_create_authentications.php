@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Chunker\Base\Libs\Columns;
 
 class CreateAuthentications extends Migration
 {
