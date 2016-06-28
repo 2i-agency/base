@@ -10,7 +10,7 @@ class NoticeController extends Controller
 	/*
 	 * Список уведомлений
 	 */
-	public function getIndex() {
+	public function index() {
 		$notices = Notice
 			::orderBy('is_read')
 			->latest()
@@ -23,12 +23,9 @@ class NoticeController extends Controller
 	/*
 	 * Отметка прочтения уведомления
 	 */
-	public function putReadNotice($noticeId) {
-		Notice
-			::findOrFail($noticeId)
-			->update(['is_read' => true]);
-
-		flash()->success('Уведомление <b>№' . $noticeId . '</b> отмечено, как прочитанное');
+	public function read(Notice $notice) {
+		$notice->update(['is_read' => true]);
+		flash()->success('Уведомление <b>№' . $notice->id . '</b> отмечено, как прочитанное');
 
 		return back();
 	}
@@ -37,9 +34,9 @@ class NoticeController extends Controller
 	/*
 	 * Удаление уведомления
 	 */
-	public function deleteDestroyNotice($noticeId) {
-		Notice::destroy($noticeId);
-		flash()->warning('Уведомление <b>№' . $noticeId . '</b> удалено');
+	public function destroy(Notice $notice) {
+		$notice->delete();
+		flash()->warning('Уведомление <b>№' . $notice->id . '</b> удалено');
 
 		return back();
 	}
