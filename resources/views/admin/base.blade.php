@@ -11,11 +11,7 @@
 	<script src="https://yastatic.net/jquery-ui/1.11.2/jquery-ui.min.js"></script>
 	<link rel="stylesheet" href="https://yastatic.net/jquery-ui/1.11.2/themes/smoothness/jquery-ui.min.css">
 
-	{{--Bootstrap--}}
-	<script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css">
-
-	{{--Иконки--}}
+	{{--Иконки FontAwesome--}}
 	<script src="https://use.fontawesome.com/4fa1e38ea7.js"></script>
 
 	{{--Собственные оформление и поведение страницы--}}

@@ -5,7 +5,6 @@
 
 
 @section('page.assets')
-	<script src="{{ asset('admin/js/base.js') }}"></script>
 	<script src="{{ asset('admin/js/languages.js') }}"></script>
 @stop
 
@@ -82,7 +81,7 @@
 					</tr>
 				</thead>
 
-				<tbody class="positioned" data-url="{{ route('admin.languages.positioning') }}">
+				<tbody class="js-positionable" data-url="{{ route('admin.languages.positioning') }}">
 					@foreach ($languages as $language)
 						<tr data-id="{{ $language->id }}">
 
