@@ -8,5 +8,13 @@ use Chunker\Base\Models\Traits\Scopes\ScopeIsPublished;
 
 trait Publicable
 {
-	use ScopeByPublicationTime, ScopeIsPublished, ScopeIsNotPublished;
+	use ScopeByPublicationTime, ScopeIsPublished, ScopeIsNotPublished, HasDates;
+
+
+	/*
+	 * Форматирование времени публикации
+	 */
+	public function setPublishedAtAttribute($time) {
+		$this->prepareTime('published_at', $time);
+	}
 }
