@@ -38,6 +38,20 @@ $(function(){
 
 
 	// Календари
-	$('.js-datetimepicker').datetimepicker({ locale: 'ru' });
+	$('.js-timepicker').each(function(num, elem) {
+		var $picker = $(elem),
+			format = $picker.data('format') || 'DD.MM.YYYY HH:mm';
+
+		$(elem).datetimepicker({
+			locale: 'ru',
+			format: format,
+			showTodayButton: true,
+			showClear: true,
+			tooltips: {
+				today: 'Выбрать сегодня',
+				clear: 'Очистить'
+			}
+		});
+	});
 
 });
