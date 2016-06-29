@@ -11,7 +11,8 @@
 /*
  * Корректировка компонентов
  */
-.nav.nav-tabs {
+.nav.nav-tabs,
+.nav.nav-pills {
   margin-bottom: 20px; }
 
 .breadcrumb > li:after {
