@@ -3,8 +3,11 @@
 	$item_is_active = false;
 
 	foreach ($item['children'] as $child) {
-		$child_url = route($child['route']);
-		$item_is_active = $item_is_active || (Route::currentRouteNamed($child['route']) || Request::fullUrlIs($child_url . '/*'));
+		if (is_array($child))
+		{
+			$child_url = route($child['route']);
+			$item_is_active = $item_is_active || (Route::currentRouteNamed($child['route']) || Request::fullUrlIs($child_url . '/*'));
+		}
 	}
 
 @endphp
@@ -17,7 +20,11 @@
 	</a>
 	<ul class="dropdown-menu">
 		@foreach ($item['children'] as $child)
-			@include('chunker.base::admin.utils.nav.item', ['item' => $child])
+			@if (is_array($child))
+				@include('chunker.base::admin.utils.nav.item', ['item' => $child])
+			@elseif ($child === '')
+				<li class="divider"></li>
+			@endif
 		@endforeach
 	</ul>
 </li>
