@@ -2,9 +2,9 @@
 
 namespace Chunker\Base\Models;
 
-use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
+use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 
 class Language extends Model
 {
