@@ -19,10 +19,9 @@ class Init extends Command
 
 		// Удаление ненужных файлов
 		if ($disk->delete([
-			// Коробочная миграция таблицы пользователей
+			// Коробочные миграции и модели
 			'database/migrations/2014_10_12_000000_create_users_table.php',
-
-			// Коробочная модель пользователя
+			'database/migrations/2014_10_12_100000_create_passwords_resets_table.php',
 			'app/User.php'
 		])
 		) {
@@ -34,9 +33,14 @@ class Init extends Command
 		$this->call('vendor:publish', ['--force' => true]);
 
 
+		// Оптимизация (необходимо для обновления кеша автозагрузки классов)
+		$this->call('optimize');
+
+
 		// Миграция и заполнение таблиц
 		$this->call('migrate');
 		$this->call('db:seed', ['--class' => 'UsersSeeder']);
 		$this->call('db:seed', ['--class' => 'LanguagesSeeder']);
+		$this->call('db:seed', ['--class' => 'SettingsSeeder']);
 	}
 }
