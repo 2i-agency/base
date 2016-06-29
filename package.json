@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "scripts": {
+    "prod": "gulp --production",
+    "dev": "gulp watch"
+  },
+  "devDependencies": {
+    "bootstrap-sass": "^3.0.0",
+    "eonasdan-bootstrap-datetimepicker-npm": "^4.17.37",
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^5.0.0",
+    "moment": "^2.13.0"
+  }
+}
