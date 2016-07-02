@@ -96,3 +96,18 @@ p,
 		margin-right: -30px;
 	}
 }
+
+// Чекбоксы и радио-кнопки
+.checkbox-inline,
+.radio-online {
+	margin-right: 10px;
+
+	& + .checkbox-inline,
+	& + .radio-inline {
+		margin-left: 0;
+	}
+
+	&:last-child {
+		margin-right: 0;
+	}
+}
