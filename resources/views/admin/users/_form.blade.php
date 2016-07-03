@@ -22,7 +22,7 @@
 			name="login"
 			value="{{ old('login') ?: (isset($user) ? $user->login : NULL) }}"
 			class="form-control"
-			pattern="^[A-Za-z][A-Za-z-]+[A-Za-z]$"
+			pattern="^[0-9A-Za-z][0-9A-Za-z-]+[0-9A-Za-z]$"
 			maxlength="20"
 			required
 			autofocus
