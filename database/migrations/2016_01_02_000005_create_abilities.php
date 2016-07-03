@@ -4,27 +4,25 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
-class CreateNotices extends Migration
+class CreateAbilities extends Migration
 {
-	protected $table = 'notices';
+	protected $table = 'abilities';
 
 
 	public function up() {
 		Schema::create($this->table, function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
-			$table->comment = 'Уведомления';
+			$table->comment = 'Возможности пользователей';
 
 			// Ключ
-			Columns::id($table);
-
-			// Содержимое
-			$table->text('content');
-
-			// Прочитано
 			$table
-				->boolean('is_read')
-				->index();
+				->string('id')
+				->primary()
+				->comment('Ключ');
+
+			// Название
+			Columns::name($table);
 
 			// Время создания и обновления
 			$table->timestamps();
