@@ -11,7 +11,10 @@
 	<div>
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 col-lg-offset-4 col-md-offset-3 col-sm-offset-2">@yield('content')</div>
+				<div class="col-lg-4 col-md-6 col-sm-8 col-xs-12 col-lg-offset-4 col-md-offset-3 col-sm-offset-2">
+					@include('chunker.base::admin.utils.flash.message')
+					@yield('content')
+				</div>
 			</div>
 		</div>
 	</div>

@@ -39,7 +39,7 @@
 
 
 			{{--Форма пользователя--}}
-			<form class="navbar-form navbar-right" method="POST" action="{{ route('logout') }}">
+			<form class="navbar-form navbar-right" method="POST" action="{{ route('admin.logout') }}">
 				{!! csrf_field() !!}
 				<div class="btn-group">
 

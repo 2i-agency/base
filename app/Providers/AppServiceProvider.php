@@ -22,14 +22,14 @@ class AppServiceProvider extends ServiceProvider
 
 		// Настройка электронной почты
 		config([
-			'mail.driver' => setting('mail_host') ? 'smtp' : config('mail.driver'),
-			'mail.host' => setting('mail_host', config('mail.host')),
-			'mail.port' => setting('mail_port', config('mail.port')),
-			'mail.from.address' => setting('mail_address', config('mail.from.address')),
-			'mail.from.name' => setting('mail_author', config('mail.from.name')),
-			'mail.encryption' => setting('mail_encryption', config('mail.encryption')),
-			'mail.username' => setting('mail_username', config('mail.username')),
-			'mail.password' => setting('mail_password', config('mail.password'))
+			'mail.driver'       => setting('mail_host')         ? 'smtp' : config('mail.driver'),
+			'mail.host'         => setting('mail_host')         ?: config('mail.host'),
+			'mail.port'         => setting('mail_port')         ?: config('mail.port'),
+			'mail.from.address' => setting('mail_address')      ?: config('mail.from.address'),
+			'mail.from.name'    => setting('mail_author')       ?: config('mail.from.name'),
+			'mail.encryption'   => setting('mail_encryption')   ?: config('mail.encryption'),
+			'mail.username'     => setting('mail_username')     ?: config('mail.username'),
+			'mail.password'     => setting('mail_password')     ?: config('mail.password')
 		]);
 
 
@@ -56,13 +56,13 @@ class AppServiceProvider extends ServiceProvider
 		$this->publishes([static::ROOT . '/resources/lang' => base_path('resources/lang')], 'lang');
 
 		$this->publishes([
-			static::ROOT . '/database/migrations' => database_path('migrations'),
-			static::ROOT . '/database/seeds' => database_path('seeds')
+			static::ROOT . '/database/migrations'   => database_path('migrations'),
+			static::ROOT . '/database/seeds'        => database_path('seeds')
 		], 'database');
 
 		$this->publishes([
-			static::ROOT . '/public/admin' => public_path('admin'),
-			static::ROOT . '/public/.htaccess' => public_path('.htaccess'),
+			static::ROOT . '/public/admin'      => public_path('admin'),
+			static::ROOT . '/public/.htaccess'  => public_path('.htaccess'),
 		], 'public');
 
 

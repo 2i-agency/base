@@ -6,8 +6,8 @@
 
 @section('content')
 
-	{{--Форма атворизации--}}
-	<form method="POST" class="panel panel-default" action="{{ route('login') }}">
+	{{--Форма аутентификации--}}
+	<form method="POST" class="panel panel-default" action="{{ route('admin.login') }}">
 		{!! csrf_field() !!}
 
 		<div class="panel-heading">
@@ -19,15 +19,13 @@
 
 		<div class="panel-body">
 
-			@include('chunker.base::admin.utils.flash.message')
-
 			{{--Логин--}}
 			<div class="form-group">
 				<input
 					type="text"
 					name="login"
 					value="{{ old('login') }}"
-
+					required
 					autofocus
 					class="form-control"
 					autocomplete="off"
@@ -59,7 +57,7 @@
 
 			<div class="row">
 
-				{{--Кнопка авторизации--}}
+				{{--Кнопка аутентификации--}}
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 					<button type="submit" class="btn btn-primary">
 						<span class="fa fa-sign-in"></span>
@@ -67,10 +65,10 @@
 					</button>
 				</div>
 
-				{{--Ссылка на страницу восстановления пароля--}}
+				{{--Ссылка на страницу сброса пароля--}}
 				<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 					<p class="form-control-static text-right">
-						<a href="#">Восстановление доступа</a>
+						<a href="{{ route('admin.reset-password-form') }}">Восстановление доступа</a>
 					</p>
 				</div>
 

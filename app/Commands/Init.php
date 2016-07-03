@@ -41,7 +41,7 @@ class Init extends Command
 				'app/User.php'
 			])
 			) {
-				$this->line('Deleted unnecessary files');
+				$this->warn('Deleted unnecessary files');
 			};
 		}
 
