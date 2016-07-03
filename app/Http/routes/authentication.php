@@ -22,16 +22,23 @@ Route::group([
 		'as'    => 'admin.logout'
 	]);
 
-	// Форма сброса пароля
-	Route::get('reset', [
-		'uses'  => 'AuthController@showResetPasswordForm',
-		'as'    => 'admin.reset-password-form'
-	]);
 
-	// Сброс пароля
-	Route::post('reset', [
-		'uses'  => 'AuthController@resetPassword',
-		'as'    => 'admin.reset-password'
-	]);
+	Route::group([
+		'middleware' => 'guest'
+	], function() {
+
+		// Форма сброса пароля
+		Route::get('reset', [
+			'uses'  => 'AuthController@showResetPasswordForm',
+			'as'    => 'admin.reset-password-form'
+		]);
+
+		// Сброс пароля
+		Route::post('reset', [
+			'uses'  => 'AuthController@resetPassword',
+			'as'    => 'admin.reset-password'
+		]);
+
+	});
 
 });
