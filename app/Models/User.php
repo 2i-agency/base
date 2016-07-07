@@ -61,9 +61,17 @@ class User extends Authenticatable
 
 
 	/*
-	 * Аутентификайии
+	 * Аутентификации
 	 */
 	public function authentications() {
 		return $this->hasMany(Authentication::class);
+	}
+
+
+	/*
+	 * Роли
+	 */
+	public function roles() {
+		return $this->belongsToMany(Role::class);
 	}
 }

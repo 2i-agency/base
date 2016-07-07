@@ -6,9 +6,11 @@ use Chunker\Base\Listeners\UserListener;
 use Chunker\Base\Models\Authentication;
 use Chunker\Base\Models\Language;
 use Chunker\Base\Models\Notice;
+use Chunker\Base\Models\Role;
 use Chunker\Base\Models\Observers\AuthenticationObserver;
 use Chunker\Base\Models\Observers\LanguageObserver;
 use Chunker\Base\Models\Observers\NoticeObserver;
+use Chunker\Base\Models\Observers\RoleObserver;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -27,5 +29,6 @@ class EventServiceProvider extends ServiceProvider
 		Authentication::observe(AuthenticationObserver::class);
 		Language::observe(LanguageObserver::class);
 		Notice::observe(NoticeObserver::class);
+		Role::observe(RoleObserver::class);
 	}
 }
