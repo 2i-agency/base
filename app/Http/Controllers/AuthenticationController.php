@@ -12,24 +12,32 @@ use Auth;
 use Illuminate\Mail\Message;
 use Mail;
 
-class AuthController extends Controller
+class AuthenticationController extends Controller
 {
 	/*
 	 * Аутентификация
 	 */
 	public function login(AuthenticationRequest $request) {
 		$credentials = $request->only(['login', 'password']);
+		$user = Auth::getProvider()->retrieveByCredentials($credentials);
 
 		// Успешная аутентификация
-		if (Auth::attempt($credentials, $request->has('remember'))) {
-			event(new UserLoggedIn(Auth::user(), false));
+		if (!$user->is_blocked && Auth::attempt($credentials, $request->has('remember'))) {
+			event(new UserLoggedIn($user, false));
 			return back();
 		}
 		// Аутентификация провалена
 		else {
-			$user = User::where('login', $credentials['login'])->first();
 			event(new UserLoggedIn($user, true));
-			flash()->error('Указан неверный пароль');
+
+			if ($user->is_blocked)
+			{
+				flash()->error('Учетная запись <b>' . $user->login . '</b> заблокирована');
+			}
+			else
+			{
+				flash()->error('Указан неверный пароль');
+			}
 
 			return back()->withInput();
 		}

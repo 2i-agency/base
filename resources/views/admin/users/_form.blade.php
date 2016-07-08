@@ -86,4 +86,27 @@
 		</label>
 	</div>
 
+	{{--Заблокирован--}}
+	<div class="form-group">
+		<label>Заблокирован:</label>
+		<label class="radio-inline">
+			<input
+				type="radio"
+				name="is_blocked"
+				value="1"
+				{{ isset($user) && $user->is_blocked ? ' checked' : NULL }}
+				{{ isset($user) && !$user->isCanBeBlocked() ? ' disabled' : NULL }}
+			>Да
+		</label>
+		<label class="radio-inline">
+			<input
+				type="radio"
+				name="is_blocked"
+				value="0"
+				{{ !isset($user) || !$user->is_blocked ? ' checked' : NULL }}
+				{{ isset($user) && !$user->isCanBeBlocked() ? ' disabled' : NULL }}
+			>Нет
+		</label>
+	</div>
+
 </div>

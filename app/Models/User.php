@@ -4,16 +4,14 @@ namespace Chunker\Base\Models;
 
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
 use Auth;
 
 class User extends Authenticatable
 {
-	use SoftDeletes, BelongsToEditors, Comparable, Nullable;
+	use BelongsToEditors, Comparable, Nullable;
 
-	protected $dates = ['deleted_at'];
 	protected $nullable = ['name'];
 
 	protected $fillable = [
@@ -21,7 +19,8 @@ class User extends Authenticatable
 		'password',
 		'email',
 		'name',
-		'is_subscribed'
+		'is_subscribed',
+		'is_blocked'
 	];
 
 	protected $hidden = [
@@ -30,7 +29,8 @@ class User extends Authenticatable
 	];
 
 	protected $casts = [
-		'is_subscribed' => 'boolean'
+		'is_subscribed' => 'boolean',
+		'is_blocked' => true
 	];
 
 
@@ -53,9 +53,9 @@ class User extends Authenticatable
 
 
 	/*
-	 * Пользователь не может удалить сам себя
+	 * Пользователь не может заблокировать сам себя
 	 */
-	public function isCanBeDeleted() {
+	public function isCanBeBlocked() {
 		return !$this->is(Auth::user());
 	}
 

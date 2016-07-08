@@ -18,8 +18,8 @@ class UserController extends Controller
 	public function __construct(Request $request) {
 		// Приведение логина в требуемый вид
 		$data = $request->all();
-		if (isset($data['login']))
-		{
+
+		if (isset($data['login'])) {
 			$data['login'] = trim(str_slug($data['login']), '-_');
 			$request->replace($data);
 		}
@@ -30,25 +30,11 @@ class UserController extends Controller
 	 * Список пользователей
 	 */
 	public function index() {
-		$fields = [
-			'id',
-			'login',
-			'email',
-			'name',
-			'is_subscribed',
-			'creator_id',
-			'updater_id',
-			'created_at',
-			'updated_at',
-			'deleted_at'];
+		$users = User
+			::latest()
+			->paginate();
 
-		$users_query = User::orderBy('login');
-		$active_users = $users_query->get($fields);
-		$deleted_users = $users_query
-			->onlyTrashed()
-			->get($fields);
-
-		return view('chunker.base::admin.users.list', compact('active_users', 'deleted_users'));
+		return view('chunker.base::admin.users.list', compact('users'));
 	}
 
 
@@ -73,7 +59,8 @@ class UserController extends Controller
 			'password',
 			'email',
 			'name',
-			'is_subscribed'
+			'is_subscribed',
+			'is_blocked'
 		]));
 
 		// Уведомление
@@ -103,49 +90,25 @@ class UserController extends Controller
 		// Валидация
 		$this->validate($request, $this->rules);
 
-		// Обновление
-		$user->update($request->only([
+		// Подготовка данных
+		$data = $request->only([
 			'login',
 			'password',
 			'email',
 			'name',
-			'is_subscribed'
-		]));
+			'is_subscribed',
+			'is_blocked'
+		]);
+		$data['is_blocked'] = $user->isCanBeBlocked() ? $data['is_blocked'] : false;
+
+		// Обновление
+		$user->update($data);
 
 		// Уведомление
 		flash()->success('Данные пользователя <b>' . e($user->login) . '</b> сохранены');
 
 
 		return back();
-	}
-
-
-	/*
-	 * Удаление пользователя
-	 */
-	public function destroy(User $user) {
-		if ($user->isCanBeDeleted()) {
-			$user->delete();
-			flash()->warning('Пользователь <b>' . e($user->login) . '</b> удалён');
-		}
-		else
-		{
-			flash()->danger('Вы не можете удалить этого пользователя');
-		}
-
-		return redirect()->route('admin.users');
-	}
-
-
-	/*
-	 * Восстановление пользователя
-	 */
-	public function restore($userId) {
-		$user = User::withTrashed()->find($userId);
-		$user->restore();
-		flash()->success('Пользователь <b>' . e($user->login) . '</b> восстановлен');
-
-		return redirect()->route('admin.users.edit', $user);
 	}
 
 

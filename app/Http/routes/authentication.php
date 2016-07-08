@@ -12,13 +12,13 @@ Route::group([
 
 	// Аутентификация
 	Route::post('login', [
-		'uses'  => 'AuthController@login',
+		'uses'  => 'AuthenticationController@login',
 		'as'    => 'admin.login'
 	]);
 
 	// Деаутентификация
 	Route::post('logout', [
-		'uses'  => 'AuthController@logout',
+		'uses'  => 'AuthenticationController@logout',
 		'as'    => 'admin.logout'
 	]);
 
@@ -29,13 +29,13 @@ Route::group([
 
 		// Форма сброса пароля
 		Route::get('reset', [
-			'uses'  => 'AuthController@showResetPasswordForm',
+			'uses'  => 'AuthenticationController@showResetPasswordForm',
 			'as'    => 'admin.reset-password-form'
 		]);
 
 		// Сброс пароля
 		Route::post('reset', [
-			'uses'  => 'AuthController@resetPassword',
+			'uses'  => 'AuthenticationController@resetPassword',
 			'as'    => 'admin.reset-password'
 		]);
 

@@ -20,12 +20,8 @@
 
 		<div class="panel-footer">
 			@include('chunker.base::admin.utils.buttons.save')
-
-			@if ($user->isCanBeDeleted())
-				@include('chunker.base::admin.utils.buttons.delete', ['url' => route('admin.users.destroy', $user)])
-			@endif
-
 		</div>
+
 	</form>
 
 @stop

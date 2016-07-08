@@ -51,14 +51,16 @@ class CreateUsers extends Migration
 				->boolean('is_subscribed')
 				->comment('Подписан на уведомления');
 
+			// Заблокирован
+			$table
+				->boolean('is_blocked')
+				->comment('Заблокирован');
+
 			// Ключи создателя и обновителя
 			Columns::editorsIds($table);
 
 			// Время создания и обновления
 			$table->timestamps();
-
-			// Время удаления
-			$table->softDeletes();
 
 		});
 	}
