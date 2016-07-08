@@ -32,14 +32,42 @@ return [
 
 	'structure' => [
 		[
-			'name'  => 'Пользователи',
-			'icon'  => 'users',
-			'route' => 'admin.users'
+			'name'      => 'Контент',
+			'icon'      => 'database',
+			'children'  => [
+				[
+					'name'  => 'Статьи',
+					'icon'  => 'file-text-o',
+					'route' => 'admin.articles'
+				],
+				[
+					'name'  => 'Новости',
+					'icon'  => 'newspaper-o',
+					'route' => 'admin.news'
+				]
+			]
 		],
 		[
-			'name'  => 'Настройки',
-			'icon'  => 'cogs',
-			'route' => 'admin.settings'
+			'name'      => 'Система',
+			'icon'      => 'cogs',
+			'children'  => [
+				[
+					'name'  => 'Пользователи',
+					'icon'  => 'users',
+					'route' => 'admin.users'
+				],
+				[
+					'name'  => 'Роли',
+					'icon'  => 'star',
+					'route' => 'admin.roles'
+				],
+				'',
+				[
+					'name'  => 'Настройки',
+					'icon'  => 'sliders',
+					'route' => 'admin.settings'
+				]
+			]
 		]
 	],
 

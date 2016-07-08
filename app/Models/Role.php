@@ -3,11 +3,12 @@
 namespace Chunker\Base\Models;
 
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
+use Chunker\Base\Models\Traits\Comparable;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-	use BelongsToEditors;
+	use BelongsToEditors, Comparable;
 
 	protected $fillable = ['name'];
 

@@ -15,6 +15,7 @@ Route::group([
 		'translation',
 		'set-locale',
 		'users',
+		'roles',
 		'settings',
 		'notices'
 	];

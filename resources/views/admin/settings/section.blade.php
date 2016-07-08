@@ -7,6 +7,7 @@
 @section('page.content')
 
 	<h3>Настройки</h3>
+
 	<div class="row">
 
 		{{--Разделы--}}
