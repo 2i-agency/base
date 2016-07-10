@@ -4,6 +4,8 @@ namespace Chunker\Base\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
+use Chunker\Base\Packages\Manager;
+use Chunker\Base\Packages\Package;
 use Chunker\Base\Commands\Init;
 use Chunker\Base\Models\User;
 use Chunker\Base\ViewComposers\LanguagesComposer;
@@ -14,7 +16,44 @@ class AppServiceProvider extends ServiceProvider
 	const ROOT = __DIR__ . '/../..';
 
 
-	public function boot() {
+	public function boot(Package $package) {
+		// Конфигурация пакета
+		$package
+			->setName('base')
+			->registerAbilities([
+
+				'admin-access'      => 'Доступ в админцентр',
+
+				'notices-view'      => 'Просмотр уведомлений',
+				'notices-edit'      => 'Правка уведомлений',
+
+				'users-view'        => 'Просмотр пользователей',
+				'users-add'         => 'Добавление пользователей',
+				'users-edit'        => 'Правка пользователей',
+
+				'roles-view'        => 'Просмотр ролей',
+				'roles-add'         => 'Добавление ролей',
+				'roles-edit'        => 'Правка ролей',
+
+				'settings-view'     => 'Просмотр настроек',
+				'settings-edit'     => 'Правка настроек',
+
+				'languages-view'    => 'Просмотр языков',
+				'languages-add'     => 'Добавление языков',
+				'languages-edit'    => 'Правка языков',
+
+				'translation-view'  => 'Просмотр перевода интерфеса',
+				'translation-edit'  => 'Правка перевода интерфейса',
+
+			]);
+
+
+		// Регистрация пакета
+		$this
+			->app['Packages']
+			->register($package);
+
+
 		// Локализация
 		Carbon::setToStringFormat('d.m.Y H:i:s');
 		$this->app->setLocale('ru');
@@ -90,5 +129,15 @@ class AppServiceProvider extends ServiceProvider
 		foreach (glob(self::ROOT . '/app/Helpers/*.php') as $filename) {
 			require_once $filename;
 		}
+
+		// Пакет
+		$this->app->bind('Package', function() {
+			return new Package;
+		});
+
+		// Менеджер пакетов
+		$this->app->singleton('Packages', function() {
+			return new Manager;
+		});
 	}
 }
