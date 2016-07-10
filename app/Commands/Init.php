@@ -17,23 +17,20 @@ class Init extends Command
 	public function handle() {
 		// Выполняются не все действия
 		$only = false;
-		foreach (['clean', 'seed'] as $option)
-		{
-			if ($this->option($option))
-			{
+		foreach (['clean', 'seed'] as $option) {
+			if ($this->option($option)) {
 				$only = true;
 				break;
 			}
 		}
-		
+
 
 		// Диск для работы с файлами проекта
 		$disk = Storage::createLocalDriver(['root' => base_path()]);
 
 
 		// Удаление ненужных файлов
-		if (!$only || $this->option('clean'))
-		{
+		if (!$only || $this->option('clean')) {
 			if ($disk->delete([
 				// Коробочные миграции и модели
 				'database/migrations/2014_10_12_000000_create_users_table.php',
@@ -47,30 +44,27 @@ class Init extends Command
 
 
 		// Публикация ассетов пакетов
-		if (!$only)
-		{
+		if (!$only) {
 			$this->call('vendor:publish', ['--force' => true]);
 		}
 
 
 		// Оптимизация (необходимо для обновления кеша автозагрузки классов)
-		if (!$only)
-		{
+		if (!$only) {
 			$this->call('optimize');
 		}
 
 
 		// Миграция
-		if (!$only)
-		{
+		if (!$only) {
 			$this->call('migrate');
 		}
 
 
 		// Посев
-		if (!$only || $this->option('seed'))
-		{
+		if (!$only || $this->option('seed')) {
 			$this->call('db:seed', ['--class' => 'UsersSeeder']);
+			$this->call('db:seed', ['--class' => 'AbilitiesSeeder']);
 			$this->call('db:seed', ['--class' => 'LanguagesSeeder']);
 			$this->call('db:seed', ['--class' => 'SettingsSeeder']);
 			$this->line('Data were sown');

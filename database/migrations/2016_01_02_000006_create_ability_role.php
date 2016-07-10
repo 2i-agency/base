@@ -27,6 +27,12 @@ class CreateAbilityRole extends Migration
 				->index()
 				->comment('Ключ роли');
 
+			// Опции
+			$table
+				->json('options')
+				->nullable()
+				->comment('Опции');
+
 		});
 	}
 

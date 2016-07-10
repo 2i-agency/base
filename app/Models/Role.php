@@ -17,7 +17,9 @@ class Role extends Model
 	 * Возможности
 	 */
 	public function abilities() {
-		return $this->belongsToMany(Ability::class);
+		return $this
+			->belongsToMany(Ability::class)
+			->withPivot('options');
 	}
 
 
