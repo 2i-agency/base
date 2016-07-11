@@ -24,7 +24,7 @@
 				data-container="body"
 				title="Уведомления"
 			>
-				<span class="fa fa-flash"></span>
+				<span class="fa fa-envelope"></span>
 				<span class="hidden-lg hidden-md hidden-sm">Уведомления</span>
 			</a>
 
