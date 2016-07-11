@@ -63,10 +63,10 @@ class Init extends Command
 
 		// Посев
 		if (!$only || $this->option('seed')) {
-			$this->call('db:seed', ['--class' => 'UsersSeeder']);
+			$this->call('db:seed', ['--class' => 'SettingsSeeder']);
 			$this->call('db:seed', ['--class' => 'AbilitiesSeeder']);
 			$this->call('db:seed', ['--class' => 'LanguagesSeeder']);
-			$this->call('db:seed', ['--class' => 'SettingsSeeder']);
+			$this->call('db:seed', ['--class' => 'UsersAndRolesSeeder']);
 			$this->line('Data were sown');
 		}
 	}

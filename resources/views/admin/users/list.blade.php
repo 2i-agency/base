@@ -29,6 +29,7 @@
 					<th>Электропочта</th>
 					<th>Имя</th>
 					<th>Уведомления</th>
+					<th>Роли</th>
 					<th>Последняя авторизация</th>
 					<th></th>
 				</tr>
@@ -63,6 +64,12 @@
 							<td>Получает уведомления</td>
 						@else
 							<td>Не&nbsp;получает уведомления</td>
+						@endif
+
+						@if ($user->roles()->count())
+							<td>{{ implode(', ', $user->roles->lists('name')->toArray()) }}</td>
+						@else
+							<td class="text-muted">Нет ролей</td>
 						@endif
 
 						{{--Время последней авторизации--}}

@@ -6,17 +6,11 @@ use Chunker\Base\Models\Ability;
 class AbilitiesSeeder extends Seeder
 {
 	public function run() {
-		// Зарегистрированные пакеты
-		$packages = app()->make('Packages')->getPackages();
-
-		// Добавление возможностей
-		foreach ($packages as $package) {
-			foreach ($package->getAbilities() as $ability_id => $ability_name) {
-				Ability::create([
-					'id'    => $ability_id,
-					'name'  => $ability_name
-				]);
-			}
+		foreach (app()['Packages']->getAbilities() as $id => $name) {
+			Ability::create([
+				'id'    => $id,
+				'name'  => $name
+			]);
 		}
 	}
 }

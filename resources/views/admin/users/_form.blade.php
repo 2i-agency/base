@@ -68,45 +68,69 @@
 	{{--Отправка уведомлений--}}
 	<div class="form-group">
 		<label>Отправлять уведомления:</label>
-		<label class="radio-inline">
-			<input
-				type="radio"
-				name="is_subscribed"
-				value="1"
-				{{ !isset($user) || $user->is_subscribed ? ' checked' : NULL }}
-			>Да
-		</label>
-		<label class="radio-inline">
-			<input
-				type="radio"
-				name="is_subscribed"
-				value="0"
-				{{ isset($user) && !$user->is_subscribed ? ' checked' : NULL }}
-			>Нет
-		</label>
+		<div>
+			<label class="radio-inline">
+				<input
+					type="radio"
+					name="is_subscribed"
+					value="1"
+					{{ !isset($user) || $user->is_subscribed ? ' checked' : NULL }}
+				>Да
+			</label>
+			<label class="radio-inline">
+				<input
+					type="radio"
+					name="is_subscribed"
+					value="0"
+					{{ isset($user) && !$user->is_subscribed ? ' checked' : NULL }}
+				>Нет
+			</label>
+		</div>
 	</div>
 
 	{{--Заблокирован--}}
 	<div class="form-group">
 		<label>Заблокирован:</label>
-		<label class="radio-inline">
-			<input
-				type="radio"
-				name="is_blocked"
-				value="1"
-				{{ isset($user) && $user->is_blocked ? ' checked' : NULL }}
-				{{ isset($user) && !$user->isCanBeBlocked() ? ' disabled' : NULL }}
-			>Да
-		</label>
-		<label class="radio-inline">
-			<input
-				type="radio"
-				name="is_blocked"
-				value="0"
-				{{ !isset($user) || !$user->is_blocked ? ' checked' : NULL }}
-				{{ isset($user) && !$user->isCanBeBlocked() ? ' disabled' : NULL }}
-			>Нет
-		</label>
+		<div>
+			<label class="radio-inline">
+				<input
+					type="radio"
+					name="is_blocked"
+					value="1"
+					{{ isset($user) && $user->is_blocked ? ' checked' : NULL }}
+					{{ isset($user) && !$user->isCanBeBlocked() ? ' disabled' : NULL }}
+				>Да
+			</label>
+			<label class="radio-inline">
+				<input
+					type="radio"
+					name="is_blocked"
+					value="0"
+					{{ !isset($user) || !$user->is_blocked ? ' checked' : NULL }}
+					{{ isset($user) && !$user->isCanBeBlocked() ? ' disabled' : NULL }}
+				>Нет
+			</label>
+		</div>
+	</div>
+
+	{{--Роли--}}
+	<div class="form-group">
+		<label>Роли:</label>
+		<div>
+			@foreach ($_roles as $_role)
+				<label class="checkbox-inline">
+					<input
+						type="checkbox"
+						name="roles[]"
+						value="{{ $_role->id }}"
+					    @if ((isset($user) && $user->isRelatedWith('roles', $_role)) || (array_search($_role->id, old('roles', [])) !== false))
+							checked
+						@endif
+					>
+					{{ $_role->name}}
+				</label>
+			@endforeach
+		</div>
 	</div>
 
 </div>

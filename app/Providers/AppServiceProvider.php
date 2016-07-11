@@ -9,6 +9,7 @@ use Chunker\Base\Packages\Package;
 use Chunker\Base\Commands\Init;
 use Chunker\Base\Models\User;
 use Chunker\Base\ViewComposers\LanguagesComposer;
+use Chunker\Base\ViewComposers\RolesComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -96,6 +97,7 @@ class AppServiceProvider extends ServiceProvider
 		// Шаблоны и композеры
 		$this->loadViewsFrom(static::ROOT . '/resources/views', 'chunker.base');
 		view()->composer('chunker.base::admin.template', LanguagesComposer::class);
+		view()->composer('chunker.base::admin.users._form', RolesComposer::class);
 
 
 		// Публикация ассетов

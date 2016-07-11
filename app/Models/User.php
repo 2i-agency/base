@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Models;
 
+use Chunker\Base\Models\Traits\IsRelatedWith;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
@@ -10,7 +11,7 @@ use Auth;
 
 class User extends Authenticatable
 {
-	use BelongsToEditors, Comparable, Nullable;
+	use BelongsToEditors, Comparable, Nullable, IsRelatedWith;
 
 	protected $nullable = ['name'];
 

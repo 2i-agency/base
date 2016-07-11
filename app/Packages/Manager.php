@@ -26,9 +26,28 @@ class Manager
 
 
 	/*
-	 * Список зарегистрированных пакетов
+	 * Зарегистрированные пакеты
 	 */
-	public function getPackages() {
-		return $this->packages;
+	public function getPackages($package = NULL) {
+		return is_null($package) ? $this->packages : $this->packages[$package];
+	}
+
+
+	/*
+	 * Возможности их пакетов
+	 */
+	public function getAbilities($packageName = NULL) {
+		if (!is_null($packageName) && !is_array($packageName)) $packageName = [$packageName];
+
+		$abilities = [];
+
+		foreach ($this->getPackages() as $package) {
+			if (is_null($packageName) || in_array($package->getName(), $packageName))
+			{
+				$abilities = array_merge($package->getAbilities());
+			}
+		}
+
+		return $abilities;
 	}
 }

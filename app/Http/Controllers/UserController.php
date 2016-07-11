@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Http\Controllers;
 
+use Chunker\Base\Models\Role;
 use Chunker\Base\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -63,6 +64,9 @@ class UserController extends Controller
 			'is_blocked'
 		]));
 
+		// Сохранение связей
+		$user->roles()->sync($request->get('roles', []));
+
 		// Уведомление
 		flash()->success('Пользователь <b>' . e($user->login) . '</b> добавлен');
 
@@ -103,6 +107,9 @@ class UserController extends Controller
 
 		// Обновление
 		$user->update($data);
+
+		// Сохранение связей
+		$user->roles()->sync($request->get('roles', []));
 
 		// Уведомление
 		flash()->success('Данные пользователя <b>' . e($user->login) . '</b> сохранены');
