@@ -22,28 +22,28 @@ class AppServiceProvider extends ServiceProvider
 			->setName('base')
 			->registerAbilities([
 
-				'admin-access'      => 'Доступ в админцентр',
+				'admin.access'      => 'Доступ в админцентр',
 
-				'notices-view'      => 'Просмотр уведомлений',
-				'notices-edit'      => 'Правка уведомлений',
+				'notices.view'      => 'Просмотр уведомлений',
+				'notices.edit'      => 'Правка уведомлений',
 
-				'users-view'        => 'Просмотр пользователей',
-				'users-add'         => 'Добавление пользователей',
-				'users-edit'        => 'Правка пользователей',
+				'users.view'        => 'Просмотр пользователей',
+				'users.add'         => 'Добавление пользователей',
+				'users.edit'        => 'Правка пользователей',
 
-				'roles-view'        => 'Просмотр ролей',
-				'roles-add'         => 'Добавление ролей',
-				'roles-edit'        => 'Правка ролей',
+				'roles.view'        => 'Просмотр ролей',
+				'roles.add'         => 'Добавление ролей',
+				'roles.edit'        => 'Правка ролей',
 
-				'settings-view'     => 'Просмотр настроек',
-				'settings-edit'     => 'Правка настроек',
+				'settings.view'     => 'Просмотр настроек',
+				'settings.edit'     => 'Правка настроек',
 
-				'languages-view'    => 'Просмотр языков',
-				'languages-add'     => 'Добавление языков',
-				'languages-edit'    => 'Правка языков',
+				'languages.view'    => 'Просмотр языков',
+				'languages.add'     => 'Добавление языков',
+				'languages.edit'    => 'Правка языков',
 
-				'translation-view'  => 'Просмотр перевода интерфеса',
-				'translation-edit'  => 'Правка перевода интерфейса',
+				'translation.view'  => 'Просмотр перевода интерфеса',
+				'translation.edit'  => 'Правка перевода интерфейса',
 
 			]);
 
