@@ -45,6 +45,15 @@ class AppServiceProvider extends ServiceProvider
 				'translation.view'  => 'Просмотр перевода интерфеса',
 				'translation.edit'  => 'Правка перевода интерфейса',
 
+			])
+			->registerAbilitiesViews([
+				'chunker.base::admin.abilities.admin',
+				'chunker.base::admin.abilities.notices',
+				'chunker.base::admin.abilities.users',
+				'chunker.base::admin.abilities.roles',
+				'chunker.base::admin.abilities.settings',
+				'chunker.base::admin.abilities.languages',
+				'chunker.base::admin.abilities.translation'
 			]);
 
 

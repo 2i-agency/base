@@ -24,6 +24,17 @@ class Role extends Model
 
 
 	/*
+	 * Проверка наличия возможности
+	 */
+	public function hasAbility($abilityId) {
+		return (bool)$this
+			->abilities()
+			->where('id', $abilityId)
+			->count();
+	}
+
+
+	/*
 	 * Пользователи
 	 */
 	public function users() {

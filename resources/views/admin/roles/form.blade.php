@@ -54,6 +54,16 @@
 					</div>
 				</div>
 
+				@if (count($abilities_views))
+					<ul class="list-group">
+						@foreach($abilities_views as $ability_view)
+							<li class="list-group-item">
+								@include($ability_view)
+							</li>
+						@endforeach
+					</ul>
+				@endif
+
 				<div class="panel-footer">
 					@if ($role->exists)
 						@include('chunker.base::admin.utils.buttons.save')

@@ -12,8 +12,11 @@ class Package
 	// Название пакета
 	protected $name;
 
-	// Возможности пользователя
+	// Возможности
 	protected $abilities = [];
+
+	// Представления для редактирования возможностей
+	protected $abilitiesViews = [];
 
 
 	/*
@@ -34,7 +37,7 @@ class Package
 
 
 	/*
-	 * Зарегистрировать возможность (массив возможностей)
+	 * Зарегистрировать возможность
 	 */
 	public function registerAbilities($abilities) {
 		if (is_array($abilities)) {
@@ -48,9 +51,31 @@ class Package
 
 
 	/*
-	 * Получить массив возможностей
+	 * Получить возможности
 	 */
 	public function getAbilities() {
 		return $this->abilities;
+	}
+
+
+	/*
+	 * Зарегистрировать возможность
+	 */
+	public function registerAbilitiesViews($abilitiesViews) {
+		if (is_array($abilitiesViews)) {
+			$this->abilitiesViews = array_merge($this->abilitiesViews, $abilitiesViews);
+		} else {
+			$this->abilitiesViews[] = (string)($abilitiesViews);
+		}
+
+		return $this;
+	}
+
+
+	/*
+	 * Получить представления возможностей
+	 */
+	public function getAbilitiesViews() {
+		return $this->abilitiesViews;
 	}
 }
