@@ -37,7 +37,6 @@
 			{{--Меню админцентра--}}
 			@include('chunker.base::admin.utils.nav.menu')
 
-
 			{{--Форма пользователя--}}
 			<form class="navbar-form navbar-right" method="POST" action="{{ route('admin.logout') }}">
 				{!! csrf_field() !!}
@@ -70,7 +69,6 @@
 
 				</div>
 			</form>
-
 
 			{{--Языковое меню--}}
 			@if (config('chunker.localization.multi'))
@@ -119,26 +117,19 @@
 			@endif
 
 
-			{{--Вспомогательные ссылки--}}
+			{{--Дополнительные ссылки--}}
 			<ul class="nav navbar-nav navbar-right">
 
-				{{--Главная страница сайта--}}
-				<li>
-					<a href="{{ asset('') }}" target="_blank">
-						<span class="fa fa-book"></span>
-						Сайт
-					</a>
-				</li>
-
-				{{--Ссылка на метрику--}}
-				@if (env('STATISTICS_URL'))
+				@foreach(config('chunker.admin.links') as $link)
 					<li>
-						<a href="{{ env('STATISTICS_URL') }}" target="_blank">
-							<span class="glyphicon glyphicon-stats"></span>
-							Статистика
+						<a href="{!! $link['url'] !!}" target="_blank">
+							@if (isset($link['icon']))
+								<span class="fa fa-{{ $link['icon'] }}"></span>
+							@endif
+							{{ $link['name'] }}
 						</a>
 					</li>
-				@endif
+				@endforeach
 
 			</ul>
 
