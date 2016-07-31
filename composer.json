@@ -1,7 +1,7 @@
 {
 	"name": "chunker/base",
 	"type": "package",
-	"description": "Базовый пакет Chunker, предоставляющий необходимый функционал админцентра: пользователи и авторизация, HTML-шаблоны и общее поведение элементов страниц, конфигурирование структуры админцентра, настройка системы, отправка сообщений, локализация",
+	"description": "Базовый пакет Chunker",
 	"authors": [
 		{
 			"name": "Studio 2i",
@@ -11,11 +11,11 @@
 		}
 	],
 	"require": {
-		"php" : ">=7.0.0",
+		"laravel/framework" : "5.2.*",
 		"zedisdog/laravel-schema-extend" : "~0.6",
+		"laracasts/flash": "~2.0",
 		"kalnoy/nestedset": "~4.1",
-		"sinergi/browser-detector": "~6.0",
-		"laracasts/flash": "~2.0"
+		"sinergi/browser-detector": "~6.0"
 	},
 	"repositories": [
 		{
