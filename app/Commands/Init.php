@@ -2,22 +2,21 @@
 
 namespace Chunker\Base\Commands;
 
-use Chunker\Base\Models\Language;
 use Illuminate\Console\Command;
 use Storage;
 
 class Init extends Command
 {
-	protected $signature = 'chunker:init
-		{--clean : Only delete unnecessary files}
-		{--seed : Only data seed}';
 	protected $description = 'Initialization of the Chunker';
+	protected $signature = 'chunker:init
+		{--clean : Only delete unnecessary files}';
 
 
 	public function handle() {
 		// Выполняются не все действия
 		$only = false;
-		foreach (['clean', 'seed'] as $option) {
+
+		foreach (['clean'] as $option) {
 			if ($this->option($option)) {
 				$only = true;
 				break;
@@ -49,25 +48,15 @@ class Init extends Command
 		}
 
 
-		// Оптимизация (необходимо для обновления кеша автозагрузки классов)
+		// Обновление кеша автозагрузки классов
 		if (!$only) {
-			$this->call('optimize');
+			system('composer dump-autoload');
 		}
 
 
 		// Миграция
 		if (!$only) {
 			$this->call('migrate');
-		}
-
-
-		// Посев
-		if (!$only || $this->option('seed')) {
-			$this->call('db:seed', ['--class' => 'SettingsSeeder']);
-			$this->call('db:seed', ['--class' => 'AbilitiesSeeder']);
-			$this->call('db:seed', ['--class' => 'LanguagesSeeder']);
-			$this->call('db:seed', ['--class' => 'UsersAndRolesSeeder']);
-			$this->line('Data were sown');
 		}
 	}
 }

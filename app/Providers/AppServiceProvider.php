@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Chunker\Base\Packages\Manager;
 use Chunker\Base\Packages\Package;
 use Chunker\Base\Commands\Init;
+use Chunker\Base\Commands\Seed;
 use Chunker\Base\Models\User;
 use Chunker\Base\ViewComposers\LanguagesComposer;
 use Chunker\Base\ViewComposers\RolesComposer;
@@ -91,7 +92,10 @@ class AppServiceProvider extends ServiceProvider
 
 
 		// Команды
-		$this->commands([Init::class]);
+		$this->commands([
+			Init::class,
+			Seed::class,
+		]);
 
 
 		// Шаблоны и композеры
