@@ -15,11 +15,11 @@
 
 ```json
 "require": {
-	"chunker/base" : "~2.*"
+	"chunker/base": "~2.*"
 }
 ```
 
-В секцию `repositories` добавляется ссылка на [репозиторий пакета](https://bitbucket.org/chunker/base) на [bitbucker.org](https://bitbucket.org):
+В секцию `repositories` добавляется ссылка на [репозиторий пакета](https://bitbucket.org/chunker/base):
 
 ```json
 "repositories": [
@@ -30,7 +30,7 @@
 ]
 ```
 
-После того, как указаны зависимость и репозиторий, необходимо выполнить команду `composer update chunker\base`. Затем в конфигурационном файле Laravel `config/app.php` в массив с сервис-провайдерами следует добавить сервис-провайдеры пакета:
+После того, как указаны зависимость и репозиторий, необходимо выполнить команду `composer update chunker/base`. Затем в конфигурационном файле Laravel `config/app.php` в массив с сервис-провайдерами следует добавить сервис-провайдеры пакета:
 
 ```php
 'providers' => [
