@@ -84,7 +84,7 @@ return [
 	'links' => [
 		[
 			'name'  => 'Сайт',
-			'url'   => asset(''),
+			'url'   => env('APP_URL', '/'),
 			'icon'  => 'book'
 		]
 	],
