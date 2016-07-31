@@ -35,16 +35,6 @@ return [
 			'name'      => 'Контент',
 			'icon'      => 'database',
 			'children'  => [
-				[
-					'name'  => 'Статьи',
-					'icon'  => 'file-text-o',
-					'route' => 'admin.articles'
-				],
-				[
-					'name'  => 'Новости',
-					'icon'  => 'newspaper-o',
-					'route' => 'admin.news'
-				]
 			]
 		],
 		[
