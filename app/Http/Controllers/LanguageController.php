@@ -13,7 +13,7 @@ class LanguageController extends Controller
 
 	protected $rules = [
 		'name' => 'required',
-		'locale' => 'sometimes|min:2|alpha_dash|unique:languages,locale'
+		'locale' => 'sometimes|min:2|alpha_dash|unique:base_languages,locale'
 	];
 
 	protected $messages = [

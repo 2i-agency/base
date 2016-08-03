@@ -10,9 +10,9 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
 	protected $rules = [
-		'login' => 'required|alpha_dash|max:20|unique:users,login',
+		'login' => 'required|alpha_dash|max:20|unique:base_users,login',
 		'password' => 'sometimes|min:6',
-		'email' => 'required|email|unique:users,email'
+		'email' => 'required|email|unique:base_users,email'
 	];
 
 

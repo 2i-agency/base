@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ability extends Model
 {
+	protected $table = 'base_abilities';
+
 	protected $fillable = [
 		'id',
 		'name'
@@ -17,7 +19,7 @@ class Ability extends Model
 	 */
 	public function roles() {
 		return $this
-			->belongsToMany(Role::class)
+			->belongsToMany(Role::class, 'base_ability_role')
 			->withPivot('options');
 	}
 }

@@ -4,9 +4,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
-class CreateNotices extends Migration
+class CreateBaseNotices extends Migration
 {
-	protected $table = 'notices';
+	protected $table = 'base_notices';
 
 
 	public function up() {

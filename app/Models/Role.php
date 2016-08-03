@@ -10,6 +10,8 @@ class Role extends Model
 {
 	use BelongsToEditors, Comparable;
 
+	protected $table = 'base_roles';
+
 	protected $fillable = ['name'];
 
 
@@ -18,7 +20,7 @@ class Role extends Model
 	 */
 	public function abilities() {
 		return $this
-			->belongsToMany(Ability::class)
+			->belongsToMany(Ability::class, 'base_ability_role')
 			->withPivot('options');
 	}
 
@@ -38,6 +40,6 @@ class Role extends Model
 	 * Пользователи
 	 */
 	public function users() {
-		return $this->belongsToMany(User::class);
+		return $this->belongsToMany(User::class, 'base_role_user');
 	}
 }

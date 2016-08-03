@@ -13,7 +13,7 @@ class AuthenticationRequest extends Request
 
 	public function rules() {
 		return [
-			'login' => 'required|exists:users',
+			'login' => 'required|exists:base_users',
 			'password' => 'required'
 		];
 	}

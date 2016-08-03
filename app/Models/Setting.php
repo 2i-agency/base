@@ -10,6 +10,8 @@ class Setting extends Model
 {
 	use BelongsToUpdater, Nullable;
 
+	protected $table = 'base_settings';
+
 	protected $casts = ['id' => 'string'];
 	protected $nullable = ['value', 'hint'];
 

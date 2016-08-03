@@ -4,9 +4,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
-class CreateRoles extends Migration
+class CreateBaseRoles extends Migration
 {
-	protected $table = 'roles';
+	protected $table = 'base_roles';
 
 
 	public function up() {

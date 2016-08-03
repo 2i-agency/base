@@ -9,6 +9,8 @@ use Sinergi\BrowserDetector\Os;
 
 class Authentication extends Model
 {
+	protected $table = 'base_authentications';
+
 	public $timestamps = false;
 	protected $timeFormat = 'd.m.Y H:i:s';
 

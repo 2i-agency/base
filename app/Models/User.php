@@ -13,6 +13,8 @@ class User extends Authenticatable
 {
 	use BelongsToEditors, Comparable, Nullable, IsRelatedWith;
 
+	public $table = 'base_users';
+
 	protected $nullable = ['name'];
 
 	protected $fillable = [
@@ -73,6 +75,6 @@ class User extends Authenticatable
 	 * Роли
 	 */
 	public function roles() {
-		return $this->belongsToMany(Role::class);
+		return $this->belongsToMany(Role::class, 'base_role_user');
 	}
 }

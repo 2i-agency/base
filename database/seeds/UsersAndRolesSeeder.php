@@ -18,7 +18,7 @@ class UsersAndRolesSeeder extends Seeder
 		$user = User::create([
 			'login'         => 'admin',
 			'password'      => '000000',
-			'email'         => 'mail@' . env('APP_URL'),
+			'email'         => 'mail@' . host(),
 			'name'          => 'Администратор',
 			'is_subscribed' => true
 		]);

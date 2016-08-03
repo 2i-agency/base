@@ -4,9 +4,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
-class CreateSettings extends Migration
+class CreateBaseSettings extends Migration
 {
-	protected $table = 'settings';
+	protected $table = 'base_settings';
 
 
 	public function up() {

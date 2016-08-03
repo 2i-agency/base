@@ -10,6 +10,8 @@ class Language extends Model
 {
 	use BelongsToEditors, NodeTrait;
 
+	protected $table = 'base_languages';
+
 	protected $fillable = [
 		'name',
 		'locale',
