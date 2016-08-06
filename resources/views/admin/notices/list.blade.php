@@ -6,6 +6,9 @@
 
 @section('page.content')
 
+	<h3>Уведомления</h3>
+
+
 	@if ($notices->count())
 
 		{!! $notices->render() !!}
