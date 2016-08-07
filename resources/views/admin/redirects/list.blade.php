@@ -67,6 +67,7 @@
 						<th>Комментарий</th>
 						<th>Активность</th>
 						<th class="w1px"></th>
+						<th class="w1px"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -100,6 +101,12 @@
 									<label class="checkbox-inline">
 										<input type="checkbox" name="delete[]" value="{{ $redirect->id }}">Удалить
 									</label>
+								</div>
+							</td>
+
+							<td>
+								<div class="form-control-static">
+									@include('chunker.base::admin.utils.edit', ['element' => $redirect])
 								</div>
 							</td>
 
