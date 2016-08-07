@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Chunker\Base\Models\Language;
 
-class LanguagesSeeder extends Seeder
+class BaseLanguagesSeeder extends Seeder
 {
 	public function run() {
 		// Добавление русского языка

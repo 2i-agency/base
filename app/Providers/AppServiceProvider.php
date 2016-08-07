@@ -58,6 +58,12 @@ class AppServiceProvider extends ServiceProvider
 				'chunker.base::admin.abilities.settings',
 				'chunker.base::admin.abilities.languages',
 				'chunker.base::admin.abilities.translation'
+			])
+			->registerSeeders([
+				'BaseAbilitiesSeeder',
+				'BaseLanguagesSeeder',
+				'BaseSettingsSeeder',
+				'BaseUsersAndRolesSeeder'
 			]);
 
 

@@ -10,17 +10,14 @@ class Seed extends Command
 	protected $signature = 'chunker:seed
 		{--package : Seeding data only for one package}';
 
-	protected $seeders = [
-		'SettingsSeeder',
-		'AbilitiesSeeder',
-		'LanguagesSeeder',
-		'UsersAndRolesSeeder'
-	];
-
 
 	public function handle() {
-		if (count($this->seeders)) {
-			foreach ($this->seeders as $seeder) {
+		$seeders = app()
+			->make('Packages')
+			->getSeeders();
+		
+		if (count($seeders)) {
+			foreach ($seeders as $seeder) {
 				$this->call('db:seed', ['--class' => $seeder]);
 			}
 

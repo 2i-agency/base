@@ -3,9 +3,8 @@
 namespace Chunker\Base\Packages;
 
 /*
- * Пакет Chunker
+ * Описание пакета Chunker
  */
-use Illuminate\Foundation\Application;
 
 class Package
 {
@@ -18,64 +17,58 @@ class Package
 	// Представления для редактирования возможностей
 	protected $abilitiesViews = [];
 
-
-	/*
-	 * Установить название пакета
-	 */
-	public function setName($name) {
-		$this->name = $name;
-		return $this;
-	}
+	// Посевщики
+	protected $seeders = [];
 
 
 	/*
-	 * Получить название пакета
+	 * Доступ к свойствам, установка свойств базового типа, регистрация данных в свойствах-массивах
 	 */
-	public function getName() {
-		return $this->name;
-	}
+	public function __call($method, $arguments) {
+		// Возможные действия
+		$actions = [
+			'get',
+			'register',
+			'set'
+		];
 
 
-	/*
-	 * Зарегистрировать возможность
-	 */
-	public function registerAbilities($abilities) {
-		if (is_array($abilities)) {
-			$this->abilities = array_merge($this->abilities, $abilities);
-		} else {
-			$this->abilities[] = (string)($abilities);
+		// Определение действия и названия свойства
+		foreach ($actions as $action) {
+			if (starts_with($method, $action)) {
+				$property = camel_case(substr($method, mb_strlen($action)));
+				break;
+			}
 		}
 
-		return $this;
-	}
 
-
-	/*
-	 * Получить возможности
-	 */
-	public function getAbilities() {
-		return $this->abilities;
-	}
-
-
-	/*
-	 * Зарегистрировать возможность
-	 */
-	public function registerAbilitiesViews($abilitiesViews) {
-		if (is_array($abilitiesViews)) {
-			$this->abilitiesViews = array_merge($this->abilitiesViews, $abilitiesViews);
-		} else {
-			$this->abilitiesViews[] = (string)($abilitiesViews);
+		// Если свойство не определено, то и не определено и действие.
+		// Свойство также может не существовать
+		if (!isset($property) || !property_exists($this, $property)) {
+			return NULL;
 		}
 
+
+		// Выполнение действия
+		switch ($action) {
+			// Установка свойств базового типа
+			case 'get' :
+				return $this->$property;
+
+			case 'register' :
+				if (is_array($arguments[0])) {
+					$this->$property = array_merge($this->$property, $arguments[0]);
+				} else {
+					$this->$property[] = $arguments[0];
+				}
+				break;
+
+			case 'set' :
+				$this->$property = $arguments[0];
+				break;
+		}
+
+
 		return $this;
-	}
-
-
-	/*
-	 * Получить представления возможностей
-	 */
-	public function getAbilitiesViews() {
-		return $this->abilitiesViews;
 	}
 }
