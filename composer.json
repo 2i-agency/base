@@ -15,7 +15,8 @@
 		"zedisdog/laravel-schema-extend" : "~0.6",
 		"laracasts/flash": "~2.0",
 		"kalnoy/nestedset": "~4.1",
-		"sinergi/browser-detector": "~6.0"
+		"sinergi/browser-detector": "~6.0",
+		"league/uri": "~4.1"
 	},
 	"repositories": [
 		{

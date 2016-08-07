@@ -74,6 +74,16 @@ class Columns
 
 
 	/*
+	 * Комментарий
+	 */
+	public static function comment(Blueprint $table, $isShort = true) {
+		with($isShort ? $table->string('comment') : $table->text('comment'))
+			->nullable()
+			->comment('Комментарий');
+	}
+
+
+	/*
 	 * Заголовок
 	 */
 	public static function metaTitle(Blueprint $table) {

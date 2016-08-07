@@ -2,6 +2,8 @@
 
 namespace Chunker\Base\Providers;
 
+use Chunker\Base\Http\Middleware\HandleRedirect;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
 use Chunker\Base\Packages\Manager;
@@ -120,17 +122,9 @@ class AppServiceProvider extends ServiceProvider
 		], 'public');
 
 
-		// Конфигурация группы посредников `admin`
-		$this
-			->app['router']
-			->middlewareGroup('admin', [
-				\App\Http\Middleware\EncryptCookies::class,
-				\Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-				\Illuminate\Session\Middleware\StartSession::class,
-				\Illuminate\View\Middleware\ShareErrorsFromSession::class,
-				\Chunker\Base\Http\Middleware\CheckAuth::class,
-				\Chunker\Base\Http\Middleware\SetLocale::class,
-			]);
+		// Регистрация глобального посредника редиректов
+		$http_kernel = $this->app->make(Kernel::class);
+		$http_kernel->pushMiddleware(HandleRedirect::class);
 
 
 		// Маршруты пакета
@@ -145,14 +139,29 @@ class AppServiceProvider extends ServiceProvider
 			require_once $filename;
 		}
 
+
 		// Пакет
 		$this->app->bind('Package', function() {
 			return new Package;
 		});
 
+
 		// Менеджер пакетов
 		$this->app->singleton('Packages', function() {
 			return new Manager;
 		});
+
+
+		// Конфигурация группы посредников `admin`
+		$this
+			->app['router']
+			->middlewareGroup('admin', [
+				\App\Http\Middleware\EncryptCookies::class,
+				\Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+				\Illuminate\Session\Middleware\StartSession::class,
+				\Illuminate\View\Middleware\ShareErrorsFromSession::class,
+				\Chunker\Base\Http\Middleware\CheckAuth::class,
+				\Chunker\Base\Http\Middleware\SetLocale::class,
+			]);
 	}
 }

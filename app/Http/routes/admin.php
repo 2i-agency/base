@@ -16,6 +16,7 @@ Route::group([
 		'set-locale',
 		'users',
 		'roles',
+		'redirects',
 		'settings',
 		'notices'
 	];

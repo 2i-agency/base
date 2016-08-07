@@ -53,6 +53,12 @@ return [
 				],
 				'',
 				[
+					'name'  => 'Перенаправления',
+					'icon'  => 'exchange',
+					'route' => 'admin.redirects'
+				],
+				'',
+				[
 					'name'  => 'Настройки',
 					'icon'  => 'sliders',
 					'route' => 'admin.settings'
