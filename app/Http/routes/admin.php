@@ -18,7 +18,8 @@ Route::group([
 		'roles',
 		'redirects',
 		'settings',
-		'notices'
+		'notices',
+		'notices-types'
 	];
 
 	foreach ($files as $file) {

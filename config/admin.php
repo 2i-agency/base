@@ -59,6 +59,11 @@ return [
 				],
 				'',
 				[
+					'name'  => 'Типы уведомлений',
+					'icon'  => 'envelope',
+					'route' => 'admin.notices-types'
+				],
+				[
 					'name'  => 'Настройки',
 					'icon'  => 'sliders',
 					'route' => 'admin.settings'

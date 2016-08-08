@@ -4,40 +4,29 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
-class CreateBaseRedirects extends Migration
+class CreateBaseNoticesTypes extends Migration
 {
-	protected $table = 'base_redirects';
+	protected $table = 'base_notices_types';
 
 
 	public function up() {
 		Schema::create($this->table, function (Blueprint $table) {
 
 			$table->engine = 'MyISAM';
-			$table->comment = 'Перенаправления';
+			$table->comment = 'Типы уведомлений';
 
 			// Ключ
 			Columns::id($table);
 
-			// Откуда
+			// Метка
 			$table
-				->string('from')
+				->string('tag', 100)
 				->unique()
-				->comment('Откуда');
+				->nullable()
+				->comment('Метка');
 
-			// Куда
-			$table
-				->string('to')
-				->index()
-				->comment('Куда');
-
-			// Активно
-			$table
-				->boolean('is_active')
-				->index()
-				->comment('Активно');
-			
-			// Комментарий
-			Columns::comment($table);
+			// Название
+			Columns::name($table);
 
 			// Ключи создателя и обновителя
 			Columns::editorsIds($table);

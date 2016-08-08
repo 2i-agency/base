@@ -10,6 +10,15 @@ class Notice extends Model
 
 	protected $fillable = [
 		'content',
-		'is_read'
+		'is_read',
+		'type_id'
 	];
+
+
+	/*
+	 * Тип
+	 */
+	public function type() {
+		return $this->belongsTo(NoticesType::class, 'type_id');
+	}
 }

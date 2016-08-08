@@ -18,13 +18,24 @@ class CreateBaseNotices extends Migration
 			// Ключ
 			Columns::id($table);
 
+			// Ключ типа
+			$table
+				->integer('type_id')
+				->unsigned()
+				->nullable()
+				->index()
+				->comment('Ключ типа');
+
 			// Содержимое
-			$table->text('content');
+			$table
+				->text('content')
+				->comment('Содержимое');
 
 			// Прочитано
 			$table
 				->boolean('is_read')
-				->index();
+				->index()
+				->comment('Прочитано');
 
 			// Время создания и обновления
 			$table->timestamps();
