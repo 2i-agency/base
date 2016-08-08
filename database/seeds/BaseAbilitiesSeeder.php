@@ -7,10 +7,12 @@ class BaseAbilitiesSeeder extends Seeder
 {
 	public function run() {
 		foreach (app()['Packages']->getAbilities() as $id => $name) {
-			Ability::create([
-				'id'    => $id,
-				'name'  => $name
-			]);
+			if (!Ability::find($id)) {
+				Ability::create([
+					'id'    => $id,
+					'name'  => $name
+				]);
+			}
 		}
 	}
 }
