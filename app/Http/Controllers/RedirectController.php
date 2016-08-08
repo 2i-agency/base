@@ -18,7 +18,7 @@ class RedirectController extends Controller
 	];
 
 	protected $messages = [
-		'from.require'  => 'Необходимо указать адрес страницы, с которой необходимо перенаправлять',
+		'from.required'  => 'Необходимо указать адрес страницы, с которой происходит перенаправление',
 		'from.unique'   => 'Для этого адреса уже создано правило перенаправления',
 		'to.required'   => 'Необходимо указать адрес, на который необходимо перенаправлять'
 	];
@@ -79,7 +79,9 @@ class RedirectController extends Controller
 			$validator = Validator::make($redirect_data, $rules, $this->messages);
 
 			if ($validator->fails()) {
-				return back()->withErrors($validator->errors());
+				return back()
+					->withInput()
+					->withErrors($validator->errors());
 			}
 		}
 
