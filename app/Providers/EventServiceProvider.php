@@ -6,6 +6,8 @@ use Chunker\Base\Listeners\UserListener;
 use Chunker\Base\Models\Authentication;
 use Chunker\Base\Models\Language;
 use Chunker\Base\Models\Notice;
+use Chunker\Base\Models\NoticesType;
+use Chunker\Base\Models\Observers\NoticesTypeObserver;
 use Chunker\Base\Models\Role;
 use Chunker\Base\Models\Observers\AuthenticationObserver;
 use Chunker\Base\Models\Observers\LanguageObserver;
@@ -29,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
 		Authentication::observe(AuthenticationObserver::class);
 		Language::observe(LanguageObserver::class);
 		Notice::observe(NoticeObserver::class);
+		NoticesType::observe(NoticesTypeObserver::class);
 		Role::observe(RoleObserver::class);
 	}
 }
