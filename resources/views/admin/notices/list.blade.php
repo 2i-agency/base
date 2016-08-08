@@ -55,6 +55,7 @@
 							name="since"
 							placeholder="С"
 						    value="{{ Request::get('since') }}"
+						    autocomplete="off"
 						>
 						<span class="input-group-addon">
 							<span class="fa fa-calendar"></span>
@@ -76,6 +77,7 @@
 							name="until"
 							placeholder="По"
 							value="{{ Request::get('until') }}"
+							autocomplete="off"
 						>
 						<span class="input-group-addon">
 							<span class="fa fa-calendar"></span>

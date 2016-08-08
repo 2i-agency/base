@@ -21,7 +21,15 @@
 			<div class="row">
 
 				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
-					<input type="text" name="name" placeholder="Название типа" class="form-control" required autocomplete="off" value="{{ old('name') }}">
+					<input
+						type="text"
+						name="name"
+						placeholder="Название типа"
+						class="form-control"
+						required
+						autocomplete="off"
+						value="{{ old('name') }}"
+					>
 				</div>
 
 				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
