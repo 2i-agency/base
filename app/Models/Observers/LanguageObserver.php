@@ -2,20 +2,20 @@
 
 namespace Chunker\Base\Models\Observers;
 
-use Illuminate\Database\Eloquent\Model;
+use Chunker\Base\Models\Language;
 use Storage;
 
 class LanguageObserver
 {
-	public function creating(Model $model) {
-		$model->locale = $model->getAttribute('locale') ?: $model->getAttribute('name');
+	public function creating(Language $language) {
+		$language->locale = $language->getAttribute('locale') ?: $language->getAttribute('name');
 	}
 
 
-	public function updating(Model $model) {
+	public function updating(Language $language) {
 		// Переименование папки с переводом в случае смены локали
-		$old_locale = $model->getOriginal('locale');
-		$new_locale = $model->getAttribute('locale');
+		$old_locale = $language->getOriginal('locale');
+		$new_locale = $language->getAttribute('locale');
 		$disk = Storage::createLocalDriver(['root' => base_path('resources/lang/vendor/chunker')]);
 
 		if ($old_locale != $new_locale && $disk->exists($old_locale)) {

@@ -129,8 +129,10 @@ class AppServiceProvider extends ServiceProvider
 
 
 		// Регистрация глобального посредника редиректов
-		$http_kernel = $this->app->make(Kernel::class);
-		$http_kernel->pushMiddleware(HandleRedirect::class);
+		$this
+			->app
+			->make(Kernel::class)
+			->pushMiddleware(HandleRedirect::class);
 
 
 		// Маршруты пакета
