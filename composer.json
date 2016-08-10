@@ -16,7 +16,8 @@
 		"laracasts/flash": "~2.0",
 		"kalnoy/nestedset": "~4.1",
 		"sinergi/browser-detector": "~6.0",
-		"league/uri": "~4.1"
+		"league/uri": "~4.1",
+		"asvae/laravel-api-tester": "~1.0"
 	},
 	"repositories": [
 		{
