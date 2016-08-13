@@ -1,26 +1,26 @@
 <div class="form-group">
-	<label>Настройки:</label>
+	<label>Перенаправления:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">
 
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Не доступно',
-			'ability'       => 'settings',
+			'ability'       => 'redirects',
 			'icon'          => 'ban',
-			'is_checked'    => !$role->isHasAccess('settings'),
+			'is_checked'    => !$role->isHasAccess('redirects'),
 		])
 
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Просмотр',
-			'ability'       => 'settings.view',
+			'ability'       => 'redirects.view',
 			'icon'          => 'eye',
-			'is_checked'    => $role->isHasAbility('settings.view'),
+			'is_checked'    => $role->isHasAbility('redirects.view'),
 		])
 
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Правка',
-			'ability'       => 'settings.edit',
+			'ability'       => 'redirects.edit',
 			'icon'          => 'pencil',
-			'is_checked'    => $role->isHasAbility('settings.edit'),
+			'is_checked'    => $role->isHasAbility('redirects.edit'),
 		])
 
 	</div>

@@ -71,22 +71,19 @@ class RoleController extends Controller
 	 */
 	protected function syncAbilities(Request $request, Role $role) {
 		if ($request->has('abilities')) {
+			$abilities = [];
 
-			// Отсев невозможного
-			$abilities = array_filter($request->get('abilities'), function($value) {
-				return $value !== '0';
-			});
+			foreach ($request->get('abilities') as $namespace => $ability) {
+				// Отсев невозможного
+				if ($ability) {
+					$abilities[] = $ability;
+				}
 
-			// Подготовка к синхронизации скалярного флага
-			$abilities = array_map(function($value) {
-				return $value === '1' ? ['options' => NULL] : $value;
-			}, $abilities);
-
-			// Синхронизация
-			$role
-				->abilities()
-				->sync($abilities);
-
+				// Синхронизация
+				$role
+					->abilities()
+					->sync($abilities);
+			}
 		}
 	}
 }

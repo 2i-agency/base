@@ -19,20 +19,43 @@ class Role extends Model
 	 * Возможности
 	 */
 	public function abilities() {
-		return $this
-			->belongsToMany(Ability::class, 'base_ability_role')
-			->withPivot('options');
+		return $this->belongsToMany(Ability::class, 'base_ability_role');
+	}
+
+
+	/*
+	 * Проверка доступа
+	 */
+	public function isHasAccess($abilityNamespace) {
+		return (bool)$this
+			->abilities()
+			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
+			->count();
 	}
 
 
 	/*
 	 * Проверка наличия возможности
 	 */
-	public function hasAbility($abilityId) {
+	public function isHasAbility($abilities) {
+		if (!is_array($abilities)) {
+			$abilities = [$abilities];
+		}
+
 		return (bool)$this
 			->abilities()
-			->where('id', $abilityId)
+			->whereIn('id', $abilities)
 			->count();
+	}
+
+
+	/*
+	 * Проверка статуса администратора
+	 */
+	public function isAdmin() {
+		return (bool)$this
+			->abilities()
+			->counnt();
 	}
 
 

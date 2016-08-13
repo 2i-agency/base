@@ -1,29 +1,27 @@
 <div class="form-group">
-	<label>Просмотр перевода интерфейса:</label>
-	<div>
+	<label>Перевод интерфейса:</label>
+	<div class="btn-group w100percent" data-toggle="buttons">
 
-		<label class="radio-inline">
-			<input type="radio" name="abilities[translation.view]" value="1"{{ !$role->exists || $role->hasAbility('translation.view') ? ' checked' : NULL }}>Да
-		</label>
+		@include('chunker.base::admin.utils.ability-trigger', [
+			'label'         => 'Не доступно',
+			'ability'       => 'translation',
+			'icon'          => 'ban',
+			'is_checked'    => !$role->isHasAccess('translation'),
+		])
 
-		<label class="radio-inline">
-			<input type="radio" name="abilities[translation.view]" value="0"{{ $role->exists && !$role->hasAbility('translation.view') ? ' checked' : NULL }}>Нет
-		</label>
+		@include('chunker.base::admin.utils.ability-trigger', [
+			'label'         => 'Просмотр',
+			'ability'       => 'translation.view',
+			'icon'          => 'eye',
+			'is_checked'    => $role->isHasAbility('translation.view'),
+		])
 
-	</div>
-</div>
-
-<div class="form-group">
-	<label>Редактирование перевода интерфейса:</label>
-	<div>
-
-		<label class="radio-inline">
-			<input type="radio" name="abilities[translation.edit]" value="1"{{ !$role->exists || $role->hasAbility('translation.edit') ? ' checked' : NULL }}>Да
-		</label>
-
-		<label class="radio-inline">
-			<input type="radio" name="abilities[translation.edit]" value="0"{{ $role->exists && !$role->hasAbility('translation.edit') ? ' checked' : NULL }}>Нет
-		</label>
+		@include('chunker.base::admin.utils.ability-trigger', [
+			'label'         => 'Правка',
+			'ability'       => 'translation.edit',
+			'icon'          => 'pencil',
+			'is_checked'    => $role->isHasAbility('translation.edit'),
+		])
 
 	</div>
 </div>

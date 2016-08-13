@@ -1,44 +1,27 @@
 <div class="form-group">
-	<label>Просмотр пользователей:</label>
-	<div>
+	<label>Пользователи:</label>
+	<div class="btn-group w100percent" data-toggle="buttons">
 
-		<label class="radio-inline">
-			<input type="radio" name="abilities[users.view]" value="1"{{ $role->hasAbility('users.view') ? ' checked' : NULL }}>Да
-		</label>
+		@include('chunker.base::admin.utils.ability-trigger', [
+			'label'         => 'Не доступно',
+			'ability'       => 'users',
+			'icon'          => 'ban',
+			'is_checked'    => !$role->isHasAccess('users'),
+		])
 
-		<label class="radio-inline">
-			<input type="radio" name="abilities[users.view]" value="0"{{ !$role->hasAbility('users.view') ? ' checked' : NULL }}>Нет
-		</label>
+		@include('chunker.base::admin.utils.ability-trigger', [
+			'label'         => 'Просмотр',
+			'ability'       => 'users.view',
+			'icon'          => 'eye',
+			'is_checked'    => $role->isHasAbility('users.view'),
+		])
 
-	</div>
-</div>
-
-<div class="form-group">
-	<label>Добавление пользователей:</label>
-	<div>
-
-		<label class="radio-inline">
-			<input type="radio" name="abilities[users.add]" value="1"{{ $role->hasAbility('users.add') ? ' checked' : NULL }}>Да
-		</label>
-
-		<label class="radio-inline">
-			<input type="radio" name="abilities[users.add]" value="0"{{ !$role->hasAbility('users.add') ? ' checked' : NULL }}>Нет
-		</label>
-
-	</div>
-</div>
-
-<div class="form-group">
-	<label>Редактирование пользователей:</label>
-	<div>
-
-		<label class="radio-inline">
-			<input type="radio" name="abilities[users.edit]" value="1"{{ $role->hasAbility('users.edit') ? ' checked' : NULL }}>Да
-		</label>
-
-		<label class="radio-inline">
-			<input type="radio" name="abilities[users.edit]" value="0"{{ !$role->hasAbility('users.edit') ? ' checked' : NULL }}>Нет
-		</label>
+		@include('chunker.base::admin.utils.ability-trigger', [
+			'label'         => 'Правка',
+			'ability'       => 'users.edit',
+			'icon'          => 'pencil',
+			'is_checked'    => $role->isHasAbility('users.edit'),
+		])
 
 	</div>
 </div>

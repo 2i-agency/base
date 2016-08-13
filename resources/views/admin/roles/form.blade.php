@@ -47,22 +47,23 @@
 					<h4 class="panel-title">Данные роли</h4>
 				</div>
 
-				<div class="panel-body">
-					<div class="form-group">
-						<label>Название:</label>
-						<input type="text" name="name" class="form-control" autocomplete="off" autofocus required value="{{ old('name') ?: ($role->exists ? $role->name : NULL) }}">
+				<div class="list-group">
+					<div class="list-group-item">
+						<div class="form-group">
+							<label>Название:</label>
+							<input type="text" name="name" class="form-control" autocomplete="off" autofocus required value="{{ old('name') ?: ($role->exists ? $role->name : NULL) }}">
+						</div>
 					</div>
-				</div>
 
-				@if (count($abilities_views))
-					<ul class="list-group">
-						@foreach($abilities_views as $ability_view)
-							<li class="list-group-item">
+					@if (count($abilities_views))
+						<div class="list-group-item">
+							@foreach($abilities_views as $ability_view)
 								@include($ability_view)
-							</li>
-						@endforeach
-					</ul>
-				@endif
+							@endforeach
+						</div>
+					@endif
+
+				</div>
 
 				<div class="panel-footer">
 					@if ($role->exists)

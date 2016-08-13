@@ -1,26 +1,26 @@
 <div class="form-group">
-	<label>Настройки:</label>
+	<label>Типы уведомлений:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">
 
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Не доступно',
-			'ability'       => 'settings',
+			'ability'       => 'notices-types',
 			'icon'          => 'ban',
-			'is_checked'    => !$role->isHasAccess('settings'),
+			'is_checked'    => !$role->isHasAccess('notices-types'),
 		])
 
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Просмотр',
-			'ability'       => 'settings.view',
+			'ability'       => 'notices-types.view',
 			'icon'          => 'eye',
-			'is_checked'    => $role->isHasAbility('settings.view'),
+			'is_checked'    => $role->isHasAbility('notices-types.view'),
 		])
 
 		@include('chunker.base::admin.utils.ability-trigger', [
-			'label'         => 'Правка',
-			'ability'       => 'settings.edit',
-			'icon'          => 'pencil',
-			'is_checked'    => $role->isHasAbility('settings.edit'),
+			'label'     => 'Правка',
+			'ability'   => 'notices-types.edit',
+			'icon'      => 'pencil',
+			'is_checked'    => $role->isHasAbility('notices-types.edit'),
 		])
 
 	</div>

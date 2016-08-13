@@ -26,36 +26,37 @@ class AppServiceProvider extends ServiceProvider
 			->setName('base')
 			->registerAbilities([
 
-				'admin.access'      => 'Доступ в админцентр',
+				'notices.edit'          => 'Правка уведомлений',
 
-				'notices.view'      => 'Просмотр уведомлений',
-				'notices.edit'      => 'Правка уведомлений',
+				'notices-types.edit'    => 'Редактирование типов уведомлений',
+				'notices-types.view'    => 'Просмотр типов уведомлений',
 
-				'users.view'        => 'Просмотр пользователей',
-				'users.add'         => 'Добавление пользователей',
-				'users.edit'        => 'Правка пользователей',
+				'settings.edit'         => 'Редактирование настроек',
+				'settings.view'         => 'Просмотр настроек',
 
-				'roles.view'        => 'Просмотр ролей',
-				'roles.add'         => 'Добавление ролей',
-				'roles.edit'        => 'Правка ролей',
+				'users.edit'            => 'Редактирование других пользователей',
+				'users.view'            => 'Просмотр пользователей',
 
-				'settings.view'     => 'Просмотр настроек',
-				'settings.edit'     => 'Правка настроек',
+				'roles.edit'            => 'Редактирование ролей',
+				'roles.view'            => 'Просмотр ролей',
 
-				'languages.view'    => 'Просмотр языков',
-				'languages.add'     => 'Добавление языков',
-				'languages.edit'    => 'Правка языков',
+				'redirects.edit'        => 'Редактирование перенаправлений',
+				'redirects.view'        => 'Просмотр перенаправлений',
 
-				'translation.view'  => 'Просмотр перевода интерфеса',
-				'translation.edit'  => 'Правка перевода интерфейса',
+				'languages.edit'        => 'Редактирование языков',
+				'languages.view'        => 'Просмотр языков',
+
+				'translation.edit'      => 'Редактирование перевода интерфейса',
+				'translation.view'      => 'Просмотр перевода интерфейса',
 
 			])
 			->registerAbilitiesViews([
-				'chunker.base::admin.abilities.admin',
 				'chunker.base::admin.abilities.notices',
+				'chunker.base::admin.abilities.notices-types',
+				'chunker.base::admin.abilities.settings',
 				'chunker.base::admin.abilities.users',
 				'chunker.base::admin.abilities.roles',
-				'chunker.base::admin.abilities.settings',
+				'chunker.base::admin.abilities.redirects',
 				'chunker.base::admin.abilities.languages',
 				'chunker.base::admin.abilities.translation'
 			])

@@ -15,6 +15,22 @@ class Ability extends Model
 
 
 	/*
+	 * Определение пространства имен
+	 */
+	public static function detectNamespace($ability) {
+		return explode('.', $ability)[0];
+	}
+
+
+	/*
+	 * Получение пространства имен
+	 */
+	public function getNamespace() {
+		return static::detectNamespace($this->id);
+	}
+
+
+	/*
 	 * Роли
 	 */
 	public function roles() {

@@ -77,4 +77,46 @@ class User extends Authenticatable
 	public function roles() {
 		return $this->belongsToMany(Role::class, 'base_role_user');
 	}
+	
+	
+	/*
+	 * Проверка доступа
+	 */
+	public function isHasAccess($abilityNamespace) {
+		foreach ($this->roles()->get('id') as $role) {
+			if ($role->isHasAccess($abilityNamespace)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+	/*
+	 * Проверка наличия возможности
+	 */
+	public function isHasAbility($ability) {
+		foreach ($this->roles()->get('id') as $role) {
+			if ($role->isHasAbility($ability)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+
+	/*
+	 * Проверка статуса администратора
+	 */
+	public function isAdmin() {
+		foreach ($this->roles()->get('id') as $role) {
+			if ($role->isAdmin()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 }
