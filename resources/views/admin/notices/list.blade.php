@@ -111,7 +111,9 @@
 							<th style="width: 150px;">Время</th>
 							<th>Содержимое</th>
 							<th class="w1px">Тип</th>
-							<th class="w1px"></th>
+							@can('edit', $notices->first())
+								<th class="w1px"></th>
+							@endcan
 						</tr>
 					</thead>
 					<tbody>
@@ -137,31 +139,33 @@
 								</td>
 
 								{{--Кнопки--}}
-								<td class="text-right text-nowrap">
-									<form
-										method="POST"
-										action="{{ route('admin.notices.read', ['notice' => $notice]) }}"
-									>
-										{!! csrf_field() !!}
-										{!! method_field('PUT') !!}
+								@can('edit', $notices->first())
+									<td class="text-right text-nowrap">
+										<form
+											method="POST"
+											action="{{ route('admin.notices.read', ['notice' => $notice]) }}"
+										>
+											{!! csrf_field() !!}
+											{!! method_field('PUT') !!}
 
-										{{--Кнопка отметки о прочтении--}}
-										@unless($notice->is_read)
-											<button type="submit" class="btn btn-xs btn-primary">
-												<span class="fa fa-check"></span>
-												Отметить прочитанным
-											</button>
-										@endunless
+											{{--Кнопка отметки о прочтении--}}
+											@unless($notice->is_read)
+												<button type="submit" class="btn btn-xs btn-primary">
+													<span class="fa fa-check"></span>
+													Отметить прочитанным
+												</button>
+											@endunless
 
-										{{--Кнопка удаления--}}
-										@include('chunker.base::admin.utils.buttons.delete', [
-											'size' => 'xs',
-											'url' => route('admin.notices.destroy', ['notice' => $notice])
-										])
+											{{--Кнопка удаления--}}
+											@include('chunker.base::admin.utils.buttons.delete', [
+												'size' => 'xs',
+												'url' => route('admin.notices.destroy', ['notice' => $notice])
+											])
 
-									</form>
+										</form>
 
-								</td>
+									</td>
+								@endcan
 
 							</tr>
 						@endforeach

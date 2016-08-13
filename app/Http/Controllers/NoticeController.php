@@ -72,6 +72,7 @@ class NoticeController extends Controller
 	 * Отметка прочтения уведомления
 	 */
 	public function read(Notice $notice) {
+		$this->authorize('edit', $notice);
 		$notice->update(['is_read' => true]);
 		flash()->success('Уведомление <b>№' . $notice->id . '</b> отмечено, как прочитанное');
 
@@ -83,6 +84,7 @@ class NoticeController extends Controller
 	 * Удаление уведомления
 	 */
 	public function destroy(Notice $notice) {
+		$this->authorize('edit', $notice);
 		$notice->delete();
 		flash()->warning('Уведомление <b>№' . $notice->id . '</b> удалено');
 
