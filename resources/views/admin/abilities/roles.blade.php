@@ -6,21 +6,21 @@
 			'label'         => 'Не доступно',
 			'ability'       => 'roles',
 			'icon'          => 'ban',
-			'is_checked'    => !$role->isHasAccess('roles'),
+			'is_checked'    => !$role->hasAccess('roles'),
 		])
 
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'roles.view',
 			'icon'          => 'eye',
-			'is_checked'    => $role->isHasAbility('roles.view'),
+			'is_checked'    => $role->hasAbility('roles.view'),
 		])
 
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'roles.edit',
 			'icon'          => 'pencil',
-			'is_checked'    => $role->isHasAbility('roles.edit'),
+			'is_checked'    => $role->hasAbility('roles.edit'),
 		])
 
 	</div>

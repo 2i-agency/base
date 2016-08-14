@@ -2,8 +2,8 @@
 
 namespace Chunker\Base\Providers;
 
-use Chunker\Base\Models\Notice;
-use Chunker\Base\Policies\NoticePolicy;
+use Chunker\Base\Models\Ability;
+use Chunker\Base\Models\User;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -12,9 +12,7 @@ class AuthServiceProvider extends ServiceProvider
 	/*
 	 * Карта политик приложения
 	 */
-	protected $policies = [
-		Notice::class => NoticePolicy::class
-	];
+	protected $policies = [];
 
 
 	/*
@@ -22,5 +20,12 @@ class AuthServiceProvider extends ServiceProvider
 	 */
 	public function boot(GateContract $gate) {
 		$this->registerPolicies($gate);
+
+		// Регистрация правил в соответствии с таблицей в базе
+		foreach (Ability::pluck('id') as $ability) {
+			$gate->define($ability, function(User $user) use ($ability) {
+				return $user->hasAbility($ability);
+			});
+		}
 	}
 }

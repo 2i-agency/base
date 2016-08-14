@@ -111,7 +111,7 @@
 							<th style="width: 150px;">Время</th>
 							<th>Содержимое</th>
 							<th class="w1px">Тип</th>
-							@can('edit', $notices->first())
+							@can('notices.edit')
 								<th class="w1px"></th>
 							@endcan
 						</tr>
@@ -139,7 +139,7 @@
 								</td>
 
 								{{--Кнопки--}}
-								@can('edit', $notices->first())
+								@can('notices.edit')
 									<td class="text-right text-nowrap">
 										<form
 											method="POST"

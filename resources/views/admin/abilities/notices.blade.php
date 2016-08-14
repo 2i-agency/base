@@ -5,14 +5,14 @@
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'notices',
-			'is_checked'    => !$role->isHasAbility('notices.edit'),
+			'is_checked'    => !$role->hasAbility('notices.edit'),
 			'icon'          => 'eye'
 		])
 
 		@include('chunker.base::admin.utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'notices.edit',
-			'is_checked'    => $role->isHasAbility('notices.edit'),
+			'is_checked'    => $role->hasAbility('notices.edit'),
 			'icon'          => 'pencil'
 		])
 

@@ -26,7 +26,7 @@ class Role extends Model
 	/*
 	 * Проверка доступа
 	 */
-	public function isHasAccess($abilityNamespace) {
+	public function hasAccess($abilityNamespace) {
 		return (bool)$this
 			->abilities()
 			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
@@ -37,7 +37,7 @@ class Role extends Model
 	/*
 	 * Проверка наличия возможности
 	 */
-	public function isHasAbility($abilities) {
+	public function hasAbility($abilities) {
 		if (!is_array($abilities)) {
 			$abilities = [$abilities];
 		}

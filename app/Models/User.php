@@ -82,9 +82,9 @@ class User extends Authenticatable
 	/*
 	 * Проверка доступа
 	 */
-	public function isHasAccess($abilityNamespace) {
+	public function hasAccess($abilityNamespace) {
 		foreach ($this->roles()->get(['id']) as $role) {
-			if ($role->isHasAccess($abilityNamespace)) {
+			if ($role->hasAccess($abilityNamespace)) {
 				return true;
 			}
 		}
@@ -96,9 +96,9 @@ class User extends Authenticatable
 	/*
 	 * Проверка наличия возможности
 	 */
-	public function isHasAbility($ability) {
+	public function hasAbility($ability) {
 		foreach ($this->roles()->get(['id']) as $role) {
-			if ($role->isHasAbility($ability)) {
+			if ($role->hasAbility($ability)) {
 				return true;
 			}
 		}
