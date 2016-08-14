@@ -12,15 +12,14 @@ class SettingController extends Controller
 	 * Раздел настроек
 	 */
 	public function section($section = NULl) {
+		$this->authorize('settings.view');
+
 		// Переадресация в первый раздел
-		if (is_null($section))
-		{
+		if (is_null($section)) {
 			$section = key(config('chunker.admin.settings'));
 			return redirect()->route('admin.settings', $section);
-		}
-		// Содержимое раздела
-		else
-		{
+		} // Содержимое раздела
+		else {
 			$settings = Setting
 				::whereIn('id', config('chunker.admin.settings')[$section]['options'])
 				->get();
@@ -34,8 +33,9 @@ class SettingController extends Controller
 	 * Сохранение
 	 */
 	public function save(Request $request) {
-		foreach ($request->get('settings') as $id => $value)
-		{
+		$this->authorize('settings.edit');
+
+		foreach ($request->get('settings') as $id => $value) {
 			Setting::find($id)->update(['value' => $value]);
 		}
 

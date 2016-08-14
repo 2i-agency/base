@@ -38,58 +38,71 @@
 						<div class="form-group">
 
 							{{--Метка--}}
-							@include('chunker.base::admin.utils.edit', [
-								'element' => $setting,
-								'right' => true
-							])
+							@include('chunker.base::admin.utils.edit', [ 'element' => $setting, 'right' => true ])
 							<label>{{ $setting->title }}:</label>
 
 							{{--Многострочное поле--}}
-							@if ($setting->control_type == 'textarea')
-								<textarea name="settings[{{ $setting->id }}]" class="form-control">{{ $setting->value }}</textarea>
+							@can('settings.edit')
 
-							{{--Переключатель--}}
-							@elseif($setting->control_type == 'radio')
-								<label class="radio-inline">
-									<input
-										type="radio"
-										name="settings[{{ $setting->id }}]"
-										value="1"
-										{{ $setting->value ? ' checked' : NULL }}
-									> Да
-								</label>
-								<label class="radio-inline">
-									<input
-										type="radio"
-										name="settings[{{ $setting->id }}]"
-										{{ $setting->value ? NULL : ' checked' }}
-										value="0"
-									> Нет
-								</label>
+								@if ($setting->control_type == 'textarea')
+									<textarea name="settings[{{ $setting->id }}]" class="form-control">{{ $setting->value }}</textarea>
 
-							{{--Однострочное поле--}}
+								{{--Переключатель--}}
+								@elseif($setting->control_type == 'radio')
+									<label class="radio-inline">
+										<input
+											type="radio"
+											name="settings[{{ $setting->id }}]"
+											value="1"
+											{{ $setting->value ? ' checked' : NULL }}
+										> Да
+									</label>
+									<label class="radio-inline">
+										<input
+											type="radio"
+											name="settings[{{ $setting->id }}]"
+											{{ $setting->value ? NULL : ' checked' }}
+											value="0"
+										> Нет
+									</label>
+
+								{{--Однострочное поле--}}
+								@else
+									<input
+										type="{{ $setting->control_type }}"
+										name="settings[{{ $setting->id }}]"
+										value="{{ $setting->value }}"
+										class="form-control"
+										autocomplete="off"
+									>
+								@endif
+
+								{{--Подсказка--}}
+								@if($setting->hint)
+									<div class="help-block">{{ $setting->hint }}</div>
+								@endif
+
 							@else
-								<input
-									type="{{ $setting->control_type }}"
-									name="settings[{{ $setting->id }}]"
-									value="{{ $setting->value }}"
-									class="form-control"
-									autocomplete="off"
-								>
-							@endif
 
-							{{--Подсказка--}}
-							@if ($setting->hint)
-								<div class="help-block">{{ $setting->hint }}</div>
-							@endif
+								<p class="form-control-static">
+									@if($setting->value)
+										{{ $setting->value }}
+									@else
+										<span class="help-block">Не указано</span>
+									@endif
+								</p>
+
+							@endcan
 
 						</div>
 					@endforeach
 				</div>
 
-				<div class="panel-footer">
-					@include('chunker.base::admin.utils.buttons.save')
-				</div>
+				@can('settings.edit')
+					<div class="panel-footer">
+						@include('chunker.base::admin.utils.buttons.save')
+					</div>
+				@endcan
 
 			</form>
 		</div>
