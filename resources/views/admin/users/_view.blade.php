@@ -29,7 +29,13 @@
 		{{--Имя--}}
 		<div class="form-group">
 			<label>Имя:</label>
-			<p class="form-control-static">{{ $user->name }}</p>
+			<p class="form-control-static">
+				@if($user->name)
+					{{ $user->name }}
+				@else
+					<span class="text-muted">Не указано</span>
+				@endif
+			</p>
 		</div>
 
 		{{--Отправка уведомлений--}}
