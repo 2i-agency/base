@@ -31,6 +31,8 @@ class UserController extends Controller
 	 * Список пользователей
 	 */
 	public function index() {
+		$this->authorize('users.view');
+
 		$users = User
 			::latest()
 			->paginate();
@@ -43,6 +45,7 @@ class UserController extends Controller
 	 * Страница добавления пользователя
 	 */
 	public function create() {
+		$this->authorize('users.edit');
 		return view('chunker.base::admin.users.create');
 	}
 
@@ -51,6 +54,8 @@ class UserController extends Controller
 	 * Добавление пользователя
 	 */
 	public function store(Request $request) {
+		$this->authorize('users.edit');
+
 		// Валидация
 		$this->validate($request, $this->rules);
 
@@ -79,6 +84,7 @@ class UserController extends Controller
 	 * Страница редактирования пользователя
 	 */
 	public function edit(User $user) {
+		$this->authorize('users.view');
 		return view('chunker.base::admin.users.edit', compact('user'));
 	}
 
@@ -87,6 +93,8 @@ class UserController extends Controller
 	 * Обновление пользователя
 	 */
 	public function update(Request $request, User $user) {
+		$this->authorize('users.edit');
+
 		// Подготовка правил
 		$this->rules['login'] .= ',' . $user->id;
 		$this->rules['email'] .= ',' . $user->id;
@@ -123,6 +131,8 @@ class UserController extends Controller
 	 * Список аутентификаций пользователя
 	 */
 	public function authentications(User $user) {
+		$this->authorize('users.view');
+
 		$authentications = $user
 			->authentications()
 			->recent()

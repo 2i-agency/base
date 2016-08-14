@@ -13,15 +13,16 @@
 	@include('chunker.base::admin.users._tabs')
 
 	{{--Форма с данными пользователя--}}
-	<form method="POST" action="{{ route('admin.users.update', $user) }}" class="panel panel-default">
-
-		{!! method_field('PUT') !!}
-		@include('chunker.base::admin.users._form')
-
-		<div class="panel-footer">
-			@include('chunker.base::admin.utils.buttons.save')
-		</div>
-
-	</form>
+	@can('users.edit')
+		<form method="POST" action="{{ route('admin.users.update', $user) }}" class="panel panel-default">
+			{!! method_field('PUT') !!}
+			@include('chunker.base::admin.users._form')
+			<div class="panel-footer">
+				@include('chunker.base::admin.utils.buttons.save')
+			</div>
+		</form>
+	@else
+		@include('chunker.base::admin.users._view')
+	@endcan
 
 @stop
