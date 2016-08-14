@@ -7,7 +7,7 @@ use App\Http\Requests\Request;
 class NoticesTypeRequest extends Request
 {
 	public function authorize() {
-		return true;
+		return $this->user()->can('notices-types.edit');
 	}
 
 

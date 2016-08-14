@@ -10,36 +10,38 @@
 
 
 	{{--Форма добавления--}}
-	<form method="POST" class="panel panel-default" action="{{ route('admin.notices-types.store') }}">
-		{!! csrf_field() !!}
+	@can('notices-types.edit')
+		<form method="POST" class="panel panel-default" action="{{ route('admin.notices-types.store') }}">
+			{!! csrf_field() !!}
 
-		<div class="panel-heading">
-			<div class="panel-title">Новый тип уведомлений</div>
-		</div>
-
-		<div class="panel-body">
-			<div class="row">
-
-				<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
-					<input
-						type="text"
-						name="name"
-						placeholder="Название типа"
-						class="form-control"
-						required
-						autocomplete="off"
-						value="{{ old('name') }}"
-					>
-				</div>
-
-				<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-					@include('chunker.base::admin.utils.buttons.add', ['block' => true])
-				</div>
-
+			<div class="panel-heading">
+				<div class="panel-title">Новый тип уведомлений</div>
 			</div>
-		</div>
 
-	</form>
+			<div class="panel-body">
+				<div class="row">
+
+					<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+						<input
+							type="text"
+							name="name"
+							placeholder="Название типа"
+							class="form-control"
+							required
+							autocomplete="off"
+							value="{{ old('name') }}"
+						>
+					</div>
+
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+						@include('chunker.base::admin.utils.buttons.add', ['block' => true])
+					</div>
+
+				</div>
+			</div>
+
+		</form>
+	@endcan
 
 
 	{{--Список типов уведомлений--}}
@@ -56,34 +58,44 @@
 						<tr>
 
 							<td>
-								<input
-									type="text"
-									name="notices_types[{{ $notices_type->id }}][name]"
-									required
-									autocomplete="off"
-									value="{{ old('notices_types.' . $notices_type->id . '.name') ?: $notices_type->name }}"
-									class="form-control"
-									{{ is_null($notices_type->tag) ? NULL : 'disabled' }}
-								>
+								@can('notices-types.edit')
+									<input
+										type="text"
+										name="notices_types[{{ $notices_type->id }}][name]"
+										required
+										autocomplete="off"
+										value="{{ old('notices_types.' . $notices_type->id . '.name') ?: $notices_type->name }}"
+										class="form-control"
+										{{ is_null($notices_type->tag) ? NULL : 'disabled' }}
+									>
+								@else
+									{{ $notices_type->name }}
+								@endcan
 							</td>
 
-							<td class="w1px">
-								<div class="form-control-static">
-									<label class="checkbox-inline">
-										<input
-											type="checkbox"
-											name="delete[]"
-											value="{{ $notices_type->id }}"
-											{{ is_null($notices_type->tag) ? NULL : 'disabled' }}
-										>Удалить
-									</label>
-								</div>
-							</td>
+							@can('notices-types.edit')
+								<td class="w1px">
+									<div class="form-control-static">
+										<label class="checkbox-inline">
+											<input
+												type="checkbox"
+												name="delete[]"
+												value="{{ $notices_type->id }}"
+												{{ is_null($notices_type->tag) ? NULL : 'disabled' }}
+											>Удалить
+										</label>
+									</div>
+								</td>
+							@endcan
 
 							<td class="w1px">
-								<div class="form-control-static">
+								@can('notices-types.edit')
+									<div class="form-control-static">
+										@include('chunker.base::admin.utils.edit', ['element' => $notices_type])
+									</div>
+								@else
 									@include('chunker.base::admin.utils.edit', ['element' => $notices_type])
-								</div>
+								@endcan
 							</td>
 
 						</tr>
@@ -92,9 +104,11 @@
 				</tbody>
 			</table>
 
-			<div class="panel-footer">
-				@include('chunker.base::admin.utils.buttons.save')
-			</div>
+			@can('notices-types.edit')
+				<div class="panel-footer">
+					@include('chunker.base::admin.utils.buttons.save')
+				</div>
+			@endcan
 
 		</form>
 

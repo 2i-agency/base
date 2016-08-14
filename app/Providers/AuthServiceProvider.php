@@ -24,7 +24,11 @@ class AuthServiceProvider extends ServiceProvider
 		// Регистрация правил в соответствии с таблицей в базе
 		foreach (Ability::pluck('id') as $ability) {
 			$gate->define($ability, function(User $user) use ($ability) {
-				return $user->hasAbility($ability);
+				if (explode('.', $ability)[1] == 'view') {
+					return $user->hasAccess($ability);
+				} else {
+					return $user->hasAbility($ability);
+				}
 			});
 		}
 	}

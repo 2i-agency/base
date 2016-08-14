@@ -12,6 +12,8 @@ class NoticesTypeController extends Controller
 	 * Список типов уведомлений
 	 */
 	public function index() {
+		$this->authorize('notices-types.view');
+
 		$notices_types = NoticesType
 			::orderBy('name')
 			->get();
@@ -44,12 +46,10 @@ class NoticesTypeController extends Controller
 				->update($notices_type_data);
 		}
 
-
 		// Удаление
 		if ($request->has('delete')) {
 			NoticesType::destroy($request->get('delete'));
 		}
-
 
 		// Уведомление
 		flash()->success('Типы уведомлений сохранены');
