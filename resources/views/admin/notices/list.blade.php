@@ -100,11 +100,13 @@
 	{{--Список уведомлений--}}
 	@if ($notices->count())
 
+		{{--Пагинатор--}}
 		{!! $notices->render() !!}
 
 		<div class="panel panel-default">
 			<div class="table-responsive">
 				<table class="table table-striped table-hover">
+
 					<thead>
 						<tr>
 							<th class="text-right" style="width: 1px;">№</th>
@@ -116,6 +118,7 @@
 							@endcan
 						</tr>
 					</thead>
+
 					<tbody>
 						@foreach ($notices as $notice)
 							<tr{!! $notice->is_read ? NULL : ' class="info"'!!}>
@@ -170,14 +173,17 @@
 							</tr>
 						@endforeach
 					</tbody>
+
 				</table>
 			</div>
 		</div>
 
+		{{--Пагинатор--}}
 		{!! $notices->render() !!}
 
 	@else
 
+		{{--Уведомление--}}
 		@include('chunker.base::admin.utils.alert', ['message' => 'Уведомления отсутствуют'])
 
 	@endif

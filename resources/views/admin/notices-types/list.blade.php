@@ -59,6 +59,7 @@
 
 							<td>
 								@can('notices-types.edit')
+									{{--Поле ввода названия--}}
 									<input
 										type="text"
 										name="notices_types[{{ $notices_type->id }}][name]"
@@ -69,10 +70,12 @@
 										{{ is_null($notices_type->tag) ? NULL : 'disabled' }}
 									>
 								@else
+									{{--Вывод названия--}}
 									{{ $notices_type->name }}
 								@endcan
 							</td>
 
+							{{--Чекбокс удаления--}}
 							@can('notices-types.edit')
 								<td class="w1px">
 									<div class="form-control-static">
@@ -88,6 +91,7 @@
 								</td>
 							@endcan
 
+							{{--Информация о редактировании--}}
 							<td class="w1px">
 								@can('notices-types.edit')
 									<div class="form-control-static">
@@ -104,6 +108,7 @@
 				</tbody>
 			</table>
 
+			{{--Кнопка сохранения--}}
 			@can('notices-types.edit')
 				<div class="panel-footer">
 					@include('chunker.base::admin.utils.buttons.save')

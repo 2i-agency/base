@@ -84,6 +84,7 @@
 
 							@else
 
+								{{--Вывод значения--}}
 								<p class="form-control-static">
 									@if($setting->value)
 										{{ $setting->value }}
@@ -98,6 +99,7 @@
 					@endforeach
 				</div>
 
+				{{--Кнопка сохранения--}}
 				@can('settings.edit')
 					<div class="panel-footer">
 						@include('chunker.base::admin.utils.buttons.save')
