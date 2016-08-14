@@ -43,6 +43,8 @@ class LanguageController extends Controller
 	 * Список языков
 	 */
 	public function index() {
+		$this->authorize('languages.view');
+
 		return view('chunker.base::admin.languages.list', [
 			'languages' => Language::defaultOrder()->get()
 		]);
@@ -53,6 +55,8 @@ class LanguageController extends Controller
 	 * Добавление языка
 	 */
 	public function store(Request $request) {
+		$this->authorize('languages.edit');
+
 		$this->validate($request, $this->rules, $this->messages);
 		$language = Language::create($request->only(['name', 'locale']));
 		flash()->success('Язык <b>' . e($language->name) . '</b> добавлен');
@@ -65,6 +69,8 @@ class LanguageController extends Controller
 	 * Обновление языка
 	 */
 	public function update(Request $request, Language $language) {
+		$this->authorize('languages.edit');
+
 		// Валидация
 		$this->rules['locale'] .= ',' . $language->id;
 		$this->validate($request, $this->rules, $this->messages);
@@ -84,6 +90,7 @@ class LanguageController extends Controller
 	 * Позиционирование языков
 	 */
 	public function positioning(Request $request) {
+		$this->authorize('languages.edit');
 		$this->setPositions($request, Language::class);
 	}
 }

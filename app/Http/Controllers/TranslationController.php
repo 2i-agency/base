@@ -14,6 +14,7 @@ class TranslationController extends Controller
 	 * Список разделов интерфейса
 	 */
 	public function index() {
+		$this->authorize('translation.view');
 		return view('chunker.base::admin.translation.sections');
 	}
 
@@ -22,6 +23,8 @@ class TranslationController extends Controller
 	 * Список элементов раздела
 	 */
 	public function section($section) {
+		$this->authorize('translation.view');
+
 		$data = config('chunker.localization.interface')[$section];
 		$title = $data[0];
 		$fields = [];
@@ -71,6 +74,8 @@ class TranslationController extends Controller
 	 * Сохранение перевода
 	 */
 	public function save(Request $request, $section) {
+		$this->authorize('translation.edit');
+
 		// Перевод элементов
 		$elements = $request->get('elements');
 

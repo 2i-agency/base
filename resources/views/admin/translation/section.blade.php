@@ -29,31 +29,49 @@
 				<div class="form-group">
 					<label>{{ $field['title'] }}:</label>
 
-					{{--Текстовое поле--}}
-					@if ($field['type'] == 'textarea')
-						<textarea
-							name="elements[{{ $field['name'] }}]"
-							class="form-control"
-							rows="5"
-						>{{ $field['value'] }}</textarea>
+					@can('translation.edit')
 
-					{{--Поле ввода--}}
+						{{--Текстовое поле--}}
+						@if ($field['type'] == 'textarea')
+							<textarea
+								name="elements[{{ $field['name'] }}]"
+								class="form-control"
+								rows="5"
+							>{{ $field['value'] }}</textarea>
+
+						{{--Поле ввода--}}
+						@else
+							<input
+								type="{{ $field['type'] }}"
+								name="elements[{{ $field['name'] }}]"
+								class="form-control"
+								value="{{ $field['value'] }}"
+								autocomplete="off">
+						@endif
+
 					@else
-						<input
-							type="{{ $field['type'] }}"
-							name="elements[{{ $field['name'] }}]"
-							class="form-control"
-							value="{{ $field['value'] }}"
-							autocomplete="off">
-					@endif
+
+						<p class="form-control-static">
+							@if (strlen($field['value']))
+								{{ $field['value'] }}
+							@else
+								<span class="text-muted">Не заполнено</span>
+							@endif
+						</p>
+
+					@endcan
 
 				</div>
 			@endforeach
 
-			{{--Кнопка сохранения--}}
-			@include('chunker.base::admin.utils.buttons.save')
-
 		</div>
+
+		@can('translation.edit')
+			<div class="panel-footer">
+				{{--Кнопка сохранения--}}
+				@include('chunker.base::admin.utils.buttons.save')
+			</div>
+		@endcan
 
 	</form>
 

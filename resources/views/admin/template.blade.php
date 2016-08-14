@@ -71,7 +71,7 @@
 			</form>
 
 			{{--Языковое меню--}}
-			@if (config('chunker.localization.multi'))
+			@if (config('chunker.localization.multi') && (Auth::user()->can('languages.view') || Auth::user()->can('translation.view') || $_languages->count() > 1))
 				<div class="navbar-form navbar-right dropdown">
 
 					{{--Кнопка с текущим языком--}}
@@ -96,21 +96,25 @@
 							<li class="divider"></li>
 						@endif
 
-						{{--Ссыла на раздел редактирования языков--}}
-						<li{!! (Route::currentRouteName() == 'admin.languages' ? ' class="active"' : NULL) !!} >
-							<a href="{{ route('admin.languages') }}">
-								<span class="fa fa-globe"></span>
-								Языки
-							</a>
-						</li>
+						{{--Ссылка на раздел редактирования языков--}}
+						@can('languages.view')
+							<li{!! (Route::currentRouteName() == 'admin.languages' ? ' class="active"' : NULL) !!} >
+								<a href="{{ route('admin.languages') }}">
+									<span class="fa fa-globe"></span>
+									Языки
+								</a>
+							</li>
+						@endcan
 
 						{{--Ссылка на раздел перевода интерфейса--}}
-						<li{!! (Route::currentRouteName() == 'admin.translation' ? ' class="active"' : NULL) !!}>
-							<a href="{{ route('admin.translation') }}">
-								<span class="fa fa-language"></span>
-								Перевод интерфейса
-							</a>
-						</li>
+						@can('translation.view')
+							<li{!! (Route::currentRouteName() == 'admin.translation' ? ' class="active"' : NULL) !!}>
+								<a href="{{ route('admin.translation') }}">
+									<span class="fa fa-language"></span>
+									Перевод интерфейса
+								</a>
+							</li>
+						@endcan
 
 					</ul>
 				</div>

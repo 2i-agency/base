@@ -15,59 +15,57 @@
 
 
 	{{--Форма добавления языка--}}
-	<form method="POST" action="{{ route('admin.languages.store') }}" class="panel panel-default">
-		{!! csrf_field() !!}
+	@can('languages.edit')
+		<form method="POST" action="{{ route('admin.languages.store') }}" class="panel panel-default">
+			{!! csrf_field() !!}
 
-		<div class="panel-heading">
-			<h4 class="panel-title">Новый язык</h4>
-		</div>
-
-		<div class="panel-body form-inline">
-
-			{{--Название--}}
-			<div class="form-group">
-				<input
-					type="text"
-					name="name"
-					autofocus
-					required
-					autocomplete="off"
-					placeholder="Название"
-					class="form-control"
-				>
+			<div class="panel-heading">
+				<h4 class="panel-title">Новый язык</h4>
 			</div>
 
-			{{--Локаль--}}
-			<div class="form-group">
-				<input
-					type="text"
-					name="locale"
-					pattern="^[\da-z][\da-z-]*[\da-z]$"
-					minlength="2"
-					autocomplete="off"
-					placeholder="Локаль"
-					class="form-control"
-				>
+			<div class="panel-body form-inline">
+
+				{{--Название--}}
+				<div class="form-group">
+					<input
+						type="text"
+						name="name"
+						autofocus
+						required
+						autocomplete="off"
+						placeholder="Название"
+						class="form-control"
+					>
+				</div>
+
+				{{--Локаль--}}
+				<div class="form-group">
+					<input
+						type="text"
+						name="locale"
+						pattern="^[\da-z][\da-z-]*[\da-z]$"
+						minlength="2"
+						autocomplete="off"
+						placeholder="Локаль"
+						class="form-control"
+					>
+				</div>
+
+				{{--Кнопка добавления--}}
+				<div class="form-group">
+					@include('chunker.base::admin.utils.buttons.add')
+				</div>
+
+				<div class="help-block">Локаль можно не указывать — в этом случае она будет сгенерирована на основе названия. Локаль может содержать буквы, цифры, дефис и нижнее подчёркивание.</div>
+
 			</div>
 
-			{{--Кнопка добавления--}}
-			<div class="form-group">
-				@include('chunker.base::admin.utils.buttons.add')
-			</div>
-
-			<div class="help-block">Локаль можно не указывать — в этом случае она будет сгенерирована на основе названия. Локаль может содержать буквы, цифры, дефис и нижнее подчёркивание.</div>
-
-		</div>
-
-	</form>
+		</form>
+	@endcan
 
 
 	{{--Список языков--}}
 	<div class="panel panel-default">
-
-		<div class="panel-heading">
-			<h4 class="panel-title">Добавленные языки</h4>
-		</div>
 
 		<div class="table-responsive">
 			<table class="table table-striped table-hover">
@@ -77,7 +75,7 @@
 						<th>Название</th>
 						<th>Локаль</th>
 						<th>Публикация</th>
-						<th></th>
+						<th class="w1px"></th>
 					</tr>
 				</thead>
 
@@ -99,21 +97,23 @@
 							@endif
 
 							{{--Кнопка редактирования--}}
-							<td class="text-right">
+							<td class="text-right text-nowrap">
 								@include('chunker.base::admin.utils.edit', ['element' => $language])
-								<button
-									type="button"
-									class="btn btn-primary btn-xs"
-									data-toggle="modal"
-									data-target="#modal-edit"
-									data-action_update="{{ route('admin.languages.update', $language) }}"
-									data-name="{{ $language->name }}"
-									data-locale="{{ $language->locale }}"
-									data-is_published="{{ $language->is_published }}"
-								>
-									<span class="glyphicon glyphicon-pencil"></span>
-									Редактировать
-								</button>
+								@can('languages.edit')
+									<button
+										type="button"
+										class="btn btn-primary btn-xs"
+										data-toggle="modal"
+										data-target="#modal-edit"
+										data-action_update="{{ route('admin.languages.update', $language) }}"
+										data-name="{{ $language->name }}"
+										data-locale="{{ $language->locale }}"
+										data-is_published="{{ $language->is_published }}"
+									>
+										<span class="glyphicon glyphicon-pencil"></span>
+										Редактировать
+									</button>
+								@endcan
 							</td>
 
 						</tr>
@@ -127,65 +127,67 @@
 
 
 	{{--Модальное окно редактирования языка--}}
-	<form method="POST" class="modal fade" id="modal-edit">
-		{!! method_field('PUT') !!}
-		{!! csrf_field() !!}
+	@can('languages.edit')
+		<form method="POST" class="modal fade" id="modal-edit">
+			{!! method_field('PUT') !!}
+			{!! csrf_field() !!}
 
-		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-dialog">
+				<div class="modal-content">
 
-				<div class="modal-header">
-					<h4 class="modal-title">Редактирование языка</h4>
-				</div>
-
-				<div class="modal-body">
-
-					{{--Название--}}
-					<div class="form-group">
-						<label>Название:</label>
-						<input
-							type="text"
-							name="name"
-							autocomplete="off"
-							required
-							class="form-control"
-						>
+					<div class="modal-header">
+						<h4 class="modal-title">Редактирование языка</h4>
 					</div>
 
-					{{--Локаль--}}
-					<div class="form-group">
-						<label>Локаль:</label>
-						<input
-							type="text"
-							name="locale"
-							autocomplete="off"
-							class="form-control"
-							pattern="^[\da-z][\da-z-]*[\da-z]$"
-							minlength="2"
-						>
-					</div>
+					<div class="modal-body">
 
-					{{--Флаг публикации--}}
-					<div class="form-group">
-						<label>Опубликован:</label>
-						<div>
-							<label class="radio-inline">
-								<input type="radio" name="is_published" value="1"> Да
-							</label>
-							<label class="radio-inline">
-								<input type="radio" name="is_published" value="0"> Нет
-							</label>
+						{{--Название--}}
+						<div class="form-group">
+							<label>Название:</label>
+							<input
+								type="text"
+								name="name"
+								autocomplete="off"
+								required
+								class="form-control"
+							>
 						</div>
+
+						{{--Локаль--}}
+						<div class="form-group">
+							<label>Локаль:</label>
+							<input
+								type="text"
+								name="locale"
+								autocomplete="off"
+								class="form-control"
+								pattern="^[\da-z][\da-z-]*[\da-z]$"
+								minlength="2"
+							>
+						</div>
+
+						{{--Флаг публикации--}}
+						<div class="form-group">
+							<label>Опубликован:</label>
+							<div>
+								<label class="radio-inline">
+									<input type="radio" name="is_published" value="1"> Да
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="is_published" value="0"> Нет
+								</label>
+							</div>
+						</div>
+
+						{{--Кнопка сохранения--}}
+						@include('chunker.base::admin.utils.buttons.save')
+
 					</div>
 
-					{{--Кнопка сохранения--}}
-					@include('chunker.base::admin.utils.buttons.save')
-
 				</div>
-
 			</div>
-		</div>
 
-	</form>
+		</form>
+	@endcan
 
 @stop
