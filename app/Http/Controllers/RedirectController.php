@@ -28,10 +28,12 @@ class RedirectController extends Controller
 	 * Список перенаправлений
 	 */
 	public function index() {
+		$this->authorize('redirects.view');
+
 		$redirects = Redirect
 			::orderBy('from')
 			->orderBy('to')
-			->paginate(3);
+			->paginate();
 
 		if ($this->isNeedRedirectByPaginator($redirects)) {
 			return $this->redirectByPaginator($redirects);
@@ -45,6 +47,8 @@ class RedirectController extends Controller
 	 * Добавление перенаправления
 	 */
 	public function store(Request $request) {
+		$this->authorize('redirects.edit');
+
 		// Валидация
 		$this->validate($request, $this->rules, $this->messages);
 
@@ -63,6 +67,8 @@ class RedirectController extends Controller
 	 * Сохранение перенаправлений
 	 */
 	public function save(Request $request) {
+		$this->authorize('redirects.edit');
+
 		$redirects = $request->get('redirects');
 
 
