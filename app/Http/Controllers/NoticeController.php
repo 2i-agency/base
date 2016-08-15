@@ -5,6 +5,7 @@ namespace Chunker\Base\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Chunker\Base\Http\Controllers\Traits\Pagination;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Chunker\Base\Models\Notice;
 use Chunker\Base\Models\NoticesType;
@@ -18,9 +19,23 @@ class NoticeController extends Controller
 	 * Список уведомлений
 	 */
 	public function index(Request $request) {
+		// Типы уведомлений
+		$notices_types = NoticesType
+			::orderBy('name')
+			->whereHas('roles', function(Builder $query) use($request) {
+				$query->whereIn('id', $request->user()->roles()->pluck('id'));
+			})
+			->get(['id', 'name']);
+
+		// Уведомления
 		$notices = Notice
 			::orderBy('is_read')
-			->latest();
+			->latest()
+			->where(function(Builder $query) use($notices_types) {
+				$query
+					->whereIn('type_id', $notices_types->pluck('id'))
+					->orWhereNull('type_id');
+			});
 
 		// Фильтрация
 		if ($request->has('type')) {
@@ -58,10 +73,7 @@ class NoticeController extends Controller
 		if ($this->isNeedRedirectByPaginator($notices)) {
 			return $this->redirectByPaginator($notices);
 		} else {
-			// Типы уведомлений
-			$notices_types = NoticesType
-				::orderBy('name')
-				->get(['id', 'name']);
+
 
 			return view('chunker.base::admin.notices.list', compact('notices', 'notices_types'));
 		}
