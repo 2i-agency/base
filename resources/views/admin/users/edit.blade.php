@@ -13,7 +13,7 @@
 	@include('chunker.base::admin.users._tabs')
 
 	{{--Форма с данными пользователя--}}
-	@can('users.edit')
+	@can('users.edit', [$user])
 		<form method="POST" action="{{ route('admin.users.update', $user) }}" class="panel panel-default">
 			{!! method_field('PUT') !!}
 			@include('chunker.base::admin.users._form')

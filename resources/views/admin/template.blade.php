@@ -83,16 +83,18 @@
 					<ul class="dropdown-menu">
 
 						{{--Ссылки на переключение языка--}}
-						@if ($_languages->count() > 1)
-							@foreach ($_languages->reject(function($language){
-								return $language->locale == Session::get('admin.locale');
-							}) as $_language)
-								<li>
-									<a href="{{ route('admin.set-locale', $_language) }}">
-										{{ $_language->name }}
-									</a>
-								</li>
-							@endforeach
+						@foreach ($_languages->reject(function($language){
+							return $language->locale == Session::get('admin.locale');
+						}) as $_language)
+							<li>
+								<a href="{{ route('admin.set-locale', $_language) }}">
+									{{ $_language->name }}
+								</a>
+							</li>
+						@endforeach
+
+						{{--Разделитель между яызками и разделами редактирования--}}
+						@if($_languages->count() > 1 && (Auth::user()->can('languages.view') || Auth::user()->can('translation.view')))
 							<li class="divider"></li>
 						@endif
 

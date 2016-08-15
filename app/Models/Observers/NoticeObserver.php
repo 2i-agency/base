@@ -4,6 +4,7 @@ namespace Chunker\Base\Models\Observers;
 
 use Chunker\Base\Models\Notice;
 use Chunker\Base\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Mail\Message;
 use Mail;
 
@@ -19,17 +20,27 @@ class NoticeObserver
 				'text' => 'chunker.base::mail.notice.text'
 			],
 			[ 'content' => $notice->content ],
-			function(Message $mail) {
+			function(Message $mail) use($notice) {
+				$users = User::where('is_subscribed', true);
+
+				// Фильтрация по ролям, подписанным на уведомления определенного типа
+				$type = $notice->type;
+
+				if ($type) {
+					$users->whereHas('roles', function(Builder $query) use($type) {
+						$query->whereIn('base_roles.id', $type->roles()->pluck('id'));
+					});
+				}
+
 				// Отправка всем подписанным пользователям
-				User
-					::where('is_subscribed', true)
+				$users
 					->get(['name', 'email'])
 					->each(function($user) use($mail) {
 						$mail->to($user->email, $user->getName());
 					});
 
 				// Тема
-				$mail->subject('Оповещение с сайта ' . host());
+				$mail->subject('Уведомление с сайта ' . host());
 			});
 	}
 }

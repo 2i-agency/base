@@ -9,7 +9,7 @@ function notice($content, $type = NULL) {
 		$type = $type->id;
 	} else if (is_string($type)) {
 		$type = \Chunker\Base\Models\NoticesType::where('tag', $type)->first(['id'])->id;
-	} else {
+	} else if ($type) {
 		$type = (int)$type;
 	}
 

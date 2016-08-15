@@ -24,6 +24,22 @@ class Role extends Model
 
 
 	/*
+	 * Типы уведомлений
+	 */
+	public function noticesTypes() {
+		return $this->belongsToMany(NoticesType::class, 'base_notices_type_role');
+	}
+
+
+	/*
+	 * Пользователи
+	 */
+	public function users() {
+		return $this->belongsToMany(User::class, 'base_role_user');
+	}
+
+
+	/*
 	 * Проверка доступа
 	 */
 	public function hasAccess($abilityNamespace) {
@@ -55,14 +71,6 @@ class Role extends Model
 	public function isAdmin() {
 		return (bool)$this
 			->abilities()
-			->counnt();
-	}
-
-
-	/*
-	 * Пользователи
-	 */
-	public function users() {
-		return $this->belongsToMany(User::class, 'base_role_user');
+			->count();
 	}
 }

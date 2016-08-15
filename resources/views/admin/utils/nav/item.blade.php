@@ -5,9 +5,12 @@
 
 @endphp
 
-<li{!! $item_is_active ? ' class="active"' : NULL !!}>
-	<a href="{{ $item_url }}">
-		@include('chunker.base::admin.utils.nav.icon')
-		{{ $item['name'] }}
-	</a>
-</li>
+{{--Ссылка на раздел--}}
+@if (!isset($item['policy']) || Auth::user()->can($item['policy']))
+	<li{!! $item_is_active ? ' class="active"' : NULL !!}>
+		<a href="{{ $item_url }}">
+			@include('chunker.base::admin.utils.nav.icon')
+			{{ $item['name'] }}
+		</a>
+	</li>
+@endif

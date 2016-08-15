@@ -29,6 +29,7 @@
 							class="form-control"
 							required
 							autocomplete="off"
+							autofocus
 							value="{{ old('name') }}"
 						>
 					</div>

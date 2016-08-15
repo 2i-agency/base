@@ -11,6 +11,9 @@ class RoleObserver
 		// Удаление связей с возможностями
 		$role->abilities()->detach();
 
+		// Удаление связей с типами уведомлений
+		$role->noticesTypes()->detach();
+
 		// Удаление связей с пользователями
 		$role->users()->detach();
 

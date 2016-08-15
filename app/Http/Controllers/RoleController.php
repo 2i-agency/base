@@ -3,21 +3,29 @@
 namespace Chunker\Base\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Request;
 use Chunker\Base\Http\Requests\RoleRequest;
+use Chunker\Base\Models\NoticesType;
 use Chunker\Base\Models\Role;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
 	/*
 	 * Страница роли
 	 */
-	public function form(Role $role = NULL) {
-		// Роли
-		$_roles = Role
-			::orderBy('name')
-			->get();
+	public function form(Request $request, Role $role = NULL) {
+		$this->authorize('roles.view');
 
+		// Если пользователь не может редактировать, то и создавать не может
+		if ($request->user()->cannot('roles.edit') && !$role->exists) {
+			return redirect()->route('admin.roles', Role::orderBy('name')->first());
+		}
+
+		// Роли
+		$_roles = Role::orderBy('name')->get(['id', 'name']);
+
+		// Типы уведомлений
+		$notices_types = NoticesType::orderBy('name')->get(['id', 'name']);
 
 		// Представления возможностей
 		$abilities_views = [];
@@ -27,7 +35,7 @@ class RoleController extends Controller
 		}
 
 
-		return view('chunker.base::admin.roles.form', compact('role', '_roles', 'abilities_views'));
+		return view('chunker.base::admin.roles.form', compact('role', '_roles', 'abilities_views', 'notices_types'));
 	}
 
 
@@ -35,8 +43,11 @@ class RoleController extends Controller
 	 * Добавление роли
 	 */
 	public function store(RoleRequest $request) {
+		$this->authorize('roles.edit');
+
 		$role = Role::create($request->all());
 		$this->syncAbilities($request, $role);
+		$role->noticesTypes()->sync($request->get('notices_types', []));
 		flash()->success('Роль <b>' . $role->name . '</b> добавлена');
 
 		return redirect()->route('admin.roles', $role);
@@ -47,8 +58,11 @@ class RoleController extends Controller
 	 * Обновление роли
 	 */
 	public function update(RoleRequest $request, Role $role) {
+		$this->authorize('roles.edit');
+
 		$role->update($request->all());
 		$this->syncAbilities($request, $role);
+		$role->noticesTypes()->sync($request->get('notices_types', []));
 		flash()->success('Данные роли <b>' . $role->name . '</b> сохранены');
 
 		return back();
@@ -59,6 +73,8 @@ class RoleController extends Controller
 	 * Удаление роли
 	 */
 	public function destroy(Role $role) {
+		$this->authorize('roles.edit');
+
 		$role->delete();
 		flash()->warning('Роль <b>' . $role->name . '</b> удалена');
 
@@ -75,15 +91,15 @@ class RoleController extends Controller
 
 			foreach ($request->get('abilities') as $namespace => $ability) {
 				// Отсев невозможного
-				if ($ability) {
+				if ($ability && $request->user()->can($namespace . '.edit')) {
 					$abilities[] = $ability;
 				}
-
-				// Синхронизация
-				$role
-					->abilities()
-					->sync($abilities);
 			}
+
+			// Синхронизация
+			$role
+				->abilities()
+				->sync($abilities);
 		}
 	}
 }
