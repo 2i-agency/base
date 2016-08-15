@@ -4,6 +4,7 @@ namespace Chunker\Base\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Chunker\Base\Http\Requests\RoleRequest;
+use Chunker\Base\Models\NoticesType;
 use Chunker\Base\Models\Role;
 use Illuminate\Http\Request;
 
@@ -21,10 +22,10 @@ class RoleController extends Controller
 		}
 
 		// Роли
-		$_roles = Role
-			::orderBy('name')
-			->get();
+		$_roles = Role::orderBy('name')->get(['id', 'name']);
 
+		// Типы уведомлений
+		$notices_types = NoticesType::orderBy('name')->get(['id', 'name']);
 
 		// Представления возможностей
 		$abilities_views = [];
@@ -34,7 +35,7 @@ class RoleController extends Controller
 		}
 
 
-		return view('chunker.base::admin.roles.form', compact('role', '_roles', 'abilities_views'));
+		return view('chunker.base::admin.roles.form', compact('role', '_roles', 'abilities_views', 'notices_types'));
 	}
 
 
@@ -46,6 +47,7 @@ class RoleController extends Controller
 
 		$role = Role::create($request->all());
 		$this->syncAbilities($request, $role);
+		$role->noticesTypes()->sync($request->get('notices_types', []));
 		flash()->success('Роль <b>' . $role->name . '</b> добавлена');
 
 		return redirect()->route('admin.roles', $role);
@@ -60,6 +62,7 @@ class RoleController extends Controller
 
 		$role->update($request->all());
 		$this->syncAbilities($request, $role);
+		$role->noticesTypes()->sync($request->get('notices_types', []));
 		flash()->success('Данные роли <b>' . $role->name . '</b> сохранены');
 
 		return back();

@@ -26,4 +26,12 @@ class NoticesType extends Model
 	public function notices() {
 		return $this->hasMany(Notice::class, 'type_id');
 	}
+	
+	
+	/*
+	 * Роли
+	 */
+	public function roles() {
+		return $this->belongsToMany(Role::class, 'base_notices_type_role');
+	}
 }
