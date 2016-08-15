@@ -1,0 +1,71 @@
+// Точки останвки
+$devise-size: ('xs': 320px, 'sm': 768px, 'md': 992px, 'lg': 1200px);
+
+// Определение контейнера
+.flex-container {
+	box-sizing: border-box;
+	margin: 0 auto;
+	padding: 0 1em;
+
+	@each $name, $size in $devise-size {
+		@media (min-width: map-get($devise-size, $size)) {
+			max-width: map-get($devise-size, $size);
+		}
+	}
+}
+
+// Определение "строки"
+.flex-row {
+	box-sizing: border-box;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 1em;
+}
+
+// Классы для настройки флексов
+.flex-row--align-v-center {
+	align-items: center;
+}
+
+.flex-row--align-v-bottom {
+	align-items: flex-end;
+}
+
+.flex-row--align-h-center {
+	justify-content: center;
+}
+
+.flex-row--align-h-right {
+	justify-content: flex-end;
+}
+
+.flex-row--reverse {
+	flex-direction: row-reverse;
+}
+
+// Общие настройки для всех ячеек
+@for $i from 1 through 12 {
+	.flex-col-xs-#{$i},
+	.flex-col-sm-#{$i},
+	.flex-col-md-#{$i},
+	.flex-col-lg-#{$i} {
+		box-sizing: border-box;
+		position: relative;
+		min-height: 1px;
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}
+
+// Создание классов для всех ячеек
+@each $name, $size in $devise-size{
+	@for $i from 1 through 12 {
+		.flex-col-#{$name}-#{$i} {
+			@media (min-width: $size) {
+				max-width: 100% * ($i / 12);
+				width: 100% * ($i / 12);
+				flex-basis: 100% * ($i / 12);
+			}
+		}
+	}
+}
