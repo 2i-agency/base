@@ -31,5 +31,23 @@ class AuthServiceProvider extends ServiceProvider
 				}
 			});
 		}
+
+		// Просмотр пользователя
+		$gate->define('users.view', function(User $user, User $editableUser = NULL) {
+			if (is_null($editableUser)) {
+				return $user->hasAccess('users.view');
+			} else {
+				return $user->hasAccess('users.view') || $user->id == $editableUser->id;
+			}
+		});
+
+		// Редактирование пользователя
+		$gate->define('users.edit', function(User $user, User $editableUser = NULL) {
+			if (is_null($editableUser)) {
+				return $user->hasAbility('users.edit');
+			} else {
+				return $user->hasAbility('users.edit') || $user->id == $editableUser->id;
+			}
+		});
 	}
 }

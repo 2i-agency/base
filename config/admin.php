@@ -20,10 +20,12 @@ return [
 	|--------------------------------------------------------------------------
 	|
 	| Каждый элемент меню представлен массивом. Доступные ключи:
-	| `name`        — название, которое затем используется в меню;
+	| `name`        — название, которое используется в меню;
 	| `icon`        — иконка из набора FontAwesome, без префиксов `fa`;
 	| `children`    — массив элементов вложенного меню;
-	| `route`       — имя маршрута, на который ссылается элемент.
+	| `route`       — имя маршрута, на который ссылается элемент;
+	| `policy`      — правило авторизации, которая определяет наличие доступа
+	|                  у пользователя к разделу.
 	|
 	| Если для ключа `children` вместо вложенного массива использовать пустую
 	| строку, то будет создан разделитель.
@@ -42,31 +44,36 @@ return [
 			'icon'      => 'cogs',
 			'children'  => [
 				[
-					'name'  => 'Пользователи',
-					'icon'  => 'users',
-					'route' => 'admin.users'
+					'name'      => 'Пользователи',
+					'icon'      => 'users',
+					'route'     => 'admin.users',
+					'policy'    => 'users.view'
 				],
 				[
-					'name'  => 'Роли',
-					'icon'  => 'star',
-					'route' => 'admin.roles'
-				],
-				'',
-				[
-					'name'  => 'Перенаправления',
-					'icon'  => 'exchange',
-					'route' => 'admin.redirects'
+					'name'      => 'Роли',
+					'icon'      => 'star',
+					'route'     => 'admin.roles',
+					'policy'    => 'roles.view'
 				],
 				'',
 				[
-					'name'  => 'Типы уведомлений',
-					'icon'  => 'envelope',
-					'route' => 'admin.notices-types'
+					'name'      => 'Перенаправления',
+					'icon'      => 'exchange',
+					'route'     => 'admin.redirects',
+					'policy'    => 'redirects.view'
+				],
+				'',
+				[
+					'name'      => 'Типы уведомлений',
+					'icon'      => 'envelope',
+					'route'     => 'admin.notices-types',
+					'policy'    => 'notices-types.view'
 				],
 				[
-					'name'  => 'Настройки',
-					'icon'  => 'sliders',
-					'route' => 'admin.settings'
+					'name'      => 'Настройки',
+					'icon'      => 'sliders',
+					'route'     => 'admin.settings',
+					'policy'    => 'settings.view'
 				]
 			]
 		]

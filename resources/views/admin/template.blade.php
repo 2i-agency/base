@@ -93,28 +93,33 @@
 									</a>
 								</li>
 							@endforeach
-							<li class="divider"></li>
 						@endif
 
-						{{--Ссылка на раздел редактирования языков--}}
-						@can('languages.view')
-							<li{!! (Route::currentRouteName() == 'admin.languages' ? ' class="active"' : NULL) !!} >
-								<a href="{{ route('admin.languages') }}">
-									<span class="fa fa-globe"></span>
-									Языки
-								</a>
-							</li>
-						@endcan
+						@if(Auth::user()->can('languages.view') || Auth::user()->can('translation.view'))
 
-						{{--Ссылка на раздел перевода интерфейса--}}
-						@can('translation.view')
-							<li{!! (Route::currentRouteName() == 'admin.translation' ? ' class="active"' : NULL) !!}>
-								<a href="{{ route('admin.translation') }}">
-									<span class="fa fa-language"></span>
-									Перевод интерфейса
-								</a>
-							</li>
-						@endcan
+							<li class="divider"></li>
+
+							{{--Ссылка на раздел редактирования языков--}}
+							@can('languages.view')
+								<li{!! (Route::currentRouteName() == 'admin.languages' ? ' class="active"' : NULL) !!} >
+									<a href="{{ route('admin.languages') }}">
+										<span class="fa fa-globe"></span>
+										Языки
+									</a>
+								</li>
+							@endcan
+
+							{{--Ссылка на раздел перевода интерфейса--}}
+							@can('translation.view')
+								<li{!! (Route::currentRouteName() == 'admin.translation' ? ' class="active"' : NULL) !!}>
+									<a href="{{ route('admin.translation') }}">
+										<span class="fa fa-language"></span>
+										Перевод интерфейса
+									</a>
+								</li>
+							@endcan
+
+						@endif
 
 					</ul>
 				</div>

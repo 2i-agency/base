@@ -84,7 +84,7 @@ class UserController extends Controller
 	 * Страница редактирования пользователя
 	 */
 	public function edit(User $user) {
-		$this->authorize('users.view');
+		$this->authorize('users.view', $user);
 		return view('chunker.base::admin.users.edit', compact('user'));
 	}
 
@@ -93,7 +93,7 @@ class UserController extends Controller
 	 * Обновление пользователя
 	 */
 	public function update(Request $request, User $user) {
-		$this->authorize('users.edit');
+		$this->authorize('users.edit', $user);
 
 		// Подготовка правил
 		$this->rules['login'] .= ',' . $user->id;
@@ -131,7 +131,7 @@ class UserController extends Controller
 	 * Список аутентификаций пользователя
 	 */
 	public function authentications(User $user) {
-		$this->authorize('users.view');
+		$this->authorize('users.view', $user);
 
 		$authentications = $user
 			->authentications()
