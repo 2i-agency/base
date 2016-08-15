@@ -71,6 +71,6 @@ class Role extends Model
 	public function isAdmin() {
 		return (bool)$this
 			->abilities()
-			->counnt();
+			->count();
 	}
 }

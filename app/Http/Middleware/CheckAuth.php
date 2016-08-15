@@ -11,18 +11,25 @@ class CheckAuth
 	public function handle($request, Closure $next) {
 		// Если пользователь не авторизован
 		if (Auth::guest()) {
-			// Ответ при асинхронном запросе
-			if ($request->ajax()) {
-				return response('Unauthorized.', 401);
-			} // Ответ при GET-запросе
-			else {
-				return response()->view('chunker.base::admin.auth.login', [], 401);
-			}
-		} // Регистрация запроса пользователя
-		else {
+			return $this->responses($request, 'Unauthorized', 401);
+		} elseif (!Auth::user()->isAdmin()) {
+			return $this->responses($request, 'Forbidden', 403);
+		} else {
+			// Регистрация запроса пользователя
 			event(new UserRequestedApp(Auth::user()));
 		}
 
 		return $next($request);
+	}
+
+
+	protected function responses($request, $message, $status) {
+		if ($request->ajax()) {
+			// Ответ при асинхронном запросе
+			return response($message, $status);
+		} else {
+			// Ответ при GET-запросе
+			return response()->view('chunker.base::admin.auth.login', [], $status);
+		}
 	}
 }

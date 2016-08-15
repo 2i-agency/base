@@ -22,20 +22,18 @@ class AuthenticationController extends Controller
 		$user = Auth::getProvider()->retrieveByCredentials($credentials);
 
 		// Успешная аутентификация
-		if (!$user->is_blocked && Auth::attempt($credentials, $request->has('remember'))) {
+		if ($user->isAdmin() && !$user->is_blocked && Auth::attempt($credentials, $request->has('remember'))) {
 			event(new UserLoggedIn($user, false));
 			return back();
-		}
-		// Аутентификация провалена
+		} // Аутентификация провалена
 		else {
 			event(new UserLoggedIn($user, true));
 
-			if ($user->is_blocked)
-			{
+			if (!$user->isAdmin()) {
+				flash()->error('Недостаточно прав');
+			} elseif ($user->is_blocked) {
 				flash()->error('Учетная запись <b>' . $user->login . '</b> заблокирована');
-			}
-			else
-			{
+			} else {
 				flash()->error('Указан неверный пароль');
 			}
 
@@ -84,8 +82,7 @@ class AuthenticationController extends Controller
 
 
 		// Уведомление о неудачном поиске
-		if (is_null($user))
-		{
+		if (is_null($user)) {
 			return back()->withErrors('Не&nbsp;найден пользователь с&nbsp;таким логином или&nbsp;электронным адресом');
 		}
 
@@ -98,9 +95,9 @@ class AuthenticationController extends Controller
 		$content = 'Ваш новый пароль для пользователя <b>' . $user->login . '</b> на&nbsp;сайте ' . config('app.url') . '</a>: <b>' . $password . '</b>';
 
 		Mail::send([
-			'html'  => 'chunker.base::mail.notice.html',
-			'text'  => 'chunker.base::mail.notice.text'
-		], ['content' => $content], function(Message $message) use ($user) {
+			'html' => 'chunker.base::mail.notice.html',
+			'text' => 'chunker.base::mail.notice.text'
+		], ['content' => $content], function (Message $message) use ($user) {
 			$message
 				->to($user->email, $user->getName())
 				->subject('Новый пароль на сайте ' . config('app.url'));
