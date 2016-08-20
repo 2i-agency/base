@@ -19,7 +19,16 @@ class BaseUsersAndRolesSeeder extends Seeder
 			$role = Role::create([ 'name'  => $role_name ]);
 		}
 
-		$role->abilities()->sync($abilities);
+
+		// Настройка возможностей администратора
+		$role->abilities()->sync([]);
+
+		foreach ($abilities as $ability) {
+			if (!$role->hasAccess($ability)) {
+				$role->abilities()->attach($ability);
+				$role->save();
+			}
+		}
 
 
 		// Добавление администратора
