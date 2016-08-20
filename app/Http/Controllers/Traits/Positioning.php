@@ -13,7 +13,11 @@ trait Positioning
 			$data[] = ['id' => $id];
 		}
 		if (count($where_id)) {
-			$class::where($where_id)->rebuildTree($data);
+			$query = $class::query();
+			foreach ($where_id as $key => $value){
+				$query->where([$key => $value]);
+			}
+			$query->rebuildTree($data);
 		} else {
 			call_user_func([$class, 'rebuildTree'], $data);
 		}
