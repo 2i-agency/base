@@ -2,7 +2,7 @@
 
 namespace Chunker\Base\Providers;
 
-use Chunker\Base\Http\Middleware\HandleRedirect;
+use Chunker\Base\Http\Middleware\Redirect;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
@@ -133,7 +133,7 @@ class AppServiceProvider extends ServiceProvider
 		$this
 			->app
 			->make(Kernel::class)
-			->pushMiddleware(HandleRedirect::class);
+			->pushMiddleware(Redirect::class);
 
 
 		// Маршруты пакета
