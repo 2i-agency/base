@@ -100,13 +100,6 @@ class AppServiceProvider extends ServiceProvider
 		$this->loadTranslationsFrom(resource_path('lang/vendor/chunker'), 'chunker');
 
 
-		// Команды
-		$this->commands([
-			Init::class,
-			Seed::class,
-		]);
-
-
 		// Шаблоны и композеры
 		$this->loadViewsFrom(static::ROOT . '/resources/views', 'chunker.base');
 		view()->composer('chunker.base::admin.template', LanguagesComposer::class);
@@ -143,23 +136,20 @@ class AppServiceProvider extends ServiceProvider
 
 
 	public function register() {
-		// Подключение хелперов
+		// Хелперы
 		foreach (glob(self::ROOT . '/app/Helpers/*.php') as $filename) {
 			require_once $filename;
 		}
 
+		// Команды
+		$this->commands([
+			Init::class,
+			Seed::class,
+		]);
 
-		// Пакет
-		$this->app->bind('Package', function() {
-			return new Package;
-		});
-
-
-		// Менеджер пакетов
-		$this->app->singleton('Packages', function() {
-			return new Manager;
-		});
-
+		// Пакет и менеджер пакетов
+		$this->app->bind(Package::class);
+		$this->app->singleton('Packages', Manager::class);
 
 		// Конфигурация группы посредников `admin`
 		$this
