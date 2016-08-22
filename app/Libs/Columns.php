@@ -17,6 +17,17 @@ class Columns
 
 
 	/*
+	 * Ключ языка
+	 */
+	public static function languageId(Blueprint $table) {
+		$table
+			->integer('languages_id')
+			->unsigned()
+			->index();
+	}
+
+
+	/*
 	 * Ключ создателя
 	 */
 	public static function creatorId(Blueprint $table) {
