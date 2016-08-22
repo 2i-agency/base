@@ -23,7 +23,8 @@ class Columns
 		$table
 			->integer('languages_id')
 			->unsigned()
-			->index();
+			->index()
+			->comment('Ключ языка');
 	}
 
 
