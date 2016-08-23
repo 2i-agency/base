@@ -6,7 +6,7 @@
 
 Route::group([
 	'prefix' => config('chunker.admin.prefix', 'admin'),
-	'namespace' => 'App\Http\Controllers\Admin',
+	'namespace' => 'Admin',
 	'middleware' => ['admin']
 ], function () {
 
