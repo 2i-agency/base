@@ -23,7 +23,7 @@
 	}
 
 	// Удаление концевого разделителя
-	if ($children[count($children) - 1] === '') {
+	if (count($children) && $children[count($children) - 1] === '') {
 		array_pop($children);
 	}
 

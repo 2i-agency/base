@@ -1,4 +1,7 @@
-// Точки останвки
+@charset "UTF-8";
+
+
+// Точки остановки
 $devise-size: ('xs': 320px, 'sm': 768px, 'md': 992px, 'lg': 1200px);
 
 // Определение контейнера
@@ -26,19 +29,15 @@ $devise-size: ('xs': 320px, 'sm': 768px, 'md': 992px, 'lg': 1200px);
 .flex-row--align-v-center {
 	align-items: center;
 }
-
 .flex-row--align-v-bottom {
 	align-items: flex-end;
 }
-
 .flex-row--align-h-center {
 	justify-content: center;
 }
-
 .flex-row--align-h-right {
 	justify-content: flex-end;
 }
-
 .flex-row--reverse {
 	flex-direction: row-reverse;
 }
