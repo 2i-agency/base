@@ -10,10 +10,11 @@ Route::group([
 	'middleware' => ['admin']
 ], function () {
 
-	$files = [];
+	$dir = __DIR__ . '/routes/admin';
+	$files = array_slice(scandir($dir), 2);
 
 	foreach ($files as $file) {
-		require_once __DIR__ . '/routes/admin/' . $file . '.php';
+		require_once $dir . '/' . $file;
 	}
 
 });
