@@ -121,6 +121,10 @@ class AppServiceProvider extends ServiceProvider
 			static::ROOT . '/public/.htaccess'  => public_path('.htaccess'),
 		], 'public');
 
+		$this->publishes([
+			static::ROOT . '/assets/routes.php' => app_path('Http/routes.php')
+		], 'app');
+
 
 		// Регистрация глобального посредника редиректов
 		$this
