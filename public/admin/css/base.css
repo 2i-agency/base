@@ -5946,7 +5946,8 @@ button.close {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin-bottom: 1em; }
+  margin-bottom: 1em;
+  margin: 0 -15px; }
 
 .flex-row--align-v-center {
   -ms-flex-align: center;
