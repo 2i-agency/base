@@ -21,7 +21,7 @@ class Columns
 	 */
 	public static function languageId(Blueprint $table) {
 		$table
-			->integer('languages_id')
+			->integer('language_id')
 			->unsigned()
 			->index()
 			->comment('Ключ языка');
