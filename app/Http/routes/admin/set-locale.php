@@ -7,7 +7,13 @@
 Route::get('set-locale/{locale}', [
 	'as' => 'admin.set-locale',
 	function ($locale) {
-		session(['admin.locale' => $locale]);
+		$language = \Chunker\Base\Models\Language::where('locale', $locale)->first();
+
+		session([
+			'admin.locale'      => $locale,
+			'admin.language'    => $language
+		]);
+
 		return back();
 	}
 ]);

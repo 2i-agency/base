@@ -5,14 +5,17 @@ namespace Chunker\Base\Http\Middleware;
 use Chunker\Base\Models\Language;
 use App;
 use Closure;
-use Session;
 
 class SetLocale
 {
 	public function handle($request, Closure $next) {
 		// Определение локали по умолчанию
-		if (!Session::has('admin.locale') || !Language::where('locale', Session::get('admin.locale'))->count()) {
-			Session::set('admin.locale', Language::defaultOrder()->first(['locale'])->locale);
+		if (!session()->has('admin.locale') || !Language::where('locale', session()->get('admin.locale'))->count()) {
+			$language = Language::defaultOrder()->first();
+			session([
+				'admin.locale'      => $language->locale,
+				'admin.language'    => $language
+			]);
 		}
 
 		return $next($request);
