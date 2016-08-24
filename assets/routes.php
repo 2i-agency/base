@@ -25,7 +25,7 @@ Route::group([
  */
 
 Route::group([
-	'prefix' => '{language}',
+	'prefix' => 'ru',
 	'namespace' => 'Site',
 	'middleware' => ['web']
 ], function () {
