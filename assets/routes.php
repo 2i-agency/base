@@ -1,16 +1,16 @@
 <?php
 
 /*
- * Админцентр
+ * Сайт
  */
 
 Route::group([
-	'prefix' => config('chunker.admin.prefix', 'admin'),
-	'namespace' => 'Admin',
-	'middleware' => ['admin']
+	'prefix' => '{language}',
+	'namespace' => 'Site',
+	'middleware' => ['web']
 ], function () {
 
-	$dir = __DIR__ . '/routes/admin';
+	$dir = __DIR__ . '/routes/site';
 	$files = array_slice(scandir($dir), 2);
 
 	foreach ($files as $file) {
@@ -21,16 +21,16 @@ Route::group([
 
 
 /*
- * Сайт
+ * Админцентр
  */
 
 Route::group([
-	'prefix' => 'ru',
-	'namespace' => 'Site',
-	'middleware' => ['web']
+	'prefix' => config('chunker.admin.prefix', 'admin'),
+	'namespace' => 'Admin',
+	'middleware' => ['admin']
 ], function () {
 
-	$dir = __DIR__ . '/routes/site';
+	$dir = __DIR__ . '/routes/admin';
 	$files = array_slice(scandir($dir), 2);
 
 	foreach ($files as $file) {
