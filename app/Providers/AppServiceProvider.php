@@ -75,7 +75,7 @@ class AppServiceProvider extends ServiceProvider
 
 
 		// Локализация
-		Carbon::setToStringFormat('d.m.Y H:i:s');
+		Carbon::setToStringFormat('d.m.Y H:i');
 		$this->app->setLocale('ru');
 
 
