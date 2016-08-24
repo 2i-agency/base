@@ -24,6 +24,17 @@ Route::group([
  * Сайт
  */
 
-Route::get('/', function () {
-	return view('welcome');
+Route::group([
+	'prefix' => '{language}',
+	'namespace' => 'Site',
+	'middleware' => ['web']
+], function () {
+
+	$dir = __DIR__ . '/routes/site';
+	$files = array_slice(scandir($dir), 2);
+
+	foreach ($files as $file) {
+		require_once $dir . '/' . $file;
+	}
+
 });
