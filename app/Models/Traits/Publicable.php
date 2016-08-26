@@ -3,12 +3,12 @@
 namespace Chunker\Base\Models\Traits;
 
 use Chunker\Base\Models\Traits\Scopes\ScopeByPublicationTime;
-use Chunker\Base\Models\Traits\Scopes\ScopeIsNotPublished;
-use Chunker\Base\Models\Traits\Scopes\ScopeIsPublished;
+use Chunker\Base\Models\Traits\Scopes\ScopeNotPublished;
+use Chunker\Base\Models\Traits\Scopes\ScopePublished;
 
 trait Publicable
 {
-	use ScopeByPublicationTime, ScopeIsPublished, ScopeIsNotPublished, HasDates;
+	use ScopeByPublicationTime, ScopePublished, ScopeNotPublished, HasDates;
 
 
 	/*
@@ -16,5 +16,21 @@ trait Publicable
 	 */
 	public function setPublishedAtAttribute($time) {
 		$this->prepareTime('published_at', $time);
+	}
+
+
+	/*
+	 * Проверка на неопубликованность
+	 */
+	public function isNotPublished() {
+		return is_null($this->published_at);
+	}
+
+
+	/*
+	 * Проверка на опубликованность
+	 */
+	public function isPublished() {
+		return $this->isNotPublished();
 	}
 }
