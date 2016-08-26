@@ -76,7 +76,7 @@
 								</td>
 								@if(isset($can_delete) && $can_delete)
 									<td width="1px" style="vertical-align: middle;">
-										<label class="radio-inline form-control" style="white-space: nowrap;">
+										<label class="radio-inline" style="white-space: nowrap;">
 											<input
 												type="checkbox"
 												name="delete[{{ $item->id }}]"
