@@ -17,7 +17,8 @@
 		"kalnoy/nestedset": "~4.1",
 		"sinergi/browser-detector": "~6.0",
 		"league/uri": "~4.1",
-		"asvae/laravel-api-tester": "~1.0"
+		"asvae/laravel-api-tester": "~1.0",
+		"spatie/laravel-medialibrary": "~4.8"
 	},
 	"repositories": [
 		{

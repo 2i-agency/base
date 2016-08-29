@@ -34,8 +34,8 @@
 
 ```php
 'providers' => [
-	Chunker\Base\AppServiceProvider::class,
-	Chunker\Base\EventServiceProvider::class,
+	Chunker\Base\Providers\AppServiceProvider::class,
+	Chunker\Base\Providers\EventServiceProvider::class,
 ];
 ```
 
