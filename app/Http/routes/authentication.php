@@ -5,7 +5,7 @@
  */
 
 Route::group([
-	'prefix'        => 'admin/auth',
+	'prefix'        => config('chunker.admin.prefix', 'admin') . '/auth',
 	'namespace'     => 'Chunker\Base\Http\Controllers',
 	'middleware'    => ['web']
 ], function () {
