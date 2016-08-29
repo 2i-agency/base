@@ -11,6 +11,6 @@ trait ScopePublished
 	 * Фильтрация опубликованных записей
 	 */
 	public function scopePublished(Builder $query) {
-		return $query->where('published_at', '=>', Carbon::now());
+		return $query->where('published_at', '<=', Carbon::now());
 	}
 }
