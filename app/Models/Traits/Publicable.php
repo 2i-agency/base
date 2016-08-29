@@ -31,6 +31,6 @@ trait Publicable
 	 * Проверка на опубликованность
 	 */
 	public function isPublished() {
-		return $this->isNotPublished();
+		return !$this->isNotPublished();
 	}
 }
