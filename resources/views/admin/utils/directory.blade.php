@@ -2,7 +2,7 @@
 @can($ability_edit)
 
 	{{--Форма добавления элемента--}}
-	<form method="POST" action="{{ route($route_store) }}" class="panel panel-default">
+	<form method="POST" action="{{ route($route['store']) }}" class="panel panel-default">
 		{!! csrf_field() !!}
 		{!! method_field('PUT') !!}
 
@@ -41,7 +41,7 @@
 @if($directory->count())
 
 	{{--Список--}}
-	<form method="POST" action="{{ route($route_update) }}" class="panel panel-default">
+	<form method="POST" action="{{ route($route['save']) }}" class="panel panel-default">
 		{!! method_field('PUT') !!}
 
 		<div class="table-responsive">
@@ -49,7 +49,7 @@
 
 				{{--Отключение позиционирование при отсутствии прав на редактирование--}}
 				@can($ability_edit)
-					<tbody class="js-positionable" data-url="{{ route($route_positioning) }}">
+					<tbody class="js-positionable" data-url="{{ route($route['positioning']) }}">
 				@else
 					<tbody>
 				@endcan
@@ -76,7 +76,7 @@
 								</td>
 								@if(isset($can_delete) && $can_delete)
 									<td width="1px" style="vertical-align: middle;">
-										<label class="radio-inline form-control" style="white-space: nowrap;">
+										<label class="radio-inline" style="white-space: nowrap;">
 											<input
 												type="checkbox"
 												name="delete[{{ $item->id }}]"
