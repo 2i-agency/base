@@ -35,4 +35,11 @@ return [
 		'fit' => 'crop-center'
 	],
 
+	'icon'  => [
+		'w'     => 400,
+		'h'     => 250,
+		'fit'   => 'crop',
+		'fm'    => 'png'
+	]
+
 ];
