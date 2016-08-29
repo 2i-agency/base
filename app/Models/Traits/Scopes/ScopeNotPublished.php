@@ -10,6 +10,6 @@ trait ScopeNotPublished
 	 * Фильтрация неопубликованных записей
 	 */
 	public function scopeNotPublished(Builder $query) {
-		return $query->whereNull('published_at');
+		return $query->where('published_at', '<', Carbon::now());
 	}
 }
