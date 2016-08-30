@@ -6,20 +6,13 @@ use Illuminate\Http\Request;
 
 trait Positioning
 {
-	protected function setPositions(Request $request, $class, $where_id = []) {
-		$data = [];
+	protected function setPositions(Request $request, $class) {
+		$moved = $class::find($request->get('moved'));
 
-		foreach (json_decode($request->get('ids')) as $id) {
-			$data[] = ['id' => $id];
-		}
-		if (count($where_id)) {
-			$query = $class::query();
-			foreach ($where_id as $key => $value){
-				$query->where([$key => $value]);
-			}
-			$query->rebuildTree($data);
-		} else {
-			call_user_func([$class, 'rebuildTree'], $data);
+		if ($request->has('prev')) {
+			$moved->insertAfterNode($class::find($request->get('prev')));
+		} else if ($request->has('next')) {
+			$moved->insertBeforeNode($class::find($request->get('next')));
 		}
 	}
 }

@@ -23,16 +23,17 @@ $(function(){
 	// Плизиционируемые элементы
 	$('.js-positionable').sortable({
 		update: function(e, ui) {
-			var $wrapper = $(ui.item[0]).closest('.js-positionable'),
-				ids = $wrapper.sortable('toArray', {attribute: 'data-id'});
+			var $item = $(ui.item[0]),
+				$wrapper = $item.closest('.js-positionable');
 
 			$.ajax({
 				url: $wrapper.data('url'),
 				data: {
-					ids: JSON.stringify(ids)
+					moved:	$item.data('id'),
+					prev:	$item.prev().data('id'),
+					next:	$item.next().data('id')
 				}
 			});
-
 		}
 	});
 
