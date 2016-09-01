@@ -74,7 +74,7 @@ trait Directory
 	 * Позиционирование
 	 */
 	public function positioning(Request $request) {
-		$this->authorize($this->ability_edit);
+		$this->authorize($this->abilities['edit']);
 		$this->setPositions($request, $this->model);
 	}
 }
