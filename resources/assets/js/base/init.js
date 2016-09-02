@@ -60,11 +60,12 @@ $(function(){
 	 * Редактор кода
 	 */
 	$('textarea.js-editor').each(function(num, textarea){
-		// Текстовое поле
 		var $textarea = $(textarea),
 			css = $textarea.data('css');
 
 		if (css) {
+			var need_update_height = true;
+
 			// Табы
 			var $tabs = $('<ul class="nav nav-tabs"></ul>')
 				.append('<li class="active"><a href="#editor' + num + '"><span class="fa fa-code"/> Редактор</a></li>')
@@ -118,22 +119,34 @@ $(function(){
 		});
 
 
-		// Айфрейм
-		var $iframe = $('<iframe frameborder="no">')
-			.appendTo($preview)
-			.css('width', '100%')
-			.attr('srcdoc', '<!doctype html><html><head><link rel="stylesheet" href="' + css + '"></head><body></body></html>');
+		if (css) {
+			// Айфрейм
+			var $iframe = $('<iframe frameborder="no">')
+				.appendTo($preview)
+				.css('width', '100%')
+				.attr('srcdoc', '<!doctype html><html><head><link rel="stylesheet" href="' + css + '"></head><body></body></html>');
 
 
-		// Предпросмотр
-		$tabs
-			.find('a[href="#preview' + num + '"]')
-			.on('shown.bs.tab', function() {
-				var $body = $($iframe.contents().find('body'));
-				$body.html(cm.getValue());
-				height = $body.outerHeight() + 30;
-				$iframe.height(height);
-			});
+			// Предпросмотр
+			$tabs
+				.find('a[href="#preview' + num + '"]')
+				.on('shown.bs.tab', function(e) {
+					var $body = $($iframe.contents().find('body'));
+
+					$body.html(cm.getValue());
+
+					if (need_update_height) {
+						$iframe.height($body.outerHeight() + 40);
+						need_update_height = false;
+					}
+				});
+
+
+			// Смена флага необходимости изменения высота айфрейма
+			cm.on('change', function() {
+				need_update_height = true;
+			})
+		}
 	});
 
 });
