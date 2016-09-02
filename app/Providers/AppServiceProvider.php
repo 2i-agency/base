@@ -122,7 +122,7 @@ class AppServiceProvider extends ServiceProvider
 
 			if (! class_exists('AddTreeToMedia')) {
 
-				$timestamp = date('Y_m_d_His', time());
+				$timestamp = date('Y_m_d_His', (time() + 1));
 				
 				$this->publishes([
 					self::ROOT . '/database/stub/add_tree_to_media.php.stub' => database_path('migrations/'.$timestamp.'_add_tree_to_media.php'),
