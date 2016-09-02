@@ -125,31 +125,15 @@ $(function(){
 			.attr('srcdoc', '<!doctype html><html><head><link rel="stylesheet" href="' + css + '"></head><body></body></html>');
 
 
-		// Перерасчет высоты айфрейма с учетом высоты горизонтальной полосы прокрутки
-		setInterval(function() {
-			var $body = $($iframe.contents().find('body')),
-				height = $body.outerHeight() + 40;
-			$iframe.height(height);
-		}, 100);
-
-
 		// Предпросмотр
 		$tabs
 			.find('a[href="#preview' + num + '"]')
-			.on('shown.bs.tab', function(e) {
-				update_iframe_body($iframe, cm);
+			.on('shown.bs.tab', function() {
+				var $body = $($iframe.contents().find('body'));
+				$body.html(cm.getValue());
+				height = $body.outerHeight() + 30;
+				$iframe.height(height);
 			});
 	});
-	
-	
-	/*
-	 * Обновление содержимое айфрейма
-	 */
-	function update_iframe_body($iframe, codeMirror) {
-		$iframe
-			.contents()
-			.find('body')
-			.html(codeMirror.getValue());
-	}
 
 });
