@@ -99,8 +99,16 @@ return [
 
 
 	'editor' => [
-		// Путь к CSS-файлу для предпросмотра в редакторе
-		'preview-css' => '/css/style.css',
+		// Пути к CSS-файлам для предпросмотра в редакторе
+		'css'   => [
+			'https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css'
+		],
+
+		// Пути к JS-файлам для имитации поведения реальной страницы
+		'js'    => [
+			'https://yastatic.net/jquery/2.2.0/jquery.min.js',
+			'https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js'
+		]
 	],
 
 
