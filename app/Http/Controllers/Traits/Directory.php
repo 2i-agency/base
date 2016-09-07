@@ -54,11 +54,12 @@ trait Directory
 
 		foreach ($names as $id => $name) {
 			$is_delete = array_search($id, $key_delete);
-			
+			$rule = isset($this->rules['names.*']) ? $this->rules['names.*'] . $id : '';
+
 			if (is_bool($is_delete)) {
 				$this->validate(
 					$request,
-					['names.*' => 'required|unique:houses_projects_categories,name,' . $id],
+					[$rule],
 					$this->validateMessages);
 				$model::find($id)->update(['name' => $name]);
 			}
