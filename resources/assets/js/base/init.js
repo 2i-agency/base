@@ -61,9 +61,11 @@ $(function(){
 	 */
 	$('textarea.js-editor').each(function(num, textarea){
 		var $textarea = $(textarea),
-			css = $textarea.data('css');
+			css = $textarea.data('css'),
+			js = $textarea.data('js'),
+			is_need_preview = Boolean(css || js);
 
-		if (css) {
+		if (is_need_preview) {
 			var need_update_height = true;
 
 			// Табы
@@ -119,12 +121,26 @@ $(function(){
 		});
 
 
-		if (css) {
+		if (is_need_preview) {
+			var stylesheets = '',
+				scripts = '';
+
+			// Подготовка CSS
+			for (var i in css) {
+				stylesheets += '<link rel="stylesheet" href="' + css[i] + '">';
+			}
+
+			// Подготовка js
+			for (var i in js) {
+				scripts += '<script src="' + js[i] + '"></script>';
+			}
+
+
 			// Айфрейм
 			var $iframe = $('<iframe frameborder="no">')
 				.appendTo($preview)
 				.css('width', '100%')
-				.attr('srcdoc', '<!doctype html><html><head><link rel="stylesheet" href="' + css + '"></head><body></body></html>');
+				.attr('srcdoc', '<!doctype html><html><head>' + stylesheets + scripts + '</head><body></body></html>');
 
 
 			// Предпросмотр

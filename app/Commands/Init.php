@@ -27,13 +27,12 @@ class Init extends Command
 		// Диск для работы с файлами проекта
 		$disk = Storage::createLocalDriver(['root' => base_path()]);
 
-
 		// Удаление ненужных файлов
 		if (!$only || $this->option('clean')) {
 			if ($disk->delete([
 				// Коробочные миграции и модели
 				'database/migrations/2014_10_12_000000_create_users_table.php',
-				'database/migrations/2014_10_12_100000_create_passwords_resets_table.php',
+				'database/migrations/2014_10_12_100000_create_password_resets_table.php',
 				'app/User.php'
 			])
 			) {
@@ -42,20 +41,25 @@ class Init extends Command
 		}
 
 
-		// Публикация ассетов пакетов
 		if (!$only) {
+			// Публикация ассетов пакетов
 			$this->call('vendor:publish', ['--force' => true]);
-		}
 
+			// Переименование миграции медиафайлов
+			$media_migration_search_results = glob(database_path('migrations/*_create_media_table.php'));
 
-		// Обновление кеша автозагрузки классов
-		if (!$only) {
-			system('composer dump-autoload');
-		}
+			if ($media_migration_search_results) {
+				$media_migration_filename = $media_migration_search_results[0];
+				$new_media_migration_filename = 'migrations/2016_00_00_000000_create_media_table.php';
+				rename(
+					$media_migration_filename,
+					database_path($new_media_migration_filename));
+			}
 
+			// Обновление кеша автозагрузки классов
+			`composer dump-autoload`;
 
-		// Миграция
-		if (!$only) {
+			// Миграция
 			$this->call('migrate');
 		}
 	}
