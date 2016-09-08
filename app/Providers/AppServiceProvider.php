@@ -117,20 +117,6 @@ class AppServiceProvider extends ServiceProvider
 			static::ROOT . '/database/seeds'        => database_path('seeds')
 		], 'database');
 
-		// Публикация миграции для пакета MediaLibrary
-		if ($this->app instanceof LaravelApplication) {
-
-			if (! class_exists('AddTreeToMedia')) {
-
-				$timestamp = date('Y_m_d_His', (time() + 1));
-				
-				$this->publishes([
-					self::ROOT . '/database/stub/add_tree_to_media.php.stub' => database_path('migrations/'.$timestamp.'_add_tree_to_media.php'),
-				], 'migrations');
-			}
-
-		}
-
 		$this->publishes([
 			static::ROOT . '/public/admin'      => public_path('admin'),
 			static::ROOT . '/public/.htaccess'  => public_path('.htaccess'),
