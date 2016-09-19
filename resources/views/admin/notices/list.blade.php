@@ -130,7 +130,7 @@
 								<td>{{ $notice->created_at }}</td>
 
 								{{--Содержимое--}}
-								<td>{{ $notice->content }}</td>
+								<td>{!! $notice->content !!}</td>
 
 								{{--Тип--}}
 								<td class="text-nowrap">
