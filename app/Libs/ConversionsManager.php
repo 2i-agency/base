@@ -6,7 +6,7 @@ namespace Chunker\Base\Libs;
 class ConversionsManager
 {
 	public static function getConversion($name){
-		$conversions = config('chunker.formats-assets');
+		$conversions = config('chunker.formats-conversions');
 		$default = array_pull($conversions, 'default');
 
 		if (is_null($default)){
