@@ -18,7 +18,7 @@ return [
 	|
 	*/
 
-	'conversions' => [
+	'templates' => [
 		'default' => [
 			'fm' => 'jpg'
 		],

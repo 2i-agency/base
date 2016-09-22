@@ -17,7 +17,7 @@ trait MediaConversions
 		if (isset($this->conversions_config))
 			$conversions = config($this->conversions_config);
 		else {
-			$conversions = config('chunker.formats-conversions.conversions');
+			$conversions = config('chunker.conversions.templates');
 			$conversions = array_except($conversions, 'default');
 		}
 
