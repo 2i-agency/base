@@ -17,7 +17,7 @@ trait MediaConversions
 		if (isset($this->conversions_config))
 			$conversions = config($this->conversions_config);
 		else {
-			$conversions = config('chunker.formats-conversions');
+			$conversions = config('chunker.formats-conversions.conversions');
 			$conversions = array_except($conversions, 'default');
 		}
 
@@ -25,7 +25,6 @@ trait MediaConversions
 
 		foreach ($conversions as $key => $conversion) {
 			if (is_int($key)) {
-				// если элемент массива - имя конверсии, то
 				$manipulations[$conversion] = ConversionsManager::getConversion($conversion);
 			} else {
 				$manipulations[$key] = $conversion;
