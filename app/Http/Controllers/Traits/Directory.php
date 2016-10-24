@@ -118,11 +118,16 @@ trait Directory
 	 */
 	function destroyOne(Request $request) {
 		$this->authorize($this->abilities['edit']);
+		
+		$model = $this->model;
+		
+		$model::find($request->id)->delete();
 
-dd();
+		$message = isset($this->flashMessages['destroyOne']) ? $this->flashMessages['destroyOne'] : 'Изменения сохранениы';
+		flash()->success($message);
 
-		flash()->success($this->flashMessages['save']);
-		return back();
+		$goto = isset($this->route) ? redirect( route($this->route['after_destroy']) ) : back();
+		return $goto;
 	}
 
 
