@@ -105,8 +105,11 @@ trait Directory
 			'description' => $request->description
 		]);
 
-		flash()->success($this->flashMessages['save']);
-		return back();
+		$message = isset($this->flashMessages['saveOne']) ? $this->flashMessages['saveOne'] : 'Изменения сохранениы';
+		flash()->success($message);
+
+		$goto = isset($this->route) ? redirect( route($this->route['after_save']) ) : back();
+		return $goto;
 	}
 
 
