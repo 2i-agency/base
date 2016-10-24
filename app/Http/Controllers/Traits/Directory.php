@@ -92,8 +92,18 @@ trait Directory
 	 */
 	function saveOne(Request $request) {
 		$this->authorize($this->abilities['edit']);
+		$model = $this->model;
+		$rule = isset($this->rules['names.*']) ? $this->rules['names.*'] . $request->id : '';
 
-dd();
+		$this->validate(
+			$request,
+			[$rule],
+			$this->validateMessages);
+
+		$model::find($request->id)->update([
+			'name' => $request->name,
+			'description' => $request->description
+		]);
 
 		flash()->success($this->flashMessages['save']);
 		return back();
