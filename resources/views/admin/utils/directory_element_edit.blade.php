@@ -66,7 +66,7 @@
 				Сохранить
 			</button>
 
-			@if (isset($model))
+			@if (isset($model) && isset($can_delete) && $can_delete)
 				<button form="delete" class="btn btn-danger" type="submit">
 					<span class="glyphicon glyphicon-remove"></span>
 					Удалить
