@@ -14,14 +14,14 @@
 
 			<div class="col-xs-6 col-sm-9 col-md-10">
 				<input
-					type="text"
-					name="name"
-					value="{{ old('name') }}"
-					autofocus
-					required
-					autocomplete="off"
-					placeholder="Название"
-					class="form-control"
+						type="text"
+						name="name"
+						value="{{ old('name') }}"
+						autofocus
+						required
+						autocomplete="off"
+						placeholder="Название"
+						class="form-control"
 				>
 			</div>
 
@@ -52,7 +52,7 @@
 					<tbody class="js-positionable" data-url="{{ route($route['positioning']) }}">
 				@else
 					<tbody>
-				@endcan
+					@endcan
 
 					@foreach ($directory as $item)
 
@@ -63,25 +63,40 @@
 									<div class="fa fa-reorder"></div>
 								</td>
 								<td>
-
 									<input
-										type="text"
-										name="names[{{ $item->id }}]"
-										value="{{ old('names.' . $item->id) ?: $item->name }}"
-										required
-										autocomplete="off"
-										placeholder="Название"
-										class="form-control"
+											type="text"
+											name="names[{{ $item->id }}]"
+											value="{{ old('names.' . $item->id) ?: $item->name }}"
+											required
+											autocomplete="off"
+											placeholder="Название"
+											class="form-control"
 									>
 								</td>
 								@if(isset($can_delete) && $can_delete)
 									<td width="1px" style="vertical-align: middle;">
 										<label class="radio-inline" style="white-space: nowrap;">
 											<input
-												type="checkbox"
-												name="delete[{{ $item->id }}]"
+													type="checkbox"
+													name="delete[{{ $item->id }}]"
 											> Удалить
 										</label>
+									</td>
+								@endif
+								@if(isset($can_edit) && $can_edit)
+									<td width="1px" style="vertical-align: middle;">
+
+										{{--Кнопка редактирования--}}
+										<a href="{{ route($route['edit'], $item->id) }}" class="btn btn-primary btn-xs">
+											@can($ability_edit)
+												<span class="fa fa-pencil"></span>
+												Редактировать
+											@else
+												<span class="fa fa-eye"></span>
+												Просмотр
+											@endcan
+										</a>
+
 									</td>
 								@endif
 							@else
@@ -91,7 +106,7 @@
 						</tr>
 					@endforeach
 
-				</tbody>
+					</tbody>
 
 			</table>
 		</div>
