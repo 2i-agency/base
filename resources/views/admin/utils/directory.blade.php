@@ -87,7 +87,7 @@
 									<td width="1px" style="vertical-align: middle;">
 
 										{{--Кнопка редактирования--}}
-										<a href="{{ route($route['edit'], $item->id) }}" class="btn btn-primary btn-xs">
+										<a href="{{ route($route['edit'], $item->id) }}" class="btn btn-primary">
 											@can($ability_edit)
 												<span class="fa fa-pencil"></span>
 												Редактировать
