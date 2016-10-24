@@ -16,8 +16,9 @@ trait Directory
 		$this->authorize($this->abilities['view']);
 
 		$model = $this->model;
+		$view = is_string($this->view) ? $this->view : $this->view['index'];
 
-		return view($this->view, [
+		return view($view, [
 			'directory' => $model::defaultOrder()->get()
 		]);
 	}
@@ -65,6 +66,47 @@ trait Directory
 			}
 
 		}
+
+		flash()->success($this->flashMessages['save']);
+		return back();
+	}
+
+
+	/*
+	 * Редактирование отдельной записи
+	 */
+	function editOne(Request $request) {
+		$this->authorize($this->abilities['edit']);
+
+		$model = $this->model;
+		$id = $request->id;
+
+		return view($this->view['edit'], [
+			'model' => $model::find($id)
+		]);
+	}
+
+
+	/*
+	 * Сохранение отдельной записи
+	 */
+	function saveOne(Request $request) {
+		$this->authorize($this->abilities['edit']);
+
+dd();
+
+		flash()->success($this->flashMessages['save']);
+		return back();
+	}
+
+
+	/*
+	 * Удаление отдельной записи
+	 */
+	function destroyOne(Request $request) {
+		$this->authorize($this->abilities['edit']);
+
+dd();
 
 		flash()->success($this->flashMessages['save']);
 		return back();
