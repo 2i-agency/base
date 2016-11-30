@@ -16,7 +16,7 @@
 
 	{{--Форма добавления языка--}}
 	@can('languages.edit')
-		<form method="POST" action="{{ route('admin.languages.store') }}" class="panel panel-default">
+		<form method="POST" action="{{ route('admin.languages.store') }}" class="panel panel-default" enctype="multipart/form-data">
 			{!! csrf_field() !!}
 
 			<div class="panel-heading">
@@ -49,6 +49,11 @@
 						placeholder="Локаль"
 						class="form-control"
 					>
+				</div>
+
+				{{--Файл флага--}}
+				<div class="form-group">
+					<input type="file" name="flag">
 				</div>
 
 				{{--Кнопка добавления--}}
@@ -128,7 +133,7 @@
 
 	{{--Модальное окно редактирования языка--}}
 	@can('languages.edit')
-		<form method="POST" class="modal fade" id="modal-edit">
+		<form method="POST" class="modal fade" id="modal-edit" enctype="multipart/form-data">
 			{!! method_field('PUT') !!}
 			{!! csrf_field() !!}
 
@@ -164,6 +169,12 @@
 								pattern="^[\da-z][\da-z-]*[\da-z]$"
 								minlength="2"
 							>
+						</div>
+
+						{{--Файл флага--}}
+						<div class="form-group">
+							<label>Флаг:</label>
+							<input type="file" name="flag">
 						</div>
 
 						{{--Флаг публикации--}}
