@@ -46,6 +46,16 @@ return [
 				'owner' => 'Название компании'
 			]
 		]
+	],
+
+	'conversions' => [
+		'icon',
+		'flag'
+	],
+
+	'view' => [
+		'icon'    => 'flag',
+		'preview' => 'icon'
 	]
 
 ];
