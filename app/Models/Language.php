@@ -62,7 +62,6 @@ class Language extends Model implements HasMediaConversions
 					$flag = $request->allFiles()['flag'];
 
 					if ($flag->isValid()) {
-						$original_extension = $flag->getClientOriginalExtension();
 
 						// Если в базе уже есть флаг, то удалить его
 						if($instance->hasMedia()){
@@ -71,9 +70,11 @@ class Language extends Model implements HasMediaConversions
 							}
 						}
 
+						$extension = $flag->clientExtension() != 'bin' ? $flag->clientExtension() : $flag->extension();
+
 						// Добавить новый флаг
-						$instance->copyMedia($flag . $original_extension)
-							->setFileName('original.' . $original_extension)
+						$instance->copyMedia($flag)
+							->setFileName('original.' . $extension )
 							->toCollection('language.flag');
 					}
 
