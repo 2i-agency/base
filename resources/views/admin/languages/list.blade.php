@@ -89,7 +89,12 @@
 						<tr data-id="{{ $language->id }}">
 
 							{{--Название--}}
-							<td>{{ $language->name }}</td>
+							<td>
+								@if(flag_is_active() && $language->getMedia()->count())
+									<img src="{{ $language->getMedia()->first()->getUrl(get_flag_locale('admin')) }}">
+								@endif
+								{{ $language->name }}
+							</td>
 
 							{{--Локаль--}}
 							<td>{{ $language->locale }}</td>
@@ -114,6 +119,10 @@
 										data-name="{{ $language->name }}"
 										data-locale="{{ $language->locale }}"
 										data-is_published="{{ $language->is_published }}"
+										data-flag="{{ flag_is_active() && $language->getMedia()->count() ?
+											$language->getMedia()->first()->getUrl(get_flag_locale('admin')) :
+											''
+										}}"
 									>
 										<span class="glyphicon glyphicon-pencil"></span>
 										Редактировать
@@ -173,8 +182,13 @@
 
 						{{--Файл флага--}}
 						<div class="form-group">
-							<label>Флаг:</label>
-							<input type="file" name="flag">
+							<label for="language-flag">Флаг</label><br>
+							<img class="js-flag-modal hidden" src=""> <input type="file" id="language-flag" name="flag">
+						</div>
+						<div class="checkbox js-flag-modal hidden">
+							<label>
+								<input type="checkbox" name="delete_flag"> Удалить флаг
+							</label>
 						</div>
 
 						{{--Флаг публикации--}}
