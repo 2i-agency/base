@@ -15,6 +15,9 @@ class Language extends Model implements HasMediaConversions
 
 	protected $table = 'base_languages';
 
+	// Переменная для указания списка конверсий
+	protected $conversions_config = 'chunker.localization.flag.conversions';
+
 	protected $fillable = [
 		'name',
 		'locale',
@@ -39,5 +42,49 @@ class Language extends Model implements HasMediaConversions
 	 */
 	public function setLocaleAttribute($locale) {
 		$this->attributes['locale'] = str_slug(mb_strlen(trim($locale)) ? $locale : $this->attributes['name']);
+	}
+
+
+	public static function boot() {
+
+		static::saved(function ($instance) {
+
+			$request = request();
+
+			if (flag_is_active()) {
+
+				if ( count($request->allFiles()) ) {
+					$flag = $request->allFiles()['flag'];
+
+					if ($flag->isValid()) {
+						$original_extension = $flag->getClientOriginalExtension();
+
+						if ($instance->getMedia()->count()){
+							$instance->getMedia()->delete();
+						}
+
+						if($instance->getMedia()->count() && $request->delete_flag){
+							$instance->getMedia()->delete();
+						} else {
+							$instance->copyMedia($flag . $original_extension)
+								->setFileName('original.' . $original_extension)
+								->toCollection('language.flag');
+						}
+
+					}
+				}
+
+			}
+
+		});
+
+		static::deleting(function ($instance) {
+
+			$instance->getMedia()->delete();
+
+		});
+
+		parent::boot();
+
 	}
 }
