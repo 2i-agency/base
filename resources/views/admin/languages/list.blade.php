@@ -10,7 +10,8 @@
 
 
 @section('page.content')
-
+	@php($_icon_small = config('chunker.localization.icon.size.small'))
+	@php($_icon_big   = config('chunker.localization.icon.size.big'))
 	<h3>Языки</h3>
 
 
@@ -52,9 +53,11 @@
 				</div>
 
 				{{--Файл флага--}}
-				<div class="form-group">
-					<input type="file" name="flag">
-				</div>
+				@if(config('chunker.localization.icon.using'))
+					<div class="form-group">
+						<input type="file" name="icon">
+					</div>
+				@endif
 
 				{{--Кнопка добавления--}}
 				<div class="form-group">
@@ -90,8 +93,8 @@
 
 							{{--Название--}}
 							<td>
-								@if(flag_is_active() && $language->getMedia()->count())
-									<img src="{{ $language->getMedia()->first()->getUrl(get_flag_locale('admin')) }}">
+								@if(config('chunker.localization.icon.using') && $language->getMedia()->count())
+									<img src="{{ $language->getMedia()->first()->getUrl($_icon_small) }}">
 								@endif
 								{{ $language->name }}
 							</td>
@@ -119,8 +122,8 @@
 										data-name="{{ $language->name }}"
 										data-locale="{{ $language->locale }}"
 										data-is_published="{{ $language->is_published }}"
-										data-flag="{{ flag_is_active() && $language->getMedia()->count() ?
-											$language->getMedia()->first()->getUrl(get_flag_locale('admin')) :
+										data-flag="{{ config('chunker.localization.icon.using') && $language->getMedia()->count() ?
+											$language->getMedia()->first()->getUrl($_icon_small) :
 											''
 										}}"
 									>
@@ -181,13 +184,15 @@
 						</div>
 
 						{{--Файл флага--}}
-						<div class="form-group">
-							<label for="language-flag">Флаг</label><br>
-							<img class="js-flag-modal hidden" src=""> <input type="file" id="language-flag" name="flag">
-						</div>
+						@if(config('chunker.localization.icon.using'))
+							<div class="form-group">
+								<label for="language-flag">Иконка</label><br>
+								<img class="js-flag-modal hidden" src=""> <input type="file" id="language-flag" name="icon">
+							</div>
+						@endif
 						<div class="checkbox js-flag-modal hidden">
 							<label>
-								<input type="checkbox" name="delete_flag"> Удалить флаг
+								<input type="checkbox" name="delete_icon"> Удалить иконку
 							</label>
 						</div>
 

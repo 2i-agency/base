@@ -44,7 +44,12 @@ return [
 			'h' => 250,
 			'fit' => 'crop',
 			'fm' => 'png'
-		]
+		],
+
+		'lang_icon' => [
+			'w' => 32,
+			'h' => 22
+		],
 	],
 
 	'original' => 'big'

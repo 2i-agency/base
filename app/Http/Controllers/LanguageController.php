@@ -6,6 +6,7 @@ use Chunker\Base\Models\Language;
 use Chunker\Base\Http\Controllers\Traits\Positioning;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\UploadedFile;
 
 class LanguageController extends Controller
 {
@@ -22,6 +23,49 @@ class LanguageController extends Controller
 		'locale.alpha_dash' => 'Локаль может содержать только буквы, цифры, дефис и нижнее подчёркивание',
 		'locale.unique' => 'Язык с такой локалью уже существует'
 	];
+
+
+	/*
+	 * Сохранение иконки для языка
+	 */
+	protected function saveIcon(Language $model) {
+		$request = request();
+		$file = isset($request->allFiles()['icon']) ? $request->allFiles()['icon'] : null;
+		$delete_icon = isset($request->delete_icon) ? $request->delete_icon : false;
+
+		// Разрешено ли использовать иконку
+		if (config('chunker.localization.icon.using')) {
+
+			$model_icons = $model->getMedia();
+
+			if (!is_null($file) && $file->isValid()) {
+
+				// Если в базе уже есть флаг, то удалить его
+				if ($model->hasMedia()) {
+					foreach ($model_icons as $model_icon) {
+						$model_icon->delete();
+					}
+				}
+
+				$extension = $file->clientExtension() != 'bin' ? $file->clientExtension() : $file->extension();
+
+				// Добавить новый флаг
+				$model->copyMedia($file)
+					->setFileName('original.' . $extension)
+					->toCollection('language.icon');
+			}
+			elseif ($delete_icon) {
+				// Если в базе уже есть флаг, то удалить его
+				if ($model->hasMedia()) {
+					foreach ($model_icons as $model_icon) {
+						$model_icon->delete();
+					}
+				}
+			}
+
+		}
+
+	}
 
 
 	public function __construct(Request $request) {
@@ -59,6 +103,10 @@ class LanguageController extends Controller
 
 		$this->validate($request, $this->rules, $this->messages);
 		$language = Language::create($request->only(['name', 'locale']));
+
+		// Сохраняем иконку языка
+		$this->saveIcon($language);
+
 		flash()->success('Язык <b>' . e($language->name) . '</b> добавлен');
 
 		return back();
@@ -77,6 +125,9 @@ class LanguageController extends Controller
 
 		// Обновление
 		$language->update($request->only(['name', 'locale', 'is_published']));
+
+		// Сохраняем иконку языка
+		$this->saveIcon($language);
 
 		// Уведомление
 		flash()->success('Данные языка <b>' . e($language->name) . '</b> сохранены');

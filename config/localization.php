@@ -48,15 +48,17 @@ return [
 		]
 	],
 
-	'flag' => [
+	'icon' => [
+		'using' => true,
+
 		'conversions' => [
 			'icon',
-			'flag'
+			'lang_icon'
 		],
 
-		'view' => [
-			'admin'   => 'flag',
-			'preview' => 'icon'
+		'size' => [
+			'big' => 'icon',
+			'small' => 'lang_icon'
 		]
 	]
 

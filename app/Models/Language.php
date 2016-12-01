@@ -16,7 +16,7 @@ class Language extends Model implements HasMediaConversions
 	protected $table = 'base_languages';
 
 	// Переменная для указания списка конверсий
-	protected $conversions_config = 'chunker.localization.flag.conversions';
+	protected $conversions_config = 'chunker.localization.icon.conversions';
 
 	protected $fillable = [
 		'name',
@@ -44,54 +44,4 @@ class Language extends Model implements HasMediaConversions
 		$this->attributes['locale'] = str_slug(mb_strlen(trim($locale)) ? $locale : $this->attributes['name']);
 	}
 
-
-	public static function boot() {
-
-		static::saved(function ($instance) {
-
-			$request = request();
-
-			// Разрешено ли использовать флаг
-			if (flag_is_active()) {
-
-				$flags = $instance->getMedia();
-
-				// Есть ли файлы для загрузки
-				if (count($request->allFiles()) ) {
-
-					$flag = $request->allFiles()['flag'];
-
-					if ($flag->isValid()) {
-
-						// Если в базе уже есть флаг, то удалить его
-						if($instance->hasMedia()){
-							foreach ($flags as $flag) {
-								$flag->delete();
-							}
-						}
-
-						$extension = $flag->clientExtension() != 'bin' ? $flag->clientExtension() : $flag->extension();
-
-						// Добавить новый флаг
-						$instance->copyMedia($flag)
-							->setFileName('original.' . $extension )
-							->toCollection('language.flag');
-					}
-
-				}
-				elseif($instance->hasMedia() && $request->delete_flag){
-
-					foreach ($flags as $flag) {
-						$flag->delete();
-					}
-				}
-
-			}
-
-
-		});
-
-		parent::boot();
-
-	}
 }
