@@ -51,36 +51,42 @@ class Language extends Model implements HasMediaConversions
 
 			$request = request();
 
+			// Разрешено ли использовать флаг
 			if (flag_is_active()) {
 
-				if ( count($request->allFiles()) ) {
+				$flags = $instance->getMedia();
+
+				// Есть ли файлы для загрузки
+				if (count($request->allFiles()) ) {
+
 					$flag = $request->allFiles()['flag'];
 
 					if ($flag->isValid()) {
 						$original_extension = $flag->getClientOriginalExtension();
 
-						if ($instance->getMedia()->count()){
-							$instance->getMedia()->delete();
+						// Если в базе уже есть флаг, то удалить его
+						if($instance->hasMedia()){
+							foreach ($flags as $flag) {
+								$flag->delete();
+							}
 						}
 
-						if($instance->getMedia()->count() && $request->delete_flag){
-							$instance->getMedia()->delete();
-						} else {
-							$instance->copyMedia($flag . $original_extension)
-								->setFileName('original.' . $original_extension)
-								->toCollection('language.flag');
-						}
+						// Добавить новый флаг
+						$instance->copyMedia($flag . $original_extension)
+							->setFileName('original.' . $original_extension)
+							->toCollection('language.flag');
+					}
 
+				}
+				elseif($instance->hasMedia() && $request->delete_flag){
+
+					foreach ($flags as $flag) {
+						$flag->delete();
 					}
 				}
 
 			}
 
-		});
-
-		static::deleting(function ($instance) {
-
-			$instance->getMedia()->delete();
 
 		});
 
