@@ -48,14 +48,16 @@ return [
 		]
 	],
 
-	'conversions' => [
-		'icon',
-		'flag'
-	],
+	'flag' => [
+		'conversions' => [
+			'icon',
+			'flag'
+		],
 
-	'view' => [
-		'icon'    => 'flag',
-		'preview' => 'icon'
+		'view' => [
+			'admin'   => 'flag',
+			'preview' => 'icon'
+		]
 	]
 
 ];
