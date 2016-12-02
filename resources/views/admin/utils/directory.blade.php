@@ -64,14 +64,19 @@
 								</td>
 								<td>
 									<input
-											type="text"
-											name="names[{{ $item->id }}]"
-											value="{{ old('names.' . $item->id) ?: $item->name }}"
-											required
-											autocomplete="off"
-											placeholder="Название"
-											class="form-control"
+										type="text"
+										name="names[{{ $item->id }}]"
+										value="{{ old('names.' . $item->id) ?: $item->name }}"
+										required
+										autocomplete="off"
+										placeholder="Название"
+										class="form-control"
 									>
+								</td>
+								<td width="1px" class="code_insert">
+									@if(isset($code_insert) && $code_insert['using'])
+										{{ $code_insert['message']['start'] . $item->id . $code_insert['message']['end'] }}
+									@endif
 								</td>
 								@if(isset($can_delete) && $can_delete)
 									<td width="1px" style="vertical-align: middle;">
