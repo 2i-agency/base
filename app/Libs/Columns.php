@@ -118,6 +118,17 @@ class Columns
 
 
 	/*
+	 * Ключевые слова
+	 */
+	public static function metaKeywords(Blueprint $table) {
+		$table
+			->string('meta_keywords')
+			->nullable()
+			->comment('Ключевые слова');
+	}
+
+
+	/*
 	 * Основные мета-теги
 	 */
 	public static function baseMeta(Blueprint $table) {
