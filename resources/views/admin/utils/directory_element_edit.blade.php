@@ -26,6 +26,37 @@
 					>
 				</div>
 
+				@if(isset($fields))
+					{{--Ключевые слова--}}
+					@if( isset($fields['meta_keywords']) && $fields['meta_keywords'] )
+						<div class="form-group">
+							<label>Ключевые слова:</label>
+							<input
+								type="text"
+								class="form-control"
+								autocomplete="off"
+								name="meta_keywords"
+								value="{{ old('meta_keywords') ?: (isset($model) ? $model->meta_keywords : NULL) }}"
+							>
+						</div>
+					@endif
+
+					{{--Слаг--}}
+					@if( isset($fields['slugs']) && $fields['slugs'] )
+						<div class="form-group">
+							<label>Псевдоним:</label>
+							<input
+								type="text"
+								class="form-control"
+								autocomplete="off"
+								name="slug"
+								value="{{ old('slug') ?: (isset($model) ? $model->slug : NULL) }}"
+							>
+							<div class="help-block">Служит адресом страницы</div>
+						</div>
+					@endif
+				@endif
+
 				{{--Описание--}}
 				@include('chunker.base::admin.utils.editor', [
 					'name'      => 'description',
@@ -47,6 +78,24 @@
 				<label>Название:</label>
 				<div>{{ $model->name }}</div>
 			</div>
+
+			{{--Ключевые слова--}}
+			<p class="form-control-static">
+				@if(strlen($model->meta_keywords))
+					{{ $model->meta_keywords }}
+				@else
+					<span class="text-muted">Не задан</span>
+				@endif
+			</p>
+
+			{{--Слаг--}}
+			<p class="form-control-static">
+				@if(strlen($model->slugs))
+					{{ $model->slugs }}
+				@else
+					<span class="text-muted">Не задан</span>
+				@endif
+			</p>
 
 			{{--Описание--}}
 			<div class="form-group">
