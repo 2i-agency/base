@@ -129,10 +129,22 @@ class Columns
 
 
 	/*
+	 * Слаги
+	 */
+	public static function slug(Blueprint $table) {
+		$table
+			->string('slug')
+			->nullable()
+			->comment('Слаги');
+	}
+
+
+	/*
 	 * Основные мета-теги
 	 */
 	public static function baseMeta(Blueprint $table) {
 		static::metaTitle($table);
+		static::metaKeywords($table);
 		static::metaDescription($table);
 	}
 
