@@ -134,6 +134,7 @@ class Columns
 	public static function slug(Blueprint $table) {
 		$table
 			->string('slug')
+			->unique()
 			->comment('Слаги');
 	}
 
