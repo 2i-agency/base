@@ -57,6 +57,37 @@ trait Slugs
 
 
 	/*
+	 * Переопределяется дефолтнный конструктор модели для правильной настройки primaryKey
+	 */
+	public function __construct(array $attributes = [])
+	{
+		$is_slug = \Schema::hasColumn($this->table, 'slug');
+
+		if ($is_slug) {
+
+			if ( isset($this->field_config) ) {
+
+				if( config($this->field_config) ) {
+					$this->setKeyName('slug');
+					$this->fresh();
+				}
+
+			} else {
+				throw new \Error(self::getErrorMessage('field_config'));
+			}
+
+		}
+
+		$this->bootIfNotBooted();
+
+		$this->syncOriginal();
+
+		$this->fill($attributes);
+
+	}
+
+
+	/*
 	 * Переопределяется дефолтнный метод модели для правильной настройки primaryKey
 	 */
 	public static function __callStatic($method, $parameters)
