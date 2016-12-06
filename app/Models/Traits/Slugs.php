@@ -22,7 +22,7 @@ trait Slugs
 
 		if ( isset($instance->fields_donor) ) {
 
-			if( isset($instance->slug) && strlen($instance->slug) ) {
+			if( isset($instance->slug) ) {
 
 				$slug = null;
 				$attributes = $instance->getAttributes();
