@@ -64,15 +64,19 @@ trait Slugs
 		$instance = new static;
 		$is_slug = \Schema::hasColumn($instance->table, 'slug');
 
-		if ( isset($instance->field_config) ) {
+		if ($is_slug) {
 
-			if( $is_slug && config($instance->field_config)  ) {
-				$instance->setKeyName('slug');
-				$instance->fresh();
+			if ( isset($instance->field_config) ) {
+
+				if( config($instance->field_config) ) {
+					$instance->setKeyName('slug');
+					$instance->fresh();
+				}
+
+			} else {
+				throw new \Error(self::getErrorMessage('field_config'));
 			}
 
-		} else {
-			throw new \Error(self::getErrorMessage('field_config'));
 		}
 
 		return call_user_func_array([$instance, $method], $parameters);
