@@ -56,7 +56,7 @@
 
 					@foreach ($directory as $item)
 
-						<tr data-id="{{ $item->id }}">
+						<tr data-id="{{ $item->getKey() }}">
 
 							@can($ability_edit)
 								<td width="1px" style="vertical-align: middle">
@@ -65,8 +65,8 @@
 								<td>
 									<input
 										type="text"
-										name="names[{{ $item->id }}]"
-										value="{{ old('names.' . $item->id) ?: $item->name }}"
+										name="names[{{ $item->getKey() }}]"
+										value="{{ old('names.' . $item->getKey()) ?: $item->name }}"
 										required
 										autocomplete="off"
 										placeholder="Название"
@@ -75,7 +75,7 @@
 								</td>
 								<td width="1px" class="code_insert">
 									@if(isset($code_insert) && $code_insert['using'])
-										{{ $code_insert['message']['start'] . $item->id . $code_insert['message']['end'] }}
+										{{ $code_insert['message']['start'] . $item->getKey() . $code_insert['message']['end'] }}
 									@endif
 								</td>
 								@if(isset($can_delete) && $can_delete)
@@ -83,7 +83,7 @@
 										<label class="radio-inline" style="white-space: nowrap;">
 											<input
 													type="checkbox"
-													name="delete[{{ $item->id }}]"
+													name="delete[{{ $item->getKey() }}]"
 											> Удалить
 										</label>
 									</td>
@@ -92,7 +92,7 @@
 									<td width="1px" style="vertical-align: middle;">
 
 										{{--Кнопка редактирования--}}
-										<a href="{{ route($route['edit'], $item->id) }}" class="btn btn-primary">
+										<a href="{{ route($route['edit'], $item) }}" class="btn btn-primary">
 											@can($ability_edit)
 												<span class="fa fa-pencil"></span>
 												Редактировать
@@ -105,7 +105,7 @@
 									</td>
 								@endif
 							@else
-								<td>{{ old('names.' . $item->id) ?: $item->name }}</td>
+								<td>{{ old('names.' . $item->getKey()) ?: $item->name }}</td>
 							@endcan
 
 						</tr>

@@ -100,10 +100,7 @@ trait Directory
 			[$rule],
 			$this->validateMessages);
 
-		$model::find($request->id)->update([
-			'name' => $request->name,
-			'description' => $request->description
-		]);
+		$model::find($request->id)->update($request->all());
 
 		$message = isset($this->flashMessages['saveOne']) ? $this->flashMessages['saveOne'] : 'Изменения сохранениы';
 		flash()->success($message);
