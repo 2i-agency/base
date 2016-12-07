@@ -8,7 +8,7 @@
 	<div class="panel-body">
 		@can($ability_edit)
 
-			<form id="save" method="POST" action="{{ route($route['save'], $model->getKey()) }}">
+			<form id="save" method="POST" action="{{ route($route['save'], $model) }}">
 
 				<input type="hidden" name="_method" value="PUT">
 				{!! csrf_field() !!}

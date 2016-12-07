@@ -56,7 +56,7 @@
 
 					@foreach ($directory as $item)
 
-						<tr data-id="{{ $item->getKey() }}">
+						<tr data-id="{{ $item->id }}">
 
 							@can($ability_edit)
 								<td width="1px" style="vertical-align: middle">
@@ -66,7 +66,7 @@
 									<input
 										type="text"
 										name="names[{{ $item->getKey() }}]"
-										value="{{ old('names.' . $item->getKey()) ?: $item->name }}"
+										value="{{ old('names.' . $item->id) ?: $item->name }}"
 										required
 										autocomplete="off"
 										placeholder="Название"
@@ -75,7 +75,7 @@
 								</td>
 								<td width="1px" class="code_insert">
 									@if(isset($code_insert) && $code_insert['using'])
-										{{ $code_insert['message']['start'] . $item->getKey() . $code_insert['message']['end'] }}
+										{{ $code_insert['message']['start'] . $item->id . $code_insert['message']['end'] }}
 									@endif
 								</td>
 								@if(isset($can_delete) && $can_delete)
@@ -83,7 +83,7 @@
 										<label class="radio-inline" style="white-space: nowrap;">
 											<input
 													type="checkbox"
-													name="delete[{{ $item->getKey() }}]"
+													name="delete[{{ $item->id }}]"
 											> Удалить
 										</label>
 									</td>
@@ -105,7 +105,7 @@
 									</td>
 								@endif
 							@else
-								<td>{{ old('names.' . $item->getKey()) ?: $item->name }}</td>
+								<td>{{ old('names.' . $item->id) ?: $item->name }}</td>
 							@endcan
 
 						</tr>
