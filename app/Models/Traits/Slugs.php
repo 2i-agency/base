@@ -56,10 +56,7 @@ trait Slugs
 	}
 
 
-	/*
-	 * Переопределяется дефолтнный конструктор модели для правильной настройки primaryKey
-	 */
-	public function __construct(array $attributes = [])
+	public function getRouteKeyName()
 	{
 		$is_slug = \Schema::hasColumn($this->table, 'slug');
 
@@ -68,8 +65,7 @@ trait Slugs
 			if ( isset($this->field_config) ) {
 
 				if( config($this->field_config) ) {
-					$this->setKeyName('slug');
-					$this->fresh();
+					return 'slug';
 				}
 
 			} else {
@@ -77,40 +73,6 @@ trait Slugs
 			}
 
 		}
-
-		$this->bootIfNotBooted();
-
-		$this->syncOriginal();
-
-		$this->fill($attributes);
-
-	}
-
-
-	/*
-	 * Переопределяется дефолтнный метод модели для правильной настройки primaryKey
-	 */
-	public static function __callStatic($method, $parameters)
-	{
-		$instance = new static;
-		$is_slug = \Schema::hasColumn($instance->table, 'slug');
-
-		if ($is_slug) {
-
-			if ( isset($instance->field_config) ) {
-
-				if( config($instance->field_config) ) {
-					$instance->setKeyName('slug');
-					$instance->fresh();
-				}
-
-			} else {
-				throw new \Error(self::getErrorMessage('field_config'));
-			}
-
-		}
-
-		return call_user_func_array([$instance, $method], $parameters);
 	}
 
 
