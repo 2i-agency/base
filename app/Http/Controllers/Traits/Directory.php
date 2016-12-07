@@ -9,6 +9,14 @@ trait Directory
 {
 	use Positioning;
 
+	function getQueryFromModel($id) {
+		$model = new $this->model;
+
+		$route_key_name = $model->getRouteKeyName();
+
+		return $model->where($route_key_name, $id);
+	}
+
 	/*
 	 * Отображение
 	 */
@@ -78,11 +86,10 @@ trait Directory
 	function editOne(Request $request) {
 		$this->authorize($this->abilities['edit']);
 
-		$model = $this->model;
 		$id = $request->id;
 
 		return view($this->view['edit'], [
-			'model' => $model::find($id)
+			'model' => $this->getQueryFromModel($id)->first()
 		]);
 	}
 
@@ -92,7 +99,6 @@ trait Directory
 	 */
 	function saveOne(Request $request) {
 		$this->authorize($this->abilities['edit']);
-		$model = $this->model;
 		$rule = isset($this->rules['names.*']) ? $this->rules['names.*'] . $request->id : '';
 
 		$this->validate(
@@ -100,7 +106,7 @@ trait Directory
 			[$rule],
 			$this->validateMessages);
 
-		$model::find($request->id)->update($request->all());
+		$this->getQueryFromModel($request->id)->update($request->except(['_method', '_token']));
 
 		$message = isset($this->flashMessages['saveOne']) ? $this->flashMessages['saveOne'] : 'Изменения сохранениы';
 		flash()->success($message);
