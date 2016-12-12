@@ -52,7 +52,7 @@ trait Directory
 	 */
 	function save(Request $request) {
 		$this->authorize($this->abilities['edit']);
-//dd($request);
+
 		$key_delete = isset($request->delete) ? array_keys($request->delete) : [];
 		$model = $this->model;
 		$names = $request->names;
