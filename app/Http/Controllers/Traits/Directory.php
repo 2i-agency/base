@@ -3,18 +3,17 @@
 namespace Chunker\Base\Http\Controllers\Traits;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
 
 trait Directory
 {
 	use Positioning;
 
-	function getQueryFromModel($id) {
+	function getModelById($id) {
 		$model = new $this->model;
 
 		$route_key_name = $model->getRouteKeyName();
 
-		return $model->where($route_key_name, $id);
+		return $model->where($route_key_name, $id)->first();
 	}
 
 	/*
@@ -89,7 +88,7 @@ trait Directory
 		$id = $request->id;
 
 		return view($this->view['edit'], [
-			'model' => $this->getQueryFromModel($id)->first()
+			'model' => $this->getModelById($id)
 		]);
 	}
 
@@ -103,10 +102,10 @@ trait Directory
 
 		$this->validate(
 			$request,
-			[$rule],
+			["name.*" => $rule],
 			$this->validateMessages);
 
-		$this->getQueryFromModel($request->id)->update($request->except(['_method', '_token']));
+		$this->getModelById($request->id)->update($request->except(['_method', '_token']));
 
 		$message = isset($this->flashMessages['saveOne']) ? $this->flashMessages['saveOne'] : 'Изменения сохранениы';
 		flash()->success($message);
