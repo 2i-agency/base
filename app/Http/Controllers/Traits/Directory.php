@@ -52,7 +52,7 @@ trait Directory
 	 */
 	function save(Request $request) {
 		$this->authorize($this->abilities['edit']);
-
+//dd($request);
 		$key_delete = isset($request->delete) ? array_keys($request->delete) : [];
 		$model = $this->model;
 		$names = $request->names;
@@ -68,7 +68,7 @@ trait Directory
 			if (is_bool($is_delete)) {
 				$this->validate(
 					$request,
-					[$rule],
+					['names.*' => $rule],
 					$this->validateMessages);
 				$model::find($id)->update(['name' => $name]);
 			}
