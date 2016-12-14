@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Providers;
 
+use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
@@ -150,6 +151,7 @@ class AppServiceProvider extends ServiceProvider
 		$this->commands([
 			Init::class,
 			Seed::class,
+			ReplaceRN::class,
 		]);
 
 		// Пакет и менеджер пакетов
