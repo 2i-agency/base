@@ -16,8 +16,8 @@ class ReplaceRN extends Command
 
 		$content = file_get_contents($input_filename);
 		$count = 0;
-		$content = str_replace('\\\\r\\\\n', "
-", $content, $count);
+		$content = str_replace('\\\\r\\\\n', PHP_EOL, $content, $count);
+		$content = str_replace('\\\\n', PHP_EOL, $content, $count);
 
 		$this->line(mb_strlen($content));
 		$this->line('Replaced ' . $count);
