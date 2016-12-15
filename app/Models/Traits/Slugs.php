@@ -22,12 +22,20 @@ trait Slugs
 
 		if ( isset($instance->fields_donor) ) {
 
-			if( isset($instance->slug) ) {
+			$is_slug = (bool)\DB
+				::table('information_schema.COLUMNS')
+				->select('*')
+				->where('TABLE_SCHEMA', env('DB_DATABASE'))
+				->where('TABLE_NAME', $instance->table)
+				->where('COLUMN_NAME', 'slug')
+				->count();
+
+			if( $is_slug ) {
 
 				$slug = null;
 				$attributes = $instance->getAttributes();
 
-				if ( strlen($attributes['slug']) ) {
+				if ( isset($attributes['slug']) && strlen($attributes['slug']) ) {
 					$slug = $attributes['slug'];
 				}
 
