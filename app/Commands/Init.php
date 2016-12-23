@@ -59,6 +59,16 @@ class Init extends Command
 			// Обновление кеша автозагрузки классов
 			`composer dump-autoload`;
 
+			// Добавление в .gitignore папки с компонентами bower
+			if ($disk->exists('.gitignore')) {
+				$contents = $disk->get('.gitignore');
+				$contents = trim($contents);
+					if(mb_strpos($contents, PHP_EOL . '/bower_components') === false) {
+						$contents .= PHP_EOL . '/bower_components' . PHP_EOL;
+					}
+				$disk->put('.gitignore', $contents);
+			}
+
 			// Миграция
 			$this->call('migrate');
 		}
