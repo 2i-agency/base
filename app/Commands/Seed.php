@@ -5,7 +5,7 @@ namespace Chunker\Base\Commands;
 use Illuminate\Console\Command;
 
 /**
- * Class Seed. Команда для посева данных в БД
+ * Class Seed - Команда для посева данных в БД
  *
  * @package Chunker\Base\Commands
  */
