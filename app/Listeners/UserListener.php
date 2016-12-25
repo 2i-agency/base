@@ -4,10 +4,17 @@ namespace Chunker\Base\Listeners;
 
 use Carbon\Carbon;
 
+/**
+ * Class UserListener - Класс слушателей событий пользователя
+ *
+ * @package Chunker\Base\Listeners
+ */
 class UserListener
 {
-	/*
-	 * При аутентификации пользователя
+	/**
+	 * Обработка события при попытке аутентификации пользователя
+	 *
+	 * @param $event
 	 */
 	public function onUserLogin($event) {
 		// Добавление записи об аутентификации
@@ -18,8 +25,10 @@ class UserListener
 	}
 
 
-	/*
-	 * При направлении запроса приложению от пользователя
+	/**
+	 * Обработка события при совершении действий пользователем
+	 *
+	 * @param $event
 	 */
 	public function onUserAppRequest($event) {
 		// Добавление данных в последнюю авторизацию, если таковая имеется
@@ -36,8 +45,10 @@ class UserListener
 	}
 
 
-	/*
+	/**
 	 * Регистрация слушателей
+	 *
+	 * @param $events
 	 */
 	public function subscribe($events) {
 		$events->listen(
