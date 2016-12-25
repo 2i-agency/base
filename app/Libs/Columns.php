@@ -4,10 +4,17 @@ namespace Chunker\Base\Libs;
 
 use Illuminate\Database\Schema\Blueprint;
 
+/**
+ * Class Columns - Класс с набором часто используемых полей для миграций
+ *
+ * @package Chunker\Base\Libs
+ */
 class Columns
 {
-	/*
-	 * Первичный ключ
+	/**
+	 * Поле первичного ключа
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function id(Blueprint $table) {
 		$table
@@ -16,8 +23,10 @@ class Columns
 	}
 
 
-	/*
-	 * Ключ языка
+	/**
+	 * Поле для ключа языка
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function languageId(Blueprint $table) {
 		$table
@@ -28,8 +37,10 @@ class Columns
 	}
 
 
-	/*
-	 * Ключ создателя
+	/**
+	 * Поле для ключа пользователя, создавшего модель
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function creatorId(Blueprint $table) {
 		$table
@@ -41,8 +52,10 @@ class Columns
 	}
 
 
-	/*
-	 * Ключ обновителя
+	/**
+	 * Поле для ключа пользователя, обновившего модель
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function updaterId(Blueprint $table) {
 		$table
@@ -54,8 +67,10 @@ class Columns
 	}
 
 
-	/*
-	 * Ключи редакторов
+	/**
+	 * Поля для ключей пользователей, создавших и отредактировавших модель
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function editorsIds(Blueprint $table) {
 		static::creatorId($table);
@@ -63,8 +78,10 @@ class Columns
 	}
 
 
-	/*
-	 * Название
+	/**
+	 * Поле для названия
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function name(Blueprint $table) {
 		$table
@@ -74,8 +91,10 @@ class Columns
 	}
 
 
-	/*
-	 * Контент
+	/**
+	 * Поле для контента
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function content(Blueprint $table) {
 		$table
@@ -85,8 +104,11 @@ class Columns
 	}
 
 
-	/*
-	 * Комментарий
+	/**
+	 * Поле для комментария
+	 *
+	 * @param Blueprint $table
+	 * @param bool      $isShort - тип поля, varchar(255) или text
 	 */
 	public static function comment(Blueprint $table, $isShort = true) {
 		with($isShort ? $table->string('comment') : $table->text('comment'))
@@ -95,8 +117,12 @@ class Columns
 	}
 
 
-	/*
-	 * Заголовок
+	/**
+	 * Поле для хранения заголовка
+	 *
+	 * meta_title
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function metaTitle(Blueprint $table) {
 		$table
@@ -106,8 +132,12 @@ class Columns
 	}
 
 
-	/*
-	 * Описание
+	/**
+	 * Поле для хранения описания
+	 *
+	 * meta_description
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function metaDescription(Blueprint $table) {
 		$table
@@ -117,8 +147,12 @@ class Columns
 	}
 
 
-	/*
-	 * Ключевые слова
+	/**
+	 * Поле для хранения ключевых слов
+	 *
+	 * meta_keywords
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function metaKeywords(Blueprint $table) {
 		$table
@@ -128,8 +162,10 @@ class Columns
 	}
 
 
-	/*
-	 * Слаги
+	/**
+	 * Поле для текстовых идентификаторов (слагов)
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function slug(Blueprint $table) {
 		$table
@@ -139,8 +175,12 @@ class Columns
 	}
 
 
-	/*
-	 * Основные мета-теги
+	/**
+	 * Поля основных мета-тегов
+	 *
+	 * meta_title, meta_description, $meta_keywords
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function baseMeta(Blueprint $table) {
 		static::metaTitle($table);
@@ -149,8 +189,10 @@ class Columns
 	}
 
 
-	/*
-	 * Время публикации
+	/**
+	 * Поле для указания времени публикации
+	 *
+	 * @param Blueprint $table
 	 */
 	public static function publishedAt(Blueprint $table) {
 		$table
