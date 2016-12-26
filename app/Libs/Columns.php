@@ -5,7 +5,7 @@ namespace Chunker\Base\Libs;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
- * Класс с набором часто используемых полей для миграций
+ * Набор часто используемых полей для миграций
  *
  * @package Chunker\Base\Libs
  */
@@ -108,7 +108,7 @@ class Columns
 	 * Поле для комментария
 	 *
 	 * @param Blueprint $table
-	 * @param bool      $isShort - тип поля, varchar(255) или text
+	 * @param bool      $isShort тип поля, VARCHAR(255) или TEXT
 	 */
 	public static function comment(Blueprint $table, $isShort = true){
 		with($isShort ? $table->string('comment') : $table->text('comment'))
@@ -118,9 +118,7 @@ class Columns
 
 
 	/**
-	 * Поле для хранения заголовка
-	 *
-	 * meta_title
+	 * Поле для хранения заголовка (meta_title)
 	 *
 	 * @param Blueprint $table
 	 */
@@ -133,9 +131,7 @@ class Columns
 
 
 	/**
-	 * Поле для хранения описания
-	 *
-	 * meta_description
+	 * Поле для хранения описания (meta_description)
 	 *
 	 * @param Blueprint $table
 	 */
@@ -148,9 +144,7 @@ class Columns
 
 
 	/**
-	 * Поле для хранения ключевых слов
-	 *
-	 * meta_keywords
+	 * Поле для хранения ключевых слов (meta_keywords)
 	 *
 	 * @param Blueprint $table
 	 */
@@ -176,9 +170,7 @@ class Columns
 
 
 	/**
-	 * Поля основных мета-тегов
-	 *
-	 * meta_title, meta_description, $meta_keywords
+	 * Поля основных мета-тегов (meta_title, meta_description, meta_keywords)
 	 *
 	 * @param Blueprint $table
 	 */

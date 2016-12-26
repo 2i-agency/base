@@ -3,16 +3,17 @@
 namespace Chunker\Base\Libs;
 
 /**
- * Клас методов для работы с конверсиями
+ * Методы для работы с конверсиями
  *
  * @package Chunker\Base\Libs
  */
 class ConversionsManager
 {
+
 	/**
 	 * Метод возвращающий массив параметров конверсий
 	 *
-	 * @param string $name - название шаблона конверсии
+	 * @param string $name название шаблона конверсии
 	 *
 	 * @return array
 	 */
@@ -28,6 +29,7 @@ class ConversionsManager
 
 		return array_merge($default, $conversions[ $name ]);
 	}
+
 
 	/**
 	 * Метод возвращающий список конверсий с их параметрами.
