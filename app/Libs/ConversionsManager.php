@@ -28,4 +28,35 @@ class ConversionsManager
 
 		return array_merge($default, $conversions[ $name ]);
 	}
+
+	/**
+	 * Метод возвращающий список конверсий с их параметрами.
+	 *
+	 * @param string $conversions_config путь до конфига со списокм конверсий
+	 *
+	 * @return array
+	 */
+	public static function getConversionsList($conversions_config){
+
+		// Если список конверсий определён, то брать его, иначе брать список всех конверсий
+		if (isset($conversions_config)) {
+			$conversions = config($conversions_config);
+		} else {
+			$conversions = config('chunker.conversions.templates');
+			$conversions = array_except($conversions, 'default');
+		}
+
+		// переменная, хранящая список всех манипуляций
+		$manipulations = [];
+
+		foreach ($conversions as $key => $conversion) {
+			if (is_int($key)) {
+				$manipulations[ $conversion ] = self::getConversion($conversion);
+			} else {
+				$manipulations[ $key ] = $conversion;
+			}
+		}
+
+		return $manipulations;
+	}
 }
