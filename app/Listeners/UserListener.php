@@ -16,12 +16,12 @@ class UserListener
 	 *
 	 * @param $event
 	 */
-	public function onUserLogin($event) {
+	public function onUserLogin($event){
 		// Добавление записи об аутентификации
 		$event
 			->user
 			->authentications()
-			->create(['is_failed' => $event->isFailed]);
+			->create([ 'is_failed' => $event->isFailed ]);
 	}
 
 
@@ -30,7 +30,7 @@ class UserListener
 	 *
 	 * @param $event
 	 */
-	public function onUserAppRequest($event) {
+	public function onUserAppRequest($event){
 		// Добавление данных в последнюю авторизацию, если таковая имеется
 		$authentications = $event
 			->user
@@ -40,7 +40,7 @@ class UserListener
 			$authentications
 				->latest('logged_in_at')
 				->first()
-				->update(['last_request_at' => Carbon::now()]);
+				->update([ 'last_request_at' => Carbon::now() ]);
 		}
 	}
 
@@ -50,7 +50,7 @@ class UserListener
 	 *
 	 * @param $events
 	 */
-	public function subscribe($events) {
+	public function subscribe($events){
 		$events->listen(
 			'Chunker\Base\Events\UserLoggedIn',
 			'Chunker\Base\Listeners\UserListener@onUserLogin'

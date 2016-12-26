@@ -17,7 +17,7 @@ trait BelongsToLanguage
 	 *
 	 * @return mixed - звязь с моделью языка
 	 */
-	public function language() {
+	public function language(){
 		return $this->belongsTo(Language::class);
 	}
 
@@ -27,7 +27,7 @@ trait BelongsToLanguage
 	 *
 	 * @return $this
 	 */
-	public function associateWithCurrentLocale() {
+	public function associateWithCurrentLocale(){
 		$language = Language::where('locale', Session::get('admin.locale'))->first();
 
 		$this

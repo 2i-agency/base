@@ -17,12 +17,12 @@ trait BelongsToCreator
 	 *
 	 * @return Eloquement - связь с моделью User
 	 */
-	public function creator() {
+	public function creator(){
 		return $this->belongsTo(User::class, 'creator_id');
 	}
 
 
-	public static function bootBelongsToCreator() {
+	public static function bootBelongsToCreator(){
 		static::creating(function($model){
 			$model
 				->creator()

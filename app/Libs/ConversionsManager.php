@@ -22,10 +22,10 @@ class ConversionsManager
 		/** @var array $default массив с параметрами по умолчанию */
 		$default = array_pull($conversions, 'default');
 
-		if (is_null($default)){
+		if (is_null($default)) {
 			$default = [];
 		}
 
-		return array_merge($default, $conversions[$name]);
+		return array_merge($default, $conversions[ $name ]);
 	}
 }

@@ -17,12 +17,12 @@ trait BelongsToUpdater
 	 *
 	 * @return mixed - связь с моделью User
 	 */
-	public function updater() {
+	public function updater(){
 		return $this->belongsTo(User::class, 'updater_id');
 	}
 
 
-	public static function bootBelongsToUpdater() {
+	public static function bootBelongsToUpdater(){
 		static::creating(function($model){
 			$model
 				->updater()

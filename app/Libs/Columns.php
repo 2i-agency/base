@@ -16,7 +16,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function id(Blueprint $table) {
+	public static function id(Blueprint $table){
 		$table
 			->increments('id')
 			->comment('Ключ');
@@ -28,7 +28,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function languageId(Blueprint $table) {
+	public static function languageId(Blueprint $table){
 		$table
 			->integer('language_id')
 			->unsigned()
@@ -42,7 +42,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function creatorId(Blueprint $table) {
+	public static function creatorId(Blueprint $table){
 		$table
 			->integer('creator_id')
 			->unsigned()
@@ -57,7 +57,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function updaterId(Blueprint $table) {
+	public static function updaterId(Blueprint $table){
 		$table
 			->integer('updater_id')
 			->unsigned()
@@ -72,7 +72,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function editorsIds(Blueprint $table) {
+	public static function editorsIds(Blueprint $table){
 		static::creatorId($table);
 		static::updaterId($table);
 	}
@@ -83,7 +83,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function name(Blueprint $table) {
+	public static function name(Blueprint $table){
 		$table
 			->string('name')
 			->index()
@@ -96,7 +96,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function content(Blueprint $table) {
+	public static function content(Blueprint $table){
 		$table
 			->longText('content')
 			->nullable()
@@ -110,7 +110,7 @@ class Columns
 	 * @param Blueprint $table
 	 * @param bool      $isShort - тип поля, varchar(255) или text
 	 */
-	public static function comment(Blueprint $table, $isShort = true) {
+	public static function comment(Blueprint $table, $isShort = true){
 		with($isShort ? $table->string('comment') : $table->text('comment'))
 			->nullable()
 			->comment('Комментарий');
@@ -124,7 +124,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function metaTitle(Blueprint $table) {
+	public static function metaTitle(Blueprint $table){
 		$table
 			->string('meta_title')
 			->nullable()
@@ -139,7 +139,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function metaDescription(Blueprint $table) {
+	public static function metaDescription(Blueprint $table){
 		$table
 			->string('meta_description')
 			->nullable()
@@ -154,7 +154,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function metaKeywords(Blueprint $table) {
+	public static function metaKeywords(Blueprint $table){
 		$table
 			->string('meta_keywords')
 			->nullable()
@@ -167,7 +167,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function slug(Blueprint $table) {
+	public static function slug(Blueprint $table){
 		$table
 			->string('slug')
 			->unique()
@@ -182,7 +182,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function baseMeta(Blueprint $table) {
+	public static function baseMeta(Blueprint $table){
 		static::metaTitle($table);
 		static::metaKeywords($table);
 		static::metaDescription($table);
@@ -194,7 +194,7 @@ class Columns
 	 *
 	 * @param Blueprint $table
 	 */
-	public static function publishedAt(Blueprint $table) {
+	public static function publishedAt(Blueprint $table){
 		$table
 			->timestamp('published_at')
 			->nullable()
