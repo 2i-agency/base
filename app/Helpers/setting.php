@@ -4,9 +4,9 @@
  * Получение значения настройки
  *
  * @param      $id
- * @param      $default = null
+ * @param      $default
  *
- * @return null
+ * @return null|string
  */
 function setting($id, $default = NULL){
 	if (Schema::hasTable('settings')) {

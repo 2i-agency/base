@@ -3,7 +3,7 @@
 /**
  * Создание случайного имени для файлов
  *
- * @param string $definition = null
+ * @param string $definition
  *
  * @return string
  */

@@ -4,7 +4,7 @@
  * Добавление уведомления администратора
  *
  * @param string $content
- * @param string $type = null
+ * @param string $type
  */
 function notice($content, $type = NULL){
 	if (is_object($type)) {
