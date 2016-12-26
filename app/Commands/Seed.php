@@ -11,8 +11,10 @@ use Illuminate\Console\Command;
  */
 class Seed extends Command
 {
+	/** @var string конамда для консоли */
 	protected $signature = 'chunker:seed
 		{--package : Seeding data only for one package}';
+	/** @var string описание команды */
 	protected $description = 'Seeding data for Chunker';
 
 

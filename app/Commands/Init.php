@@ -11,19 +11,21 @@ use Storage;
  * При указании опции --clean выполняется только удаление ненужных файлов
  *
  * По умолчанию выполнается:
- *      удаление ненужных файлов;
- *      публикация ассетов пакетов;
- *      переименование миграции медиафайлов;
- *      обновление кеша автозагрузки классов;
- *      добавление в .gitignore папки с компонентами bower;
+ *      удаление ненужных файлов,
+ *      публикация ассетов пакетов,
+ *      переименование миграции медиафайлов,
+ *      обновление кеша автозагрузки классов,
+ *      добавление в .gitignore папки с компонентами bower,
  *      миграция.
  *
  * @package Chunker\Base\Commands
  */
 class Init extends Command
 {
+	/** @var string команда для консоли */
 	protected $signature = 'chunker:init
 		{--clean : Only delete unnecessary files}';
+	/** @var string описание команды */
 	protected $description = 'Initialization of the Chunker';
 
 

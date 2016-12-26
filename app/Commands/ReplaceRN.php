@@ -11,7 +11,9 @@ use Illuminate\Console\Command;
  */
 class ReplaceRN extends Command
 {
+	/** @var string команда для консоли */
 	protected $signature = 'chunker:replace-rn {input} {output}';
+	/** @var string описание команды */
 	protected $description = 'Replacing string \r\n and \n in file on line break';
 
 
