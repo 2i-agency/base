@@ -5,7 +5,7 @@ namespace Chunker\Base\Listeners;
 use Carbon\Carbon;
 
 /**
- * Class UserListener - Класс слушателей событий пользователя
+ * Класс слушателей событий пользователя
  *
  * @package Chunker\Base\Listeners
  */

@@ -6,7 +6,7 @@ use Chunker\Base\Models\Language;
 use Session;
 
 /**
- * Trait BelongsToLanguage - Трейт для подключения связи с моделью Language
+ * Трейт для подключения связи с моделью Language
  *
  * @package Chunker\Base\Models\Traits\BelongsTo
  */

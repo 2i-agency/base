@@ -5,7 +5,7 @@ namespace Chunker\Base\Libs;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
- * Class Columns - Класс с набором часто используемых полей для миграций
+ * Класс с набором часто используемых полей для миграций
  *
  * @package Chunker\Base\Libs
  */

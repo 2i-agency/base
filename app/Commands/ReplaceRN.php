@@ -5,7 +5,7 @@ namespace Chunker\Base\Commands;
 use Illuminate\Console\Command;
 
 /**
- * Class ReplaceRN - Команда для замены \r\n и \n на перенос строки
+ * Команда для замены \r\n и \n на перенос строки
  *
  * @package Chunker\Base\Commands
  */

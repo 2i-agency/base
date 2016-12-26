@@ -3,7 +3,7 @@
 namespace Chunker\Base\Libs;
 
 /**
- * Class ConversionsManager - Клас методов для работы с конверсиями
+ * Клас методов для работы с конверсиями
  *
  * @package Chunker\Base\Libs
  */

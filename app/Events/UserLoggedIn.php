@@ -6,7 +6,7 @@ use App\Events\Event;
 use Chunker\Base\Models\User;
 
 /**
- * Class UserLoggedIn - Класс события аутентификации пользователя
+ * Класс события аутентификации пользователя
  *
  * @property
  *

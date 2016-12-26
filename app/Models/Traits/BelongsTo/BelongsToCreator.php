@@ -6,7 +6,7 @@ use Chunker\Base\Models\User;
 use Auth;
 
 /**
- * Trait BelongsToCreator - Трейт для подключения связи с пользователем, создавшем модель
+ * Трейт для подключения связи с пользователем, создавшем модель
  *
  * @package Chunker\Base\Models\Traits\BelongsTo
  */

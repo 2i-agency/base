@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Storage;
 
 /**
- * Class Init - Команда для инициализации пакетов Chunker
+ * Команда для инициализации пакетов Chunker
  *
  * При указании опции --clean выполняется только удаление ненужных файлов
  *
