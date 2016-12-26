@@ -5,10 +5,17 @@ namespace Chunker\Base\Models\Traits\BelongsTo;
 use Chunker\Base\Models\User;
 use Auth;
 
+/**
+ * Trait BelongsToCreator - Трейт для подключения связи с пользователем, создавшем модель
+ *
+ * @package Chunker\Base\Models\Traits\BelongsTo
+ */
 trait BelongsToCreator
 {
-	/*
+	/**
 	 * Пользователь-создатель
+	 *
+	 * @return Eloquement - связь с моделью User
 	 */
 	public function creator() {
 		return $this->belongsTo(User::class, 'creator_id');
