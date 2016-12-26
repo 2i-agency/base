@@ -9,14 +9,22 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
 use Auth;
 
+/**
+ * Модель пользователя
+ *
+ * @package Chunker\Base\Models
+ */
 class User extends Authenticatable
 {
 	use BelongsToEditors, Comparable, Nullable, IsRelatedWith;
 
+	/** @var string имя таблицы */
 	public $table = 'base_users';
 
-	protected $nullable = ['name'];
+	/** @var array поля принимающие null */
+	protected $nullable = [ 'name' ];
 
+	/** @var array поля для массового присвоения атрибутов */
 	protected $fillable = [
 		'login',
 		'password',
@@ -26,64 +34,81 @@ class User extends Authenticatable
 		'is_blocked'
 	];
 
+	/** @var array поля, которые должны быть скрыты при преобразовании модели в массив */
 	protected $hidden = [
 		'password',
 		'remember_token',
 	];
 
+	/** @var array поля для мутаторов */
 	protected $casts = [
 		'is_subscribed' => 'boolean',
-		'is_blocked' => true
+		'is_blocked'    => true
 	];
 
 
-	/*
+	/**
 	 * Хеширование пароля
+	 *
+	 * @param string $password
 	 */
-	public function setPasswordAttribute($password) {
+	public function setPasswordAttribute($password){
 		if (strlen($password)) {
-			$this->attributes['password'] = bcrypt($password);
+			$this->attributes[ 'password' ] = bcrypt($password);
 		}
 	}
 
 
-	/*
+	/**
+	 * Получения имени пользователя.
 	 * Если для пользователя не задано имя, то возвращается логин
+	 *
+	 * @return string
 	 */
-	public function getName() {
+	public function getName(){
 		return is_null($this->name) ? $this->login : $this->name;
 	}
 
 
-	/*
-	 * Пользователь не может заблокировать сам себя
+	/**
+	 * Можно ли заблокировать пользователя (пользователь не может заблокировать сам себя).
+	 *
+	 * @return bool
 	 */
-	public function isCanBeBlocked() {
+	public function isCanBeBlocked(){
 		return !$this->is(Auth::user());
 	}
 
 
-	/*
+	/**
 	 * Аутентификации
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */
-	public function authentications() {
+	public function authentications(){
 		return $this->hasMany(Authentication::class);
 	}
 
 
-	/*
+	/**
 	 * Роли
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
-	public function roles() {
+	public function roles(){
 		return $this->belongsToMany(Role::class, 'base_role_user');
 	}
-	
-	
-	/*
+
+
+	/**
 	 * Проверка доступа
+	 *
+	 * @param string $abilityNamespace пространство имён возможности
+	 *
+	 * @return bool
 	 */
-	public function hasAccess($abilityNamespace) {
-		foreach ($this->roles()->get(['id']) as $role) {
+	public function hasAccess($abilityNamespace){
+		foreach ($this->roles()->get([ 'id' ]) as $role) {
 			if ($role->hasAccess($abilityNamespace)) {
 				return true;
 			}
@@ -93,11 +118,15 @@ class User extends Authenticatable
 	}
 
 
-	/*
+	/**
 	 * Проверка наличия возможности
+	 *
+	 * @param string $ability возможности
+	 *
+	 * @return bool
 	 */
-	public function hasAbility($ability) {
-		foreach ($this->roles()->get(['id']) as $role) {
+	public function hasAbility($ability){
+		foreach ($this->roles()->get([ 'id' ]) as $role) {
 			if ($role->hasAbility($ability)) {
 				return true;
 			}
@@ -107,11 +136,13 @@ class User extends Authenticatable
 	}
 
 
-	/*
+	/**
 	 * Проверка статуса администратора
+	 *
+	 * @return bool
 	 */
-	public function isAdmin() {
-		foreach ($this->roles()->get(['id']) as $role) {
+	public function isAdmin(){
+		foreach ($this->roles()->get([ 'id' ]) as $role) {
 			if ($role->isAdmin()) {
 				return true;
 			}
