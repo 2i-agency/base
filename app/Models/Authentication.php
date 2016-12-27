@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Sinergi\BrowserDetector\Browser;
@@ -95,5 +96,24 @@ class Authentication extends Model
 	 */
 	public function getOs(){
 		return new Os($this->user_agent);
+	}
+
+
+	public static function boot(){
+
+		/**
+		 * Заполнение атрибутов данными о компьютере пользователя
+		 */
+		static::creating(function($instance){
+			$request = request();
+
+			$instance->fill([
+				'logged_in_at' => Carbon::now(),
+				'ip_address'   => $request->ip(),
+				'user_agent'   => $request->server('HTTP_USER_AGENT')
+			]);
+		});
+
+		parent::boot();
 	}
 }

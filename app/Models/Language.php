@@ -8,6 +8,7 @@ use Kalnoy\Nestedset\NodeTrait;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
+use Storage;
 
 /**
  * Модель языка
@@ -54,6 +55,32 @@ class Language extends Model implements HasMediaConversions
 	 */
 	public function setLocaleAttribute($locale){
 		$this->attributes[ 'locale' ] = str_slug(mb_strlen(trim($locale)) ? $locale : $this->attributes[ 'name' ]);
+	}
+
+
+	public static function boot(){
+
+		/**
+		 * Полю locale присваивается значение поля name если локаль не задана
+		 */
+		static::creating(function($instance){
+			$instance->locale = $instance->getAttribute('locale') ?: $instance->getAttribute('name');
+		});
+
+		/**
+		 * Переименование папки с переводом в случае смены локали
+		 */
+		static::updating(function($instance){
+			$old_locale = $instance->getOriginal('locale');
+			$new_locale = $instance->getAttribute('locale');
+			$disk = Storage::createLocalDriver([ 'root' => base_path('resources/lang/vendor/chunker') ]);
+
+			if (( $old_locale != $new_locale ) && $disk->exists($old_locale)) {
+				$disk->rename($old_locale, $new_locale);
+			}
+		});
+
+		parent::boot();
 	}
 
 }

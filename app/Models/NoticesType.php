@@ -46,4 +46,19 @@ class NoticesType extends Model
 	public function roles(){
 		return $this->belongsToMany(Role::class, 'base_notices_type_role');
 	}
+
+
+	public static function boot(){
+
+		/**
+		 * Очистка ключа типа у уведомлений
+		 */
+		static::deleting(function($instance){
+			$instance
+				->notices()
+				->update([ 'type_id' => NULL ]);
+		});
+
+		parent::boot();
+	}
 }
