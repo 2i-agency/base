@@ -163,7 +163,7 @@ class AppServiceProvider extends ServiceProvider
 		$this->app->bind(Package::class);
 		$this->app->singleton('Packages', Manager::class);
 
-		// Конфигурация группы посредников `admin`
+		/** Конфигурация группы посредников `admin` */
 		$this
 			->app[ 'router' ]
 			->middlewareGroup('admin', [
