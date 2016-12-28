@@ -15,50 +15,56 @@ class NoticeController extends Controller
 	use Pagination;
 
 
-	/*
+	/**
 	 * Список уведомлений
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
 	 */
-	public function index(Request $request) {
-		// Типы уведомлений
+	public function index(Request $request){
+		/** @var NoticesType $notices_types Типы уведомлений */
 		$notices_types = NoticesType
 			::orderBy('name')
-			->whereHas('roles', function(Builder $query) use($request) {
+			->whereHas('roles', function(Builder $query) use ($request){
 				$query->whereIn('id', $request->user()->roles()->pluck('id'));
 			})
-			->get(['id', 'name']);
+			->get([ 'id', 'name' ]);
 
-		// Уведомления
+		/** @var Notice $notices Уведомления */
 		$notices = Notice
 			::orderBy('is_read')
 			->latest()
-			->where(function(Builder $query) use($notices_types) {
+			->where(function(Builder $query) use ($notices_types){
 				$query
 					->whereIn('type_id', $notices_types->pluck('id'))
 					->orWhereNull('type_id');
 			});
 
-		// Фильтрация
+		/** Фильтрация */
 		if ($request->has('type')) {
-			// Тип
+			/** По типу */
 			if ($request->get('type') == 'none') {
 				$notices->whereNull('type_id');
 			} elseif ((int)$request->get('type')) {
 				$notices->where('type_id', $request->get('type'));
 			}
 
-			// Статус
+			/** По статусу */
 			if ($request->get('is_read') == 'read') {
 				$notices->where('is_read', true);
-			} else if ($request->get('is_read') == 'not_read') {
-				$notices->where('is_read', false);
+			} else {
+				if ($request->get('is_read') == 'not_read') {
+					$notices->where('is_read', false);
+				}
 			}
 
-			// С
+			/** По временеи: с */
 			if ($request->has('since')) {
 				$notices->where('created_at', '>=', Carbon::parse($request->get('since')));
 			}
 
-			// По
+			/** По времени: по  */
 			if ($request->has('until')) {
 				$notices->where('created_at', '<=', Carbon::parse($request->get('until')));
 			}
@@ -66,36 +72,44 @@ class NoticeController extends Controller
 
 		$notices = $notices
 			->paginate(10)
-			->appends($request->only(['type', 'is_read', 'since', 'until']));
+			->appends($request->only([ 'type', 'is_read', 'since', 'until' ]));
 
-
-		// Результат
+		/** Результат */
 		if ($this->isNeedRedirectByPaginator($notices)) {
 			return $this->redirectByPaginator($notices);
 		} else {
-
-
-			return view('chunker.base::admin.notices.list', compact('notices', 'notices_types'));
+			return view(
+				'chunker.base::admin.notices.list',
+				compact('notices', 'notices_types')
+			);
 		}
 	}
 
 
-	/*
+	/**
 	 * Отметка прочтения уведомления
+	 *
+	 * @param Notice $notice
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function read(Notice $notice) {
+	public function read(Notice $notice){
 		$this->authorize('notices.edit');
-		$notice->update(['is_read' => true]);
+		$notice->update([ 'is_read' => true ]);
 		flash()->success('Уведомление <b>№' . $notice->id . '</b> отмечено, как прочитанное');
 
 		return back();
 	}
 
 
-	/*
+	/**
 	 * Удаление уведомления
+	 *
+	 * @param Notice $notice
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function destroy(Notice $notice) {
+	public function destroy(Notice $notice){
 		$this->authorize('notices.edit');
 		$notice->delete();
 		flash()->warning('Уведомление <b>№' . $notice->id . '</b> удалено');

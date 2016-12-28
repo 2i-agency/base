@@ -2,64 +2,69 @@
 
 namespace Chunker\Base\Http\Controllers;
 
-use Chunker\Base\Models\Role;
 use Chunker\Base\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+	/** @var array массив правил для валидации */
 	protected $rules = [
-		'login' => 'required|alpha_dash|max:20|unique:base_users,login',
+		'login'    => 'required|alpha_dash|max:20|unique:base_users,login',
 		'password' => 'sometimes|min:6',
-		'email' => 'required|email|unique:base_users,email'
+		'email'    => 'required|email|unique:base_users,email'
 	];
 
 
-	public function __construct(Request $request) {
-		// Приведение логина в требуемый вид
+	public function __construct(Request $request){
+		/** Приведение логина в требуемый вид */
 		$data = $request->all();
 
-		if (isset($data['login'])) {
-			$data['login'] = trim(str_slug($data['login']), '-_');
+		if (isset($data[ 'login' ])) {
+			$data[ 'login' ] = trim(str_slug($data[ 'login' ]), '-_');
 			$request->replace($data);
 		}
 	}
 
 
-	/*
+	/**
 	 * Список пользователей
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function index() {
+	public function index(){
 		$this->authorize('users.view');
-
-		$users = User
-			::latest()
-			->paginate();
+		$users = User::latest()->paginate();
 
 		return view('chunker.base::admin.users.list', compact('users'));
 	}
 
 
-	/*
+	/**
 	 * Страница добавления пользователя
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function create() {
+	public function create(){
 		$this->authorize('users.edit');
 		return view('chunker.base::admin.users.create');
 	}
 
 
-	/*
+	/**
 	 * Добавление пользователя
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function store(Request $request) {
+	public function store(Request $request){
 		$this->authorize('users.edit');
 
-		// Валидация
+		/** Валидация */
 		$this->validate($request, $this->rules);
 
-		// Добавление
+		/** Создание объекта */
 		$user = User::create($request->only([
 			'login',
 			'password',
@@ -69,40 +74,47 @@ class UserController extends Controller
 			'is_blocked'
 		]));
 
-		// Сохранение связей
+		/** Сохранение связей */
 		$user->roles()->sync($request->get('roles', []));
 
-		// Уведомление
 		flash()->success('Пользователь <b>' . e($user->login) . '</b> добавлен');
-
 
 		return redirect()->route('admin.users.edit', $user);
 	}
 
 
-	/*
+	/**
 	 * Страница редактирования пользователя
+	 *
+	 * @param User $user
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function edit(User $user) {
+	public function edit(User $user){
 		$this->authorize('users.view', $user);
 		return view('chunker.base::admin.users.edit', compact('user'));
 	}
 
 
-	/*
+	/**
 	 * Обновление пользователя
+	 *
+	 * @param Request $request
+	 * @param User    $user
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function update(Request $request, User $user) {
+	public function update(Request $request, User $user){
 		$this->authorize('users.edit', $user);
 
-		// Подготовка правил
-		$this->rules['login'] .= ',' . $user->id;
-		$this->rules['email'] .= ',' . $user->id;
+		/** Подготовка правил. Добавление ключа модели в правила */
+		$this->rules[ 'login' ] .= ',' . $user->id;
+		$this->rules[ 'email' ] .= ',' . $user->id;
 
-		// Валидация
+		/** Валидация */
 		$this->validate($request, $this->rules);
 
-		// Подготовка данных
+		/** Подготовка данных */
 		$data = $request->only([
 			'login',
 			'password',
@@ -111,26 +123,28 @@ class UserController extends Controller
 			'is_subscribed',
 			'is_blocked'
 		]);
-		$data['is_blocked'] = $user->isCanBeBlocked() ? $data['is_blocked'] : false;
+		$data[ 'is_blocked' ] = $user->isCanBeBlocked() ? $data[ 'is_blocked' ] : false;
 
-		// Обновление
+		/** Обновление */
 		$user->update($data);
 
-		// Сохранение связей
+		/** Сохранение связей */
 		$user->roles()->sync($request->get('roles', []));
 
-		// Уведомление
 		flash()->success('Данные пользователя <b>' . e($user->login) . '</b> сохранены');
-
 
 		return back();
 	}
 
 
-	/*
-	 * Список аутентификаций пользователя
+	/**
+	 * Лог аутентификаций пользователя
+	 *
+	 * @param User $user
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function authentications(User $user) {
+	public function authentications(User $user){
 		$this->authorize('users.view', $user);
 
 		$authentications = $user
@@ -138,6 +152,9 @@ class UserController extends Controller
 			->recent()
 			->paginate();
 
-		return view('chunker.base::admin.users.authentications', compact('user', 'authentications'));
+		return view(
+			'chunker.base::admin.users.authentications',
+			compact('user', 'authentications')
+		);
 	}
 }

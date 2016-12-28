@@ -12,22 +12,30 @@ class RedirectController extends Controller
 {
 	use Pagination;
 
+	/**
+	 * @var array массив правил для валидации
+	 */
 	protected $rules = [
-		'from'  => 'required|unique:base_redirects,from',
-		'to'    => 'required'
+		'from' => 'required|unique:base_redirects,from',
+		'to'   => 'required'
 	];
 
+	/**
+	 * @var array массив сообщений для валидации
+	 */
 	protected $messages = [
-		'from.required'  => 'Необходимо указать адрес страницы, с которой происходит перенаправление',
+		'from.required' => 'Необходимо указать адрес страницы, с которой происходит перенаправление',
 		'from.unique'   => 'Для этого адреса уже создано правило перенаправления',
 		'to.required'   => 'Необходимо указать адрес, на который необходимо перенаправлять'
 	];
 
 
-	/*
+	/**
 	 * Список перенаправлений
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
 	 */
-	public function index() {
+	public function index(){
 		$this->authorize('redirects.view');
 
 		$redirects = Redirect
@@ -38,50 +46,58 @@ class RedirectController extends Controller
 		if ($this->isNeedRedirectByPaginator($redirects)) {
 			return $this->redirectByPaginator($redirects);
 		} else {
-			return view('chunker.base::admin.redirects.list', compact('redirects'));
+			return view(
+				'chunker.base::admin.redirects.list',
+				compact('redirects')
+			);
 		}
 	}
 
 
-	/*
+	/**
 	 * Добавление перенаправления
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function store(Request $request) {
+	public function store(Request $request){
 		$this->authorize('redirects.edit');
 
-		// Валидация
+		/** Валидация */
 		$this->validate($request, $this->rules, $this->messages);
 
-		// Добавление
+		/** Добавление */
 		$redirect = Redirect::create($request->all());
 
-		// Уведомление
 		flash()->success('Перенаправление с <b>' . $request->from . '</b> на <b>' . $redirect->to . '</b> успешно добавлено');
-
 
 		return back();
 	}
 
 
-	/*
+	/**
 	 * Сохранение перенаправлений
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function save(Request $request) {
+	public function save(Request $request){
 		$this->authorize('redirects.edit');
 
 		$redirects = $request->get('redirects');
 
-
-		// Валидация
+		/** Валидация */
 		foreach ($redirects as $redirect_id => $redirect_data) {
-			// Добавление ключа модели в правила валидации
+			/** Добавление ключа модели в правила валидации */
 			$rules = $this->rules;
-			$rules['from'] = $rules['from'] . ',' . $redirect_id;
+			$rules[ 'from' ] = $rules[ 'from' ] . ',' . $redirect_id;
 
-			// Подготовка `Откуда`
-			$redirect_data['from'] = Redirect::prepareFrom($redirect_data['from']);
+			/** Подготовка поля 'Откуда' */
+			$redirect_data[ 'from' ] = Redirect::prepareFrom($redirect_data[ 'from' ]);
 
-			// Проверка данных
+			/** Проверка данных */
 			$validator = Validator::make($redirect_data, $rules, $this->messages);
 
 			if ($validator->fails()) {
@@ -91,24 +107,19 @@ class RedirectController extends Controller
 			}
 		}
 
-
-		// Обновление
+		/** Обновление данных */
 		foreach ($redirects as $redirect_id => $redirect_data) {
 			Redirect
 				::find($redirect_id)
 				->update($redirect_data);
 		}
 
-
-		// Удаление
+		/** Удаление отмеченых элементов */
 		if ($request->has('delete')) {
 			Redirect::destroy($request->get('delete'));
 		}
 
-
-		// Уведомление
 		flash()->success('Перенаправления сохранены');
-
 
 		return back();
 	}

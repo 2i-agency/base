@@ -10,39 +10,73 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-	/*
-	 * Страница роли
+	/**
+	 * Синхронизация возможностей
+	 *
+	 * @param Request $request
+	 * @param Role    $role
 	 */
-	public function form(Request $request, Role $role = NULL) {
+	protected function syncAbilities(Request $request, Role $role){
+		if ($request->has('abilities')) {
+			$abilities = [];
+
+			/** Сбор в массив возможностей, которые разрешены пользователю */
+			foreach ($request->get('abilities') as $namespace => $ability) {
+				if ($ability && $request->user()->can($namespace . '.edit')) {
+					$abilities[] = $ability;
+				}
+			}
+
+			/** Синхронизация возможностей с пользователем */
+			$role->abilities()->sync($abilities);
+		}
+	}
+
+
+	/**
+	 * Страница роли
+	 *
+	 * @param Request   $request
+	 * @param Role|NULL $role
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+	 */
+	public function form(Request $request, Role $role = NULL){
 		$this->authorize('roles.view');
 
-		// Если пользователь не может редактировать, то и создавать не может
+		/** Если пользователь не может редактировать, то и создавать не может */
 		if ($request->user()->cannot('roles.edit') && !$role->exists) {
 			return redirect()->route('admin.roles', Role::orderBy('name')->first());
 		}
 
-		// Роли
-		$_roles = Role::orderBy('name')->get(['id', 'name']);
+		/** Коллекция ролей */
+		$_roles = Role::orderBy('name')->get([ 'id', 'name' ]);
 
-		// Типы уведомлений
-		$notices_types = NoticesType::orderBy('name')->get(['id', 'name']);
+		/** Коллекция типов уведомлений */
+		$notices_types = NoticesType::orderBy('name')->get([ 'id', 'name' ]);
 
-		// Представления возможностей
+		/** Представления возможностей */
 		$abilities_views = [];
 
-		foreach (app()['Packages']->getPackages() as $package) {
+		foreach (app()[ 'Packages' ]->getPackages() as $package) {
 			$abilities_views = array_merge($abilities_views, $package->getAbilitiesViews());
 		}
 
-
-		return view('chunker.base::admin.roles.form', compact('role', '_roles', 'abilities_views', 'notices_types'));
+		return view(
+			'chunker.base::admin.roles.form',
+			compact('role', '_roles', 'abilities_views', 'notices_types')
+		);
 	}
 
 
-	/*
+	/**
 	 * Добавление роли
+	 *
+	 * @param RoleRequest $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function store(RoleRequest $request) {
+	public function store(RoleRequest $request){
 		$this->authorize('roles.edit');
 
 		$role = Role::create($request->all());
@@ -54,10 +88,15 @@ class RoleController extends Controller
 	}
 
 
-	/*
+	/**
 	 * Обновление роли
+	 *
+	 * @param RoleRequest $request
+	 * @param Role        $role
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function update(RoleRequest $request, Role $role) {
+	public function update(RoleRequest $request, Role $role){
 		$this->authorize('roles.edit');
 
 		$role->update($request->all());
@@ -69,37 +108,19 @@ class RoleController extends Controller
 	}
 
 
-	/*
+	/**
 	 * Удаление роли
+	 *
+	 * @param Role $role
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function destroy(Role $role) {
+	public function destroy(Role $role){
 		$this->authorize('roles.edit');
 
 		$role->delete();
 		flash()->warning('Роль <b>' . $role->name . '</b> удалена');
 
 		return redirect()->route('admin.roles');
-	}
-
-
-	/*
-	 * Синхронизация возможностей
-	 */
-	protected function syncAbilities(Request $request, Role $role) {
-		if ($request->has('abilities')) {
-			$abilities = [];
-
-			foreach ($request->get('abilities') as $namespace => $ability) {
-				// Отсев невозможного
-				if ($ability && $request->user()->can($namespace . '.edit')) {
-					$abilities[] = $ability;
-				}
-			}
-
-			// Синхронизация
-			$role
-				->abilities()
-				->sync($abilities);
-		}
 	}
 }
