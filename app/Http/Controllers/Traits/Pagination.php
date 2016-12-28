@@ -2,7 +2,6 @@
 
 namespace Chunker\Base\Http\Controllers\Traits;
 
-use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Route;
 
