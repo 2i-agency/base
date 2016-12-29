@@ -36,7 +36,7 @@ class UserController extends Controller
 		$this->authorize('users.view');
 		$users = User::latest()->paginate();
 
-		return view('chunker.base::admin.users.list', compact('users'));
+		return view('chunker.base::users.list', compact('users'));
 	}
 
 
@@ -47,7 +47,7 @@ class UserController extends Controller
 	 */
 	public function create(){
 		$this->authorize('users.edit');
-		return view('chunker.base::admin.users.create');
+		return view('chunker.base::users.create');
 	}
 
 
@@ -92,7 +92,7 @@ class UserController extends Controller
 	 */
 	public function edit(User $user){
 		$this->authorize('users.view', $user);
-		return view('chunker.base::admin.users.edit', compact('user'));
+		return view('chunker.base::users.edit', compact('user'));
 	}
 
 
@@ -153,7 +153,7 @@ class UserController extends Controller
 			->paginate();
 
 		return view(
-			'chunker.base::admin.users.authentications',
+			'chunker.base::users.authentications',
 			compact('user', 'authentications')
 		);
 	}

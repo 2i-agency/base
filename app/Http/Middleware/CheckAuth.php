@@ -29,7 +29,7 @@ class CheckAuth
 			return response($message, $status);
 		} else {
 			/** Ответ при GET-запросе */
-			return response()->view('chunker.base::admin.auth.login', [], $status);
+			return response()->view('chunker.base::auth.login', [], $status);
 		}
 	}
 

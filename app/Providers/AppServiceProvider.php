@@ -53,14 +53,14 @@ class AppServiceProvider extends ServiceProvider
 
 			])
 			->registerAbilitiesViews([
-				'chunker.base::admin.abilities.notices',
-				'chunker.base::admin.abilities.notices-types',
-				'chunker.base::admin.abilities.settings',
-				'chunker.base::admin.abilities.users',
-				'chunker.base::admin.abilities.roles',
-				'chunker.base::admin.abilities.redirects',
-				'chunker.base::admin.abilities.languages',
-				'chunker.base::admin.abilities.translation'
+				'chunker.base::abilities.notices',
+				'chunker.base::abilities.notices-types',
+				'chunker.base::abilities.settings',
+				'chunker.base::abilities.users',
+				'chunker.base::abilities.roles',
+				'chunker.base::abilities.redirects',
+				'chunker.base::abilities.languages',
+				'chunker.base::abilities.translation'
 			])
 			->registerSeeders([
 				'BaseAbilitiesSeeder',
@@ -105,8 +105,8 @@ class AppServiceProvider extends ServiceProvider
 
 		/** Шаблоны и композеры */
 		$this->loadViewsFrom(static::ROOT . '/resources/views', 'chunker.base');
-		view()->composer('chunker.base::admin.template', LanguagesComposer::class);
-		view()->composer('chunker.base::admin.users._form', RolesComposer::class);
+		view()->composer('chunker.base::template', LanguagesComposer::class);
+		view()->composer('chunker.base::users._form', RolesComposer::class);
 
 		/** Публикация конфигов */
 		$this->publishes([ static::ROOT . '/config' => config_path('chunker') ], 'config');

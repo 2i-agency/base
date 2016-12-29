@@ -63,7 +63,7 @@ class RoleController extends Controller
 		}
 
 		return view(
-			'chunker.base::admin.roles.form',
+			'chunker.base::roles.form',
 			compact('role', '_roles', 'abilities_views', 'notices_types')
 		);
 	}

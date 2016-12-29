@@ -47,7 +47,7 @@ class RedirectController extends Controller
 			return $this->redirectByPaginator($redirects);
 		} else {
 			return view(
-				'chunker.base::admin.redirects.list',
+				'chunker.base::redirects.list',
 				compact('redirects')
 			);
 		}

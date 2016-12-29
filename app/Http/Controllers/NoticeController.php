@@ -79,7 +79,7 @@ class NoticeController extends Controller
 			return $this->redirectByPaginator($notices);
 		} else {
 			return view(
-				'chunker.base::admin.notices.list',
+				'chunker.base::notices.list',
 				compact('notices', 'notices_types')
 			);
 		}

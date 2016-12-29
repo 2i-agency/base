@@ -66,7 +66,7 @@ class AuthenticationController extends Controller
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
 	public function showResetPasswordForm(){
-		return view('chunker.base::admin.auth.reset');
+		return view('chunker.base::auth.reset');
 	}
 
 

@@ -30,7 +30,7 @@ class SettingController extends Controller
 				->get();
 
 			return view(
-				'chunker.base::admin.settings.section',
+				'chunker.base::settings.section',
 				compact('section', 'settings')
 			);
 		}
