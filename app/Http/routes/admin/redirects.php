@@ -1,29 +1,34 @@
 <?php
 
-/*
- * Перенаправления
+/**
+ * Группа роутов для работы с перенаправлениями
  */
-
 Route::group([
 	'prefix' => 'redirects'
-], function() {
+], function(){
 
-	// Список перенаправлений
+	/**
+	 * Список перенаправлений
+	 */
 	Route::get('/', [
-		'uses'  => 'RedirectController@index',
-		'as'    => 'admin.redirects'
+		'uses' => 'RedirectController@index',
+		'as'   => 'admin.redirects'
 	]);
 
-	// Добавление перенаправления
+	/**
+	 * Добавление перенаправления
+	 */
 	Route::post('store', [
-		'uses'  => 'RedirectController@store',
-		'as'    => 'admin.redirects.store'
+		'uses' => 'RedirectController@store',
+		'as'   => 'admin.redirects.store'
 	]);
 
-	// Сохранение перенаправлений
+	/**
+	 * Сохранение перенаправлений
+	 */
 	Route::put('save', [
-		'uses'  => 'RedirectController@save',
-		'as'    => 'admin.redirects.save'
+		'uses' => 'RedirectController@save',
+		'as'   => 'admin.redirects.save'
 	]);
 
 });

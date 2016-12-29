@@ -1,42 +1,51 @@
 <?php
 
-/*
- * Аутентификация
+/**
+ * Группа роутов для аутентификации
  */
-
 Route::group([
-	'prefix'        => config('chunker.admin.prefix', 'admin') . '/auth',
-	'namespace'     => 'Chunker\Base\Http\Controllers',
-	'middleware'    => ['web']
-], function () {
+	'prefix'     => config('chunker.admin.prefix', 'admin') . '/auth',
+	'namespace'  => 'Chunker\Base\Http\Controllers',
+	'middleware' => [ 'web' ]
+], function(){
 
-	// Аутентификация
+	/**
+	 * Аутентификация
+	 */
 	Route::post('login', [
-		'uses'  => 'AuthenticationController@login',
-		'as'    => 'admin.login'
+		'uses' => 'AuthenticationController@login',
+		'as'   => 'admin.login'
 	]);
 
-	// Деаутентификация
+	/**
+	 * Деаутентификация
+	 */
 	Route::post('logout', [
-		'uses'  => 'AuthenticationController@logout',
-		'as'    => 'admin.logout'
+		'uses' => 'AuthenticationController@logout',
+		'as'   => 'admin.logout'
 	]);
 
-
+	/**
+	 * Группа роутов для сброса пароля
+	 */
 	Route::group([
 		'middleware' => 'guest'
-	], function() {
+	], function(){
 
-		// Форма сброса пароля
+		/**
+		 * Форма сброса пароля
+		 */
 		Route::get('reset', [
-			'uses'  => 'AuthenticationController@showResetPasswordForm',
-			'as'    => 'admin.reset-password-form'
+			'uses' => 'AuthenticationController@showResetPasswordForm',
+			'as'   => 'admin.reset-password-form'
 		]);
 
-		// Сброс пароля
+		/**
+		 * Сброс пароля
+		 */
 		Route::post('reset', [
-			'uses'  => 'AuthenticationController@resetPassword',
-			'as'    => 'admin.reset-password'
+			'uses' => 'AuthenticationController@resetPassword',
+			'as'   => 'admin.reset-password'
 		]);
 
 	});
