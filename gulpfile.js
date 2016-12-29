@@ -13,13 +13,13 @@ elixir(function(mix) {
 			'./node_modules/codemirror/addon/display/fullscreen.css',
 			'./node_modules/codemirror/addon/hint/show-hint.css',
 			'base.scss'
-		], './public/admin/css/base.css')
+		], './publishes/public/admin/css/base.css')
 
 		// Шрифты Bootstrap
-		.copy('./node_modules/bootstrap-sass/assets/fonts', './public/admin/fonts')
+		.copy('./node_modules/bootstrap-sass/assets/fonts', './publishes/public/admin/fonts')
 
 		// Стили страницы аутентификации
-		.sass('auth.scss', './public/admin/css/auth.css')
+		.sass('auth.scss', './publishes/public/admin/css/auth.css')
 
 		// Базовое поведение
 		.scripts([
@@ -55,9 +55,9 @@ elixir(function(mix) {
 			'base/get-tinymce-config.js',
 			'base/init.js'
 
-		], './public/admin/js/base.js')
+		], './publishes/public/admin/js/base.js')
 
 		// Поведение раздела с языками
-		.scripts('languages.js', './public/admin/js/languages.js');
+		.scripts('languages.js', './publishes/public/admin/js/languages.js');
 
 });
