@@ -4,56 +4,58 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
+/**
+ * Миграция для таблицы настроек
+ */
 class CreateBaseSettings extends Migration
 {
 	protected $table = 'base_settings';
 
 
-	public function up() {
-		Schema::create($this->table, function (Blueprint $table) {
+	public function up(){
+		Schema::create($this->table, function(Blueprint $table){
 
 			$table->engine = 'MyISAM';
 			$table->comment = 'Настройки';
 
-			// Ключ
+			/** Ключ */
 			$table
 				->string('id')
 				->unique()
 				->comment('Ключ');
 
-			// Заголовок
+			/** Заголовок */
 			$table
 				->string('title')
 				->comment('Заголовок');
 
-			// Значение
+			/** Значение */
 			$table
 				->string('value')
 				->nullable()
 				->comment('Значение настройки');
 
-			// Тип элементa управления
+			/** Тип элементa управления */
 			$table
 				->string('control_type')
 				->comment('Тип элемента управления');
 
-			// Подсказка
+			/** Подсказка */
 			$table
 				->string('hint')
 				->nullable()
 				->comment('Подсказка');
 
-			// Ключ обновителя
+			/** Ключ обновителя */
 			Columns::updaterId($table);
 
-			// Время создания и обновления
+			/** Время создания и обновления */
 			$table->timestamps();
-
 		});
 	}
 
 
-	public function down() {
+	public function down(){
 		Schema::drop($this->table);
 	}
 }

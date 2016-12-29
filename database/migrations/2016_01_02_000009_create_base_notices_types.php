@@ -4,41 +4,43 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
+/**
+ * Миграция для таблицы с типами уведомлений
+ */
 class CreateBaseNoticesTypes extends Migration
 {
 	protected $table = 'base_notices_types';
 
 
-	public function up() {
-		Schema::create($this->table, function (Blueprint $table) {
+	public function up(){
+		Schema::create($this->table, function(Blueprint $table){
 
 			$table->engine = 'MyISAM';
 			$table->comment = 'Типы уведомлений';
 
-			// Ключ
+			/** Ключ */
 			Columns::id($table);
 
-			// Метка
+			/** Метка */
 			$table
 				->string('tag', 100)
 				->unique()
 				->nullable()
 				->comment('Метка');
 
-			// Название
+			/** Название */
 			Columns::name($table);
 
-			// Ключи создателя и обновителя
+			/** Ключи создателя и обновителя */
 			Columns::editorsIds($table);
 
-			// Время создания и обновления
+			/** Время создания и обновления */
 			$table->timestamps();
-
 		});
 	}
 
 
-	public function down() {
+	public function down(){
 		Schema::drop($this->table);
 	}
 }

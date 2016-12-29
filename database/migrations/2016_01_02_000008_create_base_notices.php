@@ -4,21 +4,24 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
+/**
+ * Миграция для таблицы уведомлений
+ */
 class CreateBaseNotices extends Migration
 {
 	protected $table = 'base_notices';
 
 
-	public function up() {
-		Schema::create($this->table, function (Blueprint $table) {
+	public function up(){
+		Schema::create($this->table, function(Blueprint $table){
 
 			$table->engine = 'MyISAM';
 			$table->comment = 'Уведомления';
 
-			// Ключ
+			/** Ключ */
 			Columns::id($table);
 
-			// Ключ типа
+			/** Ключ типа */
 			$table
 				->integer('type_id')
 				->unsigned()
@@ -26,25 +29,25 @@ class CreateBaseNotices extends Migration
 				->index()
 				->comment('Ключ типа');
 
-			// Содержимое
+			/** Содержимое */
 			$table
 				->text('content')
 				->comment('Содержимое');
 
-			// Прочитано
+			/** Прочитано */
 			$table
 				->boolean('is_read')
 				->index()
 				->comment('Прочитано');
 
-			// Время создания и обновления
+			/** Время создания и обновления */
 			$table->timestamps();
 
 		});
 	}
 
 
-	public function down() {
+	public function down(){
 		Schema::drop($this->table);
 	}
 }

@@ -3,36 +3,38 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Миграция для связующей таблицы типами уведомлений и ролями
+ */
 class CreateBaseNoticesTypeRole extends Migration
 {
 	protected $table = 'base_notices_type_role';
 
 
-	public function up() {
-		Schema::create($this->table, function (Blueprint $table) {
+	public function up(){
+		Schema::create($this->table, function(Blueprint $table){
 
 			$table->engine = 'MyISAM';
 			$table->comment = 'Связи между типами уведомлений и ролями пользователей';
 
-			// Ключ типа уведомлений
+			/** Ключ типа уведомлений */
 			$table
 				->integer('notices_type_id')
 				->unsigned()
 				->index()
 				->comment('Ключ типа уведомлений');
 
-			// Ключ роли
+			/** Ключ роли */
 			$table
 				->integer('role_id')
 				->unsigned()
 				->index()
 				->comment('Ключ роли');
-
 		});
 	}
 
 
-	public function down() {
+	public function down(){
 		Schema::drop($this->table);
 	}
 }

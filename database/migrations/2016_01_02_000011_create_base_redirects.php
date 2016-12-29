@@ -4,52 +4,54 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Chunker\Base\Libs\Columns;
 
+/**
+ * Миграция для таблицы перенаправлений
+ */
 class CreateBaseRedirects extends Migration
 {
 	protected $table = 'base_redirects';
 
 
-	public function up() {
-		Schema::create($this->table, function (Blueprint $table) {
+	public function up(){
+		Schema::create($this->table, function(Blueprint $table){
 
 			$table->engine = 'MyISAM';
 			$table->comment = 'Перенаправления';
 
-			// Ключ
+			/** Ключ */
 			Columns::id($table);
 
-			// Откуда
+			/** Откуда */
 			$table
 				->string('from')
 				->unique()
 				->comment('Откуда');
 
-			// Куда
+			/** Куда */
 			$table
 				->string('to')
 				->index()
 				->comment('Куда');
 
-			// Активно
+			/** Активно */
 			$table
 				->boolean('is_active')
 				->index()
 				->comment('Активно');
-			
-			// Комментарий
+
+			/** Комментарий */
 			Columns::comment($table);
 
-			// Ключи создателя и обновителя
+			/** Ключи создателя и обновителя */
 			Columns::editorsIds($table);
 
-			// Время создания и обновления
+			/** Время создания и обновления */
 			$table->timestamps();
-
 		});
 	}
 
 
-	public function down() {
+	public function down(){
 		Schema::drop($this->table);
 	}
 }
