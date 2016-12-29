@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Перевод интерфейса')

@@ -18,7 +18,7 @@ class NoticesTypeController extends Controller
 		$notices_types = NoticesType::orderBy('name')->get();
 
 		return view(
-			'chunker.base::notices-types.list',
+			'base::notices-types.list',
 			compact('notices_types')
 		);
 	}

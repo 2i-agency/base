@@ -58,7 +58,7 @@
 				@endif
 
 				{{--Описание--}}
-				@include('chunker.base::utils.editor', [
+				@include('base::utils.editor', [
 					'name'      => 'description',
 					'value'     => old('description') ?: (isset($model) ? $model->description : null),
 					'disabled'  => \Auth::user()->cannot($ability_edit)

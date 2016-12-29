@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Уведомления')
@@ -160,7 +160,7 @@
 											@endunless
 
 											{{--Кнопка удаления--}}
-											@include('chunker.base::utils.buttons.delete', [
+											@include('base::utils.buttons.delete', [
 												'size' => 'xs',
 												'url' => route('notices.destroy', ['notice' => $notice])
 											])
@@ -184,7 +184,7 @@
 	@else
 
 		{{--Уведомление--}}
-		@include('chunker.base::utils.alert', ['message' => 'Уведомления отсутствуют'])
+		@include('base::utils.alert', ['message' => 'Уведомления отсутствуют'])
 
 	@endif
 

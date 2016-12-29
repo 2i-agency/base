@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Аутентификации пользователя ' . $user->getName())
@@ -7,10 +7,10 @@
 @section('page.content')
 
 	{{--Хлебные крошки--}}
-	@include('chunker.base::users._breadcrumbs')
+	@include('base::users._breadcrumbs')
 
 	{{--Табы--}}
-	@include('chunker.base::users._tabs')
+	@include('base::users._tabs')
 
 	@if ($authentications->count())
 
@@ -88,7 +88,7 @@
 	@else
 
 		{{--Уведомление об отсутствии аутентификаций--}}
-		@include('chunker.base::utils.alert', ['message' => 'Пользователь пока не производил аутентификаций'])
+		@include('base::utils.alert', ['message' => 'Пользователь пока не производил аутентификаций'])
 
 	@endif
 

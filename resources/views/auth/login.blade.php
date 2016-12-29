@@ -1,4 +1,4 @@
-@extends('chunker.base::auth.template')
+@extends('base::auth.template')
 
 
 @section('page.title', 'Аутентификация')

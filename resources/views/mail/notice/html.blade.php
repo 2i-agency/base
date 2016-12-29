@@ -1,4 +1,4 @@
-@extends('chunker.base::mail.templates.html')
+@extends('base::mail.templates.html')
 
 
 @section('content')

@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Языки')
@@ -61,7 +61,7 @@
 
 				{{--Кнопка добавления--}}
 				<div class="form-group">
-					@include('chunker.base::utils.buttons.add')
+					@include('base::utils.buttons.add')
 				</div>
 
 				<div class="help-block">Локаль можно не указывать — в этом случае она будет сгенерирована на основе названия. Локаль может содержать буквы, цифры, дефис и нижнее подчёркивание.</div>
@@ -111,7 +111,7 @@
 
 							{{--Кнопка редактирования--}}
 							<td class="text-right text-nowrap">
-								@include('chunker.base::utils.edit', ['element' => $language])
+								@include('base::utils.edit', ['element' => $language])
 								@can('languages.edit')
 									<button
 										type="button"
@@ -210,7 +210,7 @@
 						</div>
 
 						{{--Кнопка сохранения--}}
-						@include('chunker.base::utils.buttons.save')
+						@include('base::utils.buttons.save')
 
 					</div>
 

@@ -53,14 +53,14 @@ class AppServiceProvider extends ServiceProvider
 
 			])
 			->registerAbilitiesViews([
-				'chunker.base::abilities.notices',
-				'chunker.base::abilities.notices-types',
-				'chunker.base::abilities.settings',
-				'chunker.base::abilities.users',
-				'chunker.base::abilities.roles',
-				'chunker.base::abilities.redirects',
-				'chunker.base::abilities.languages',
-				'chunker.base::abilities.translation'
+				'base::abilities.notices',
+				'base::abilities.notices-types',
+				'base::abilities.settings',
+				'base::abilities.users',
+				'base::abilities.roles',
+				'base::abilities.redirects',
+				'base::abilities.languages',
+				'base::abilities.translation'
 			])
 			->registerSeeders([
 				'BaseAbilitiesSeeder',
@@ -103,10 +103,12 @@ class AppServiceProvider extends ServiceProvider
 		/** Добавление файлов локализации в пространство имен */
 		$this->loadTranslationsFrom(resource_path('lang/vendor/chunker'), 'chunker');
 
-		/** Шаблоны и композеры */
-		$this->loadViewsFrom(static::ROOT . '/resources/views', 'chunker.base');
-		view()->composer('chunker.base::template', LanguagesComposer::class);
-		view()->composer('chunker.base::users._form', RolesComposer::class);
+		/** Объявление пространства имён представлений пакета */
+		$this->loadViewsFrom(static::ROOT . '/resources/views', 'base');
+
+		/** Редистрация композеров представлений */
+		view()->composer('base::template', LanguagesComposer::class);
+		view()->composer('base::users._form', RolesComposer::class);
 
 		/** Публикация необходимых файлов */
 		$this->publishes([ static::ROOT . '/publishes/' => base_path() ]);

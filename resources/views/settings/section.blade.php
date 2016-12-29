@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Настройки')
@@ -38,7 +38,7 @@
 						<div class="form-group">
 
 							{{--Метка--}}
-							@include('chunker.base::utils.edit', [ 'element' => $setting, 'right' => true ])
+							@include('base::utils.edit', [ 'element' => $setting, 'right' => true ])
 							<label>{{ $setting->title }}:</label>
 
 							{{--Многострочное поле--}}
@@ -102,7 +102,7 @@
 				{{--Кнопка сохранения--}}
 				@can('settings.edit')
 					<div class="panel-footer">
-						@include('chunker.base::utils.buttons.save')
+						@include('base::utils.buttons.save')
 					</div>
 				@endcan
 

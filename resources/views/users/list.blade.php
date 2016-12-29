@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Пользователи')
@@ -83,7 +83,7 @@
 
 							{{--Ссылка на страницу редактирования--}}
 							<td class="text-right text-nowrap">
-								@include('chunker.base::utils.edit', ['element' => $user])
+								@include('base::utils.edit', ['element' => $user])
 
 								<a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-xs">
 									@can('users.edit')
@@ -106,7 +106,7 @@
 	@else
 
 		{{--Уведомление об отсутствии пользователей--}}
-		@include('chunker.base::utils.alert', ['message' => 'Пользователи отсутствуют'])
+		@include('base::utils.alert', ['message' => 'Пользователи отсутствуют'])
 
 	@endif
 

@@ -3,11 +3,11 @@
 
 		{{--Выпадающее меню--}}
 		@if (isset($parent['children']))
-			@include('chunker.base::utils.nav.section', ['item' => $parent])
+			@include('base::utils.nav.section', ['item' => $parent])
 
 		{{--Ссылка--}}
 		@else
-			@include('chunker.base::utils.nav.item', ['item' => $parent])
+			@include('base::utils.nav.item', ['item' => $parent])
 		@endif
 
 	@endforeach

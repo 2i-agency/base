@@ -43,8 +43,8 @@ class Notice extends Model
 		static::created(function($instance){
 			Mail::send(
 				[
-					'html' => 'chunker.base::mail.notice.html',
-					'text' => 'chunker.base::mail.notice.text'
+					'html' => 'base::mail.notice.html',
+					'text' => 'base::mail.notice.text'
 				],
 				[ 'content' => $instance->content ],
 				function(Message $mail) use ($instance){

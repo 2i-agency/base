@@ -36,7 +36,7 @@
 
 		{{--Родительский элемент--}}
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			@include('chunker.base::utils.nav.icon')
+			@include('base::utils.nav.icon')
 			{{ $item['name'] }}
 			<span class="caret"></span>
 		</a>
@@ -48,7 +48,7 @@
 
 				{{--Дочерний элемент--}}
 				@if (is_array($child))
-					@include('chunker.base::utils.nav.item', ['item' => $child])
+					@include('base::utils.nav.item', ['item' => $child])
 
 				{{--Разделитель--}}
 				@elseif ($child === '')
@@ -63,6 +63,6 @@
 
 @elseif(count($children) == 1)
 
-	@include('chunker.base::utils.nav.item', [ 'item' => $children[0] ])
+	@include('base::utils.nav.item', [ 'item' => $children[0] ])
 
 @endif

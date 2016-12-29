@@ -66,7 +66,7 @@ class AuthenticationController extends Controller
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
 	public function showResetPasswordForm(){
-		return view('chunker.base::auth.reset');
+		return view('base::auth.reset');
 	}
 
 
@@ -105,8 +105,8 @@ class AuthenticationController extends Controller
 		$content = 'Ваш новый пароль для пользователя <b>' . $user->login . '</b> на&nbsp;сайте ' . config('app.url') . '</a>: <b>' . $password . '</b>';
 
 		Mail::send([
-			'html' => 'chunker.base::mail.notice.html',
-			'text' => 'chunker.base::mail.notice.text'
+			'html' => 'base::mail.notice.html',
+			'text' => 'base::mail.notice.text'
 		], [ 'content' => $content ], function(Message $message) use ($user){
 			$message
 				->to($user->email, $user->getName())

@@ -2,14 +2,14 @@
 	<label>Уведомления:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">
 
-		@include('chunker.base::utils.ability-trigger', [
+		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'notices',
 			'is_checked'    => !$role->hasAbility('notices.edit'),
 			'icon'          => 'eye'
 		])
 
-		@include('chunker.base::utils.ability-trigger', [
+		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'notices.edit',
 			'is_checked'    => $role->hasAbility('notices.edit'),

@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', $title)
@@ -69,7 +69,7 @@
 		@can('translation.edit')
 			<div class="panel-footer">
 				{{--Кнопка сохранения--}}
-				@include('chunker.base::utils.buttons.save')
+				@include('base::utils.buttons.save')
 			</div>
 		@endcan
 

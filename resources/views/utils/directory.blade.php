@@ -119,7 +119,7 @@
 		@can($ability_edit)
 			<div class="panel-footer">
 				<div class="form-group">
-					@include('chunker.base::utils.buttons.save')
+					@include('base::utils.buttons.save')
 				</div>
 			</div>
 		@endcan
@@ -127,6 +127,6 @@
 
 @else
 
-	@include('chunker.base::utils.alert', ['message' => $empty])
+	@include('base::utils.alert', ['message' => $empty])
 
 @endif

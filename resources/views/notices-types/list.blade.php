@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Типы уведомлений')
@@ -35,7 +35,7 @@
 					</div>
 
 					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-						@include('chunker.base::utils.buttons.add', ['block' => true])
+						@include('base::utils.buttons.add', ['block' => true])
 					</div>
 
 				</div>
@@ -96,10 +96,10 @@
 							<td class="w1px">
 								@can('notices-types.edit')
 									<div class="form-control-static">
-										@include('chunker.base::utils.edit', ['element' => $notices_type])
+										@include('base::utils.edit', ['element' => $notices_type])
 									</div>
 								@else
-									@include('chunker.base::utils.edit', ['element' => $notices_type])
+									@include('base::utils.edit', ['element' => $notices_type])
 								@endcan
 							</td>
 
@@ -112,7 +112,7 @@
 			{{--Кнопка сохранения--}}
 			@can('notices-types.edit')
 				<div class="panel-footer">
-					@include('chunker.base::utils.buttons.save')
+					@include('base::utils.buttons.save')
 				</div>
 			@endcan
 
@@ -120,7 +120,7 @@
 
 	@else
 
-		@include('chunker.base::utils.alert', ['message' => 'Типы уведомлений отсутствуют'])
+		@include('base::utils.alert', ['message' => 'Типы уведомлений отсутствуют'])
 
 	@endif
 

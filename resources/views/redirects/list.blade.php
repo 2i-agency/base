@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Перенаправления')
@@ -76,7 +76,7 @@
 
 					{{--Кнопка--}}
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-						@include('chunker.base::utils.buttons.add', ['block' => true])
+						@include('base::utils.buttons.add', ['block' => true])
 					</div>
 
 				</div>
@@ -208,10 +208,10 @@
 							<td>
 								@can('redirects.edit')
 									<div class="form-control-static">
-										@include('chunker.base::utils.edit', ['element' => $redirect])
+										@include('base::utils.edit', ['element' => $redirect])
 									</div>
 								@else
-									@include('chunker.base::utils.edit', ['element' => $redirect])
+									@include('base::utils.edit', ['element' => $redirect])
 								@endcan
 							</td>
 
@@ -224,7 +224,7 @@
 			{{--Кнопка сохранения--}}
 			@can('redirects.edit')
 				<div class="panel-footer">
-					@include('chunker.base::utils.buttons.save')
+					@include('base::utils.buttons.save')
 				</div>
 			@endcan
 
@@ -236,7 +236,7 @@
 	@else
 
 		{{--Уведомление об отсутствии--}}
-		@include('chunker.base::utils.alert', ['message' => 'Перенаправления отсутствуют'])
+		@include('base::utils.alert', ['message' => 'Перенаправления отсутствуют'])
 
 	@endif
 

@@ -2,21 +2,21 @@
 	<label>Настройки:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">
 
-		@include('chunker.base::utils.ability-trigger', [
+		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'settings',
 			'icon'          => 'ban',
 			'is_checked'    => !$role->hasAccess('settings'),
 		])
 
-		@include('chunker.base::utils.ability-trigger', [
+		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'settings.view',
 			'icon'          => 'eye',
 			'is_checked'    => $role->hasAbility('settings.view'),
 		])
 
-		@include('chunker.base::utils.ability-trigger', [
+		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'settings.edit',
 			'icon'          => 'pencil',

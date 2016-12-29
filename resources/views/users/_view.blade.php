@@ -5,7 +5,7 @@
 			<span class="fa fa-file-text"></span>
 			Данные пользователя
 			@if (isset($user))
-				@include('chunker.base::utils.edit', ['element' => $user, 'right' => true])
+				@include('base::utils.edit', ['element' => $user, 'right' => true])
 			@endif
 		</h4>
 	</div>

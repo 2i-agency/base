@@ -18,7 +18,7 @@ class TranslationController extends Controller
 	public function index(){
 		$this->authorize('translation.view');
 
-		return view('chunker.base::translation.sections');
+		return view('base::translation.sections');
 	}
 
 
@@ -68,7 +68,7 @@ class TranslationController extends Controller
 		/** Установка текущей локали */
 		App::setLocale($current_locale);
 
-		return view('chunker.base::translation.section', compact('section', 'title', 'fields'));
+		return view('base::translation.section', compact('section', 'title', 'fields'));
 	}
 
 

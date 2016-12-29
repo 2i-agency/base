@@ -1,4 +1,4 @@
-@extends('chunker.base::base')
+@extends('base::base')
 
 @section('page.body')
 
@@ -34,7 +34,7 @@
 		<div class="collapse navbar-collapse" id="collapsable">
 
 			{{--Меню админцентра--}}
-			@include('chunker.base::utils.nav.menu')
+			@include('base::utils.nav.menu')
 
 			{{--Форма пользователя--}}
 			<form class="navbar-form navbar-right" method="POST" action="{{ route('admin.logout') }}">
@@ -145,7 +145,7 @@
 
 	{{--Содержимое страницы--}}
 	<div class="container-fluid">
-		@include('chunker.base::utils.flash.message')
+		@include('base::utils.flash.message')
 		@yield('page.content')
 	</div>
 

@@ -1,4 +1,4 @@
-@extends('chunker.base::template')
+@extends('base::template')
 
 
 @section('page.title', 'Роли')
@@ -106,10 +106,10 @@
 				@can('roles.edit')
 					<div class="panel-footer">
 						@if ($role->exists)
-							@include('chunker.base::utils.buttons.save')
-							@include('chunker.base::utils.buttons.delete', ['url' => route('roles.destroy', $role)])
+							@include('base::utils.buttons.save')
+							@include('base::utils.buttons.delete', ['url' => route('roles.destroy', $role)])
 						@else
-							@include('chunker.base::utils.buttons.add')
+							@include('base::utils.buttons.add')
 						@endif
 					</div>
 				@endcan

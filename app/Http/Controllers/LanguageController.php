@@ -99,7 +99,7 @@ class LanguageController extends Controller
 	public function index(){
 		$this->authorize('languages.view');
 
-		return view('chunker.base::languages.list', [
+		return view('base::languages.list', [
 			'languages' => Language::defaultOrder()->get()
 		]);
 	}
