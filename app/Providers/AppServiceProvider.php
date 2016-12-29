@@ -108,31 +108,8 @@ class AppServiceProvider extends ServiceProvider
 		view()->composer('chunker.base::template', LanguagesComposer::class);
 		view()->composer('chunker.base::users._form', RolesComposer::class);
 
-		/** Публикация конфигов */
-		$this->publishes([ static::ROOT . '/config' => config_path('chunker') ], 'config');
-
-		/** Публикация языковых ресурсов */
-		$this->publishes([ static::ROOT . '/resources/lang' => base_path('resources/lang') ], 'lang');
-
-		/** Публикация миграций и сидов */
-		$this->publishes([
-			static::ROOT . '/database/migrations' => database_path('migrations'),
-			static::ROOT . '/database/seeds'      => database_path('seeds')
-		], 'database');
-
-		/**
-		 * Публикация ассетов для админ-панели и
-		 * перезапись файла .htaccess в папке public
-		 */
-		$this->publishes([
-			static::ROOT . '/public/admin'     => public_path('admin'),
-			static::ROOT . '/public/.htaccess' => public_path('.htaccess'),
-		], 'public');
-
-		/** Публикация роута */
-		$this->publishes([
-			static::ROOT . '/assets/routes.php' => app_path('Http/routes.php')
-		], 'app');
+		/** Публикация необходимых файлов */
+		$this->publishes([ static::ROOT . '/publishes/' => base_path() ]);
 
 		/** Регистрация глобального посредника редиректов */
 		$this
