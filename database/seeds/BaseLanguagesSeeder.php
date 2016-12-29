@@ -3,15 +3,18 @@
 use Illuminate\Database\Seeder;
 use Chunker\Base\Models\Language;
 
+/**
+ * Посев языков
+ */
 class BaseLanguagesSeeder extends Seeder
 {
-	public function run() {
+	public function run(){
 		$name = 'RU';
 
 		if (!Language::where('name', $name)->count()) {
-			// Добавление русского языка
+			/** Добавление русского языка */
 			Language::create([
-				'name' => $name,
+				'name'         => $name,
 				'is_published' => true
 			]);
 		}
