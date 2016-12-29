@@ -106,7 +106,7 @@ class AppServiceProvider extends ServiceProvider
 		/** Объявление пространства имён представлений пакета */
 		$this->loadViewsFrom(static::ROOT . '/resources/views', 'base');
 
-		/** Редистрация композеров представлений */
+		/** Регистрация композеров представлений */
 		view()->composer('base::template', LanguagesComposer::class);
 		view()->composer('base::users._form', RolesComposer::class);
 
