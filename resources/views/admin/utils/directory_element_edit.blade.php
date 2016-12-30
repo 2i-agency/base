@@ -40,6 +40,19 @@
 							>
 						</div>
 					@endif
+					{{--Описание--}}
+					@if( isset($fields['meta_description']) && $fields['meta_description'] )
+						<div class="form-group">
+							<label>Описание для мета-тега:</label>
+							<input
+								type="text"
+								class="form-control"
+								autocomplete="off"
+								name="meta_description"
+								value="{{ old('meta_description') ?: (isset($model) ? $model->meta_description : NULL) }}"
+							>
+						</div>
+					@endif
 
 					{{--Слаг--}}
 					@if( isset($fields['slugs']) && $fields['slugs'] )
