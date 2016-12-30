@@ -111,7 +111,12 @@ class AppServiceProvider extends ServiceProvider
 		view()->composer('base::users._form', RolesComposer::class);
 
 		/** Публикация необходимых файлов */
-		$this->publishes([ static::ROOT . '/publishes/' => base_path() ]);
+		$path = static::ROOT . '/publishes/';
+		$files = array_slice(scandir($path), 2);
+
+		foreach ($files as $file) {
+			$this->publishes([ $path.$file => base_path() ], $file);
+		}
 
 		/** Регистрация глобального посредника редиректов */
 		$this
