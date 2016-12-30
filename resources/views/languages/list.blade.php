@@ -14,10 +14,14 @@
 	@php($_icon_big   = config('chunker.localization.icon.size.big'))
 	<h3>Языки</h3>
 
-
 	{{--Форма добавления языка--}}
 	@can('languages.edit')
-		<form method="POST" action="{{ route('admin.languages.store') }}" class="panel panel-default" enctype="multipart/form-data">
+		<form
+			method="POST"
+			action="{{ route('admin.languages.store') }}"
+			class="panel panel-default"
+			enctype="multipart/form-data"
+		>
 			{!! csrf_field() !!}
 
 			<div class="panel-heading">
@@ -52,7 +56,7 @@
 					>
 				</div>
 
-				{{--Файл флага--}}
+				{{--Файл иконки--}}
 				@if(config('chunker.localization.icon.using'))
 					<div class="form-group">
 						<input type="file" name="icon">
@@ -64,7 +68,10 @@
 					@include('base::utils.buttons.add')
 				</div>
 
-				<div class="help-block">Локаль можно не указывать — в этом случае она будет сгенерирована на основе названия. Локаль может содержать буквы, цифры, дефис и нижнее подчёркивание.</div>
+				<div class="help-block">
+					Локаль можно не указывать — в этом случае она будет сгенерирована на основе названия. Локаль может
+					содержать буквы, цифры, дефис и нижнее подчёркивание.
+				</div>
 
 			</div>
 
@@ -79,62 +86,62 @@
 			<table class="table table-striped table-hover">
 
 				<thead>
-					<tr>
-						<th>Название</th>
-						<th>Локаль</th>
-						<th>Публикация</th>
-						<th class="w1px"></th>
-					</tr>
+				<tr>
+					<th>Название</th>
+					<th>Локаль</th>
+					<th>Публикация</th>
+					<th class="w1px"></th>
+				</tr>
 				</thead>
 
 				<tbody class="js-positionable" data-url="{{ route('admin.languages.positioning') }}">
-					@foreach ($languages as $language)
-						<tr data-id="{{ $language->id }}">
+				@foreach ($languages as $language)
+					<tr data-id="{{ $language->id }}">
 
-							{{--Название--}}
-							<td>
-								@if(config('chunker.localization.icon.using') && $language->getMedia()->count())
-									<img src="{{ $language->getMedia()->first()->getUrl($_icon_small) }}">
-								@endif
-								{{ $language->name }}
-							</td>
-
-							{{--Локаль--}}
-							<td>{{ $language->locale }}</td>
-
-							{{--Публикация--}}
-							@if ($language->is_published)
-								<td>Опубликован</td>
-							@else
-								<td class="text-muted">Не опубликован</td>
+						{{--Название--}}
+						<td>
+							@if(config('chunker.localization.icon.using') && $language->getMedia()->count())
+								<img src="{{ $language->getMedia()->first()->getUrl($_icon_small) }}">
 							@endif
+							{{ $language->name }}
+						</td>
 
-							{{--Кнопка редактирования--}}
-							<td class="text-right text-nowrap">
-								@include('base::utils.edit', ['element' => $language])
-								@can('languages.edit')
-									<button
-										type="button"
-										class="btn btn-primary btn-xs"
-										data-toggle="modal"
-										data-target="#modal-edit"
-										data-action_update="{{ route('admin.languages.update', $language) }}"
-										data-name="{{ $language->name }}"
-										data-locale="{{ $language->locale }}"
-										data-is_published="{{ $language->is_published }}"
-										data-flag="{{ config('chunker.localization.icon.using') && $language->getMedia()->count() ?
+						{{--Локаль--}}
+						<td>{{ $language->locale }}</td>
+
+						{{--Публикация--}}
+						@if ($language->is_published)
+							<td>Опубликован</td>
+						@else
+							<td class="text-muted">Не опубликован</td>
+						@endif
+
+						{{--Кнопка редактирования--}}
+						<td class="text-right text-nowrap">
+							@include('base::utils.edit', ['element' => $language])
+							@can('languages.edit')
+								<button
+									type="button"
+									class="btn btn-primary btn-xs"
+									data-toggle="modal"
+									data-target="#modal-edit"
+									data-action_update="{{ route('admin.languages.update', $language) }}"
+									data-name="{{ $language->name }}"
+									data-locale="{{ $language->locale }}"
+									data-is_published="{{ $language->is_published }}"
+									data-flag="{{ (config('chunker.localization.icon.using') && $language->getMedia()->count()) ?
 											$language->getMedia()->first()->getUrl($_icon_small) :
 											''
 										}}"
-									>
-										<span class="glyphicon glyphicon-pencil"></span>
-										Редактировать
-									</button>
-								@endcan
-							</td>
+								>
+									<span class="glyphicon glyphicon-pencil"></span>
+									Редактировать
+								</button>
+							@endcan
+						</td>
 
-						</tr>
-					@endforeach
+					</tr>
+				@endforeach
 				</tbody>
 
 			</table>

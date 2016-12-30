@@ -1,3 +1,4 @@
+{{--Переключатели возможностей для пользователей--}}
 <div class="form-group">
 	<label>Пользователи:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">

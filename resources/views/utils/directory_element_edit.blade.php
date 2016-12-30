@@ -1,3 +1,4 @@
+{{--Шаблон формы редактирования отдельной записи каталога--}}
 <ul class="breadcrumb">
 	<li><a href="{{ route($breadcrumbs['route']) }}">{{ $breadcrumbs['name'] }}</a></li>
 	<li class="active">{{ $model->name }}</li>
@@ -115,6 +116,7 @@
 				Сохранить
 			</button>
 
+			{{--Кнопка удаления--}}
 			@if (isset($model) && isset($can_delete) && $can_delete)
 				<button form="delete" class="btn btn-danger" type="submit">
 					<span class="glyphicon glyphicon-remove"></span>

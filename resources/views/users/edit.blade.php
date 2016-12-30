@@ -14,7 +14,11 @@
 
 	{{--Форма с данными пользователя--}}
 	@can('users.edit', [$user])
-		<form method="POST" action="{{ route('admin.users.update', $user) }}" class="panel panel-default">
+		<form
+			method="POST"
+			action="{{ route('admin.users.update', $user) }}"
+			class="panel panel-default"
+		>
 			{!! method_field('PUT') !!}
 			@include('base::users._form')
 			<div class="panel-footer">

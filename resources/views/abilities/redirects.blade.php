@@ -1,3 +1,4 @@
+{{--Переключатели возможностей для перенаправлений--}}
 <div class="form-group">
 	<label>Перенаправления:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">

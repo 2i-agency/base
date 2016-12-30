@@ -1,3 +1,8 @@
+{{--Календарь--}}
+{{--@var mixed  $id ключ поля--}}
+{{--@var string $name имя поля--}}
+{{--@var string $value значение поля--}}
+{{--@var string $placeholder подсказка--}}
 <div class="input-group date js-timepicker">
 	<input
 		id="{{ $id or NULL }}"

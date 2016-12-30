@@ -40,7 +40,11 @@
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
 
 			{{--Форма--}}
-			<form method="POST" class="panel panel-default" action="{{ route('admin.roles.' . ($role->exists ? 'update' : 'store'), $role) }}">
+			<form
+				method="POST"
+				class="panel panel-default"
+				action="{{ route('admin.roles.' . ($role->exists ? 'update' : 'store'), $role) }}"
+			>
 				{!! csrf_field() !!}
 				@if($role->exists)
 					{!! method_field('PUT') !!}

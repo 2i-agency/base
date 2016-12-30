@@ -1,3 +1,4 @@
+{{--Переключатели возможностей для ролей--}}
 <div class="form-group">
 	<label>Роли:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">

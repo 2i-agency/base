@@ -1,3 +1,4 @@
+{{--Переключатели возможностей для типов уведомлений--}}
 <div class="form-group">
 	<label>Типы уведомлений:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">

@@ -1,6 +1,6 @@
 @php
 
-	// Информация о созданиии
+	/** Информация о созданиии */
 	$create = "
 	<span class='fa fa-plus-circle fa-fw'></span>
 	<b>Создание</b>
@@ -14,7 +14,7 @@
 	$popover_content = '<p>' . $create . '</p>';
 
 
-	// Информация об обновлении
+	/** Информация об обновлении */
 	if ($element->created_at->ne($element->updated_at))
 	{
 		$update = "

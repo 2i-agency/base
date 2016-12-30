@@ -5,7 +5,7 @@
 
 	foreach ($item['children'] as $child) {
 
-		// Добавление дочернего элемента
+		/** Добавление дочернего элемента */
 		if (is_array($child))
 		{
 			if (!isset($child['policy']) || Auth::user()->can($child['policy'])) {
@@ -15,14 +15,14 @@
 			}
 		}
 
-		// Добавление разделителя
+		/** Добавление разделителя */
 		elseif (count($children) && $children[count($children) - 1] !== '') {
 			$children[] = $child;
 		}
 
 	}
 
-	// Удаление концевого разделителя
+	/** Удаление концевого разделителя */
 	if (count($children) && $children[count($children) - 1] === '') {
 		array_pop($children);
 	}

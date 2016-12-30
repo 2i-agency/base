@@ -8,7 +8,6 @@
 
 	<h3>Перенаправления</h3>
 
-
 	{{--Форма добавления--}}
 	@can('redirects.edit')
 		<form method="POST" class="panel panel-default" action="{{ route('admin.redirects.store') }}">
@@ -60,7 +59,7 @@
 						>
 					</div>
 
-					{{--Активно--}}
+					{{--Флаг активности--}}
 					<div class="col-lg-1 col-md-1 col-sm-3 col-xs-12">
 						<p class="form-control-static">
 							<label class="checkbox-inline">
@@ -74,7 +73,7 @@
 						</p>
 					</div>
 
-					{{--Кнопка--}}
+					{{--Кнопка "Добавить"--}}
 					<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
 						@include('base::utils.buttons.add', ['block' => true])
 					</div>
@@ -92,7 +91,11 @@
 		{{--Пагинация--}}
 		{!! $redirects->render() !!}
 
-		<form method="POST" class="panel panel-default table-responsive" action="{{ route('admin.redirects.save') }}">
+		<form
+			method="POST"
+			class="panel panel-default table-responsive"
+			action="{{ route('admin.redirects.save') }}"
+		>
 			{!! csrf_field() !!}
 			{!! method_field('PUT') !!}
 
@@ -162,7 +165,7 @@
 								@endcan
 							</td>
 
-							{{--Активно--}}
+							{{--Флаг активности--}}
 							<td class="text-nowrap">
 								@can('redirects.edit')
 									<div class="form-control-static">
@@ -235,7 +238,7 @@
 
 	@else
 
-		{{--Уведомление об отсутствии--}}
+		{{--Уведомление об отсутствии перенаправлений--}}
 		@include('base::utils.alert', ['message' => 'Перенаправления отсутствуют'])
 
 	@endif

@@ -1,3 +1,4 @@
+{{--Переключатели возможностей для языков--}}
 <div class="form-group">
 	<label>Языки:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">

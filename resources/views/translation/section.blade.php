@@ -12,7 +12,6 @@
 		<li class="active">{{ $title }}</li>
 	</ul>
 
-
 	{{--Список элементов--}}
 	<form method="POST" class="panel panel-default" action="{{ route('admin.translation.save', $section) }}">
 		{!! csrf_field() !!}

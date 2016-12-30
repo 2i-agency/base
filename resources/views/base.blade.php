@@ -1,3 +1,4 @@
+{{--Базовый шаблон админпанели--}}
 <!doctype html>
 <html lang="ru">
 <head>
@@ -23,5 +24,5 @@
 	<link rel="shortcut icon" href="{{ asset('admin/img/favicon.png') }}">
 
 </head>
-<body>@yield('page.body')</body>
+	<body>@yield('page.body')</body>
 </html>

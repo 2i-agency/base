@@ -1,3 +1,4 @@
+{{--Шаблон меню админпанели--}}
 <ul class="nav navbar-nav">
 	@foreach(config('chunker.admin.structure') as $parent)
 

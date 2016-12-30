@@ -1,4 +1,6 @@
 {{--Кнопка добавления--}}
+{{--@var bool   $block - флаг установки класса btn-block--}}
+{{--@var string $size - указывает размер кнопки--}}
 <button
 	type="submit"
 	class="

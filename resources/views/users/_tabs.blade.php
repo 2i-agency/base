@@ -1,3 +1,4 @@
+{{--Табы--}}
 @include('base::utils.tabs', [
 	'tabs' => [
 		'<span class="fa fa-user"></span> Данные' => route('users.edit', $user),

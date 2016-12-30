@@ -8,7 +8,6 @@
 
 	<h3>Типы уведомлений</h3>
 
-
 	{{--Форма добавления--}}
 	@can('notices-types.edit')
 		<form method="POST" class="panel panel-default" action="{{ route('admin.notices-types.store') }}">
@@ -48,7 +47,11 @@
 	{{--Список типов уведомлений--}}
 	@if ($notices_types->count())
 
-		<form method="POST" class="panel panel-default table-responsive" action="{{ route('admin.notices-types.save') }}">
+		<form
+			method="POST"
+			class="panel panel-default table-responsive"
+			action="{{ route('admin.notices-types.save') }}"
+		>
 			{!! csrf_field() !!}
 			{!! method_field('PUT') !!}
 
@@ -120,6 +123,7 @@
 
 	@else
 
+		{{--Типы уведомлений отсутствуют--}}
 		@include('base::utils.alert', ['message' => 'Типы уведомлений отсутствуют'])
 
 	@endif

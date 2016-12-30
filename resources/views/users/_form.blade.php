@@ -27,7 +27,9 @@
 			required
 			autofocus
 			autocomplete="off">
-		<div class="help-block">Логин может содержать латинские буквы, цифры и дефис и содержать не более 20 символов</div>
+		<div class="help-block">
+			Логин может содержать латинские буквы, цифры и дефис и содержать не более 20 символов
+		</div>
 	</div>
 
 	{{--Пароль--}}
@@ -36,7 +38,8 @@
 		<input
 			type="password"
 			name="password"
-			class="form-control"{{ isset($user) ? NULL : ' required'}}
+			class="form-control"
+			{{ isset($user) ? NULL : ' required'}}
 			minlength="6"
 		>
 		<div class="help-block">Не менее 6 символов</div>
@@ -123,7 +126,7 @@
 						type="checkbox"
 						name="roles[]"
 						value="{{ $_role->id }}"
-					    @if ((isset($user) && $user->isRelatedWith('roles', $_role)) || (array_search($_role->id, old('roles', [])) !== false))
+						@if ((isset($user) && $user->isRelatedWith('roles', $_role)) || (array_search($_role->id, old('roles', [])) !== false))
 							checked
 						@endif
 					>

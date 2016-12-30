@@ -29,7 +29,11 @@
 
 		{{--Форма--}}
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
-			<form method="POST" class="panel panel-default" action="{{ route('admin.settings.save') }}">
+			<form
+				method="POST"
+				class="panel panel-default"
+				action="{{ route('admin.settings.save') }}"
+			>
 				{!! csrf_field() !!}
 				{!! method_field('PUT') !!}
 
@@ -41,11 +45,16 @@
 							@include('base::utils.edit', [ 'element' => $setting, 'right' => true ])
 							<label>{{ $setting->title }}:</label>
 
-							{{--Многострочное поле--}}
 							@can('settings.edit')
 
+								{{--Многострочное поле--}}
 								@if ($setting->control_type == 'textarea')
-									<textarea name="settings[{{ $setting->id }}]" class="form-control">{{ $setting->value }}</textarea>
+									<textarea
+										name="settings[{{ $setting->id }}]"
+										class="form-control"
+									>
+										{{ $setting->value }}
+									</textarea>
 
 								{{--Переключатель--}}
 								@elseif($setting->control_type == 'radio')

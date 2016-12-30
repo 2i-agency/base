@@ -1,3 +1,4 @@
+{{--Переключатели возможностей для настроек--}}
 <div class="form-group">
 	<label>Настройки:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">

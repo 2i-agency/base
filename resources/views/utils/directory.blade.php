@@ -13,15 +13,16 @@
 		<div class="panel-body row">
 
 			<div class="col-xs-6 col-sm-9 col-md-10">
+				{{--Название--}}
 				<input
-						type="text"
-						name="name"
-						value="{{ old('name') }}"
-						autofocus
-						required
-						autocomplete="off"
-						placeholder="Название"
-						class="form-control"
+					type="text"
+					name="name"
+					value="{{ old('name') }}"
+					autofocus
+					required
+					autocomplete="off"
+					placeholder="Название"
+					class="form-control"
 				>
 			</div>
 
@@ -41,7 +42,11 @@
 @if($directory->count())
 
 	{{--Список--}}
-	<form method="POST" action="{{ route($route['save']) }}" class="panel panel-default">
+	<form
+		method="POST"
+		action="{{ route($route['save']) }}"
+		class="panel panel-default"
+	>
 		{!! method_field('PUT') !!}
 
 		<div class="table-responsive">
@@ -52,16 +57,18 @@
 					<tbody class="js-positionable" data-url="{{ route($route['positioning']) }}">
 				@else
 					<tbody>
-					@endcan
+				@endcan
 
 					@foreach ($directory as $item)
 
 						<tr data-id="{{ $item->id }}">
 
 							@can($ability_edit)
+								{{--Ячейка с иконкой для сортировки объектов--}}
 								<td width="1px" style="vertical-align: middle">
 									<div class="fa fa-reorder"></div>
 								</td>
+								{{--Название--}}
 								<td>
 									<input
 										type="text"
@@ -73,25 +80,27 @@
 										class="form-control"
 									>
 								</td>
+								{{--Вывод сода для вставки в текст. Добавление каталога чего-либо (напр.: галереи) в статьи--}}
 								<td width="1px" class="code_insert">
 									@if(isset($code_insert) && $code_insert['using'])
 										{{ $code_insert['message']['start'] . $item->id . $code_insert['message']['end'] }}
 									@endif
 								</td>
+								{{--Флаг для удаления записи--}}
 								@if(isset($can_delete) && $can_delete)
 									<td width="1px" style="vertical-align: middle;">
 										<label class="radio-inline" style="white-space: nowrap;">
 											<input
-													type="checkbox"
-													name="delete[{{ $item->id }}]"
+												type="checkbox"
+												name="delete[{{ $item->id }}]"
 											> Удалить
 										</label>
 									</td>
 								@endif
+								{{--Кнопка для редактирования/просмотра записи при включении режима одиночного редактирования--}}
 								@if(isset($can_edit) && $can_edit)
 									<td width="1px" style="vertical-align: middle;">
 
-										{{--Кнопка редактирования--}}
 										<a href="{{ route($route['edit'], $item) }}" class="btn btn-primary">
 											@can($ability_edit)
 												<span class="fa fa-pencil"></span>

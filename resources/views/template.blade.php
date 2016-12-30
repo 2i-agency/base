@@ -29,7 +29,6 @@
 
 		</div>
 
-
 		{{--Содержимое, скрываемое в мобильной версии--}}
 		<div class="collapse navbar-collapse" id="collapsable">
 
@@ -92,7 +91,7 @@
 							</li>
 						@endforeach
 
-						{{--Разделитель между яызками и разделами редактирования--}}
+						{{--Разделитель между языками и разделами редактирования--}}
 						@if($_languages->count() > 1 && (Auth::user()->can('languages.view') || Auth::user()->can('translation.view')))
 							<li class="divider"></li>
 						@endif

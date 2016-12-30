@@ -1,3 +1,4 @@
+{{--Шаблон редактора--}}
 <textarea
 	name="{{ $name or 'content' }}"
 	rows="10"

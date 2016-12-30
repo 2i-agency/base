@@ -1,3 +1,4 @@
+{{--Модальное окно--}}
 <div id="flash-overlay-modal" class="modal fade {{ $modalClass or '' }}">
 	<div class="modal-dialog">
 		<div class="modal-content">

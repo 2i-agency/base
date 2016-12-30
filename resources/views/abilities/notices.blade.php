@@ -1,3 +1,4 @@
+{{--Переключатели возможностей для уведомлений--}}
 <div class="form-group">
 	<label>Уведомления:</label>
 	<div class="btn-group w100percent" data-toggle="buttons">
