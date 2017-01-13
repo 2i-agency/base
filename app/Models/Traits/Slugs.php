@@ -80,6 +80,8 @@ trait Slugs
 				throw new \Error(self::getErrorMessage('field_config'));
 			}
 
+		} else {
+			return $this->getKeyName();
 		}
 	}
 
