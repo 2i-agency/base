@@ -100,7 +100,6 @@ $(function(){
 			mode: 'text/html',
 			theme: 'monokai',
 			autoCloseBrackets: true,
-			autoCloseTags: true,
 			matchBrackets: true,
 			matchTags: true,
 			lineNumbers: true,
