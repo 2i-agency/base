@@ -4,6 +4,7 @@ namespace Chunker\Base\Providers;
 
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
+use Chunker\Base\Providers\Traits\Migrator;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
@@ -17,12 +18,13 @@ use Chunker\Base\ViewComposers\RolesComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
+	use Migrator;
 
 	/** Корневая папка пакета */
 	const ROOT = __DIR__ . '/../..';
 
 
-	public function boot(Package $package){
+	public function boot(Package $package) {
 		/** Конфигурация пакета */
 		$package
 			->setName('base')
@@ -115,7 +117,17 @@ class AppServiceProvider extends ServiceProvider
 		$files = array_slice(scandir($path), 2);
 
 		foreach ($files as $file) {
-			$this->publishes([ $path.$file => base_path() ], $file);
+			if ($file == 'database') {
+
+				$this->upMigrates($path . 'database/migrations/', $file);
+
+				$this->publishes([
+					$path . 'database/seeds/' => database_path('/seeds/')
+				], $file);
+
+			} else {
+				$this->publishes([ $path . $file => base_path($file) ], $file);
+			}
 		}
 
 		/** Регистрация глобального посредника редиректов */
@@ -130,7 +142,7 @@ class AppServiceProvider extends ServiceProvider
 	}
 
 
-	public function register(){
+	public function register() {
 		/** Регистрания хелперов */
 		foreach (glob(self::ROOT . '/app/Helpers/*.php') as $filename) {
 			require_once $filename;
