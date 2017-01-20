@@ -59,6 +59,11 @@ class CreateBaseUsers extends Migration
 				->boolean('is_blocked')
 				->comment('Заблокирован');
 
+			/** Доступ в админ-панель */
+			$table
+				->boolean('is_admin_access')
+				->comment('Доступ в админ-панель');
+
 			/** Ключи создателя и обновителя */
 			Columns::editorsIds($table);
 

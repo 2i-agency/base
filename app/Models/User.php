@@ -31,7 +31,8 @@ class User extends Authenticatable
 		'email',
 		'name',
 		'is_subscribed',
-		'is_blocked'
+		'is_blocked',
+		'is_admin_access'
 	];
 
 	/** @var array поля, которые должны быть скрыты при преобразовании модели в массив */
@@ -42,8 +43,9 @@ class User extends Authenticatable
 
 	/** @var array поля для мутаторов */
 	protected $casts = [
-		'is_subscribed' => 'boolean',
-		'is_blocked'    => true
+		'is_subscribed'   => 'boolean',
+		'is_blocked'      => true,
+		'is_admin_access' => true
 	];
 
 
@@ -60,7 +62,7 @@ class User extends Authenticatable
 	 *
 	 * @param string $password
 	 */
-	public function setPasswordAttribute($password){
+	public function setPasswordAttribute($password) {
 		if (strlen($password)) {
 			$this->attributes[ 'password' ] = bcrypt($password);
 		}
@@ -73,7 +75,7 @@ class User extends Authenticatable
 	 *
 	 * @return string
 	 */
-	public function getName(){
+	public function getName() {
 		return is_null($this->name) ? $this->login : $this->name;
 	}
 
@@ -83,7 +85,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function isCanBeBlocked(){
+	public function isCanBeBlocked() {
 		return !$this->is(Auth::user());
 	}
 
@@ -93,7 +95,7 @@ class User extends Authenticatable
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 */
-	public function authentications(){
+	public function authentications() {
 		return $this->hasMany(Authentication::class);
 	}
 
@@ -103,7 +105,7 @@ class User extends Authenticatable
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
-	public function roles(){
+	public function roles() {
 		return $this->belongsToMany(Role::class, 'base_roles_users');
 	}
 
@@ -115,7 +117,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function hasAccess($abilityNamespace){
+	public function hasAccess($abilityNamespace) {
 		foreach ($this->roles()->get([ 'id' ]) as $role) {
 			if ($role->hasAccess($abilityNamespace)) {
 				return true;
@@ -133,7 +135,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function hasAbility($ability){
+	public function hasAbility($ability) {
 		foreach ($this->roles()->get([ 'id' ]) as $role) {
 			if ($role->hasAbility($ability)) {
 				return true;
@@ -151,7 +153,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function isAdmin(){
+	public function isAdmin() {
 		foreach ($this->roles()->get([ 'id' ]) as $role) {
 			if ($role->isAdmin()) {
 				return true;
