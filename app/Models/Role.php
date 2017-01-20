@@ -23,11 +23,9 @@ class Role extends Model
 
 	/**
 	 * Возможности
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
-	public function abilities(){
-		return $this->belongsToMany(Ability::class, 'base_ability_role');
+	public function abilities() {
+		return $this->morphToMany(Ability::class, 'base_abilities_agents');
 	}
 
 
@@ -36,7 +34,7 @@ class Role extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
-	public function noticesTypes(){
+	public function noticesTypes() {
 		return $this->belongsToMany(NoticesType::class, 'base_notices_type_role');
 	}
 
@@ -46,7 +44,7 @@ class Role extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
-	public function users(){
+	public function users() {
 		return $this->belongsToMany(User::class, 'base_role_user');
 	}
 
@@ -58,7 +56,7 @@ class Role extends Model
 	 *
 	 * @return bool
 	 */
-	public function hasAccess($abilityNamespace){
+	public function hasAccess($abilityNamespace) {
 		return (bool)$this
 			->abilities()
 			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
@@ -73,7 +71,7 @@ class Role extends Model
 	 *
 	 * @return bool
 	 */
-	public function hasAbility($abilities){
+	public function hasAbility($abilities) {
 		if (!is_array($abilities)) {
 			$abilities = [ $abilities ];
 		}
@@ -88,21 +86,23 @@ class Role extends Model
 	/**
 	 * Проверка статуса администратора
 	 *
+	 * @todo переделать в соответствии с новой логикой работы
+	 *
 	 * @return bool
 	 */
-	public function isAdmin(){
+	public function isAdmin() {
 		return (bool)$this
 			->abilities()
 			->count();
 	}
 
 
-	public static function boot(){
+	public static function boot() {
 
 		/**
 		 * Удаление связей роли с возможностями, типами уведомлений, пользователями
 		 */
-		static::deleting(function($instance){
+		static::deleting(function($instance) {
 			// Удаление связей с возможностями
 			$instance->abilities()->detach();
 

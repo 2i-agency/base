@@ -46,11 +46,19 @@ class Ability extends Model
 	/**
 	 * Отношение с моделью Role
 	 *
-	 * @return mixed связь с моделью User
+	 * @return mixed связь с моделью Role
 	 */
 	public function roles(){
-		return $this
-			->belongsToMany(Role::class, 'base_ability_role')
-			->withPivot('options');
+		return $this->morphedByMany(Role::class, 'base_abilities_agents');
+	}
+
+
+	/**
+	 * Отношение с моделью User
+	 *
+	 * @return mixed связь с моделью User
+	 */
+	public function user(){
+		return $this->morphedByMany(User::class, 'base_abilities_agents');
 	}
 }

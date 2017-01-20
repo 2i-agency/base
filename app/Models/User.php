@@ -48,6 +48,14 @@ class User extends Authenticatable
 
 
 	/**
+	 * Возможности
+	 */
+	public function abilities() {
+		return $this->morphToMany(Ability::class, 'base_abilities_agents');
+	}
+
+
+	/**
 	 * Хеширование пароля
 	 *
 	 * @param string $password
@@ -138,6 +146,8 @@ class User extends Authenticatable
 
 	/**
 	 * Проверка статуса администратора
+	 *
+	 * @todo переделать в соответствии с новой логикой работы
 	 *
 	 * @return bool
 	 */
