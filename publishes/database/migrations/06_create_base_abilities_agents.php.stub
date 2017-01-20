@@ -6,9 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 /**
  * Миграция для таблицы связей ролей и пользователей с возможностями
  */
-class CreateBaseAgentsAbilities extends Migration
+class CreateBaseAbilitiesAgents extends Migration
 {
-	protected $table = 'base_ability_morph';
+	protected $table = 'base_abilities_agents';
 
 
 	public function up() {

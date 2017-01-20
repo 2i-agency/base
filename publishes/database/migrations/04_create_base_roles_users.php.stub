@@ -6,9 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 /**
  * Миграция для связующей таблицы пользователей и ролей
  */
-class CreateBaseRoleUser extends Migration
+class CreateBaseRolesUsers extends Migration
 {
-	protected $table = 'base_role_user';
+	protected $table = 'base_roles_users';
 
 
 	public function up(){
