@@ -1,0 +1,45 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+/**
+ * Миграция для таблицы связей ролей и пользователей с возможностями
+ */
+class CreateBaseAbilitiesRolesUsers extends Migration
+{
+	protected $table = 'base_abilities_roles_users';
+
+
+	public function up() {
+		Schema::create($this->table, function(Blueprint $table) {
+
+			$table->engine = 'MyISAM';
+			$table->comment = 'Полиморфическая связь ролей и пользователей с возможностями';
+
+			/** Ключ возможности */
+			$table
+				->string('ability_id')
+				->index()
+				->comment('Ключ возможности');
+
+			/** Ключ связанной модели */
+			$table
+				->integer('model_id')
+				->unsigned()
+				->index()
+				->comment('Ключ связанной модели');
+
+			/** Тип связанной модели */
+			$table
+				->string('model_type')
+				->index()
+				->comment('Тип связанной модели');
+		});
+	}
+
+
+	public function down() {
+		Schema::drop($this->table);
+	}
+}
