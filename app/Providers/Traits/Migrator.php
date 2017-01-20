@@ -43,7 +43,7 @@ trait Migrator
 		/** Получаем список файлов миграции */
 		$files = array_slice(scandir($path), 2);
 
-		$timestamp = Carbon::now();
+		$timestamp = Carbon::now()->addSecond();
 
 		foreach ($files as $key => $file) {
 			/** Если класса миграции не объявлен */
