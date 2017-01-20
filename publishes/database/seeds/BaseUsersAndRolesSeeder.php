@@ -10,7 +10,7 @@ use Chunker\Base\Models\Role;
  */
 class BaseUsersAndRolesSeeder extends Seeder
 {
-	public function run(){
+	public function run() {
 		/** Все доступные возможности */
 		$abilities = array_keys(app()[ 'Packages' ]->getAbilities());
 
@@ -38,11 +38,12 @@ class BaseUsersAndRolesSeeder extends Seeder
 
 		if (!$user) {
 			$user = User::create([
-				'login'         => $login,
-				'password'      => '000000',
-				'email'         => 'mail@' . host(),
-				'name'          => 'Администратор',
-				'is_subscribed' => true
+				'login'           => $login,
+				'password'        => '000000',
+				'email'           => 'mail@' . host(),
+				'name'            => 'Администратор',
+				'is_subscribed'   => true,
+				'is_admin_access' => true
 			]);
 		}
 
