@@ -7,7 +7,7 @@ use Chunker\Base\Libs\Columns;
 /**
  * Миграция для таблицы представителя (роль или пользователь)
  */
-class CreateBaseRoles extends Migration
+class CreateBaseAgents extends Migration
 {
 	protected $table = 'base_agents';
 
