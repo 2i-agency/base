@@ -15,7 +15,6 @@ class CreateBaseRoles extends Migration
 	public function up(){
 		Schema::create($this->table, function(Blueprint $table){
 
-			$table->engine = 'MyISAM';
 			$table->comment = 'Роли пользователей';
 
 			/** Ключ */

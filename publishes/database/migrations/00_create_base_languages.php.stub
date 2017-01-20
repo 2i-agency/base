@@ -16,7 +16,6 @@ class CreateBaseLanguages extends Migration
 	public function up(){
 		Schema::create($this->table, function(Blueprint $table){
 
-			$table->engine = 'MyISAM';
 			$table->comment = 'Языки';
 
 			/** Ключ */

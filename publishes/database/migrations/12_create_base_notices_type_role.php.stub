@@ -14,7 +14,6 @@ class CreateBaseNoticesTypeRole extends Migration
 	public function up(){
 		Schema::create($this->table, function(Blueprint $table){
 
-			$table->engine = 'MyISAM';
 			$table->comment = 'Связи между типами уведомлений и ролями пользователей';
 
 			/** Ключ типа уведомлений */
