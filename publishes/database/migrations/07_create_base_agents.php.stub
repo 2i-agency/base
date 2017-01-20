@@ -9,7 +9,7 @@ use Chunker\Base\Libs\Columns;
  */
 class CreateBaseRoles extends Migration
 {
-	protected $table = 'base_roles';
+	protected $table = 'base_agents';
 
 
 	public function up(){
