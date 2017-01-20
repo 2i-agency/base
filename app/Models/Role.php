@@ -25,7 +25,7 @@ class Role extends Model
 	 * Возможности
 	 */
 	public function abilities() {
-		return $this->morphToMany(Ability::class, 'base_abilities_agents');
+		return $this->morphToMany(Ability::class, 'model', 'base_abilities_roles_users');
 	}
 
 
@@ -45,7 +45,7 @@ class Role extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
 	public function users() {
-		return $this->belongsToMany(User::class, 'base_role_user');
+		return $this->belongsToMany(User::class, 'base_roles_users');
 	}
 
 

@@ -49,7 +49,7 @@ class Ability extends Model
 	 * @return mixed связь с моделью Role
 	 */
 	public function roles(){
-		return $this->morphedByMany(Role::class, 'base_abilities_agents');
+		return $this->morphedByMany(Role::class, 'base_abilities_roles_users');
 	}
 
 
@@ -59,6 +59,6 @@ class Ability extends Model
 	 * @return mixed связь с моделью User
 	 */
 	public function user(){
-		return $this->morphedByMany(User::class, 'base_abilities_agents');
+		return $this->morphedByMany(User::class, 'base_abilities_roles_users');
 	}
 }

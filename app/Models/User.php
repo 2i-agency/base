@@ -51,7 +51,7 @@ class User extends Authenticatable
 	 * Возможности
 	 */
 	public function abilities() {
-		return $this->morphToMany(Ability::class, 'base_abilities_agents');
+		return $this->morphToMany(Ability::class, 'base_abilities_roles_users');
 	}
 
 
@@ -104,7 +104,7 @@ class User extends Authenticatable
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
 	public function roles(){
-		return $this->belongsToMany(Role::class, 'base_role_user');
+		return $this->belongsToMany(Role::class, 'base_roles_users');
 	}
 
 
