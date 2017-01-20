@@ -21,6 +21,19 @@ class CreateBaseRoles extends Migration
 			/** Ключ */
 			Columns::id($table);
 
+			/** Ключ связанной модели роли или пользователя */
+			$table
+				->integer('model_id')
+				->unsigned()
+				->index()
+				->comment('Ключ связанной модели');
+
+			/** Тип связанной модели роли или пользователя */
+			$table
+				->string('model_type')
+				->index()
+				->comment('Тип связанной модели');
+
 			/** Ключ возможности */
 			$table
 				->string('ability_id')
