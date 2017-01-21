@@ -32,8 +32,10 @@ class NoticeController extends Controller
 			->get([ 'id', 'name' ]);
 
 		/** @var Notice $notices Уведомления */
-		$notices = Notice
-			::orderBy('is_read')
+		$notices = $request
+			->user()
+			->notices()
+			->orderBy('is_read')
 			->latest()
 			->where(function(Builder $query) use ($notices_types){
 				$query
@@ -109,9 +111,14 @@ class NoticeController extends Controller
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function destroy(Notice $notice){
+	public function destroy(Request $request, Notice $notice){
 		$this->authorize('notices.edit');
-		$notice->delete();
+
+		$notice->users()->detach($request->user()->id);
+		if (!$notice->users()->count()) {
+			$notice->delete();
+		}
+
 		flash()->warning('Уведомление <b>№' . $notice->id . '</b> удалено');
 
 		return back();

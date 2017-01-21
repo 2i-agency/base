@@ -57,6 +57,11 @@ class User extends Authenticatable
 	}
 
 
+	public function notices() {
+		return $this->belongsToMany(Notice::class, 'base_notices_users');
+	}
+
+
 	/**
 	 * Хеширование пароля
 	 *
@@ -154,11 +159,11 @@ class User extends Authenticatable
 	 * @return bool
 	 */
 	public function isAdmin() {
-		foreach ($this->roles()->get([ 'id' ]) as $role) {
-			if ($role->isAdmin()) {
-				return true;
-			}
-		}
+//		foreach ($this->roles()->get([ 'id' ]) as $role) {
+//			if ($role->isAdmin()) {
+//				return true;
+//			}
+//		}
 
 		return false;
 	}
