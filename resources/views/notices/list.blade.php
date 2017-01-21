@@ -176,7 +176,7 @@
 										{{--Кнопка удаления--}}
 										@include('base::utils.buttons.delete', [
 											'size' => 'xs',
-											'url' => route('notices.destroy', ['notice' => $notice])
+											'url' => route('admin.notices.destroy', ['notice' => $notice])
 										])
 
 									</form>

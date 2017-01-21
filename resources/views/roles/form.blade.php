@@ -111,7 +111,7 @@
 					<div class="panel-footer">
 						@if ($role->exists)
 							@include('base::utils.buttons.save')
-							@include('base::utils.buttons.delete', ['url' => route('roles.destroy', $role)])
+							@include('base::utils.buttons.delete', ['url' => route('admin.roles.destroy', $role)])
 						@else
 							@include('base::utils.buttons.add')
 						@endif
