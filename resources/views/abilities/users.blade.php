@@ -1,28 +1,25 @@
 {{--Переключатели возможностей для пользователей--}}
 <div class="form-group">
 	<label>Пользователи:</label>
-	<div class="btn-group w100percent" data-toggle="buttons">
+	<select class="form-control" name="abilities[languages]">
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'users',
-			'icon'          => 'ban',
-			'is_checked'    => !$role->hasAccess('users'),
+			'is_selected'    => !$role->hasAccess('users'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'users.view',
-			'icon'          => 'eye',
-			'is_checked'    => $role->hasAbility('users.view'),
+			'is_selected'    => $role->hasAbility('users.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'users.edit',
-			'icon'          => 'pencil',
-			'is_checked'    => $role->hasAbility('users.edit'),
+			'is_selected'    => $role->hasAbility('users.edit'),
 		])
 
-	</div>
+	</select>
 </div>

@@ -1,28 +1,25 @@
 {{--Переключатели возможностей для типов уведомлений--}}
 <div class="form-group">
 	<label>Типы уведомлений:</label>
-	<div class="btn-group w100percent" data-toggle="buttons">
+	<select class="form-control" name="abilities[notices-types]">
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'notices-types',
-			'icon'          => 'ban',
-			'is_checked'    => !$role->hasAccess('notices-types'),
+			'is_selected'    => !$role->hasAccess('notices-types'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'notices-types.view',
-			'icon'          => 'eye',
-			'is_checked'    => $role->hasAbility('notices-types.view'),
+			'is_selected'    => $role->hasAbility('notices-types.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'     => 'Правка',
 			'ability'   => 'notices-types.edit',
-			'icon'      => 'pencil',
-			'is_checked'    => $role->hasAbility('notices-types.edit'),
+			'is_selected'    => $role->hasAbility('notices-types.edit'),
 		])
 
-	</div>
+	</select>
 </div>

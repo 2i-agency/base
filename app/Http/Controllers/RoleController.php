@@ -56,15 +56,15 @@ class RoleController extends Controller
 		$notices_types = NoticesType::orderBy('name')->get([ 'id', 'name' ]);
 
 		/** Представления возможностей */
-		$abilities_views = [];
+		$packages_abilities_views = [];
 
-		foreach (app()[ 'Packages' ]->getPackages() as $package) {
-			$abilities_views = array_merge($abilities_views, $package->getAbilitiesViews());
+		foreach (app()[ 'Packages' ]->getPackages() as $key => $package) {
+			$packages_abilities_views[$key] = array_merge($packages_abilities_views, $package->getAbilitiesViews());
 		}
 
 		return view(
 			'base::roles.form',
-			compact('role', '_roles', 'abilities_views', 'notices_types')
+			compact('role', '_roles', 'packages_abilities_views', 'notices_types')
 		);
 	}
 

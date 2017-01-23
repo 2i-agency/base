@@ -1,7 +1,7 @@
 @extends('base::template')
 
 
-@section('page.title', 'Роли')
+@section('page.title', 'Доступ')
 
 
 @section('page.content')
@@ -42,7 +42,6 @@
 			{{--Форма--}}
 			<form
 				method="POST"
-				class="panel panel-default"
 				action="{{ route('admin.roles.' . ($role->exists ? 'update' : 'store'), $role) }}"
 			>
 				{!! csrf_field() !!}
@@ -50,65 +49,62 @@
 					{!! method_field('PUT') !!}
 				@endif
 
-				<div class="panel-heading">
-					<h4 class="panel-title">Данные роли</h4>
-				</div>
-
-				<div class="list-group">
-
 					{{--Название--}}
-					<div class="list-group-item">
-						<div class="form-group">
-							<label>Название:</label>
-							@can('roles.edit')
-								<input
-									type="text"
-									name="name"
-									class="form-control"
-									autocomplete="off"
-									autofocus
-									required
-									value="{{ old('name') ?: ($role->exists ? $role->name : NULL) }}"
-								>
-							@else
-								<p class="form-control-static">{{ $role->name }}</p>
-							@endcan
-						</div>
+					<div class="form-group">
+						<label>Название:</label>
+						@can('roles.edit')
+							<input
+								type="text"
+								name="name"
+								class="form-control"
+								autocomplete="off"
+								autofocus
+								required
+								value="{{ old('name') ?: ($role->exists ? $role->name : NULL) }}"
+							>
+						@else
+							<p class="form-control-static">{{ $role->name }}</p>
+						@endcan
 					</div>
 
-					{{--Настройка возможностей--}}
-					@if (count($abilities_views))
-						<div class="list-group-item">
-							@foreach($abilities_views as $ability_view)
-								@include($ability_view)
-							@endforeach
-						</div>
-					@endif
+				{{--Настройка возможностей--}}
+				@if (count($packages_abilities_views))
+					<div class="list-group">
+						@foreach($packages_abilities_views as $abilities_views)
+							<div class="list-group-item">
+								@foreach($abilities_views as $ability_view)
+									@include($ability_view)
+								@endforeach
+							</div>
+						@endforeach
+					</div>
+				@endif
 
 					{{--Уведомления--}}
 					@if ($notices_types->count())
-						<div class="list-group-item">
-							<label>Получает уведомления:</label>
-							<div>
-								@foreach($notices_types as $notices_type)
-									<label class="checkbox-inline">
-										<input
-											type="checkbox"
-											name="notices_types[]"
-											value="{{ $notices_type->id }}"
-										    {{ $notices_type->roles()->find($role->id) ? ' checked' : NULL }}
-										>{{ $notices_type->name }}
-									</label>
-								@endforeach
+						<div class="list-group">
+							<div class="list-group-item">
+								<label>Получает уведомления:</label>
+								<div>
+									@foreach($notices_types as $notices_type)
+										<label class="checkbox-inline">
+											<input
+												type="checkbox"
+												name="notices_types[]"
+												value="{{ $notices_type->id }}"
+											    {{ $notices_type->roles()->find($role->id) ? ' checked' : NULL }}
+											>{{ $notices_type->name }}
+										</label>
+									@endforeach
+								</div>
 							</div>
 						</div>
 					@endif
 
-				</div>
 
 				{{--Кнопки сохранения и удаления--}}
 				@can('roles.edit')
-					<div class="panel-footer">
+					<div>
 						@if ($role->exists)
 							@include('base::utils.buttons.save')
 							@include('base::utils.buttons.delete', ['url' => route('admin.roles.destroy', $role)])

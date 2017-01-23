@@ -48,7 +48,7 @@ return [
 					'policy' => 'users.view'
 				],
 				[
-					'name'   => 'Роли',
+					'name'   => 'Доступ',
 					'icon'   => 'star',
 					'route'  => 'admin.roles',
 					'policy' => 'roles.view'

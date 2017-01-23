@@ -1,28 +1,25 @@
 {{--Переключатели возможностей для перенаправлений--}}
 <div class="form-group">
 	<label>Перенаправления:</label>
-	<div class="btn-group w100percent" data-toggle="buttons">
+	<select class="form-control" name="abilities[redirects]">
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'redirects',
-			'icon'          => 'ban',
-			'is_checked'    => !$role->hasAccess('redirects'),
+			'is_selected'    => !$role->hasAccess('redirects'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'redirects.view',
-			'icon'          => 'eye',
-			'is_checked'    => $role->hasAbility('redirects.view'),
+			'is_selected'    => $role->hasAbility('redirects.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'redirects.edit',
-			'icon'          => 'pencil',
-			'is_checked'    => $role->hasAbility('redirects.edit'),
+			'is_selected'    => $role->hasAbility('redirects.edit'),
 		])
 
-	</div>
+	</select>
 </div>

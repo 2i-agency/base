@@ -1,21 +1,20 @@
 {{--Переключатели возможностей для уведомлений--}}
+
 <div class="form-group">
 	<label>Уведомления:</label>
-	<div class="btn-group w100percent" data-toggle="buttons">
+	<select class="form-control" name="abilities[notices]">
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'notices',
-			'is_checked'    => !$role->hasAbility('notices.edit'),
-			'icon'          => 'eye'
+			'is_selected'    => !$role->hasAbility('notices.edit'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'notices.edit',
-			'is_checked'    => $role->hasAbility('notices.edit'),
-			'icon'          => 'pencil'
+			'is_selected'    => $role->hasAbility('notices.edit'),
 		])
 
-	</div>
+	</select>
 </div>

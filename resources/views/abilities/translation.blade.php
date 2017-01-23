@@ -1,28 +1,25 @@
 {{--Переключатели возможностей для перевода интерфейсов--}}
 <div class="form-group">
 	<label>Перевод интерфейса:</label>
-	<div class="btn-group w100percent" data-toggle="buttons">
+	<select class="form-control" name="abilities[languages]">
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'translation',
-			'icon'          => 'ban',
-			'is_checked'    => !$role->hasAccess('translation'),
+			'is_selected'    => !$role->hasAccess('translation'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'translation.view',
-			'icon'          => 'eye',
-			'is_checked'    => $role->hasAbility('translation.view'),
+			'is_selected'    => $role->hasAbility('translation.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'translation.edit',
-			'icon'          => 'pencil',
-			'is_checked'    => $role->hasAbility('translation.edit'),
+			'is_selected'    => $role->hasAbility('translation.edit'),
 		])
 
-	</div>
+	</select>
 </div>
