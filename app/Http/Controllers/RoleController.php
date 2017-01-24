@@ -52,6 +52,8 @@ class RoleController extends Controller
 		/** Коллекция ролей */
 		$_roles = Role::orderBy('name')->get([ 'id', 'name' ]);
 
+		$agent = $role;
+
 		/** Коллекция типов уведомлений */
 		$notices_types = NoticesType::orderBy('name')->get([ 'id', 'name' ]);
 
@@ -64,7 +66,7 @@ class RoleController extends Controller
 
 		return view(
 			'base::roles.form',
-			compact('role', '_roles', 'packages_abilities_views', 'notices_types')
+			compact('role', 'agent', '_roles', 'packages_abilities_views', 'notices_types')
 		);
 	}
 

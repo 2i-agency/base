@@ -39,7 +39,7 @@ class CheckAuth
 		if (Auth::guest()) {
 			return $this->responses($request, 'Unauthorized', 401);
 		} /** Если у пользователя нет прав */
-		elseif (!Auth::user()->is_admin_access) {
+		elseif (!Auth::user()->isAdmin()) {
 			return $this->responses($request, 'Forbidden', 403);
 		} /** Регистрация запроса пользователя */
 		else {

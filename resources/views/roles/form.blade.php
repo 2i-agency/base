@@ -49,23 +49,23 @@
 					{!! method_field('PUT') !!}
 				@endif
 
-					{{--Название--}}
-					<div class="form-group">
-						<label>Название:</label>
-						@can('roles.edit')
-							<input
-								type="text"
-								name="name"
-								class="form-control"
-								autocomplete="off"
-								autofocus
-								required
-								value="{{ old('name') ?: ($role->exists ? $role->name : NULL) }}"
-							>
-						@else
-							<p class="form-control-static">{{ $role->name }}</p>
-						@endcan
-					</div>
+				{{--Название--}}
+				<div class="form-group">
+					<label>Название:</label>
+					@can('roles.edit')
+						<input
+							type="text"
+							name="name"
+							class="form-control"
+							autocomplete="off"
+							autofocus
+							required
+							value="{{ old('name') ?: ($role->exists ? $role->name : NULL) }}"
+						>
+					@else
+						<p class="form-control-static">{{ $role->name }}</p>
+					@endcan
+				</div>
 
 				{{--Настройка возможностей--}}
 				@if (count($packages_abilities_views))
@@ -80,26 +80,26 @@
 					</div>
 				@endif
 
-					{{--Уведомления--}}
-					@if ($notices_types->count())
-						<div class="list-group">
-							<div class="list-group-item">
-								<label>Получает уведомления:</label>
-								<div>
-									@foreach($notices_types as $notices_type)
-										<label class="checkbox-inline">
-											<input
-												type="checkbox"
-												name="notices_types[]"
-												value="{{ $notices_type->id }}"
-											    {{ $notices_type->roles()->find($role->id) ? ' checked' : NULL }}
-											>{{ $notices_type->name }}
-										</label>
-									@endforeach
-								</div>
+				{{--Уведомления--}}
+				@if ($notices_types->count())
+					<div class="list-group">
+						<div class="list-group-item">
+							<label>Получает уведомления:</label>
+							<div>
+								@foreach($notices_types as $notices_type)
+									<label class="checkbox-inline">
+										<input
+											type="checkbox"
+											name="notices_types[]"
+											value="{{ $notices_type->id }}"
+										    {{ $notices_type->roles()->find($role->id) ? ' checked' : NULL }}
+										>{{ $notices_type->name }}
+									</label>
+								@endforeach
 							</div>
 						</div>
-					@endif
+					</div>
+				@endif
 
 
 				{{--Кнопки сохранения и удаления--}}

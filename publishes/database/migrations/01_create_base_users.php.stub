@@ -60,7 +60,7 @@ class CreateBaseUsers extends Migration
 
 			/** Доступ в админ-панель */
 			$table
-				->boolean('is_admin_access')
+				->boolean('is_admin')
 				->comment('Доступ в админ-панель');
 
 			/** Ключи создателя и обновителя */

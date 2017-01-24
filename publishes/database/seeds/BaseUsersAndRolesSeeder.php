@@ -38,12 +38,12 @@ class BaseUsersAndRolesSeeder extends Seeder
 
 		if (!$user) {
 			$user = User::create([
-				'login'           => $login,
-				'password'        => '000000',
-				'email'           => 'mail@' . host(),
-				'name'            => 'Администратор',
-				'is_subscribed'   => true,
-				'is_admin_access' => true
+				'login'         => $login,
+				'password'      => '000000',
+				'email'         => 'mail@' . host(),
+				'name'          => 'Администратор',
+				'is_subscribed' => true,
+				'is_admin'      => true
 			]);
 		}
 

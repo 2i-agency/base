@@ -39,12 +39,20 @@ class NoticesType extends Model
 
 
 	/**
-	 * Роли
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
 	 */
-	public function roles(){
-		return $this->belongsToMany(Role::class, 'base_notices_type_role');
+	public function roles()
+	{
+		return $this->morphedByMany(Role::class, 'model', 'base_notices_type_role_user');
+	}
+
+
+	/**
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+	 */
+	public function users()
+	{
+		return $this->morphedByMany(User::class, 'model', 'base_notices_type_role_user');
 	}
 
 

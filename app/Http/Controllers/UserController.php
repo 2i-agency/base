@@ -2,12 +2,17 @@
 
 namespace Chunker\Base\Http\Controllers;
 
+use Chunker\Base\Http\Controllers\Traits\AbilitiesLists;
+use Chunker\Base\Models\NoticesType;
+use Chunker\Base\Models\Role;
 use Chunker\Base\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+	use AbilitiesLists;
+
 	/** @var array массив правил для валидации */
 	protected $rules = [
 		'login'    => 'required|alpha_dash|max:20|unique:base_users,login',
@@ -71,7 +76,8 @@ class UserController extends Controller
 			'email',
 			'name',
 			'is_subscribed',
-			'is_blocked'
+			'is_blocked',
+			'is_admin'
 		]));
 
 		/** Сохранение связей */
@@ -121,7 +127,8 @@ class UserController extends Controller
 			'email',
 			'name',
 			'is_subscribed',
-			'is_blocked'
+			'is_blocked',
+			'is_admin'
 		]);
 		$data[ 'is_blocked' ] = $user->isCanBeBlocked() ? $data[ 'is_blocked' ] : false;
 
@@ -156,5 +163,73 @@ class UserController extends Controller
 			'base::users.authentications',
 			compact('user', 'authentications')
 		);
+	}
+
+
+
+	public function abilities(User $user){
+		$this->authorize('users.view', $user);
+
+		/** Если пользователь не может редактировать, то и создавать не может */
+		if (false) {
+			return redirect()->route('admin.roles', Role::orderBy('name')->first());
+		}
+
+		$agent = $user;
+
+		/** Коллекция ролей */
+		$_roles = Role::orderBy('name')->get([ 'id', 'name' ]);
+
+		/** Коллекция типов уведомлений */
+		$notices_types = NoticesType::orderBy('name')->get([ 'id', 'name' ]);
+
+		/** Представления возможностей */
+		$packages_abilities_views = [];
+
+		foreach (app()[ 'Packages' ]->getPackages() as $key => $package) {
+			$packages_abilities_views[$key] = array_merge($packages_abilities_views, $package->getAbilitiesViews());
+		}
+
+		return view(
+			'base::users.abilities',
+			compact('user', 'agent', '_roles', 'packages_abilities_views', 'notices_types')
+		);
+
+	}
+
+
+	/**
+	 * Обновление возможностей пользователя
+	 *
+	 * @param Request $request
+	 * @param User    $user
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function updateAbilities(Request $request, User $user){
+		$this->authorize('users.edit', $user);
+
+		if ($request->has('abilities')) {
+			$abilities = [];
+
+			/** Сбор в массив возможностей, которые разрешены пользователю */
+			foreach ($request->get('abilities') as $namespace => $ability) {
+				if ($ability && \Auth::user()->hasAdminAccess($namespace . '.edit')) {
+					$abilities[] = $ability;
+				}
+			}
+
+			/** Синхронизация возможностей с пользователем */
+			$user->abilities()->sync($abilities);
+		}
+
+		/** Сохранение связей */
+		$user->roles()->sync($request->get('roles', []));
+
+		$user->noticesTypes()->sync($request->get('notices_types', []));
+
+		flash()->success('Изменения сохранены');
+
+		return back();
 	}
 }

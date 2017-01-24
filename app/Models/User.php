@@ -32,7 +32,7 @@ class User extends Authenticatable
 		'name',
 		'is_subscribed',
 		'is_blocked',
-		'is_admin_access'
+		'is_admin'
 	];
 
 	/** @var array поля, которые должны быть скрыты при преобразовании модели в массив */
@@ -43,9 +43,9 @@ class User extends Authenticatable
 
 	/** @var array поля для мутаторов */
 	protected $casts = [
-		'is_subscribed'   => 'boolean',
-		'is_blocked'      => true,
-		'is_admin_access' => true
+		'is_subscribed' => 'boolean',
+		'is_blocked'    => true,
+		'is_admin'      => false
 	];
 
 
@@ -53,12 +53,22 @@ class User extends Authenticatable
 	 * Возможности
 	 */
 	public function abilities() {
-		return $this->morphToMany(Ability::class, 'base_abilities_roles_users');
+		return $this->morphToMany(Ability::class, 'model', 'base_abilities_roles_users');
 	}
 
 
 	public function notices() {
 		return $this->belongsToMany(Notice::class, 'base_notices_users');
+	}
+
+
+	/**
+	 * Типы уведомлений
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+	 */
+	public function noticesTypes() {
+		return $this->morphToMany(NoticesType::class, 'model', 'base_notices_type_role_user');
 	}
 
 
@@ -82,6 +92,17 @@ class User extends Authenticatable
 	 */
 	public function getName() {
 		return is_null($this->name) ? $this->login : $this->name;
+	}
+
+
+	/**
+	 * Можно ли сменить доступ в админ-центр (пользователь не может отключить сам себя)
+	 * Алиас для метода isCanBeBlocked.
+	 *
+	 * @return bool
+	 */
+	public function isCanBeAdminChanged() {
+		return $this->isCanBeBlocked();
 	}
 
 
@@ -123,9 +144,17 @@ class User extends Authenticatable
 	 * @return bool
 	 */
 	public function hasAccess($abilityNamespace) {
-		foreach ($this->roles()->get([ 'id' ]) as $role) {
-			if ($role->hasAccess($abilityNamespace)) {
-				return true;
+		if ($this
+			->abilities()
+			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
+			->count()
+		) {
+			return true;
+		} else {
+			foreach ($this->roles()->get([ 'id' ]) as $role) {
+				if ($role->hasAccess($abilityNamespace)) {
+					return true;
+				}
 			}
 		}
 
@@ -140,9 +169,54 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function hasAbility($ability) {
-		foreach ($this->roles()->get([ 'id' ]) as $role) {
-			if ($role->hasAbility($ability)) {
+	public function hasAbility($abilities) {
+
+		if (!is_array($abilities)) {
+			$abilities = [ $abilities ];
+		}
+
+		if ($this
+			->abilities()
+			->whereIn('id', $abilities)
+			->count()
+		) {
+			return true;
+		} else {
+			foreach ($abilities as $ability) {
+				if ($this->hasAccess($ability)) {
+					return false;
+				}
+			}
+			foreach ($this->roles()->get([ 'id' ]) as $role) {
+				if ($role->hasAbility($abilities)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+
+	/**
+	 * Определение административных прав доступа
+	 *
+	 * @param string $abilities возможность
+	 *
+	 * @return bool
+	 */
+	public function hasAdminAccess($abilities) {
+
+		if ($this->id == 1) {
+			return true;
+		}
+
+		if (!is_array($abilities)) {
+			$abilities = [ $abilities ];
+		}
+
+		foreach ($abilities as $ability) {
+			if ($this->hasAbility(Ability::detectNamespace($ability) . '.edit')) {
 				return true;
 			}
 		}
@@ -154,17 +228,9 @@ class User extends Authenticatable
 	/**
 	 * Проверка статуса администратора
 	 *
-	 * @todo переделать в соответствии с новой логикой работы
-	 *
 	 * @return bool
 	 */
 	public function isAdmin() {
-//		foreach ($this->roles()->get([ 'id' ]) as $role) {
-//			if ($role->isAdmin()) {
-//				return true;
-//			}
-//		}
-
-		return false;
+		return $this->id == 1 || $this->is_admin;
 	}
 }

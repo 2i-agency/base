@@ -26,7 +26,7 @@ class AuthenticationController extends Controller
 		$user = Auth::getProvider()->retrieveByCredentials($credentials);
 
 		/** Успешная аутентификация */
-		if ($user->is_admin_access && !$user->is_blocked && Auth::attempt($credentials, $request->has('remember'))) {
+		if ($user->isAdmin() && !$user->is_blocked && Auth::attempt($credentials, $request->has('remember'))) {
 			event(new UserLoggedIn($user, false));
 
 			return back();
@@ -34,7 +34,7 @@ class AuthenticationController extends Controller
 		else {
 			event(new UserLoggedIn($user, true));
 
-			if (!$user->is_admin_access) {
+			if (!$user->isAdmin()) {
 				flash()->error('Недостаточно прав');
 			} elseif ($user->is_blocked) {
 				flash()->error('Учетная запись <b>' . $user->login . '</b> заблокирована');

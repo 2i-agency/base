@@ -1,24 +1,28 @@
 {{--Переключатели возможностей для перенаправлений--}}
 <div class="form-group">
 	<label>Перенаправления:</label>
-	<select class="form-control" name="abilities[redirects]">
+	<select
+		class="form-control"
+		name="abilities[redirects]"
+		{{ \Auth::user()->hasAdminAccess('redirects') ? NULL : 'disabled' }}
+	>
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'redirects',
-			'is_selected'    => !$role->hasAccess('redirects'),
+			'is_selected'    => !$agent->hasAccess('redirects'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'redirects.view',
-			'is_selected'    => $role->hasAbility('redirects.view'),
+			'is_selected'    => $agent->hasAbility('redirects.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'redirects.edit',
-			'is_selected'    => $role->hasAbility('redirects.edit'),
+			'is_selected'    => $agent->hasAbility('redirects.edit'),
 		])
 
 	</select>

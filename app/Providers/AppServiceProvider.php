@@ -110,7 +110,7 @@ class AppServiceProvider extends ServiceProvider
 
 		/** Регистрация композеров представлений */
 		view()->composer('base::template', LanguagesComposer::class);
-		view()->composer('base::users._form', RolesComposer::class);
+		view()->composer('base::users.abilities', RolesComposer::class);
 
 		/** Публикация необходимых файлов */
 		$path = static::ROOT . '/publishes/';

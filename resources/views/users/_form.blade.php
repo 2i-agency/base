@@ -116,23 +116,28 @@
 		</div>
 	</div>
 
-	{{--Роли--}}
+	{{--Заблокирован--}}
 	<div class="form-group">
-		<label>Роли:</label>
+		<label>Доступ в админ-центр:</label>
 		<div>
-			@foreach ($_roles as $_role)
-				<label class="checkbox-inline">
-					<input
-						type="checkbox"
-						name="roles[]"
-						value="{{ $_role->id }}"
-						@if ((isset($user) && $user->isRelatedWith('roles', $_role)) || (array_search($_role->id, old('roles', [])) !== false))
-							checked
-						@endif
-					>
-					{{ $_role->name}}
-				</label>
-			@endforeach
+			<label class="radio-inline">
+				<input
+					type="radio"
+					name="is_admin"
+					value="1"
+					{{ isset($user) && $user->is_admin ? ' checked' : NULL }}
+					{{ isset($user) && !$user->isCanBeAdminChanged() ? ' disabled' : NULL }}
+				>Да
+			</label>
+			<label class="radio-inline">
+				<input
+					type="radio"
+					name="is_admin"
+					value="0"
+					{{ !isset($user) || !$user->is_admin ? ' checked' : NULL }}
+					{{ isset($user) && !$user->isCanBeAdminChanged() ? ' disabled' : NULL }}
+				>Нет
+			</label>
 		</div>
 	</div>
 

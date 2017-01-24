@@ -78,6 +78,22 @@ Route::group([
 			'as'   => 'admin.users.authentications'
 		]);
 
+		/**
+		 * Страница со списком возможностей
+		 */
+		Route::get('abilities', [
+			'uses' => 'UserController@abilities',
+			'as'   => 'admin.users.abilities'
+		]);
+
+		/**
+		 * Страница со списком возможностей
+		 */
+		Route::put('update-abilities', [
+			'uses' => 'UserController@updateAbilities',
+			'as'   => 'admin.users.update-abilities'
+		]);
+
 	});
 
 });
