@@ -4,6 +4,7 @@ namespace Chunker\Base\Models;
 
 use Chunker\Base\Models\Traits\IsRelatedWith;
 use Chunker\Base\Models\Traits\Nullable;
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
@@ -195,6 +196,14 @@ class User extends Authenticatable
 		}
 
 		return false;
+	}
+
+
+	public function can($ability, $arguments = []) {
+		return
+			$this->id == 1
+			|| $this->hasAdminAccess($ability)
+			|| app(Gate::class)->forUser($this)->check($ability, $arguments);
 	}
 
 

@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Providers;
 
+use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
 use Chunker\Base\Providers\Traits\Migrator;
@@ -15,6 +16,7 @@ use Chunker\Base\Commands\Seed;
 use Chunker\Base\Models\User;
 use Chunker\Base\ViewComposers\LanguagesComposer;
 use Chunker\Base\ViewComposers\RolesComposer;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -147,6 +149,13 @@ class AppServiceProvider extends ServiceProvider
 		foreach (glob(self::ROOT . '/app/Helpers/*.php') as $filename) {
 			require_once $filename;
 		}
+
+		/** Регистрация кастомного Gate */
+		$this->app->singleton(GateContract::class, function ($app) {
+			return new Gate($app, function () use ($app) {
+				return call_user_func($app['auth']->userResolver());
+			});
+		});
 
 		/** Регистрация команд */
 		$this->commands([
