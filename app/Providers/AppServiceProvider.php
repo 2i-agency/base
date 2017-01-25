@@ -84,6 +84,10 @@ class AppServiceProvider extends ServiceProvider
 		/** Локализация */
 		$this->app->setLocale('ru');
 
+		/** Заменяем стандартный класс Gate */
+		config([ 'app.aliases.Gate' => Gate::class ]);
+
+
 		/**
 		 * Применение настройек электронной почты
 		 *
@@ -151,9 +155,9 @@ class AppServiceProvider extends ServiceProvider
 		}
 
 		/** Регистрация кастомного Gate */
-		$this->app->singleton(GateContract::class, function ($app) {
-			return new Gate($app, function () use ($app) {
-				return call_user_func($app['auth']->userResolver());
+		$this->app->singleton(GateContract::class, function($app) {
+			return new Gate($app, function() use ($app) {
+				return call_user_func($app[ 'auth' ]->userResolver());
 			});
 		});
 
