@@ -17,6 +17,7 @@ use Chunker\Base\Models\User;
 use Chunker\Base\ViewComposers\LanguagesComposer;
 use Chunker\Base\ViewComposers\RolesComposer;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use zedisdog\LaravelSchemaExtend\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -86,6 +87,8 @@ class AppServiceProvider extends ServiceProvider
 
 		/** Заменяем стандартный класс Gate */
 		config([ 'app.aliases.Gate' => Gate::class ]);
+		/** Заменяем стандартый класс Schema */
+		config([ 'app.aliases.Schema' => Schema::class ]);
 
 
 		/**
