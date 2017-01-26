@@ -74,6 +74,26 @@ class User extends Authenticatable
 
 
 	/**
+	 * Аутентификации
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function authentications() {
+		return $this->hasMany(Authentication::class);
+	}
+
+
+	/**
+	 * Роли
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function roles() {
+		return $this->belongsToMany(Role::class, 'base_roles_users');
+	}
+
+
+	/**
 	 * Хеширование пароля
 	 *
 	 * @param string $password
@@ -118,40 +138,22 @@ class User extends Authenticatable
 
 
 	/**
-	 * Аутентификации
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
-	 */
-	public function authentications() {
-		return $this->hasMany(Authentication::class);
-	}
-
-
-	/**
-	 * Роли
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-	 */
-	public function roles() {
-		return $this->belongsToMany(Role::class, 'base_roles_users');
-	}
-
-
-	/**
 	 * Проверка доступа
 	 *
 	 * @param string $abilityNamespace пространство имён возможности
 	 *
 	 * @return bool
 	 */
-	public function hasAccess($abilityNamespace) {
-		if ($this
+	public function hasAccess($abilityNamespace, $without_role = false) {
+		if (
+		$this
 			->abilities()
 			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
 			->count()
 		) {
+			/** Если есть связь хотя бы с одной возможностью из пространства имён */
 			return true;
-		} else {
+		} elseif(!$without_role) {
 			foreach ($this->roles()->get([ 'id' ]) as $role) {
 				if ($role->hasAccess($abilityNamespace)) {
 					return true;
@@ -166,30 +168,39 @@ class User extends Authenticatable
 	/**
 	 * Проверка наличия возможности
 	 *
-	 * @param string $ability возможности
+	 * @param array|string $ability возможности
 	 *
 	 * @return bool
 	 */
-	public function hasAbility($abilities) {
-
-		if (!is_array($abilities)) {
-			$abilities = [ $abilities ];
-		}
+	public function hasAbility($ability) {
 
 		if ($this
 			->abilities()
-			->whereIn('id', $abilities)
+			->where('id', $ability)
 			->count()
 		) {
 			return true;
 		} else {
-			foreach ($abilities as $ability) {
-				if ($this->hasAccess($ability)) {
-					return false;
+
+			/** Если есть связи с другими возможностями из этого пространства имён */
+			if ($this->hasAccess($ability, true)) {
+				foreach ($this->abilities()->get([ 'id' ]) as $value) {
+
+					if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
+
+						if (Ability::getPriority($value, $ability)) {
+							return true;
+						}
+
+					}
 				}
+
+				return false;
 			}
+
 			foreach ($this->roles()->get([ 'id' ]) as $role) {
-				if ($role->hasAbility($abilities)) {
+
+				if ($role->hasAbility($ability)) {
 					return true;
 				}
 			}
@@ -199,6 +210,14 @@ class User extends Authenticatable
 	}
 
 
+	/**
+	 * Переопределил стандартную функцию модели
+	 *
+	 * @param string $ability
+	 * @param array  $arguments
+	 *
+	 * @return bool
+	 */
 	public function can($ability, $arguments = []) {
 		return
 			$this->id == 1
@@ -210,7 +229,7 @@ class User extends Authenticatable
 	/**
 	 * Определение административных прав доступа
 	 *
-	 * @param string $abilities возможность
+	 * @param array|string $abilities возможность
 	 *
 	 * @return bool
 	 */
@@ -225,7 +244,8 @@ class User extends Authenticatable
 		}
 
 		foreach ($abilities as $ability) {
-			if ($this->hasAbility(Ability::detectNamespace($ability) . '.edit')) {
+
+			if ($this->hasAbility(Ability::detectNamespace($ability) . Ability::getAdminPostfix($ability, true))) {
 				return true;
 			}
 		}
