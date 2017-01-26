@@ -22,14 +22,70 @@ class Ability extends Model
 
 
 	/**
+	 * Возвращает массив действий, доступных для возможности
+	 *
+	 * @param string $ability возможность
+	 *
+	 * @return array массив возможностей
+	 */
+	public static function getPostfixes($ability) {
+		list($abilities) = array_divide(app('Packages')->getAbilities());
+		$postfixes = [];
+
+		foreach ($abilities as $package_ability) {
+			if (self::detectNamespace($package_ability) == self::detectNamespace($ability)) {
+				$postfixes[] = array_last(explode('.', $package_ability));
+			}
+		}
+
+		return $postfixes;
+	}
+
+
+	/**
+	 * Возвращает постфикс возможности администрирования
+	 *
+	 * @param bool $with_dot указывает необходимость добавить перед постфиксом точку
+	 *
+	 * @return string
+	 */
+	public static function getAdminPostfix($ability, $with_dot) {
+		$admin_postfix = array_first(self::getPostfixes($ability));
+		if ($with_dot) {
+			return '.' . $admin_postfix;
+		} else {
+			return $admin_postfix;
+		}
+	}
+
+
+	/**
+	 * Сравнивает приоритет возможностей
+	 *
+	 * @param string $needle возможность, которую необходимо проверить
+	 * @param string $ability возможность, с которой нужно сравнить
+	 *
+	 * @return bool
+	 */
+	public static function getPriority($needle, $ability) {
+		$needle_action = array_first(explode('.', $needle));
+		$ability_action = array_first(explode('.', $ability));
+		$actions = self::getPostfixes($ability);
+
+		return array_search($needle_action, $actions) <= array_search($ability_action, $actions);
+	}
+
+
+	/**
 	 * Определение пространства имен
 	 *
 	 * @param string $ability роль
 	 *
 	 * @return string название роли
 	 */
-	public static function detectNamespace($ability){
-		return explode('.', $ability)[ 0 ];
+	public static function detectNamespace($ability) {
+		$ability = array_last(explode('::', $ability));
+		return array_first(explode('.', $ability));
 	}
 
 
@@ -38,7 +94,7 @@ class Ability extends Model
 	 *
 	 * @return string
 	 */
-	public function getNamespace(){
+	public function getNamespace() {
 		return static::detectNamespace($this->id);
 	}
 
@@ -48,7 +104,7 @@ class Ability extends Model
 	 *
 	 * @return mixed связь с моделью Role
 	 */
-	public function roles(){
+	public function roles() {
 		return $this->morphedByMany(Role::class, 'base_abilities_roles_users');
 	}
 
@@ -58,7 +114,7 @@ class Ability extends Model
 	 *
 	 * @return mixed связь с моделью User
 	 */
-	public function user(){
+	public function user() {
 		return $this->morphedByMany(User::class, 'base_abilities_roles_users');
 	}
 }
