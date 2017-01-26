@@ -29,7 +29,7 @@ class Ability extends Model
 	 * @return array массив возможностей
 	 */
 	public static function getPostfixes($ability) {
-		list($abilities) = array_divide(app('Packages')->getAbilities());
+		$abilities = array_keys(app('Packages')->getAbilities());
 		$postfixes = [];
 
 		foreach ($abilities as $package_ability) {
