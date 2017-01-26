@@ -4,6 +4,7 @@ namespace Chunker\Base\Models;
 
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
+use Chunker\Base\Models\Traits\IsRelatedWith;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
-	use BelongsToEditors, Comparable;
+	use BelongsToEditors, Comparable, IsRelatedWith;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_roles';
