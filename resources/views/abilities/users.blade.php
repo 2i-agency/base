@@ -4,7 +4,7 @@
 	<select
 		class="form-control"
 		name="abilities[users]"
-		{{ \Auth::user()->hasAdminAccess('users') ? NULL : 'disabled' }}
+		{{ $disabled ? ' disabled' : NULL }}
 	>
 
 		@include('base::utils.ability-trigger', [

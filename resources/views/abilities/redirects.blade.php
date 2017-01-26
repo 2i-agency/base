@@ -4,7 +4,7 @@
 	<select
 		class="form-control"
 		name="abilities[redirects]"
-		{{ \Auth::user()->hasAdminAccess('redirects') ? NULL : 'disabled' }}
+		{{ $disabled ? ' disabled' : NULL }}
 	>
 
 		@include('base::utils.ability-trigger', [
