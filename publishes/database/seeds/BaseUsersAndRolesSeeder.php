@@ -12,7 +12,7 @@ class BaseUsersAndRolesSeeder extends Seeder
 {
 	public function run() {
 		/** Все доступные возможности */
-		$abilities = array_keys(app()[ 'Packages' ]->getAbilities());
+		$abilities = array_keys(app('Packages')->getAbilities());
 
 		/** Добавление роли администратора */
 		$role_name = 'Администратор';
