@@ -6,6 +6,7 @@ use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
 use Chunker\Base\Providers\Traits\Migrator;
+use Chunker\Base\ViewComposers\VisibleRoleUserComposer;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
@@ -72,6 +73,38 @@ class AppServiceProvider extends ServiceProvider
 				'BaseLanguagesSeeder',
 				'BaseSettingsSeeder',
 				'BaseUsersAndRolesSeeder'
+			])
+			->registerMenuItems([
+				'users' => [
+					'name'   => 'Пользователи',
+					'icon'   => 'users',
+					'route'  => 'admin.users',
+					'policy' => 'users.view'
+				],
+				'roles' => [
+					'name'   => 'Доступ',
+					'icon'   => 'star',
+					'route'  => 'admin.roles',
+					'policy' => 'roles.view'
+				],
+				'redirects' => [
+					'name'   => 'Перенаправления',
+					'icon'   => 'exchange',
+					'route'  => 'admin.redirects',
+					'policy' => 'redirects.view'
+				],
+				'notices-types' => [
+					'name'   => 'Типы уведомлений',
+					'icon'   => 'envelope',
+					'route'  => 'admin.notices-types',
+					'policy' => 'notices-types.view'
+				],
+				'settings' => [
+					'name'   => 'Настройки',
+					'icon'   => 'sliders',
+					'route'  => 'admin.settings',
+					'policy' => 'settings.view'
+				]
 			]);
 
 		/** Регистрация пакета */
@@ -120,6 +153,7 @@ class AppServiceProvider extends ServiceProvider
 		/** Регистрация композеров представлений */
 		view()->composer('base::template', LanguagesComposer::class);
 		view()->composer('base::users.abilities', RolesComposer::class);
+		view()->composer('base::users.list', VisibleRoleUserComposer::class);
 
 		/** Публикация необходимых файлов */
 		$path = static::ROOT . '/publishes/';

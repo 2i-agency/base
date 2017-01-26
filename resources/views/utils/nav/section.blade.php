@@ -6,8 +6,12 @@
 	foreach ($item['children'] as $child) {
 
 		/** Добавление дочернего элемента */
-		if (is_array($child))
+		if (is_array($child) || ($child != ''))
 		{
+			if (is_string($child)) {
+				$child = app('Packages')->getMenuItems()[$child];
+			}
+
 			if (!isset($child['policy']) || Auth::user()->can($child['policy'])) {
 				$children[] = $child;
 				$child_url = route($child['route']);

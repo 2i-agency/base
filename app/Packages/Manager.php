@@ -81,6 +81,20 @@ class Manager
 
 
 	/**
+	 * Получение массива с пунктами меню.
+	 * Если указан параметр $packageName,
+	 * возвращается пункты этого пакета или пакетов.
+	 *
+	 * @param string|array $packageName
+	 *
+	 * @return array
+	 */
+	public function getMenuItems($packageName = NULL){
+		return $this->collectDataFromPackages('menuItems', $packageName);
+	}
+
+
+	/**
 	 * Сбор данных из свойств объектов пакетов с помошью методов-геттеров
 	 *
 	 * @param string       $property

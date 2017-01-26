@@ -41,38 +41,13 @@ return [
 			'name'     => 'Система',
 			'icon'     => 'cogs',
 			'children' => [
-				[
-					'name'   => 'Пользователи',
-					'icon'   => 'users',
-					'route'  => 'admin.users',
-					'policy' => 'users.view'
-				],
-				[
-					'name'   => 'Доступ',
-					'icon'   => 'star',
-					'route'  => 'admin.roles',
-					'policy' => 'roles.view'
-				],
+				'users',
+				'roles',
 				'',
-				[
-					'name'   => 'Перенаправления',
-					'icon'   => 'exchange',
-					'route'  => 'admin.redirects',
-					'policy' => 'redirects.view'
-				],
+				'redirects',
 				'',
-				[
-					'name'   => 'Типы уведомлений',
-					'icon'   => 'envelope',
-					'route'  => 'admin.notices-types',
-					'policy' => 'notices-types.view'
-				],
-				[
-					'name'   => 'Настройки',
-					'icon'   => 'sliders',
-					'route'  => 'admin.settings',
-					'policy' => 'settings.view'
-				]
+				'notices-types',
+				'settings'
 			]
 		]
 	],
