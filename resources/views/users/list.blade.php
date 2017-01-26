@@ -18,7 +18,6 @@
 		</div>
 	@endcan
 
-
 	@if ($users->count())
 
 		{{--Список пользователей--}}
@@ -31,7 +30,7 @@
 					<th>Электропочта</th>
 					<th>Имя</th>
 					<th>Уведомления</th>
-					<th>Роли</th>
+					{{--<th>Роли</th>--}}
 					<th>Последняя авторизация</th>
 					<th class="w1px"></th>
 				</tr>
@@ -48,7 +47,14 @@
 									{{ $user->login }}
 								</td>
 							@else
-								<td>{{ $user->login }}</td>
+								<td>
+									{{ $user->login }}
+									@if ($user->roles()->count() && isset($_role_active) && $_role_active)
+										<p class="text-muted small">
+											{{ implode(', ', $user->roles->lists('name')->toArray()) }}
+										</p>
+									@endif
+								</td>
 							@endif
 
 							{{--Электронный адрес--}}
@@ -66,12 +72,6 @@
 								<td>Получает уведомления</td>
 							@else
 								<td>Не&nbsp;получает уведомления</td>
-							@endif
-
-							@if ($user->roles()->count())
-								<td>{{ implode(', ', $user->roles->lists('name')->toArray()) }}</td>
-							@else
-								<td class="text-muted">Нет ролей</td>
 							@endif
 
 							{{--Время последней авторизации--}}
