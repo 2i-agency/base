@@ -73,6 +73,7 @@
 						@foreach($packages_abilities_views as $abilities_views)
 							<div class="list-group-item">
 								@foreach($abilities_views as $ability_view)
+									@php($disabled = !\Auth::user()->hasAdminAccess([$ability_view, 'roles']))
 									@include($ability_view)
 								@endforeach
 							</div>
@@ -80,25 +81,38 @@
 					</div>
 				@endif
 
+
 				{{--Уведомления--}}
-				@if ($notices_types->count())
-					<div class="list-group">
-						<div class="list-group-item">
-							<label>Получает уведомления:</label>
-							<div>
-								@foreach($notices_types as $notices_type)
-									<label class="checkbox-inline">
-										<input
-											type="checkbox"
-											name="notices_types[]"
-											value="{{ $notices_type->id }}"
-										    {{ $notices_type->roles()->find($role->id) ? ' checked' : NULL }}
-										>{{ $notices_type->name }}
-									</label>
-								@endforeach
+				@if (isset($role) && $role->noticesTypes()->count() || \Auth::user()->hasAdminAccess('notices-types') )
+					@if($notices_types->count())
+						<div class="list-group">
+							<div class="list-group-item">
+								<label>Получает уведомления:</label>
+								<div>
+									@foreach($notices_types as $notices_type)
+										@php($checked =
+											(isset($role) && $role->isRelatedWith('noticesTypes', $notices_type))
+											|| in_array($notices_type->id, old('notices_types', []))
+										)
+										<label class="checkbox-inline">
+
+											@if(\Auth::user()->hasAdminAccess('roles'))
+												<input
+													type="checkbox"
+													name="notices_types[]"
+													value="{{ $notices_type->id }}"
+													{{ $notices_type->roles()->where('id', $role->id)->count() ? ' checked' : NULL }}
+												>{{ $notices_type->name }}
+											@elseif($checked)
+												{{ $notices_type->name }}
+											@endif
+
+										</label>
+									@endforeach
+								</div>
 							</div>
 						</div>
-					</div>
+					@endif
 				@endif
 
 
