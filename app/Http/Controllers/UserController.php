@@ -39,8 +39,14 @@ class UserController extends Controller
 	 */
 	public function index(){
 		$this->authorize('users.view');
-		$users = User::latest()->paginate();
+		$users = User::latest();
 
+		/** Убираем супер-администратора из списка, если если авторизированный пользователь не он */
+		if (\Auth::user()->id != 1) {
+			$users->where('id', '<>', 1);
+		}
+
+		$users = $users->paginate();
 		return view('base::users.list', compact('users'));
 	}
 
