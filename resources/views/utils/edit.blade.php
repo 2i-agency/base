@@ -30,6 +30,21 @@
 		$popover_content .= '<p>' . $update . '</p>';
 	}
 
+	/** Информация об удалении */
+	if (!is_null($element->deleted_at)) {
+		$delete = "
+		<span class='fa fa-times-circle fa-fw'></span>
+		<b>Удаление</b>
+		<br>" . $element->deleted_at;
+
+		if ($element->deleter)
+		{
+			$delete .= "<br>" . $element->deleter->getName();
+		}
+
+		$popover_content .= '<p>' . $delete . '</p>';
+	}
+
 @endphp
 
 
