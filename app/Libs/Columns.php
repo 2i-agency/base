@@ -68,6 +68,33 @@ class Columns
 
 
 	/**
+	 * Поле для ключа пользователя, удалившего модель
+	 *
+	 * @param Blueprint $table
+	 */
+	public static function deleterId(Blueprint $table){
+		$table
+			->integer('deleter_id')
+			->unsigned()
+			->nullable()
+			->index()
+			->comment('Ключ удалившего');
+	}
+
+
+	/**
+	 * Поля для мягкого удаления
+	 *
+	 * @param Blueprint $table
+	 */
+	public static function softDeleteFields(Blueprint $table){
+		$table->softDeletes();
+		static::deleterId($table);
+
+	}
+
+
+	/**
 	 * Поля для ключей пользователей, создавших и отредактировавших модель
 	 *
 	 * @param Blueprint $table

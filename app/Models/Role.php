@@ -6,6 +6,7 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
 use Chunker\Base\Models\Traits\IsRelatedWith;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Модель роли
@@ -13,13 +14,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
-	use BelongsToEditors, Comparable, IsRelatedWith;
+	use BelongsToEditors, Comparable, IsRelatedWith, SoftDeletes;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_roles';
 
 	/** @var array поля для массового присвоения атрибутов */
 	protected $fillable = [ 'name' ];
+
+	/** @var array поля с датами */
+	protected $dates = ['deleted_at'];
 
 
 	/**

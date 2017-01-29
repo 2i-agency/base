@@ -33,6 +33,9 @@ class CreateBaseNoticesTypes extends Migration
 			/** Ключи создателя и обновителя */
 			Columns::editorsIds($table);
 
+			/** Поля для мягкого удаления */
+			Columns::softDeleteFields($table);
+
 			/** Время создания и обновления */
 			$table->timestamps();
 		});

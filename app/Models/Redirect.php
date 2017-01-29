@@ -5,6 +5,7 @@ namespace Chunker\Base\Models;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use League\Uri\Schemes\Http;
 
 /**
@@ -14,7 +15,7 @@ use League\Uri\Schemes\Http;
  */
 class Redirect extends Model
 {
-	use Nullable, BelongsToEditors;
+	use Nullable, BelongsToEditors, SoftDeletes;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_redirects';
@@ -31,6 +32,9 @@ class Redirect extends Model
 	protected $nullable = [
 		'comment'
 	];
+
+	/** @var array поля с датами */
+	protected $dates = ['deleted_at'];
 
 
 	/**

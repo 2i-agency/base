@@ -5,6 +5,7 @@ namespace Chunker\Base\Models;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Модель типов уведомлений
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class NoticesType extends Model
 {
-	use Nullable, BelongsToEditors;
+	use Nullable, BelongsToEditors, SoftDeletes;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_notices_types';
@@ -24,8 +25,13 @@ class NoticesType extends Model
 		'name'
 	];
 
+	/** @var array поля с датами */
+	protected $dates = ['deleted_at'];
+
 	/** @var array поля принимающие null */
 	protected $nullable = [ 'tag' ];
+
+
 
 
 	/**
