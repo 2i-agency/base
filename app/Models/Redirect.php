@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Models;
 
+use Chunker\Base\Models\Traits\BelongsTo\BelongsToDeleter;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use League\Uri\Schemes\Http;
  */
 class Redirect extends Model
 {
-	use Nullable, BelongsToEditors, SoftDeletes;
+	use Nullable, BelongsToEditors, SoftDeletes, BelongsToDeleter;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_redirects';
