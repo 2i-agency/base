@@ -5,6 +5,7 @@ namespace Chunker\Base\Models;
 use Chunker\Base\Models\Traits\IsRelatedWith;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
@@ -217,7 +218,16 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function hasAdminAccess($abilities) {
+	public function hasAdminAccess($abilities, $model = NULL) {
+
+		if (
+			!is_null($model)
+			&& ($model instanceof Model)
+			&& isset($model->created_at)
+			&& $model->creator_id == $this->id
+		) {
+			return true;
+		}
 
 		if ($this->id == 1) {
 			return true;
