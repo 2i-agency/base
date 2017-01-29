@@ -182,22 +182,6 @@ class User extends Authenticatable
 			return true;
 		} else {
 
-			/** Если есть связи с другими возможностями из этого пространства имён */
-			if ($this->hasAccess($ability, true)) {
-				foreach ($this->abilities()->get([ 'id' ]) as $value) {
-
-					if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
-
-						if (Ability::getPriority($value, $ability)) {
-							return true;
-						}
-
-					}
-				}
-
-				return false;
-			}
-
 			foreach ($this->roles()->get([ 'id' ]) as $role) {
 
 				if ($role->hasAbility($ability)) {
