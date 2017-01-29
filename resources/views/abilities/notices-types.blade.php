@@ -25,5 +25,11 @@
 			'is_selected'    => $agent->hasAbility('notices-types.edit'),
 		])
 
+		@include('base::utils.ability-trigger', [
+			'label'     => 'Администрирование',
+			'ability'   => 'notices-types.admin',
+			'is_selected'    => $agent->hasAbility('notices-types.admin'),
+		])
+
 	</select>
 </div>

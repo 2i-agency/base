@@ -6,7 +6,7 @@ use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
 use Chunker\Base\Providers\Traits\Migrator;
-use Chunker\Base\ViewComposers\VisibleRoleUserComposer;
+use Chunker\Base\ViewComposers\VisibleRoleComposer;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
@@ -36,8 +36,9 @@ class AppServiceProvider extends ServiceProvider
 
 				'notices.edit' => 'Правка уведомлений',
 
-				'notices-types.edit' => 'Редактирование типов уведомлений',
-				'notices-types.view' => 'Просмотр типов уведомлений',
+				'notices-types.admin' => 'Администрирование типов уведомлений',
+				'notices-types.edit'  => 'Редактирование типов уведомлений',
+				'notices-types.view'  => 'Просмотр типов уведомлений',
 
 				'settings.edit' => 'Редактирование настроек',
 				'settings.view' => 'Просмотр настроек',
@@ -45,11 +46,13 @@ class AppServiceProvider extends ServiceProvider
 				'users.edit' => 'Редактирование других пользователей',
 				'users.view' => 'Просмотр пользователей',
 
-				'roles.edit' => 'Редактирование ролей',
-				'roles.view' => 'Просмотр ролей',
+				'roles.admin' => 'Администрирование ролей',
+				'roles.edit'  => 'Редактирование ролей',
+				'roles.view'  => 'Просмотр ролей',
 
-				'redirects.edit' => 'Редактирование перенаправлений',
-				'redirects.view' => 'Просмотр перенаправлений',
+				'redirects.admin' => 'Администрирование перенаправлений',
+				'redirects.edit'  => 'Редактирование перенаправлений',
+				'redirects.view'  => 'Просмотр перенаправлений',
 
 				'languages.edit' => 'Редактирование языков',
 				'languages.view' => 'Просмотр языков',
@@ -75,19 +78,19 @@ class AppServiceProvider extends ServiceProvider
 				'BaseUsersAndRolesSeeder'
 			])
 			->registerMenuItems([
-				'users' => [
+				'users'         => [
 					'name'   => 'Пользователи',
 					'icon'   => 'users',
 					'route'  => 'admin.users',
 					'policy' => 'users.view'
 				],
-				'roles' => [
+				'roles'         => [
 					'name'   => 'Доступ',
 					'icon'   => 'star',
 					'route'  => 'admin.roles',
 					'policy' => 'roles.view'
 				],
-				'redirects' => [
+				'redirects'     => [
 					'name'   => 'Перенаправления',
 					'icon'   => 'exchange',
 					'route'  => 'admin.redirects',
@@ -99,7 +102,7 @@ class AppServiceProvider extends ServiceProvider
 					'route'  => 'admin.notices-types',
 					'policy' => 'notices-types.view'
 				],
-				'settings' => [
+				'settings'      => [
 					'name'   => 'Настройки',
 					'icon'   => 'sliders',
 					'route'  => 'admin.settings',
@@ -153,7 +156,7 @@ class AppServiceProvider extends ServiceProvider
 		/** Регистрация композеров представлений */
 		view()->composer('base::template', LanguagesComposer::class);
 		view()->composer('base::users.abilities', RolesComposer::class);
-		view()->composer('base::users.list', VisibleRoleUserComposer::class);
+		view()->composer('base::users.list', VisibleRoleComposer::class);
 
 		/** Публикация необходимых файлов */
 		$path = static::ROOT . '/publishes/';

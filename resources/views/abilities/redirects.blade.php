@@ -25,5 +25,11 @@
 			'is_selected'    => $agent->hasAbility('redirects.edit'),
 		])
 
+		@include('base::utils.ability-trigger', [
+			'label'     => 'Администрирование',
+			'ability'   => 'redirects.admin',
+			'is_selected'    => $agent->hasAbility('redirects.admin'),
+		])
+
 	</select>
 </div>
