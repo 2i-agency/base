@@ -61,7 +61,7 @@
 					@foreach($notices_types as $notices_type)
 						<tr>
 
-							<td>
+							<td style="vertical-align: middle">
 								@can('notices-types.edit')
 									{{--Поле ввода названия--}}
 									<input
@@ -71,7 +71,7 @@
 										autocomplete="off"
 										value="{{ old('notices_types.' . $notices_type->id . '.name') ?: $notices_type->name }}"
 										class="form-control"
-										{{ is_null($notices_type->tag) ? NULL : 'disabled' }}
+										{{ is_null($notices_type->tag) && !$notices_type->trashed() ? NULL : 'disabled' }}
 									>
 								@else
 									{{--Вывод названия--}}
@@ -80,16 +80,22 @@
 							</td>
 
 							{{--Чекбокс удаления--}}
-							@can('notices-types.edit')
+							@can('notices-types.admin')
 								<td class="w1px">
 									<div class="form-control-static">
 										<label class="checkbox-inline">
-											<input
-												type="checkbox"
-												name="delete[]"
-												value="{{ $notices_type->id }}"
-												{{ is_null($notices_type->tag) ? NULL : 'disabled' }}
-											>Удалить
+											@if($notices_type->trashed())
+												@include('base::utils.buttons.restore', [
+													'url' => route('admin.notices-types.restore', $notices_type),
+												])
+											@else
+												<input
+													type="checkbox"
+													name="delete[]"
+													value="{{ $notices_type->id }}"
+													{{ is_null($notices_type->tag) ? NULL : 'disabled' }}
+												>Удалить
+											@endif
 										</label>
 									</div>
 								</td>
