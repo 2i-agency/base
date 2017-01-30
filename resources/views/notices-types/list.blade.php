@@ -79,7 +79,7 @@
 								@endcan
 							</td>
 
-							{{--Чекбокс удаления--}}
+							{{--Удаление/Восстановление--}}
 							@can('notices-types.admin')
 								<td class="w1px">
 									<div class="form-control-static">
