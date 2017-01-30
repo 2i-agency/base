@@ -59,4 +59,28 @@ trait Migrator
 
 		}
 	}
+
+
+	/**
+	 * Метод для публикации всех необходимых файлов
+	 *
+	 * @param string $path путь откуда будет публиковаться файлы
+	 */
+	protected function publish($path) {
+		$files = array_slice(scandir($path), 2);
+
+		foreach ($files as $file) {
+			if ($file == 'database') {
+
+				$this->upMigrates($path . 'database/migrations/', $file);
+
+				$this->publishes([
+					$path . 'database/seeds/' => database_path('/seeds/')
+				], $file);
+
+			} else {
+				$this->publishes([ $path . $file => base_path($file) ], $file);
+			}
+		}
+	}
 }
