@@ -23,7 +23,11 @@ trait BelongsToDeleter
 	}
 
 
-	public function scopeWithDelete($query, $ability) {
+	public function scopeWithDelete($query, $ability = NULL) {
+		if (is_null($ability)) {
+			$ability = $this->ability;
+		}
+
 		if (\Auth::user()->hasAdminAccess($ability, $this)) {
 			return $query->withTrashed();
 		}
