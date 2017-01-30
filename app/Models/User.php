@@ -145,7 +145,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function hasAccess($abilityNamespace, $without_role = false) {
+	public function hasAccess($abilityNamespace) {
 		if (
 		$this
 			->abilities()
@@ -154,7 +154,7 @@ class User extends Authenticatable
 		) {
 			/** Если есть связь хотя бы с одной возможностью из пространства имён */
 			return true;
-		} elseif(!$without_role) {
+		} else {
 			foreach ($this->roles()->get([ 'id' ]) as $role) {
 				if ($role->hasAccess($abilityNamespace)) {
 					return true;
@@ -182,6 +182,21 @@ class User extends Authenticatable
 		) {
 			return true;
 		} else {
+
+			/** Если есть связи с другими возможностями из этого пространства имён */
+			if ($this->hasAccess($ability)) {
+				foreach ($this->abilities()->pluck('id') as $value) {
+
+					if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
+
+						if (Ability::getPriority($value, $ability)) {
+							return true;
+						}
+
+					}
+				}
+
+			}
 
 			foreach ($this->roles()->get([ 'id' ]) as $role) {
 

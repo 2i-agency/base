@@ -60,6 +60,23 @@ class Ability extends Model
 
 
 	/**
+	 * Сравнивает приоритет возможностей
+	 *
+	 * @param string $needle возможность, которую необходимо проверить
+	 * @param string $ability возможность, с которой нужно сравнить
+	 *
+	 * @return bool
+	 */
+	public static function getPriority($needle, $ability) {
+		$needle_action = array_last(explode('.', $needle));
+		$ability_action = array_last(explode('.', $ability));
+		$actions = self::getPostfixes($ability);
+
+		return array_search($needle_action, $actions) <= array_search($ability_action, $actions);
+	}
+
+
+	/**
 	 * Определение пространства имен
 	 *
 	 * @param string $ability роль
