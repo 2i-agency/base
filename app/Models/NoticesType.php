@@ -32,6 +32,8 @@ class NoticesType extends Model
 	/** @var array поля принимающие null */
 	protected $nullable = [ 'tag' ];
 
+	protected $ability = 'notices-types';
+
 
 
 
