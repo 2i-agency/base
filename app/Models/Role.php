@@ -26,6 +26,8 @@ class Role extends Model
 	/** @var array поля с датами */
 	protected $dates = ['deleted_at'];
 
+	protected $ability = 'roles';
+
 
 	/**
 	 * Возможности
