@@ -173,7 +173,19 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function hasAbility($ability) {
+	public function hasAbility($ability, $model = NULL) {
+
+		if ($this->id == 1) {
+			return true;
+		}
+
+		if (
+			!is_null($model)
+			&& ($model instanceof Model)
+			&& ($model->creator_id == $this->id))
+		{
+			return true;
+		}
 
 		if ($this
 			->abilities()
@@ -181,28 +193,27 @@ class User extends Authenticatable
 			->count()
 		) {
 			return true;
-		} else {
+		}
 
-			/** Если есть связи с другими возможностями из этого пространства имён */
-			if ($this->hasAccess($ability)) {
-				foreach ($this->abilities()->pluck('id') as $value) {
+		/** Если есть связи с другими возможностями из этого пространства имён */
+		if ($this->hasAccess($ability)) {
+			foreach ($this->abilities()->pluck('id') as $value) {
 
-					if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
+				if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
 
-						if (Ability::getPriority($value, $ability)) {
-							return true;
-						}
-
+					if (Ability::getPriority($value, $ability)) {
+						return true;
 					}
-				}
 
+				}
 			}
 
-			foreach ($this->roles()->get([ 'id' ]) as $role) {
+		}
 
-				if ($role->hasAbility($ability)) {
-					return true;
-				}
+		foreach ($this->roles()->get([ 'id' ]) as $role) {
+
+			if ($role->hasAbility($ability)) {
+				return true;
 			}
 		}
 
