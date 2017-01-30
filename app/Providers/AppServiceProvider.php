@@ -159,22 +159,7 @@ class AppServiceProvider extends ServiceProvider
 		view()->composer('base::users.list', VisibleRoleComposer::class);
 
 		/** Публикация необходимых файлов */
-		$path = static::ROOT . '/publishes/';
-		$files = array_slice(scandir($path), 2);
-
-		foreach ($files as $file) {
-			if ($file == 'database') {
-
-				$this->upMigrates($path . 'database/migrations/', $file);
-
-				$this->publishes([
-					$path . 'database/seeds/' => database_path('/seeds/')
-				], $file);
-
-			} else {
-				$this->publishes([ $path . $file => base_path($file) ], $file);
-			}
-		}
+		$this->publish(static::ROOT . '/publishes/');
 
 		/** Регистрация глобального посредника редиректов */
 		$this
