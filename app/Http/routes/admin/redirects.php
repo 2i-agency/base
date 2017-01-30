@@ -31,4 +31,12 @@ Route::group([
 		'as'   => 'admin.redirects.save'
 	]);
 
+	/**
+	 * Сохранение типов
+	 */
+	Route::put('restore/{redirect}', [
+		'uses' => 'RedirectController@restore',
+		'as'   => 'admin.redirects.restore'
+	]);
+
 });

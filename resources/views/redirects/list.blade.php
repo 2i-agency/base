@@ -128,6 +128,7 @@
 										autocomplete="off"
 										value="{{ old('redirects.' . $redirect->id . '.from') ?: $redirect->from }}"
 										class="form-control"
+										{{ !$redirect->trashed() ? NULL : 'disabled' }}
 									>
 								@else
 									<a href="{{ url($redirect->from) }}" target="_blank">{{ $redirect->from }}</a>
@@ -144,6 +145,7 @@
 										autocomplete="off"
 										value="{{ old('redirects.' . $redirect->id . '.to') ?: $redirect->to }}"
 										class="form-control"
+										{{ !$redirect->trashed() ? NULL : 'disabled' }}
 									>
 								@else
 									<a href="{{ url($redirect->to) }}" target="_blank">{{ $redirect->to }}</a>
@@ -159,6 +161,7 @@
 										autocomplete="off"
 										value="{{ old('redirects.' . $redirect->id . '.comment') ?: $redirect->comment }}"
 										class="form-control"
+										{{ !$redirect->trashed() ? NULL : 'disabled' }}
 									>
 								@else
 									<span class="text-muted">Без комментария</span>
@@ -184,6 +187,7 @@
 												@else
 												    {{ $redirect->is_active ? ' checked' : NULL }}
 												@endif
+												{{ !$redirect->trashed() ? NULL : 'disabled' }}
 											>Активно
 										</label>
 									</div>
@@ -192,17 +196,24 @@
 								@endcan
 							</td>
 
-							{{--Удаление--}}
+							{{--Удаление/Восстановление--}}
 							@can('redirects.edit')
 								<td>
 									<div class="form-control-static">
-										<label class="checkbox-inline">
-											<input
-												type="checkbox"
-												name="delete[]"
-												value="{{ $redirect->id }}"
-											>Удалить
-										</label>
+										@if($redirect->trashed())
+											@include('base::utils.buttons.restore', [
+												'url' => route('admin.redirects.restore', $redirect),
+											])
+										@else
+											<label class="checkbox-inline">
+
+												<input
+													type="checkbox"
+													name="delete[]"
+													value="{{ $redirect->id }}"
+												>Удалить
+											</label>
+										@endif
 									</div>
 								</td>
 							@endcan

@@ -41,6 +41,7 @@ class RedirectController extends Controller
 		$redirects = Redirect
 			::orderBy('from')
 			->orderBy('to')
+			->withDelete()
 			->paginate();
 
 		if ($this->isNeedRedirectByPaginator($redirects)) {
@@ -116,10 +117,34 @@ class RedirectController extends Controller
 
 		/** Удаление отмеченых элементов */
 		if ($request->has('delete')) {
+			$this->authorize('redirects.admin');
 			Redirect::destroy($request->get('delete'));
 		}
 
 		flash()->success('Перенаправления сохранены');
+
+		return back();
+	}
+
+
+	/**
+	 * Восстановление типов уведомлений
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function restore(Request $request){
+
+		$redirect = Redirect
+			::withDelete()
+			->find($request->redirect);
+
+		$this->authorize('redirects.admin', $redirect);
+
+		$redirect->restore();
+
+		flash()->success('Перенаправление восстановлено');
 
 		return back();
 	}

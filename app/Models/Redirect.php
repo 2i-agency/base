@@ -37,6 +37,8 @@ class Redirect extends Model
 	/** @var array поля с датами */
 	protected $dates = ['deleted_at'];
 
+	protected $ability = 'redirects';
+
 
 	/**
 	 * Преобразование строки в путь с запросом
