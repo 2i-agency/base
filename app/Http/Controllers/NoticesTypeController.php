@@ -61,6 +61,7 @@ class NoticesTypeController extends Controller
 
 		/** Удаление отмеченых типов уведомлений */
 		if ($request->has('delete')) {
+			$this->authorize('notices-types.admin');
 			NoticesType::destroy($request->get('delete'));
 		}
 
