@@ -123,11 +123,13 @@
 					<div>
 						@if ($role->exists)
 							@include('base::utils.buttons.save')
-							@if($role->trashed())
-								@include('base::utils.buttons.restore', ['url' => route('admin.roles.restore', $role)])
-							@else
-								@include('base::utils.buttons.delete', ['url' => route('admin.roles.destroy', $role)])
-							@endif
+							@can('roles.admin', $role)
+								@if($role->trashed())
+									@include('base::utils.buttons.restore', ['url' => route('admin.roles.restore', $role)])
+								@else
+									@include('base::utils.buttons.delete', ['url' => route('admin.roles.destroy', $role)])
+								@endif
+							@endcan
 						@else
 							@include('base::utils.buttons.add')
 						@endif
