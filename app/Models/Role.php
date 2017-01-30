@@ -91,20 +91,6 @@ class Role extends Model
 	}
 
 
-	/**
-	 * Проверка статуса администратора
-	 *
-	 * @todo переделать в соответствии с новой логикой работы
-	 *
-	 * @return bool
-	 */
-	public function isAdmin() {
-		return (bool)$this
-			->abilities()
-			->count();
-	}
-
-
 	public static function boot() {
 
 		/**
