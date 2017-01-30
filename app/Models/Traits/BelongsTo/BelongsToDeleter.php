@@ -18,13 +18,12 @@ trait BelongsToDeleter
 	 *
 	 * @return Eloquement - связь с моделью User
 	 */
-	public function deleter(){
+	public function deleter() {
 		return $this->belongsTo(User::class, 'deleter_id');
 	}
 
 
-	public function scopeWithDelete($query, $ability)
-	{
+	public function scopeWithDelete($query, $ability) {
 		if (\Auth::user()->hasAdminAccess($ability, $this)) {
 			return $query->withTrashed();
 		}
@@ -33,10 +32,10 @@ trait BelongsToDeleter
 	}
 
 
-	public static function bootBelongsToDeletor(){
-		static::deleting(function($model){
+	public static function bootBelongsToDeleter() {
+		static::deleting(function($model) {
 			$model
-				->deletor()
+				->deleter()
 				->associate(Auth::user());
 		});
 	}
