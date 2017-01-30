@@ -41,8 +41,15 @@ class RoleController extends Controller
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
 	 */
-	public function form(Request $request, Role $role = NULL){
-		$this->authorize('roles.view');
+	public function form(Request $request, $role = NULL){
+
+		if (is_int($role) || is_string($role)) {
+			$role = Role::withDelete()->find($role);
+		} elseif (is_null($role)) {
+			$role = new Role();
+		}
+
+		$this->authorize('roles.view', $role);
 
 		/** Если пользователь не может редактировать, то и создавать не может */
 		if ($request->user()->cannot('roles.edit') && !$role->exists) {
@@ -50,7 +57,7 @@ class RoleController extends Controller
 		}
 
 		/** Коллекция ролей */
-		$_roles = Role::orderBy('name')->get([ 'id', 'name' ]);
+		$_roles = Role::orderBy('name')->withDelete()->get([ 'id', 'name' ]);
 
 		$agent = $role;
 
@@ -99,7 +106,7 @@ class RoleController extends Controller
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function update(RoleRequest $request, Role $role){
-		$this->authorize('roles.edit');
+		$this->authorize('roles.edit', $role);
 
 		$role->update($request->all());
 		$this->syncAbilities($request, $role);
@@ -118,11 +125,35 @@ class RoleController extends Controller
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function destroy(Role $role){
-		$this->authorize('roles.edit');
+		$this->authorize('roles.edit', $role);
 
 		$role->delete();
 		flash()->warning('Роль <b>' . $role->name . '</b> удалена');
 
 		return redirect()->route('admin.roles');
+	}
+
+
+	/**
+	 * Восстановление роли
+	 *
+	 * @param Role $role
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function restore(Request $request){
+		$this->authorize('roles.admin');
+
+		$role = Role
+			::withDelete()
+			->find($request->role);
+
+		$this->authorize('roles.admin', $role);
+
+		$role->restore();
+
+		flash()->success('Роль "' . $role->name . '" восстановлена');
+
+		return back();
 	}
 }

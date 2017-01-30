@@ -50,6 +50,14 @@ Route::group([
 			'as'   => 'admin.roles.destroy'
 		]);
 
+		/**
+		 * Удаление роли
+		 */
+		Route::put('restore', [
+			'uses' => 'RoleController@restore',
+			'as'   => 'admin.roles.restore'
+		]);
+
 	});
 
 });
