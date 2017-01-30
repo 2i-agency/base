@@ -31,4 +31,12 @@ Route::group([
 		'as'   => 'admin.notices-types.save'
 	]);
 
+	/**
+	 * Сохранение типов
+	 */
+	Route::put('restore/{notices_type}', [
+		'uses' => 'NoticesTypeController@restore',
+		'as'   => 'admin.notices-types.restore'
+	]);
+
 });

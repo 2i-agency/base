@@ -5,6 +5,7 @@ namespace Chunker\Base\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Chunker\Base\Http\Requests\NoticesTypeRequest;
 use Chunker\Base\Models\NoticesType;
+use Illuminate\Http\Request;
 
 class NoticesTypeController extends Controller
 {
@@ -15,7 +16,7 @@ class NoticesTypeController extends Controller
 	 */
 	public function index(){
 		$this->authorize('notices-types.view');
-		$notices_types = NoticesType::orderBy('name')->get();
+		$notices_types = NoticesType::orderBy('name')->withDelete('notices-types')->get();
 
 		return view(
 			'base::notices-types.list',
@@ -40,7 +41,7 @@ class NoticesTypeController extends Controller
 
 
 	/**
-	 * Сохранение уведомлений
+	 * Сохранение типов уведомлений
 	 *
 	 * @param NoticesTypeRequest $request
 	 *
@@ -60,6 +61,27 @@ class NoticesTypeController extends Controller
 		}
 
 		flash()->success('Типы уведомлений сохранены');
+
+		return back();
+	}
+
+
+	/**
+	 * Восстановление типов уведомлений
+	 *
+	 * @param Request $request
+	 *
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function restore(Request $request){
+
+		$notices_type = NoticesType
+			::withDelete()
+			->find($request->notices_type);
+
+		$notices_type->restore();
+
+		flash()->success('Тип "' . $notices_type->name . '" восстановлен');
 
 		return back();
 	}
