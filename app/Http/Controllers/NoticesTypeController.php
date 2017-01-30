@@ -16,7 +16,7 @@ class NoticesTypeController extends Controller
 	 */
 	public function index(){
 		$this->authorize('notices-types.view');
-		$notices_types = NoticesType::orderBy('name')->withDelete('notices-types')->get();
+		$notices_types = NoticesType::orderBy('name')->withDelete()->get();
 
 		return view(
 			'base::notices-types.list',
@@ -33,6 +33,8 @@ class NoticesTypeController extends Controller
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function store(NoticesTypeRequest $request){
+		$this->authorize('notices-types.edit');
+
 		$notices_type = NoticesType::create($request->all());
 		flash()->success('Тип уведомления <b>' . $notices_type->name . '</b> успешно добавлен');
 
@@ -48,6 +50,8 @@ class NoticesTypeController extends Controller
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function save(NoticesTypeRequest $request){
+		$this->authorize('notices-types.edit');
+
 		$notices_types = $request->get('notices_types');
 
 		/** Обновление */
@@ -78,6 +82,8 @@ class NoticesTypeController extends Controller
 		$notices_type = NoticesType
 			::withDelete()
 			->find($request->notices_type);
+
+		$this->authorize('notices-types.admin', $notices_type);
 
 		$notices_type->restore();
 
