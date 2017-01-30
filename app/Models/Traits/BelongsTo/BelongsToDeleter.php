@@ -37,10 +37,12 @@ trait BelongsToDeleter
 
 
 	public static function bootBelongsToDeleter() {
+
 		static::deleting(function($model) {
 			$model
 				->deleter()
-				->associate(Auth::user());
+				->associate(Auth::user())
+				->save();
 		});
 	}
 }
