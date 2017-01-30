@@ -193,7 +193,7 @@ class UserController extends Controller
 		$packages_abilities_views = [];
 
 		foreach (app()[ 'Packages' ]->getPackages() as $key => $package) {
-			$packages_abilities_views[$key] = array_merge($packages_abilities_views, $package->getAbilitiesViews());
+			$packages_abilities_views[$key] = $package->getAbilitiesViews();
 		}
 
 		return view(
