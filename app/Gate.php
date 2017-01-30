@@ -2,6 +2,7 @@
 namespace Chunker\Base;
 
 use Illuminate\Auth\Access\Gate as BaseGate;
+use Illuminate\Database\Eloquent\Model;
 
 class Gate extends BaseGate
 {
@@ -20,6 +21,18 @@ class Gate extends BaseGate
 
 		if ($user->id == 1) {
 			return true;
+		}
+
+		if ($arguments instanceof Model && $user->hasAbility($ability, $arguments)) {
+			return true;
+		}
+
+		if (count($arguments)) {
+			foreach ($arguments as $argument) {
+				if ($argument instanceof Model && $user->hasAbility($ability, $argument)) {
+					return true;
+				}
+			}
 		}
 
 		$arguments = is_array($arguments) ? $arguments : [$arguments];
