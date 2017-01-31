@@ -17,6 +17,6 @@
 		value="put"
 	@endif
 >
-	<span class="fa fa-recycle"></span>
+	<span class="fa fa-reply"></span>
 	Восстановить
 </button>
