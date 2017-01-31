@@ -116,7 +116,7 @@
 
 				<tbody>
 					@foreach($redirects as $redirect)
-						<tr>
+						<tr class="vertical-middle">
 
 							{{--Откуда--}}
 							<td>
@@ -127,7 +127,7 @@
 										required
 										autocomplete="off"
 										value="{{ old('redirects.' . $redirect->id . '.from') ?: $redirect->from }}"
-										class="form-control"
+										class="form-control{{ $redirect->trashed() ?  ' deleted' : NULL }}"
 										{{ !$redirect->trashed() ? NULL : 'disabled' }}
 									>
 								@else
@@ -144,7 +144,7 @@
 										required
 										autocomplete="off"
 										value="{{ old('redirects.' . $redirect->id . '.to') ?: $redirect->to }}"
-										class="form-control"
+										class="form-control{{ $redirect->trashed() ?  ' deleted' : NULL }}"
 										{{ !$redirect->trashed() ? NULL : 'disabled' }}
 									>
 								@else
@@ -160,7 +160,7 @@
 										name="redirects[{{ $redirect->id }}][comment]"
 										autocomplete="off"
 										value="{{ old('redirects.' . $redirect->id . '.comment') ?: $redirect->comment }}"
-										class="form-control"
+										class="form-control{{ $redirect->trashed() ?  ' deleted' : NULL }}"
 										{{ !$redirect->trashed() ? NULL : 'disabled' }}
 									>
 								@else
@@ -171,7 +171,7 @@
 							{{--Флаг активности--}}
 							<td class="text-nowrap">
 								@can('redirects.edit')
-									<div class="form-control-static">
+									<div class="form-control-static{{ $redirect->trashed() ?  ' deleted' : NULL }}">
 										<label class="checkbox-inline">
 											<input
 												type="hidden"

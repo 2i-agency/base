@@ -59,9 +59,9 @@
 				<tbody>
 
 					@foreach($notices_types as $notices_type)
-						<tr>
+						<tr class="vertical-middle">
 
-							<td style="vertical-align: middle">
+							<td>
 								@can('notices-types.edit')
 									{{--Поле ввода названия--}}
 									<input
@@ -70,7 +70,7 @@
 										required
 										autocomplete="off"
 										value="{{ old('notices_types.' . $notices_type->id . '.name') ?: $notices_type->name }}"
-										class="form-control"
+										class="form-control{{ $notices_type->trashed() ?  ' deleted' : NULL }}"
 										{{ is_null($notices_type->tag) && !$notices_type->trashed() ? NULL : 'disabled' }}
 									>
 								@else

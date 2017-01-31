@@ -27,7 +27,7 @@
 					@foreach ($_roles as $_role)
 						<a
 							href="{{ route('admin.roles', $_role) }}"
-							class="list-group-item{{ $_role->is($role) ? ' active' : NULL }}"
+							class="list-group-item{{ $_role->is($role) ? ' active' : NULL }}{{ $_role->trashed() ? ' deleted': NULL}}"
 						>
 							{{ $_role['name'] }}
 						</a>
