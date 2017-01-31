@@ -139,3 +139,12 @@ p,
 .code_insert {
 	white-space: nowrap;
 }
+
+.deleted {
+	color: #999;
+	text-decoration: line-through;
+}
+
+.vertical-middle td {
+	vertical-align: middle !important;
+}
