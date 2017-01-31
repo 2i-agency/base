@@ -16,7 +16,8 @@ class RolesComposer
 	public function compose(View $view){
 		$_roles = Role
 			::orderBy('name')
-			->get([ 'id', 'name' ]);
+			->withDelete()
+			->get();
 
 		$view->with('_roles', $_roles);
 	}

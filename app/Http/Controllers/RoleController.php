@@ -57,7 +57,7 @@ class RoleController extends Controller
 		}
 
 		/** Коллекция ролей */
-		$_roles = Role::orderBy('name')->withDelete()->get([ 'id', 'name' ]);
+		$_roles = Role::orderBy('name')->withDelete()->get();
 
 		$agent = $role;
 
