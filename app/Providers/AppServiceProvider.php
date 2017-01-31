@@ -85,7 +85,7 @@ class AppServiceProvider extends ServiceProvider
 					'policy' => 'users.view'
 				],
 				'roles'         => [
-					'name'   => 'Доступ',
+					'name'   => 'Роли',
 					'icon'   => 'star',
 					'route'  => 'admin.roles',
 					'policy' => 'roles.view'

@@ -120,13 +120,13 @@
 
 				{{--Кнопки сохранения и удаления--}}
 				@can('roles.edit', $role)
-					<div>
+					<div class="mb20px">
 						@if ($role->exists)
-							@include('base::utils.buttons.save')
 							@can('roles.admin', $role)
 								@if($role->trashed())
 									@include('base::utils.buttons.restore', ['url' => route('admin.roles.restore', $role)])
 								@else
+									@include('base::utils.buttons.save')
 									@include('base::utils.buttons.delete', ['url' => route('admin.roles.destroy', $role)])
 								@endif
 							@endcan
