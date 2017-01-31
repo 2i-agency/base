@@ -76,12 +76,13 @@
 
 			{{--Название--}}
 			<div class="form-group">
-				<label>Название:</label>
+				<label>Название:</label><br>
 				<div>{{ $model->name }}</div>
 			</div>
 
 			{{--Ключевые слова--}}
 			<p class="form-control-static">
+				<label>Ключевые слова:</label><br>
 				@if(strlen($model->meta_keywords))
 					{{ $model->meta_keywords }}
 				@else
@@ -91,6 +92,7 @@
 
 			{{--Слаг--}}
 			<p class="form-control-static">
+				<label>Псевдоним:</label><br>
 				@if(strlen($model->slugs))
 					{{ $model->slugs }}
 				@else
@@ -100,7 +102,7 @@
 
 			{{--Описание--}}
 			<div class="form-group">
-				<label>Описание:</label>
+				<label>Описание:</label><br>
 				<div>{{ $model->description }}</div>
 			</div>
 

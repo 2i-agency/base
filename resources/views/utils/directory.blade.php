@@ -123,7 +123,16 @@
 									</td>
 								@endif
 							@else
-								<td>{{ old('names.' . $item->id) ?: $item->name }}</td>
+								<td style="vertical-align: middle;">{{ old('names.' . $item->id) ?: $item->name }}</td>
+
+								<td width="1px" style="vertical-align: middle;">
+
+									<a href="{{ route($route['edit'], $item) }}" class="btn btn-primary">
+										<span class="fa fa-eye"></span>
+										Просмотр
+									</a>
+
+								</td>
 							@endcan
 
 						</tr>

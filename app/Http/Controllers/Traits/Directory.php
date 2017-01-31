@@ -158,7 +158,7 @@ trait Directory
 	 * Редактирование отдельного элемента каталога
 	 */
 	function editOne(Request $request){
-		$this->authorize($this->abilities[ 'edit' ]);
+		$this->authorize($this->abilities[ 'view' ]);
 
 		$id = $request->id;
 
