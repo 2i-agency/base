@@ -18,61 +18,61 @@ trait Directory
 	 *
 	 * Необходимо объявить в классе, к которому подключён трейт
 	 */
-	protected $rules;
+//	protected $rules;
 
 	/**
 	 * @var array массив сообщений о провале валидации.
 	 *
 	 * Необходимо объявить в классе, к которому подключён трейт
 	 */
-	protected $validateMessages;
+//	protected $validateMessages;
 
 	/**
 	 * @var array массив сообщений для хелпера flash.
 	 *
 	 * Необходимо объявить в классе, к которому подключён трейт
 	 */
-	protected $flashMessages = [
-		'store'      => '',
-		'save'       => '',
-		'saveOne'    => '',
-		'destroyOne' => '',
-	];
+//	protected $flashMessages = [
+//		'store'      => '',
+//		'save'       => '',
+//		'saveOne'    => '',
+//		'destroyOne' => '',
+//	];
 
 	/**
 	 * @var mixed параметр, хранящий в себе класс модели.
 	 *
 	 * Необходимо объявить в классе, к которому подключён трейт
 	 */
-	protected $model;
+//	protected $model;
 
 	/**
 	 * @var array массив возможностей для каталога.
 	 *
 	 * Необходимо объявить в классе, к которому подключён трейт
 	 */
-	protected $abilities = [
-		'view' => '',
-		'edit' => ''
-	];
+//	protected $abilities = [
+//		'view' => '',
+//		'edit' => ''
+//	];
 
 	/**
 	 * @var array массив роутов для редиректов.
 	 */
-	protected $route = [
-		'after_save'    => '',
-		'after_destroy' => ''
-	];
+//	protected $route = [
+//		'after_save'    => '',
+//		'after_destroy' => ''
+//	];
 
 	/**
 	 * @var array массив представлений.
 	 *
 	 * Необходимо объявить в классе, к которому подключён трейт
 	 */
-	protected $view = [
-		'index' => '',
-		'edit'  => ''
-	];
+//	protected $view = [
+//		'index' => '',
+//		'edit'  => ''
+//	];
 
 
 	/**
@@ -100,7 +100,7 @@ trait Directory
 		$view = is_string($this->view) ? $this->view : $this->view[ 'index' ];
 
 		return view($view, [
-			'directory' => $model::defaultOrder()->get()
+			'directory' => $model::withDelete()->defaultOrder()->get()
 		]);
 	}
 
@@ -196,11 +196,9 @@ trait Directory
 	 * @param Request $request
 	 */
 	function destroyOne(Request $request){
-		$this->authorize($this->abilities[ 'edit' ]);
+		$this->authorize($this->abilities[ 'admin' ]);
 
-		$model = $this->model;
-
-		$model::find($request->id)->delete();
+		$this->getModelById($request->id)->delete();
 
 		$message = isset($this->flashMessages[ 'destroyOne' ]) ? $this->flashMessages[ 'destroyOne' ] : 'Изменения сохранениы';
 		flash()->success($message);
@@ -217,5 +215,30 @@ trait Directory
 	public function positioning(Request $request){
 		$this->authorize($this->abilities[ 'edit' ]);
 		$this->setPositions($request, $this->model);
+	}
+
+
+	/**
+	 * Удаление элемента каталога
+	 *
+	 * @param Request $request
+	 */
+	public function restore(Request $request){
+
+		$model = new $this->model;
+
+		$model = $model
+			->withDelete()
+			->where($model->getRouteKeyName(), $request->id)
+			->first();
+
+		$this->authorize($this->abilities[ 'admin' ], $model);
+
+		$model->restore();
+
+		$message = isset($this->flashMessages[ 'restore' ]) ? $this->flashMessages[ 'restore' ] : 'Объект восстановлен';
+		flash()->success($message);
+
+		return back();
 	}
 }

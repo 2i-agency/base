@@ -1,5 +1,5 @@
 <h3>{{ $title }}</h3>
-@can($ability_edit)
+@can($ability['edit'])
 
 	{{--Форма добавления элемента--}}
 	<form method="POST" action="{{ route($route['store']) }}" class="panel panel-default">
@@ -53,7 +53,7 @@
 			<table class="table table-hover">
 
 				{{--Отключение позиционирование при отсутствии прав на редактирование--}}
-				@can($ability_edit)
+				@can($ability['edit'])
 					<tbody class="js-positionable" data-url="{{ route($route['positioning']) }}">
 				@else
 					<tbody>
@@ -63,7 +63,7 @@
 
 						<tr data-id="{{ $item->id }}">
 
-							@can($ability_edit)
+							@can($ability['edit'])
 								{{--Ячейка с иконкой для сортировки объектов--}}
 								<td width="1px" style="vertical-align: middle">
 									<div class="fa fa-reorder"></div>
@@ -78,16 +78,17 @@
 										autocomplete="off"
 										placeholder="Название"
 										class="form-control"
+										{{ !$item->trashed() ? NULL : 'disabled' }}
 									>
 								</td>
-								{{--Вывод сода для вставки в текст. Добавление каталога чего-либо (напр.: галереи) в статьи--}}
+								{{--Вывод кода для вставки в текст. Добавление каталога чего-либо (напр.: галереи) в статьи--}}
 								<td width="1px" class="code_insert">
 									@if(isset($code_insert) && $code_insert['using'])
 										{{ $code_insert['message']['start'] . $item->id . $code_insert['message']['end'] }}
 									@endif
 								</td>
 								{{--Флаг для удаления записи--}}
-								@if(isset($can_delete) && $can_delete)
+								@if(isset($can_delete) && $can_delete && !$item->trashed())
 									<td width="1px" style="vertical-align: middle;">
 										<label class="radio-inline" style="white-space: nowrap;">
 											<input
@@ -98,11 +99,11 @@
 									</td>
 								@endif
 								{{--Кнопка для редактирования/просмотра записи при включении режима одиночного редактирования--}}
-								@if(isset($can_edit) && $can_edit)
+								@if(isset($can_edit) && $can_edit && !$item->trashed())
 									<td width="1px" style="vertical-align: middle;">
 
 										<a href="{{ route($route['edit'], $item) }}" class="btn btn-primary">
-											@can($ability_edit)
+											@can($ability['edit'])
 												<span class="fa fa-pencil"></span>
 												Редактировать
 											@else
@@ -110,6 +111,14 @@
 												Просмотр
 											@endcan
 										</a>
+
+									</td>
+								@elseif($item->trashed())
+									<td width="1px" style="vertical-align: middle;">
+
+										@include('base::utils.buttons.restore', [
+											'url' => route($route['restore'], $item),
+										])
 
 									</td>
 								@endif
@@ -125,7 +134,7 @@
 			</table>
 		</div>
 
-		@can($ability_edit)
+		@can($ability['edit'])
 			<div class="panel-footer">
 				<div class="form-group">
 					@include('base::utils.buttons.save')

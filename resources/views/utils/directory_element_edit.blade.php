@@ -7,7 +7,7 @@
 <div class="panel panel-default">
 
 	<div class="panel-body">
-		@can($ability_edit)
+		@can($ability['edit'])
 
 			<form id="save" method="POST" action="{{ route($route['save'], $model) }}">
 
@@ -62,7 +62,7 @@
 				@include('base::utils.editor', [
 					'name'      => 'description',
 					'value'     => old('description') ?: (isset($model) ? $model->description : null),
-					'disabled'  => \Auth::user()->cannot($ability_edit)
+					'disabled'  => \Auth::user()->cannot($ability['edit'])
 				])
 
 			</form>
@@ -107,7 +107,7 @@
 		@endcan
 	</div>
 
-	@can($ability_edit)
+	@can($ability['edit'])
 		<div class="panel-footer">
 
 			{{--Кнопка сохранения--}}
