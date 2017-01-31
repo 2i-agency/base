@@ -41,21 +41,36 @@
 						<tr>
 
 							{{--Логин--}}
-							@if ($user->is_blocked)
+							@if($user->is_blocked || !$user->isAdmin())
 								<td class="text-muted">
-									<span class="fa fa-ban" data-hover="tooltip" data-placement="right" title="Пользователь заблокирован"></span>
-									{{ $user->login }}
-								</td>
 							@else
 								<td>
-									{{ $user->login }}
-									@if ($user->roles()->count() && isset($_role_active) && $_role_active)
-										<p class="text-muted small">
-											{{ implode(', ', $user->roles->lists('name')->toArray()) }}
-										</p>
-									@endif
-								</td>
 							@endif
+
+							@if($user->is_blocked)
+								<span
+									class="fa fa-ban"
+									data-hover="tooltip"
+									data-placement="right"
+									title="Пользователь заблокирован"
+								></span>
+							@endif
+
+							@if(!$user->isAdmin())
+								<span
+									class="fa fa-user-times"
+									data-hover="tooltip"
+									data-placement="right"
+									title="Нет доступа в админ-панель"
+								></span>
+							@endif
+							{{ $user->login }}
+							@if ($user->roles()->count() && isset($_role_active) && $_role_active)
+								<p class="text-muted small">
+									{{ implode(', ', $user->roles->lists('name')->toArray()) }}
+								</p>
+							@endif
+						</td>
 
 							{{--Электронный адрес--}}
 							<td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
