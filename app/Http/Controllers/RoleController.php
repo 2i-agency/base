@@ -56,9 +56,6 @@ class RoleController extends Controller
 			return redirect()->route('admin.roles', Role::orderBy('name')->first());
 		}
 
-		/** Коллекция ролей */
-		$_roles = Role::orderBy('name')->withDelete()->get();
-
 		$agent = $role;
 
 		/** Коллекция типов уведомлений */
@@ -73,7 +70,7 @@ class RoleController extends Controller
 
 		return view(
 			'base::roles.form',
-			compact('role', 'agent', '_roles', 'packages_abilities_views', 'notices_types')
+			compact('role', 'agent', 'packages_abilities_views', 'notices_types')
 		);
 	}
 
