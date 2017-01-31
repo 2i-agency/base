@@ -61,11 +61,11 @@
 
 					@foreach ($directory as $item)
 
-						<tr data-id="{{ $item->id }}">
+						<tr class="vertical-middle" data-id="{{ $item->id }}">
 
 							@can($ability['edit'])
 								{{--Ячейка с иконкой для сортировки объектов--}}
-								<td width="1px" style="vertical-align: middle">
+								<td width="1px">
 									<div class="fa fa-reorder"></div>
 								</td>
 								{{--Название--}}
@@ -77,7 +77,7 @@
 										required
 										autocomplete="off"
 										placeholder="Название"
-										class="form-control"
+										class="form-control{{ $item->trashed() ?  ' deleted' : NULL }}"
 										{{ !$item->trashed() ? NULL : 'disabled' }}
 									>
 								</td>
@@ -89,7 +89,7 @@
 								</td>
 								{{--Флаг для удаления записи--}}
 								@if(isset($can_delete) && $can_delete && !$item->trashed())
-									<td width="1px" style="vertical-align: middle;">
+									<td width="1px">
 										<label class="radio-inline" style="white-space: nowrap;">
 											<input
 												type="checkbox"
@@ -100,7 +100,7 @@
 								@endif
 								{{--Кнопка для редактирования/просмотра записи при включении режима одиночного редактирования--}}
 								@if(isset($can_edit) && $can_edit && !$item->trashed())
-									<td width="1px" style="vertical-align: middle;">
+									<td width="1px">
 
 										<a href="{{ route($route['edit'], $item) }}" class="btn btn-primary">
 											@can($ability['edit'])
@@ -114,7 +114,7 @@
 
 									</td>
 								@elseif($item->trashed())
-									<td width="1px" style="vertical-align: middle;">
+									<td width="1px">
 
 										@include('base::utils.buttons.restore', [
 											'url' => route($route['restore'], $item),
@@ -123,9 +123,9 @@
 									</td>
 								@endif
 							@else
-								<td style="vertical-align: middle;">{{ old('names.' . $item->id) ?: $item->name }}</td>
+								<td>{{ old('names.' . $item->id) ?: $item->name }}</td>
 
-								<td width="1px" style="vertical-align: middle;">
+								<td width="1px">
 
 									<a href="{{ route($route['edit'], $item) }}" class="btn btn-primary">
 										<span class="fa fa-eye"></span>
