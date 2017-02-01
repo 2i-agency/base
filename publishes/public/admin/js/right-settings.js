@@ -3,91 +3,106 @@ $(function () {
 		$container = $('#js-right-container'),
 		$body = $container.find('.js-body');
 
-function initForm() {
-	$('[data-hover="tooltip"]').tooltip();
-	$('[data-toggle="popover"]').popover({
-		html: true,
-		trigger: 'hover'
-	});
-
-	$('#js-btn-add-right').click(function () {
-
-		$.ajax({
-			url: $('#js-add-right').data('url'),
-			type: 'post',
-			data: {
-				'agent': $('#js-new-agent').val(),
-				'ability_agent': $('#js-new-ability').val(),
-				'ability': $button.data('ability'),
-				'id': $button.data('id'),
-				'model': $button.data('model')
-			},
-
-			success: function (data) {
-				if (data != "") {
-					$body.html(data);
-
-					initForm();
-				}
-
-			}
-		});
-	});
-
-	$('.js-btn-update-right').click(function () {
-
-		$.ajax({
-			url: $(this).data('url'),
-			type: 'post',
-			data: {
-				'agent': $(this).data('agent'),
-				'ability_agent': $('#js-update-agent-' + $(this).data('agent')).val(),
-				'ability': $button.data('ability'),
-				'id': $button.data('id'),
-				'model': $button.data('model')
-			},
-
-			success: function (data) {
-				if (data != "") {
-					$body.html(data);
-
-					initForm();
-				}
-
-			}
+	function initForm() {
+		$('#js-error-right').addClass('hidden');
+		$('[data-hover="tooltip"]').tooltip();
+		$('[data-toggle="popover"]').popover({
+			html: true,
+			trigger: 'hover'
 		});
 
-	});
+		$('#js-btn-add-right').click(function () {
 
-	$('.js-btn-delete-right').click(function () {
+			$.ajax({
+				url: $('#js-add-right').data('url'),
+				type: 'post',
+				data: {
+					'agent': $('#js-new-agent').val(),
+					'ability_agent': $('#js-new-ability').val(),
+					'ability': $button.data('ability'),
+					'id': $button.data('id'),
+					'model': $button.data('model')
+				},
 
-		$.ajax({
-			url: $(this).data('url'),
-			type: 'post',
-			data: {
-				'agent': $(this).data('agent'),
-				'ability_agent': $('#js-update-agent-' + $(this).data('agent')).val(),
-				'ability': $button.data('ability'),
-				'id': $button.data('id'),
-				'model': $button.data('model')
-			},
+				success: function (data) {
+					if (data != "") {
+						$body.html(data);
 
-			success: function (data) {
-				if (data != "") {
-					$body.html(data);
+						initForm();
+					}
+				},
 
-					initForm();
+				statusCode:{
+					403: function(){
+						$('#js-error-right').text('Вы не можете редактировать права').removeClass('hidden');
+					}
 				}
-
-			}
+			});
 		});
 
-	});
+		$('.js-btn-update-right').click(function () {
 
-}
+			$.ajax({
+				url: $(this).data('url'),
+				type: 'post',
+				data: {
+					'agent': $(this).data('agent'),
+					'ability_agent': $('#js-update-agent-' + $(this).data('agent')).val(),
+					'ability': $button.data('ability'),
+					'id': $button.data('id'),
+					'model': $button.data('model')
+				},
 
+				success: function (data) {
+					if (data != "") {
+						$body.html(data);
 
+						initForm();
+					}
 
+				},
+
+				statusCode:{
+					403: function(){
+						$('#js-error-right').text('Вы не можете редактировать права').removeClass('hidden');
+					}
+				}
+			});
+
+		});
+
+		$('.js-btn-delete-right').click(function () {
+
+			$.ajax({
+				url: $(this).data('url'),
+				type: 'post',
+				data: {
+					'agent': $(this).data('agent'),
+					'ability_agent': $('#js-update-agent-' + $(this).data('agent')).val(),
+					'ability': $button.data('ability'),
+					'id': $button.data('id'),
+					'model': $button.data('model')
+				},
+
+				success: function (data) {
+					if (data != "") {
+						$body.html(data);
+
+						initForm();
+					}
+
+				},
+
+				statusCode:{
+					403: function(){
+						$('#js-error-right').text('Вы не можете редактировать права').removeClass('hidden');
+					}
+				}
+			});
+
+		});
+
+	}
 
 	$button.magnificPopup({
 		items: {
@@ -99,6 +114,8 @@ function initForm() {
 
 		callbacks: {
 			beforeOpen: function() {
+				$('#js-error-right').addClass('hidden');
+
 				$.ajax({
 					url: $button.data('url'),
 					type: 'post',
@@ -115,6 +132,12 @@ function initForm() {
 							initForm();
 						}
 
+					},
+
+					statusCode:{
+						403: function(){
+							$('#js-error-right').text('Вы не можете редактировать права').removeClass('hidden');
+						}
 					}
 				});
 			},

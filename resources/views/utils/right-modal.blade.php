@@ -31,6 +31,7 @@
 
 			</div>
 
+			<div id="js-error-right" class="alert alert-danger hidden"></div>
 		</div>
 	</div>
 @endif
