@@ -55,7 +55,7 @@
 						data-placement="right"
 						title="{{ $is_role ? 'Роль' : 'Пользователь' }}"
 					></span>
-					{{ $is_role ? $agent->agentable()->first()->name : $agent->agentable()->first()->name }}
+					{{ $is_role ? $agent->agentable()->first()->name : $agent->agentable()->first()->getName() }}
 				</td>
 				<td>
 					<select class="form-control" name="new-ability" id="js-update-agent-{{ $agent->id }}">
