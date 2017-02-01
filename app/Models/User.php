@@ -375,13 +375,13 @@ class User extends Authenticatable
 	 *
 	 * @return Builder
 	 */
-	public function ScopeIsRootAdmin(Builder $builder) {
+	public function ScopeIsRootAdmin($query) {
 
 		if (\Auth::user()->id == 1) {
-			return $builder;
+			return $query;
 		}
 
-		return $builder->where('id', '<>', 1);
+		return $query->where('id', '<>', 1);
 	}
 
 
