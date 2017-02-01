@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
 use Auth;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Модель пользователя
@@ -50,6 +51,65 @@ class User extends Authenticatable
 		'is_blocked'    => true,
 		'is_admin'      => false
 	];
+
+
+	/**
+	 * Проверяем возможности у моделей
+	 *
+	 * @param      $ability
+	 * @param null $models
+	 *
+	 * @return bool
+	 */
+	protected function hasAccessModels($ability, $models = NULL) {
+		/** Если передана модель или коллекция моделей */
+		if (!is_null($models)) {
+
+			/** Если передана одна модель, оборачиаем её в коллекцию, для удобства */
+			if ($models instanceof Model) {
+				$models = (new Collection())->add($models);
+			}
+
+			/** Проходимся по всем переданным моделям */
+			foreach ($models as $model) {
+
+				/** Если пользователь создатель переданной модели */
+				if ($model->creator_id == $this->id) {
+					return true;
+				}
+
+				/** Если у модели есть связь с агентами */
+				if (method_exists($model, 'agents')) {
+					$abilities = $model
+						->agents()
+						->where('id', $this
+							->agents()
+							->pluck('id')
+							->toArray()
+						)
+						->pluck('ability_id')
+						->toArray();
+
+					/** Проверяем все связанные возможности */
+					foreach ($abilities as $value) {
+
+						/** Пространство имён проверяемой и переданной совпадают */
+						if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
+
+							/** Приоритет проверямеой выше чем переданной */
+							if (Ability::getPriority($value, $ability)) {
+								return true;
+							}
+
+						}
+					}
+				}
+
+			}
+		}
+
+		return false;
+	}
 
 
 	/**
@@ -94,6 +154,15 @@ class User extends Authenticatable
 		return $this->belongsToMany(Role::class, 'base_roles_users');
 	}
 
+	/**
+	 * Агенты
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+	 */
+	public function agents() {
+		return $this->morphMany(Agent::class, 'agent');
+	}
+
 
 	/**
 	 * Хеширование пароля
@@ -120,12 +189,11 @@ class User extends Authenticatable
 
 	/**
 	 * Можно ли сменить доступ в админ-центр (пользователь не может отключить сам себя)
-	 * Алиас для метода isCanBeBlocked.
 	 *
 	 * @return bool
 	 */
 	public function isCanBeAdminChanged() {
-		return $this->isCanBeBlocked();
+		return !$this->is(Auth::user());
 	}
 
 
@@ -147,22 +215,40 @@ class User extends Authenticatable
 	 * @return bool
 	 */
 	public function hasAccess($abilityNamespace) {
-		if (
-		$this
-			->abilities()
-			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
-			->count()
-		) {
-			/** Если есть связь хотя бы с одной возможностью из пространства имён */
+
+		/** Пользователь с id = 1 имеет доступ везде */
+		if ($this->id == 1) {
 			return true;
-		} else {
-			foreach ($this->roles()->get([ 'id' ]) as $role) {
-				if ($role->hasAccess($abilityNamespace)) {
-					return true;
-				}
+		}
+
+		/** Если есть связь хотя бы с одной возможностью из пространства имён */
+		if (
+			$this
+				->abilities()
+				->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
+				->count()
+		) {
+			return true;
+		}
+
+		/** Если есть агент с возможностью из пространства имён */
+		if (
+			$this
+				->agents()
+				->where('ability_id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
+				->count()
+		) {
+			return true;
+		}
+
+		/** Проверяем доступ у ролей, привязанных к пользователю */
+		foreach ($this->roles()->get([ 'id' ]) as $role) {
+			if ($role->hasAccess($abilityNamespace)) {
+				return true;
 			}
 		}
 
+		/** В ином случае у пользователя нет доступа */
 		return false;
 	}
 
@@ -170,24 +256,19 @@ class User extends Authenticatable
 	/**
 	 * Проверка наличия возможности
 	 *
-	 * @param array|string $ability возможности
+	 * @param array|string          $ability возможности
+	 * @param null|Model|Collection $models модель или коллекция моделей
 	 *
 	 * @return bool
 	 */
-	public function hasAbility($ability, $model = NULL) {
+	public function hasAbility($ability, $models = NULL) {
 
+		/** Пользователь с id = 1 есть возможность */
 		if ($this->id == 1) {
 			return true;
 		}
 
-		if (
-			!is_null($model)
-			&& ($model instanceof Model)
-			&& ($model->creator_id == $this->id))
-		{
-			return true;
-		}
-
+		/** Если у пользователя есть связь с возможностью */
 		if ($this
 			->abilities()
 			->where('id', $ability)
@@ -198,10 +279,14 @@ class User extends Authenticatable
 
 		/** Если есть связи с другими возможностями из этого пространства имён */
 		if ($this->hasAccess($ability)) {
+
+			/** Проверяем все связанные возможности */
 			foreach ($this->abilities()->pluck('id') as $value) {
 
+				/** Пространство имён проверяемой и переданной совпадают */
 				if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
 
+					/** Приоритет проверямеой выше чем переданной */
 					if (Ability::getPriority($value, $ability)) {
 						return true;
 					}
@@ -211,6 +296,7 @@ class User extends Authenticatable
 
 		}
 
+		/** Проверяем возможности у ролей связанных с пользователем */
 		foreach ($this->roles()->get([ 'id' ]) as $role) {
 
 			if ($role->hasAbility($ability)) {
@@ -218,6 +304,12 @@ class User extends Authenticatable
 			}
 		}
 
+		/** Проверяем возможности у моделей */
+		if ($this->hasAccessModels($ability, $models)) {
+			return true;
+		}
+
+		/** В ином случае у пользователя нет возможности */
 		return false;
 	}
 
@@ -245,36 +337,44 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function hasAdminAccess($abilities, $model = NULL) {
+	public function hasAdminAccess($abilities, $models = NULL) {
 
-		if (
-			!is_null($model)
-			&& ($model instanceof Model)
-			&& isset($model->created_at)
-			&& $model->creator_id == $this->id
-		) {
-			return true;
-		}
-
+		/** Пользователь с id = 1 администратор */
 		if ($this->id == 1) {
 			return true;
 		}
 
+		/** Если передана одна возможность, оборачиваем её в массив для удобства */
 		if (!is_array($abilities)) {
 			$abilities = [ $abilities ];
 		}
 
+		/** Проверяем все переданные возможности */
 		foreach ($abilities as $ability) {
+			$admin_ability = Ability::detectNamespace($ability) . Ability::getAdminPostfix($ability, true);
 
-			if ($this->hasAbility(Ability::detectNamespace($ability) . Ability::getAdminPostfix($ability, true))) {
+			if ($this->hasAbility($admin_ability)) {
+				return true;
+			}
+
+			/** Проверяем возможности у моделей */
+			if ($this->hasAccessModels($admin_ability, $models)) {
 				return true;
 			}
 		}
 
+		/** В ином случае у пользователя нет административного доступа */
 		return false;
 	}
 
 
+	/**
+	 * Заготовка запроса для исключения пользователя с id = 1 если запрашивает не он
+	 *
+	 * @param Builder $builder
+	 *
+	 * @return Builder
+	 */
 	public function ScopeIsRootAdmin(Builder $builder) {
 
 		if (\Auth::user()->id == 1) {

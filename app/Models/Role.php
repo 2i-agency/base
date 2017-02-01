@@ -6,6 +6,7 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToDeleter;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
 use Chunker\Base\Models\Traits\IsRelatedWith;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -48,6 +49,16 @@ class Role extends Model
 
 
 	/**
+	 * Агенты
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+	 */
+	public function agents() {
+		return $this->morphMany(Agent::class, 'agent');
+	}
+
+
+	/**
 	 * Пользователи
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -65,10 +76,29 @@ class Role extends Model
 	 * @return bool
 	 */
 	public function hasAccess($abilityNamespace) {
-		return (bool)$this
-			->abilities()
-			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
-			->count();
+
+		/** Если есть связь хотя бы с одной возможностью из пространства имён */
+		if (
+			$this
+				->abilities()
+				->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
+				->count()
+		) {
+			return true;
+		}
+
+		/** Если есть агент с возможностью из пространства имён */
+		if (
+		$this
+			->agents()
+			->where('ability_id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
+			->count()
+		) {
+			return true;
+		}
+
+		/** В ином случае у роли нет доступа */
+		return false;
 	}
 
 
@@ -79,15 +109,77 @@ class Role extends Model
 	 *
 	 * @return bool
 	 */
-	public function hasAbility($abilities) {
-		if (!is_array($abilities)) {
-			$abilities = [ $abilities ];
+	public function hasAbility($ability, $models = NULL) {
+		if (
+			$this
+				->abilities()
+				->where('id', $ability)
+				->count()
+		) {
+			return true;
 		}
 
-		return (bool)$this
-			->abilities()
-			->whereIn('id', $abilities)
-			->count();
+		/** Если есть связи с другими возможностями из этого пространства имён */
+		if ($this->hasAccess($ability)) {
+
+			/** Проверяем все связанные возможности */
+			foreach ($this->abilities()->pluck('id') as $value) {
+
+				/** Пространство имён проверяемой и переданной совпадают */
+				if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
+
+					/** Приоритет проверямеой выше чем переданной */
+					if (Ability::getPriority($value, $ability)) {
+						return true;
+					}
+
+				}
+			}
+
+		}
+
+		/** Если передана модель или коллекциЯ моделей */
+		if (!is_null($models)) {
+
+			/** Если передана одна модель, оборачиаем её в коллекцию, для удобства */
+			if ($models instanceof Model) {
+				$models = (new Collection())->add($models);
+			}
+
+			/** Проходимся по всем переданным моделям */
+			foreach ($models as $model) {
+
+				/** Если у модели есть связь с агентами */
+				if (method_exists($model, 'agents')) {
+					$abilities = $model
+						->agents()
+						->where('id', $this
+							->agents()
+							->pluck('id')
+							->toArray()
+						)
+						->pluck('ability_id')
+						->toArray();
+
+					/** Проверяем все связанные возможности */
+					foreach ($abilities as $value) {
+
+						/** Пространство имён проверяемой и переданной совпадают */
+						if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
+
+							/** Приоритет проверямеой выше чем переданной */
+							if (Ability::getPriority($value, $ability)) {
+								return true;
+							}
+
+						}
+					}
+				}
+
+			}
+		}
+
+		return false;
 	}
 
 
