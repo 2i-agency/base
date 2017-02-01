@@ -82,7 +82,7 @@ class User extends Authenticatable
 				if (method_exists($model, 'agents')) {
 					$abilities = $model
 						->agents()
-						->where('id', $this
+						->whereIn('id', $this
 							->agents()
 							->pluck('id')
 							->toArray()
