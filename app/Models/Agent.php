@@ -10,6 +10,8 @@ class Agent extends Model
 
 	/** @var array поля для массового присвоения атрибутов */
 	protected $fillable = [
+		'agent_id',
+		'agent_type',
 		'model_id',
 		'model_type',
 		'ability_id'
@@ -33,6 +35,12 @@ class Agent extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
 	 */
 	public function agentable()
+	{
+		return $this->morphTo('agent');
+	}
+
+
+	public function models()
 	{
 		return $this->morphTo('model');
 	}

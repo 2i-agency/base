@@ -68,11 +68,11 @@ class RightsController extends Controller
 
 		$agent = Agent::create([
 			'ability_id' => $request->ability_agent,
-			'model_id'   => array_last(explode(':', $agent)),
-			'model_type' => $agent_class,
+			'agent_id'   => array_last(explode(':', $agent)),
+			'agent_type' => $agent_class,
 		]);
 
-		$model->agents()->attach($agent->id);
+		$model->agents()->save($agent);
 
 		return $this->index($request);
 	}

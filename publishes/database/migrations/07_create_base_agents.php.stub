@@ -22,12 +22,25 @@ class CreateBaseAgents extends Migration
 
 			/** Ключ связанной модели роли или пользователя */
 			$table
-				->integer('model_id')
+				->integer('agent_id')
 				->unsigned()
 				->index()
 				->comment('Ключ связанной модели');
 
 			/** Тип связанной модели роли или пользователя */
+			$table
+				->string('agent_type')
+				->index()
+				->comment('Тип связанной модели');
+
+			/** Ключ связанной модели */
+			$table
+				->integer('model_id')
+				->unsigned()
+				->index()
+				->comment('Ключ связанной модели');
+
+			/** Тип связанной модели */
 			$table
 				->string('model_type')
 				->index()

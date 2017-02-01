@@ -48,14 +48,14 @@
 		@foreach($agents as $agent)
 			<tr class="vertical-middle">
 				<td>
-					@php($is_role = $agent->model_type == \Chunker\Base\Models\Role::class)
+					@php($is_role = $agent->agent_type == \Chunker\Base\Models\Role::class)
 					<span
 						class="fa fa-{{ $is_role ? 'users' : 'user' }}"
 						data-hover="tooltip"
 						data-placement="right"
 						title="{{ $is_role ? 'Роль' : 'Пользователь' }}"
 					></span>
-					{{ $is_role ? $agent->agentable()->first()->name : $agent->agentable()->first()->getName() }}
+					{{ $is_role ? $agent->agentable()->first()->name : $agent->agentable()->first()->name }}
 				</td>
 				<td>
 					<select class="form-control" name="new-ability" id="js-update-agent-{{ $agent->id }}">
