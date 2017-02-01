@@ -12,17 +12,34 @@ use App\Http\Controllers\Controller;
 class RightsController extends Controller
 {
 	/**
+	 * Возвращает административную возможность из пространства имён переданной
+	 *
+	 * @param $ability
+	 *
+	 * @return mixed|string
+	 */
+	protected function getAbility($ability) {
+		$ability = array_first(explode('.', $ability));
+		$ability .= Ability::getAdminPostfix($ability, true);
+
+		return $ability;
+	}
+
+
+	/**
 	 * Список пользователей
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
 	public function index(Request $request) {
+		/** Создаём модель */
 		$model = new $request->model;
-
 		$model = $model->where($model->getRouteKeyName(), $request->id)->first();
 
-		$this->authorize($request->ability, $model);
+		/** Проверяем доступ к модели */
+		$this->authorize($this->getAbility($request->ability), $model);
 
+		/** Фильтруем агентов, которые уже добавлены */
 		$agents = $model->agents()->get();
 		$exclude_agents = [
 			'roles' => [],
@@ -61,6 +78,8 @@ class RightsController extends Controller
 		$model = new $request->model;
 		$model = $model->where($model->getRouteKeyName(), $request->id)->first();
 
+		$this->authorize($this->getAbility($request->ability), $model);
+
 		$agent = $request->agent;
 		if (array_first(explode(':', $agent)) == 'user') {
 			$agent_class = User::class;
@@ -80,6 +99,11 @@ class RightsController extends Controller
 
 	public function update(Request $request) {
 
+		$model = new $request->model;
+		$model = $model->where($model->getRouteKeyName(), $request->id)->first();
+
+		$this->authorize($this->getAbility($request->ability), $model);
+
 		Agent::find($request->agent)->update(['ability_id' => $request->ability_agent]);
 
 		return $this->index($request);
@@ -87,6 +111,11 @@ class RightsController extends Controller
 
 
 	public function delete(Request $request) {
+
+		$model = new $request->model;
+		$model = $model->where($model->getRouteKeyName(), $request->id)->first();
+
+		$this->authorize($this->getAbility($request->ability), $model);
 
 		Agent::destroy($request->agent);
 
