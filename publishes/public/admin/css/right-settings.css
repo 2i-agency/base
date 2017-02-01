@@ -1,0 +1,16 @@
+/* стили для всплывающих уведомлений */
+.white-popup
+{
+	position: relative;
+	max-width: 500px;
+	width: auto;
+	margin: 20px auto;
+	padding: 20px;
+}
+.mfp-close {
+	right: 20px;
+	top: 20px;
+}
+.mfp-close:active {
+	top: 21px;
+}

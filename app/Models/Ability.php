@@ -21,6 +21,22 @@ class Ability extends Model
 	];
 
 
+	public static function getName($ability = NULL) {
+		$postfix = array_last(explode('.', $ability));
+
+		if ($postfix == 'admin') {
+			return 'Администрирование';
+		}
+		if ($postfix == 'edit') {
+			return 'Правка';
+		}
+		if ($postfix == 'view') {
+			return 'Просмотр';
+		}
+		return 'Нет доступа';
+	}
+
+
 	/**
 	 * Возвращает массив действий, доступных для возможности
 	 *

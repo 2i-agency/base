@@ -1,21 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: boldyreva
- * Date: 20.01.17
- * Time: 12:20
- */
+namespace Chunker\Base\Models;
 
-namespace chunker\base\app\Models;
-
-
-use Chunker\Base\Models\Ability;
 use Illuminate\Database\Eloquent\Model;
 
 class Agent extends Model
 {
 	/** @var string имя таблицы */
 	protected $table = 'base_agents';
+
+	/** @var array поля для массового присвоения атрибутов */
+	protected $fillable = [
+		'model_id',
+		'model_type',
+		'ability_id'
+	];
+
+	public $timestamps = false;
 
 	/**
 	 * Связь агента с возможностью
@@ -34,6 +34,6 @@ class Agent extends Model
 	 */
 	public function agentable()
 	{
-		return $this->morphTo();
+		return $this->morphTo('model');
 	}
 }

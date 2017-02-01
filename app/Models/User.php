@@ -5,6 +5,7 @@ namespace Chunker\Base\Models;
 use Chunker\Base\Models\Traits\IsRelatedWith;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
@@ -271,6 +272,16 @@ class User extends Authenticatable
 		}
 
 		return false;
+	}
+
+
+	public function ScopeIsRootAdmin(Builder $builder) {
+
+		if (\Auth::user()->id == 1) {
+			return $builder;
+		}
+
+		return $builder->where('id', '<>', 1);
 	}
 
 
