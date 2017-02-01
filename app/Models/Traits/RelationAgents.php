@@ -11,7 +11,10 @@ trait RelationAgents
 
 	public function ScopeOnlyAccess($query, $ability) {
 
-		if (\Auth::user()->id == 1) {
+		if (
+			(\Auth::user()->id == 1)
+			|| \Auth::user()->hasAccess($ability, false)
+		) {
 			return $query;
 		}
 

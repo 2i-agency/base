@@ -210,11 +210,12 @@ class User extends Authenticatable
 	/**
 	 * Проверка доступа
 	 *
-	 * @param string $abilityNamespace пространство имён возможности
+	 * @param      $abilityNamespace
+	 * @param bool $with_agents
 	 *
 	 * @return bool
 	 */
-	public function hasAccess($abilityNamespace) {
+	public function hasAccess($abilityNamespace, $with_agents = true) {
 
 		/** Пользователь с id = 1 имеет доступ везде */
 		if ($this->id == 1) {
@@ -233,7 +234,8 @@ class User extends Authenticatable
 
 		/** Если есть агент с возможностью из пространства имён */
 		if (
-			$this
+			$with_agents
+			 && $this
 				->agents()
 				->where('ability_id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
 				->count()
