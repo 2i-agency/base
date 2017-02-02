@@ -74,9 +74,11 @@ trait Migrator
 
 				$this->upMigrates($path . 'database/migrations/', $file);
 
-				$this->publishes([
-					$path . 'database/seeds/' => database_path('/seeds/')
-				], $file);
+				if (file_exists($path . 'database/seeds')) {
+					$this->publishes([
+						$path . 'database/seeds/' => database_path('/seeds/')
+					], $file);
+				}
 
 			} else {
 				$this->publishes([ $path . $file => base_path($file) ], $file);
