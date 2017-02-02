@@ -46,13 +46,16 @@ class RightsController extends Controller
 			'users' => []
 		];
 
-		foreach ($agents as $agent) {
+		$foreach_agents = $agents;
+		foreach ($foreach_agents as $key => $agent) {
 			$exclude_agent = $agent->agentable()->first();
 
 			if ($exclude_agent instanceof Role) {
 				$exclude_agents['roles'][] = $exclude_agent->id;
 			} elseif ($exclude_agent instanceof User) {
 				$exclude_agents['users'][] = $exclude_agent->id;
+			} elseif (is_null($exclude_agent)) {
+				unset($agents[$key]);
 			}
 
 		}
