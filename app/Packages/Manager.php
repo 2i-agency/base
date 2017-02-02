@@ -2,6 +2,8 @@
 
 namespace Chunker\Base\Packages;
 
+use Chunker\Base\Models\Ability;
+
 /**
  * Менеджер пакетов chunker
  *
@@ -91,6 +93,43 @@ class Manager
 	 */
 	public function getMenuItems($packageName = NULL){
 		return $this->collectDataFromPackages('menuItems', $packageName);
+	}
+
+
+	/**
+	 * Проверка активности пункта меню
+	 *
+	 * @param string $ability возможность по которой будет проходить поиск пункта меню
+	 *
+	 * @return bool
+	 */
+	public function isActiveSection($ability) {
+
+		foreach (config('chunker.admin.structure') as $parent) {
+
+			if (isset($parent[ 'children' ])) {
+
+				foreach ($parent[ 'children' ] as $child) {
+
+					if (is_array($child) || ( $child != '' )) {
+						if (is_string($child)) {
+							$child = $this->getMenuItems()[ $child ];
+						}
+
+						if (!isset($child[ 'policy' ]) || \Auth::user()->can($child[ 'policy' ])) {
+							if (Ability::detectNamespace($child[ 'policy' ]) == Ability::detectNamespace($ability)) {
+								return true;
+							}
+						}
+					}
+
+				}
+
+			}
+
+		}
+
+		return false;
 	}
 
 
