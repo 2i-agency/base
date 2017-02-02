@@ -1,6 +1,7 @@
 <?php
 namespace Chunker\Base\Models\Traits;
 
+use Chunker\Base\Models\Ability;
 use Chunker\Base\Models\Agent;
 
 trait RelationAgents
@@ -22,7 +23,7 @@ trait RelationAgents
 			::user()
 			->agents()
 			->where('model_type', get_class($this))
-			->where('ability_id', $ability)
+			->where('ability_id', 'like', '%' . Ability::detectNamespace($ability) . '%')
 			->pluck('model_id')
 			->toArray();
 
