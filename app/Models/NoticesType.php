@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class NoticesType extends Model
 {
-	use Nullable, BelongsToEditors, SoftDeletes, BelongsToDeleter;
+	use Nullable, BelongsToEditors, BelongsToDeleter;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_notices_types';
