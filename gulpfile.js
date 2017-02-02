@@ -53,7 +53,8 @@ elixir(function(mix) {
 
 			'base/actualize-collapse-indicator.js',
 			'base/get-tinymce-config.js',
-			'base/init.js'
+			'base/init.js',
+			'base/right-settings.js'
 
 		], './publishes/public/admin/js/base.js')
 

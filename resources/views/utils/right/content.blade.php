@@ -51,9 +51,9 @@
 					@php($is_role = $agent->agent_type == \Chunker\Base\Models\Role::class)
 					<span
 						class="fa fa-{{ $is_role ? 'users' : 'user' }}"
-						data-toggle="popover"
-						data-content="{{ $is_role ? 'Роль' : 'Пользователь' }}"
-						data-placement="right"
+						data-hover="tooltip"
+						title="{{ $is_role ? 'Роль' : 'Пользователь' }}"
+						data-placement="top"
 					></span>
 					{{ $is_role ? $agent->agentable()->first()->name : $agent->agentable()->first()->getName() }}
 				</td>

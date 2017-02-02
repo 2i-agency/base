@@ -2,9 +2,14 @@
 	{{--Кнопка прав--}}
 	<span
 		class="fa fa-star fa-fw{!! isset($right) && $right ? ' pull-right' : NULL !!}"
-		data-toggle="popover"
-		data-content="Настройка прав"
+		{{--Подсказка--}}
+		data-hover="tooltip"
+		title="Настройка прав"
 		data-placement="left"
+
+		data-toggle="modal"
+		data-target="#js-right-container"
+
 		id="js-right-button"
 		type="button"
 		data-url="{{ route('admin.rights') }}"
