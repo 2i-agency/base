@@ -71,7 +71,7 @@ class RightsController extends Controller
 		$ability = Ability::detectNamespace($request->ability);
 		$postfixes = array_reverse(Ability::getPostfixes($ability));
 
-		return view('base::utils.right', compact('postfixes', 'roles', 'users', 'agents', 'ability'));
+		return view('base::utils.right.content', compact('postfixes', 'roles', 'users', 'agents', 'ability'));
 	}
 
 
