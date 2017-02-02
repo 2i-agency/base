@@ -59,11 +59,6 @@
 				</td>
 				<td>
 					<select class="form-control" name="new-ability" id="js-update-agent-{{ $agent->id }}">
-						@include('base::utils.ability-trigger', [
-							'is_selected' => isset($agent->ability_id),
-							'ability' => $ability,
-							'label' => 'Нет доступа'
-						])
 						@foreach($postfixes as $postfix)
 							@include('base::utils.ability-trigger', [
 								'is_selected' => $ability . '.' . $postfix == $agent->ability_id,
