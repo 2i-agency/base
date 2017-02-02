@@ -15,7 +15,11 @@
 	<form action="{{ route('admin.users.update-abilities', ['user' => $user]) }}" method="POST">
 		<input type="hidden" name="_method" value="PUT">
 
-		@if(isset($user) && $user->roles()->count() || \Auth::user()->hasAdminAccess('roles'))
+		@if(
+			isset($user)
+			&& $user->roles()->count()
+			&& app('Packages')->isActiveSection('articles-categories')
+		)
 			{{--Роли--}}
 			<div class="list-group">
 				<div class="form-group list-group-item">
