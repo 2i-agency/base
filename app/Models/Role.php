@@ -8,7 +8,6 @@ use Chunker\Base\Models\Traits\Comparable;
 use Chunker\Base\Models\Traits\IsRelatedWith;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Модель роли
@@ -16,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Role extends Model
 {
-	use BelongsToEditors, Comparable, IsRelatedWith, SoftDeletes, BelongsToDeleter;
+	use BelongsToEditors, Comparable, IsRelatedWith, BelongsToDeleter;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_roles';

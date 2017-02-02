@@ -4,6 +4,7 @@ namespace Chunker\Base\Models\Traits\BelongsTo;
 
 use Chunker\Base\Models\User;
 use Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Трейт для подключения связи с пользователем, создавшем модель
@@ -12,6 +13,7 @@ use Auth;
  */
 trait BelongsToDeleter
 {
+	use SoftDeletes;
 
 	/**
 	 * Пользователь-создатель
