@@ -91,6 +91,12 @@ trait Slugs
 
 					}
 
+					if (is_null($slug)) {
+						$class_name = __CLASS__;
+						$class_name = array_last(explode('\\', $class_name));
+						throw new \Error('Поле slug не может быть null. Модель ' . $class_name . ' (' . __CLASS__ . ') ');
+					}
+
 					$instance->slug = str_slug($slug);
 				}
 
