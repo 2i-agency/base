@@ -41,7 +41,6 @@
 <div class="container">
     <div class="content">
         <div class="title">Страница не найдена.</div>
-        Вернуться на <a href="{{ back() }}">назад</a>.
     </div>
 </div>
 </body>
