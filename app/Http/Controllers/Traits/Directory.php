@@ -82,7 +82,7 @@ trait Directory
 	 *
 	 * @return mixed
 	 */
-	protected function getModelById($id){
+	protected function getModelById($id) {
 		$model = new $this->model;
 		$route_key_name = $model->getRouteKeyName();
 
@@ -93,7 +93,7 @@ trait Directory
 	/**
 	 * Показывает список всех элементов каталога
 	 */
-	function index(){
+	function index() {
 		$this->authorize($this->abilities[ 'view' ]);
 
 		$model = $this->model;
@@ -108,7 +108,7 @@ trait Directory
 	/**
 	 * Сохранение нового элемента каталога
 	 */
-	function store(Request $request){
+	function store(Request $request) {
 		$this->authorize($this->abilities[ 'edit' ]);
 		$this->validate($request, $this->rules, $this->validateMessages);
 
@@ -124,7 +124,7 @@ trait Directory
 	/**
 	 * Обновление существующих элементов каталога
 	 */
-	function save(Request $request){
+	function save(Request $request) {
 		$this->authorize($this->abilities[ 'edit' ]);
 
 		$model = $this->model;
@@ -157,7 +157,7 @@ trait Directory
 	/**
 	 * Редактирование отдельного элемента каталога
 	 */
-	function editOne(Request $request){
+	function editOne(Request $request) {
 		$this->authorize($this->abilities[ 'view' ]);
 
 		$id = $request->id;
@@ -171,7 +171,7 @@ trait Directory
 	/**
 	 * Обновление отдельного элемента каталога
 	 */
-	function saveOne(Request $request){
+	function saveOne(Request $request) {
 		$this->authorize($this->abilities[ 'edit' ]);
 		/** Подставляем в условие для валидации ключ элемента */
 		$rule = isset($this->rules[ 'names.*' ]) ? $this->rules[ 'names.*' ] . $request->id : '';
@@ -195,7 +195,7 @@ trait Directory
 	 *
 	 * @param Request $request
 	 */
-	function destroyOne(Request $request){
+	function destroyOne(Request $request) {
 		$this->authorize($this->abilities[ 'admin' ]);
 
 		$this->getModelById($request->id)->delete();
@@ -212,7 +212,7 @@ trait Directory
 	 *
 	 * @param Request $request
 	 */
-	public function positioning(Request $request){
+	public function positioning(Request $request) {
 		$this->authorize($this->abilities[ 'edit' ]);
 		$this->setPositions($request, $this->model);
 	}
@@ -223,7 +223,7 @@ trait Directory
 	 *
 	 * @param Request $request
 	 */
-	public function restore(Request $request){
+	public function restore(Request $request) {
 
 		$model = new $this->model;
 
