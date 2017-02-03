@@ -11,14 +11,6 @@ trait RelationAgents
 	}
 
 	public function ScopeOnlyAccess($query, $ability) {
-
-		if (
-			(\Auth::user()->id == 1)
-			|| \Auth::user()->hasAccess($ability, false)
-		) {
-			return $query;
-		}
-
 		$allow_access = \Auth
 			::user()
 			->agents()
@@ -27,7 +19,22 @@ trait RelationAgents
 			->pluck('model_id')
 			->toArray();
 
-		return $query->whereIn('id', $allow_access);
+		if (
+			(
+				(\Auth::user()->id == 1)
+				|| \Auth::user()->hasAccess($ability, false)
+			)
+			&& !\Auth
+				::user()
+				->agents()
+				->whereNull('ability_id')
+				->count()
+		) {
+			return $query;
+		} else {
+			return $query->whereIn('id', $allow_access);
+		}
+
 
 	}
 }

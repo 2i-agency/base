@@ -25,6 +25,11 @@
 			</td>
 			<td>
 				<select class="form-control" name="new-ability" id="js-new-ability">
+					@include('base::utils.ability-trigger', [
+						'is_selected' => isset($agent->ability_id),
+						'ability' => '',
+						'label' => 'Доступ закрыт'
+					])
 					@foreach($postfixes as $postfix)
 						@include('base::utils.ability-trigger', [
 							'is_selected' => false,
@@ -59,6 +64,11 @@
 				</td>
 				<td>
 					<select class="form-control" name="new-ability" id="js-update-agent-{{ $agent->id }}">
+						@include('base::utils.ability-trigger', [
+							'is_selected' => isset($agent->ability_id),
+							'ability' => '',
+							'label' => 'Доступ закрыт'
+						])
 						@foreach($postfixes as $postfix)
 							@include('base::utils.ability-trigger', [
 								'is_selected' => $ability . '.' . $postfix == $agent->ability_id,

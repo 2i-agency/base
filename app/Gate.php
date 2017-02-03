@@ -25,26 +25,17 @@ class Gate extends BaseGate
 			return true;
 		}
 
-		/** Если переданы массив или коллекция, то пройтись по ним и проверить доступ отдельной модели */
-		if (count($arguments)) {
-			foreach ($arguments as $argument) {
-				if ($argument instanceof Model && $user->hasAbility($ability, $argument)) {
-					return true;
-				}
-			}
-		}
-
-		/** Проверка из стандартного Gate */
-		$arguments = is_array($arguments) ? $arguments : [$arguments];
-
-		if (is_null($result = $this->callBeforeCallbacks($user, $ability, $arguments))) {
-			$result = $this->callAuthCallback($user, $ability, $arguments);
-		}
-
-		$this->callAfterCallbacks(
-			$user, $ability, $arguments, $result
-		);
-
-		return $result;
+//		/** Проверка из стандартного Gate */
+//		$arguments = is_array($arguments) ? $arguments : [$arguments];
+//
+//		if (is_null($result = $this->callBeforeCallbacks($user, $ability, $arguments))) {
+//			$result = $this->callAuthCallback($user, $ability, $arguments);
+//		}
+//
+//		$this->callAfterCallbacks(
+//			$user, $ability, $arguments, $result
+//		);
+//
+//		return $result;
 	}
 }

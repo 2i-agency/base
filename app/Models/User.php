@@ -88,6 +88,10 @@ class User extends Authenticatable
 					/** Проверяем все связанные возможности */
 					foreach ($abilities as $value) {
 
+						if (is_null($value)) {
+							return NULL;
+						}
+
 						/** Пространство имён проверяемой и переданной совпадают */
 						if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
 
@@ -265,6 +269,14 @@ class User extends Authenticatable
 			return true;
 		}
 
+		/** Проверяем возможности у моделей */
+		$access_models = $this->hasAccessModels($ability, $models);
+
+		/** У модели доступ закрыт */
+		if (is_null($access_models)) {
+			return false;
+		}
+
 		/** Если у пользователя есть связь с возможностью */
 		if ($this
 			->abilities()
@@ -302,7 +314,7 @@ class User extends Authenticatable
 		}
 
 		/** Проверяем возможности у моделей */
-		if ($this->hasAccessModels($ability, $models)) {
+		if ($access_models) {
 			return true;
 		}
 

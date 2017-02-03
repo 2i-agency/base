@@ -1,10 +1,13 @@
 <?php
 namespace Chunker\Base\Models;
 
+use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Database\Eloquent\Model;
 
 class Agent extends Model
 {
+	use Nullable;
+
 	/** @var string имя таблицы */
 	protected $table = 'base_agents';
 
@@ -16,6 +19,8 @@ class Agent extends Model
 		'model_type',
 		'ability_id'
 	];
+
+	protected $nullable = [ 'ability_id' ];
 
 	public $timestamps = false;
 

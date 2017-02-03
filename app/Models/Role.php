@@ -150,6 +150,7 @@ class Role extends Model
 
 				/** Если у модели есть связь с агентами */
 				if (method_exists($model, 'agents')) {
+
 					$abilities = $model
 						->agents()
 						->where('id', $this
@@ -162,6 +163,10 @@ class Role extends Model
 
 					/** Проверяем все связанные возможности */
 					foreach ($abilities as $value) {
+
+						if(is_null($value)) {
+							return false;
+						}
 
 						/** Пространство имён проверяемой и переданной совпадают */
 						if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
