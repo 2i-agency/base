@@ -117,9 +117,11 @@ class Manager
 						}
 
 						if (
-							isset($child[ 'policy' ])
-							&& \Auth::user()->can($child[ 'policy' ])
-							&& Ability::detectNamespace($child[ 'policy' ]) == Ability::detectNamespace($ability)
+							!isset($child[ 'policy' ])
+							|| (
+								\Auth::user()->can($child[ 'policy' ])
+								&& Ability::detectNamespace($child[ 'policy' ]) == Ability::detectNamespace($ability)
+							)
 						) {
 							return true;
 						}
