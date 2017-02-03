@@ -73,6 +73,13 @@ class User extends Authenticatable
 			/** Проходимся по всем переданным моделям */
 			foreach ($models as $model) {
 
+				if (
+					($model instanceof User)
+					&& $model->id == \Auth::user()->id
+				) {
+					return true;
+				}
+
 				/** Если у модели есть связь с агентами */
 				if (method_exists($model, 'agents')) {
 					$abilities = $model
