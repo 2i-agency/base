@@ -25,5 +25,11 @@
 			'is_selected'    => $agent->hasAbility('users.edit'),
 		])
 
+		@include('base::utils.ability-trigger', [
+			'label'         => 'Администрирование',
+			'ability'       => 'users.admin',
+			'is_selected'    => $agent->hasAbility('users.admin'),
+		])
+
 	</select>
 </div>
