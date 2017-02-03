@@ -116,10 +116,12 @@ class Manager
 							$child = $this->getMenuItems()[ $child ];
 						}
 
-						if (!isset($child[ 'policy' ]) || \Auth::user()->can($child[ 'policy' ])) {
-							if (Ability::detectNamespace($child[ 'policy' ]) == Ability::detectNamespace($ability)) {
-								return true;
-							}
+						if (
+							isset($child[ 'policy' ])
+							&& \Auth::user()->can($child[ 'policy' ])
+							&& Ability::detectNamespace($child[ 'policy' ]) == Ability::detectNamespace($ability)
+						) {
+							return true;
 						}
 					}
 
