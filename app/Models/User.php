@@ -327,7 +327,7 @@ class User extends Authenticatable
 	public function can($ability, $arguments = []) {
 		return
 			$this->id == 1
-			|| $this->hasAdminAccess($ability)
+			|| $this->hasAbility($ability, $arguments)
 			|| app(Gate::class)->forUser($this)->check($ability, $arguments);
 	}
 
