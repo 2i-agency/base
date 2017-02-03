@@ -50,6 +50,7 @@ class CreateBaseAgents extends Migration
 			$table
 				->string('ability_id')
 				->index()
+				->nullable()
 				->comment('Ключ возможности');
 		});
 	}
