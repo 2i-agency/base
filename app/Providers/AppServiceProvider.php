@@ -43,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
 				'settings.edit' => 'Редактирование настроек',
 				'settings.view' => 'Просмотр настроек',
 
+				'users.admin' => 'Администрирование пользователей',
 				'users.edit' => 'Редактирование других пользователей',
 				'users.view' => 'Просмотр пользователей',
 

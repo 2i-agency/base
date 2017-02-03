@@ -16,9 +16,12 @@
 		<input type="hidden" name="_method" value="PUT">
 
 		@if(
-			isset($user)
-			&& $user->roles()->count()
-			&& app('Packages')->isActiveSection('articles-categories')
+			app('Packages')->isActiveSection('roles')
+			&& (
+				isset($user)
+				&& \Auth::user()->hasAdminAccess(['users', 'roles'])
+				|| $user->roles()->count()
+			)
 		)
 			{{--Роли--}}
 			<div class="list-group">
@@ -29,7 +32,7 @@
 						@foreach ($_roles as $_role)
 							@php($checked = (isset($user) && $user->isRelatedWith('roles', $_role)) || in_array($_role->id, old('roles', [])))
 							<label class="checkbox-inline">
-								@if(\Auth::user()->hasAdminAccess('roles'))
+								@if(\Auth::user()->hasAdminAccess(['users', 'roles']))
 									<input
 										type="checkbox"
 										name="roles[]"
@@ -63,7 +66,14 @@
 		@endif
 
 		{{--Уведомления--}}
-		@if (isset($user) && $user->noticesTypes()->count() || \Auth::user()->hasAdminAccess('notices-types') )
+		@if(
+			app('Packages')->isActiveSection('notices-types')
+			&& (
+				isset($user)
+				&& \Auth::user()->hasAdminAccess(['users', 'notices-types'], $user)
+				|| $user->noticesTypes()->count()
+			)
+		)
 			@if($notices_types->count())
 				<div class="list-group">
 					<div class="list-group-item">
@@ -76,7 +86,7 @@
 								)
 								<label class="checkbox-inline">
 
-									@if(\Auth::user()->hasAdminAccess('roles'))
+									@if(\Auth::user()->hasAdminAccess(['users', 'notices-types']))
 										<input
 											type="checkbox"
 											name="notices_types[]"
@@ -96,7 +106,7 @@
 		@endif
 
 		{{--Кнопки сохранения и удаления--}}
-		@if(\Auth::user()->hasAdminAccess([$ability_view, 'users']))
+		@if(\Auth::user()->hasAdminAccess(['users']) && \Auth::user()->hasAdminAccess(['roles', 'notices-types'], NULL, false))
 			<div class="mb20px">
 				@include('base::utils.buttons.save')
 			</div>
