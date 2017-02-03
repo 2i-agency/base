@@ -73,11 +73,6 @@ class User extends Authenticatable
 			/** Проходимся по всем переданным моделям */
 			foreach ($models as $model) {
 
-				/** Если пользователь создатель переданной модели */
-				if ($model->creator_id == $this->id) {
-					return true;
-				}
-
 				/** Если у модели есть связь с агентами */
 				if (method_exists($model, 'agents')) {
 					$abilities = $model
