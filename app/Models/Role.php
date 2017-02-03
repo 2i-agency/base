@@ -185,24 +185,4 @@ class Role extends Model
 
 		return false;
 	}
-
-
-	public static function boot() {
-
-		/**
-		 * Удаление связей роли с возможностями, типами уведомлений, пользователями
-		 */
-		static::deleting(function($instance) {
-			// Удаление связей с возможностями
-			$instance->abilities()->detach();
-
-			// Удаление связей с типами уведомлений
-			$instance->noticesTypes()->detach();
-
-			// Удаление связей с пользователями
-			$instance->users()->detach();
-		});
-
-		parent::boot();
-	}
 }
