@@ -339,7 +339,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function hasAdminAccess($abilities, $models = NULL) {
+	public function hasAdminAccess($abilities, $models = NULL, $and = true) {
 
 		/** Пользователь с id = 1 администратор */
 		if ($this->id == 1) {
@@ -351,22 +351,20 @@ class User extends Authenticatable
 			$abilities = [ $abilities ];
 		}
 
+		$return = $and;
+
 		/** Проверяем все переданные возможности */
 		foreach ($abilities as $ability) {
-			$admin_ability = Ability::detectNamespace($ability) . Ability::getAdminPostfix($ability, true);
+			$admin_ability = Ability::getAdminAbility($ability);
 
-			if ($this->hasAbility($admin_ability)) {
-				return true;
-			}
-
-			/** Проверяем возможности у моделей */
-			if ($this->hasAccessModels($admin_ability, $models)) {
-				return true;
+			if ($and) {
+				$return = $return && $this->hasAbility($admin_ability, $models);
+			} else {
+				$return = $return || $this->hasAbility($admin_ability, $models);
 			}
 		}
 
-		/** В ином случае у пользователя нет административного доступа */
-		return false;
+		return $return;
 	}
 
 
