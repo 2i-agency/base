@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Models\Traits\BelongsTo;
 
+use Chunker\Base\Models\Ability;
 use Chunker\Base\Models\User;
 use Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,7 +31,17 @@ trait BelongsToDeleter
 			$ability = $this->ability;
 		}
 
-		if (\Auth::user()->hasAdminAccess($ability, $this)) {
+		$ability = Ability::getAdminAbility($ability);
+
+		if (
+			\Auth::user()->hasAdminAccess($ability, $this)
+			|| \Auth
+				::user()
+				->agents()
+				->where('model_type', get_class($this))
+				->where('ability_id', $ability)
+				->count()
+		) {
 			return $query->withTrashed();
 		}
 
