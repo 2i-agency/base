@@ -137,6 +137,7 @@ class UserController extends Controller
 			'is_admin'
 		]);
 		$data[ 'is_blocked' ] = $user->isCanBeBlocked() ? $data[ 'is_blocked' ] : false;
+		$data[ 'is_admin' ] = $user->isCanBeAdminChanged() ? $data[ 'is_admin' ] : $user->isAdmin();
 
 		/** Обновление */
 		$user->update($data);
