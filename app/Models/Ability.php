@@ -65,13 +65,18 @@ class Ability extends Model
 	 *
 	 * @return string
 	 */
-	public static function getAdminPostfix($ability, $with_dot) {
+	public static function getAdminPostfix($ability, $with_dot = false) {
 		$admin_postfix = array_first(self::getPostfixes($ability));
 		if ($with_dot) {
 			return '.' . $admin_postfix;
 		} else {
 			return $admin_postfix;
 		}
+	}
+
+
+	public static function getAdminAbility($ability) {
+		return self::detectNamespace($ability) . self::getAdminPostfix($ability, true);
 	}
 
 
@@ -100,7 +105,10 @@ class Ability extends Model
 	 * @return string название роли
 	 */
 	public static function detectNamespace($ability) {
-		$ability = array_last(explode('::', $ability));
+		if (count(explode('::', $ability)) > 1) {
+			$ability = array_last(explode('::', $ability));
+			return array_last(explode('.', $ability));
+		}
 		return array_first(explode('.', $ability));
 	}
 
