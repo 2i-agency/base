@@ -1,6 +1,10 @@
 {{--Вывод отдельного пункта меню--}}
 @php
 
+	if (is_string($item)) {
+		$item = app('Packages')->getMenuItems()[$item];
+	}
+
 	$item_url = route($item['route']);
 	$item_is_active = Route::currentRouteNamed($item['route']) || Request::fullUrlIs($item_url . '/*');
 
