@@ -260,6 +260,32 @@ class User extends Authenticatable
 		return false;
 	}
 
+	/**
+	 * Проверяет существование возможности у самомго пользователя
+	 *
+	 * @param $ability
+	 *
+	 * @return bool
+	 */
+	public function checkAbility($ability) {
+
+		/** Пользователь с id = 1 есть возможность */
+		if ($this->id == 1) {
+			return true;
+		}
+
+		/** Если у пользователя есть связь с возможностью */
+		if ($this
+			->abilities()
+			->where('id', $ability)
+			->count()
+		) {
+			return true;
+		}
+
+		return false;
+	}
+
 
 	/**
 	 * Проверка наличия возможности
@@ -272,7 +298,7 @@ class User extends Authenticatable
 	public function hasAbility($ability, $models = NULL) {
 
 		/** Пользователь с id = 1 есть возможность */
-		if ($this->id == 1) {
+		if ($this->checkAbility($ability)) {
 			return true;
 		}
 
@@ -282,15 +308,6 @@ class User extends Authenticatable
 		/** У модели доступ закрыт */
 		if (is_null($access_models)) {
 			return false;
-		}
-
-		/** Если у пользователя есть связь с возможностью */
-		if ($this
-			->abilities()
-			->where('id', $ability)
-			->count()
-		) {
-			return true;
 		}
 
 		/** Если есть связи с другими возможностями из этого пространства имён */
