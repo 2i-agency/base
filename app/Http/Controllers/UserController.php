@@ -221,7 +221,7 @@ class UserController extends Controller
 
 			/** Сбор в массив возможностей, которые разрешены пользователю */
 			foreach ($request->get('abilities') as $namespace => $ability) {
-				if ($ability && \Auth::user()->hasAdminAccess($namespace . '.edit')) {
+				if ($ability && \Auth::user()->hasAdminAccess($namespace)) {
 					$abilities[] = $ability;
 				}
 			}
