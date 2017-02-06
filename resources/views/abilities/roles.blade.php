@@ -16,19 +16,19 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'roles.view',
-			'is_selected'    => $agent->hasAbility('roles.view'),
+			'is_selected'    => $agent->checkAbility('roles.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'roles.edit',
-			'is_selected'    => $agent->hasAbility('roles.edit'),
+			'is_selected'    => $agent->checkAbility('roles.edit'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'     => 'Администрирование',
 			'ability'   => 'roles.admin',
-			'is_selected'    => $agent->hasAbility('roles.admin'),
+			'is_selected'    => $agent->checkAbility('roles.admin'),
 		])
 
 	</select>

@@ -10,13 +10,13 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'notices',
-			'is_selected'    => !$agent->hasAbility('notices.edit'),
+			'is_selected'    => !$agent->checkAbility('notices.edit', NULL, true),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'notices.edit',
-			'is_selected'    => $agent->hasAbility('notices.edit'),
+			'is_selected'    => $agent->checkAbility('notices.edit', NULL, true),
 		])
 
 	</select>

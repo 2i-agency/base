@@ -16,13 +16,13 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'settings.view',
-			'is_selected'    => $agent->hasAbility('settings.view'),
+			'is_selected'    => $agent->checkAbility('settings.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'settings.edit',
-			'is_selected'    => $agent->hasAbility('settings.edit'),
+			'is_selected'    => $agent->checkAbility('settings.edit'),
 		])
 
 	</select>
