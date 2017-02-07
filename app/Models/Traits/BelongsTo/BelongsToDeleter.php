@@ -49,6 +49,12 @@ trait BelongsToDeleter
 	}
 
 
+	public function withTrashed()
+	{
+		return $this->withDelete();
+	}
+
+
 	public static function bootBelongsToDeleter() {
 
 		static::deleting(function($model) {
