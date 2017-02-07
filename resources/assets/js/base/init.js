@@ -37,6 +37,10 @@ $(function(){
 		}
 	});
 
+	$('.js-positionable').sortable({
+		cancel:".ui-state-disabled"
+	}).disableSelection();
+
 
 	// Календарь
 	$('.js-timepicker').each(function(num, elem) {
