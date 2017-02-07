@@ -17,6 +17,5 @@
 		value="put"
 	@endif
 >
-	<span class="fa fa-reply"></span>
-	Восстановить
+	<span class="fa fa-reply"></span>{{ (isset($is_icon) && $is_icon) ? NULL : 'Восстановить' }}
 </button>
