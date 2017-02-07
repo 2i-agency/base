@@ -49,6 +49,29 @@ trait BelongsToDeleter
 	}
 
 
+	public function scopeOnlyDelete($query, $ability = NULL) {
+		if (is_null($ability)) {
+			$ability = $this->ability;
+		}
+
+		$ability = Ability::getAdminAbility($ability);
+
+		if (
+			\Auth::user()->hasAdminAccess($ability, $this)
+			|| \Auth
+				::user()
+				->agents()
+				->where('model_type', get_class($this))
+				->where('ability_id', $ability)
+				->count()
+		) {
+			return $query->onlyTrashed();
+		}
+
+		return $query;
+	}
+
+
 	public function withTrashed()
 	{
 		return $this->withDelete();
