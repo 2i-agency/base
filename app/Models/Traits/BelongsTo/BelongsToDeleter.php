@@ -68,7 +68,11 @@ trait BelongsToDeleter
 			return $query->onlyTrashed();
 		}
 
-		return $query;
+		/**
+		 * Условие, которое в любом случае вернёт пустой запрос.
+		 * Нужно для того, чтобы возвращать пустой запрос если нет разрешения.
+		 */
+		return $query->where('id', NULL);
 	}
 
 
@@ -84,6 +88,13 @@ trait BelongsToDeleter
 			$model
 				->deleter()
 				->associate(Auth::user())
+				->save();
+		});
+
+		static::restoring(function($model) {
+			$model
+				->deleter()
+				->dissociate()
 				->save();
 		});
 	}
