@@ -10,7 +10,7 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'redirects',
-			'is_selected'    => !$agent->checkAbility('redirects'),
+			'is_selected'    => !$agent->hasAbility('redirects'),
 		])
 
 		@include('base::utils.ability-trigger', [

@@ -10,7 +10,7 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'languages',
-			'is_selected'    => !$agent->checkAbility('languages'),
+			'is_selected'    => !$agent->hasAbility('languages'),
 		])
 
 		@include('base::utils.ability-trigger', [

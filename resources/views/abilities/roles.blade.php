@@ -10,7 +10,7 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'roles',
-			'is_selected'    => !$agent->checkAbility('roles'),
+			'is_selected'    => !$agent->hasAbility('roles'),
 		])
 
 		@include('base::utils.ability-trigger', [

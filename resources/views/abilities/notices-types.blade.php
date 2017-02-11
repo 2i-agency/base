@@ -10,7 +10,7 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'notices-types',
-			'is_selected'   => !$agent->checkAbility('notices-types'),
+			'is_selected'   => !$agent->hasAbility('notices-types'),
 		])
 
 		@include('base::utils.ability-trigger', [
