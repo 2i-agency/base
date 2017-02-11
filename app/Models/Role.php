@@ -185,4 +185,20 @@ class Role extends Model
 
 		return false;
 	}
+
+
+	/**
+	 * Проверяет существование возможности у самой роли
+	 *
+	 * @param $ability
+	 *
+	 * @return bool
+	 */
+	public function checkAbility($ability) {
+
+		return (bool)$this
+			->abilities()
+			->where('id', $ability)
+			->count();
+	}
 }
