@@ -1,5 +1,6 @@
 $(function () {
-	var	$container = $('#js-right-container'),
+	var	$button,
+		$container = $('#js-right-container'),
 		$body = $container.find('#js-right-body');
 
 	// Отправка запроса и получение ответа
@@ -27,7 +28,7 @@ $(function () {
 	}
 
 	$('.js-right-button').click(function () {
-console.log('fdsfsd');
+		$button = $(this);
 		$('#js-error-right').addClass('hidden');
 		sent_data(
 			$(this).data('url'),
