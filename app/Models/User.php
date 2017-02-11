@@ -275,7 +275,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function checkAbility($ability) {
+	public function checkAbility($ability, $models = NULL) {
 
 		/** Пользователь с id = 1 есть возможность */
 		if ($this->id == 1) {
@@ -287,6 +287,7 @@ class User extends Authenticatable
 			->abilities()
 			->where('id', $ability)
 			->count()
+			&& !is_null($this->hasAccessModels($ability, $models))
 		) {
 			return true;
 		}
@@ -305,8 +306,7 @@ class User extends Authenticatable
 	 */
 	public function hasAbility($ability, $models = NULL) {
 
-		/** Пользователь с id = 1 есть возможность */
-		if ($this->checkAbility($ability)) {
+		if ($this->checkAbility($ability, $models)) {
 			return true;
 		}
 
