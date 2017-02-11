@@ -19,22 +19,23 @@ trait RelationAgents
 			->pluck('model_id')
 			->toArray();
 
-		if (
-			(
-				(\Auth::user()->id == 1)
-				|| \Auth::user()->hasAccess($ability, false)
-			)
-			&& !\Auth
-				::user()
-				->agents()
-				->whereNull('ability_id')
-				->count()
-		) {
+		$disallow_access = \Auth
+			::user()
+			->agents()
+			->where('model_type', get_class($this))
+			->whereNull('ability_id')
+			->pluck('model_id')
+			->toArray();
+
+		if (\Auth::user()->id == 1) {
 			return $query;
+		}
+
+		if (\Auth::user()->hasAccess($ability, false)) {
+			return $query->whereNotIn('id', $disallow_access);
 		} else {
 			return $query->whereIn('id', $allow_access);
 		}
-
 
 	}
 }
