@@ -1,6 +1,5 @@
 $(function () {
-	var $button = $('#js-right-button'),
-		$container = $('#js-right-container'),
+	var	$container = $('#js-right-container'),
 		$body = $container.find('#js-right-body');
 
 	// Отправка запроса и получение ответа
@@ -26,6 +25,20 @@ $(function () {
 			}
 		});
 	}
+
+	$('.js-right-button').click(function () {
+console.log('fdsfsd');
+		$('#js-error-right').addClass('hidden');
+		sent_data(
+			$(this).data('url'),
+			{
+				'id': $(this).data('id'),
+				'ability': $(this).data('ability'),
+				'model': $(this).data('model')
+			}
+		);
+	});
+
 
 	// Инициализация формы
 	function initForm() {
@@ -85,15 +98,7 @@ $(function () {
 	}
 
 	$container.on('show.bs.modal', function () {
-		$('#js-error-right').addClass('hidden');
-		sent_data(
-			$button.data('url'),
-			{
-				'id': $button.data('id'),
-				'ability': $button.data('ability'),
-				'model': $button.data('model')
-			}
-		);
+		initForm();
 	});
 
 	$container.on('hidden.bs.modal', function () {
