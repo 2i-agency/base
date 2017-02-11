@@ -80,6 +80,14 @@ class User extends Authenticatable
 					return true;
 				}
 
+				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
+				if (method_exists($model, 'newNestedSetQuery')) {
+					$result_ancestors = $this->hasAccessModels($ability, $model->getAncestors());
+					if ($result_ancestors) {
+						return true;
+					}
+				}
+
 				/** Если у модели есть связь с агентами */
 				if (method_exists($model, 'agents')) {
 					$abilities = $model
