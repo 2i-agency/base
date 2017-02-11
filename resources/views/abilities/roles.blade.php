@@ -10,25 +10,25 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'roles',
-			'is_selected'    => !$agent->hasAccess('roles'),
+			'is_selected'    => $agent->exists && !$agent->checkAbility('roles'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'roles.view',
-			'is_selected'    => $agent->checkAbility('roles.view'),
+			'is_selected'    => $agent->exists && $agent->checkAbility('roles.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'roles.edit',
-			'is_selected'    => $agent->checkAbility('roles.edit'),
+			'is_selected'    => $agent->exists && $agent->checkAbility('roles.edit'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'     => 'Администрирование',
 			'ability'   => 'roles.admin',
-			'is_selected'    => $agent->checkAbility('roles.admin'),
+			'is_selected'    => $agent->exists && $agent->checkAbility('roles.admin'),
 		])
 
 	</select>

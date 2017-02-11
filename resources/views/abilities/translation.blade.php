@@ -10,19 +10,19 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'translation',
-			'is_selected'    => !$agent->hasAccess('translation'),
+			'is_selected'    => $agent->exists && !$agent->checkAbility('translation'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'translation.view',
-			'is_selected'    => $agent->checkAbility('translation.view'),
+			'is_selected'    => $agent->exists && $agent->checkAbility('translation.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'translation.edit',
-			'is_selected'    => $agent->checkAbility('translation.edit'),
+			'is_selected'    => $agent->exists && $agent->checkAbility('translation.edit'),
 		])
 
 	</select>
