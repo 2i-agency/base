@@ -10,25 +10,25 @@
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Не доступно',
 			'ability'       => 'redirects',
-			'is_selected'    => $agent->exists && !$agent->checkAbility('redirects'),
+			'is_selected'    => !$agent->checkAbility('redirects'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Просмотр',
 			'ability'       => 'redirects.view',
-			'is_selected'    => $agent->exists && $agent->checkAbility('redirects.view'),
+			'is_selected'    => $agent->checkAbility('redirects.view'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'         => 'Правка',
 			'ability'       => 'redirects.edit',
-			'is_selected'    => $agent->exists && $agent->checkAbility('redirects.edit'),
+			'is_selected'    => $agent->checkAbility('redirects.edit'),
 		])
 
 		@include('base::utils.ability-trigger', [
 			'label'     => 'Администрирование',
 			'ability'   => 'redirects.admin',
-			'is_selected'    => $agent->exists && $agent->checkAbility('redirects.admin'),
+			'is_selected'    => $agent->checkAbility('redirects.admin'),
 		])
 
 	</select>
