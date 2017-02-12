@@ -8,6 +8,7 @@ use Chunker\Base\Models\Traits\Comparable;
 use Chunker\Base\Models\Traits\IsRelatedWith;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Модель роли
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
-	use BelongsToEditors, Comparable, IsRelatedWith, BelongsToDeleter;
+	use BelongsToEditors, Comparable, IsRelatedWith, BelongsToDeleter, LogsActivity;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_roles';
@@ -200,5 +201,24 @@ class Role extends Model
 			->abilities()
 			->where('id', $ability)
 			->count();
+	}
+
+
+	/**
+	 * Метод для замены стандартного описания действия
+	 *
+	 * @param string $eventName
+	 *
+	 * @return string
+	 */
+	public function getDescriptionForEvent(string $eventName): string
+	{
+		$actions = [
+			'created' => 'создал роль',
+			'updated' => 'отредактировал данные роли',
+			'deleted' => 'удалил роль'
+		];
+
+		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' ":subject.name"';
 	}
 }
