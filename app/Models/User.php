@@ -446,10 +446,10 @@ class User extends Authenticatable
 	{
 		$actions = [
 			'created' => 'создал',
-			'updated' => 'отредактировал'
+			'updated' => 'отредактировал данные'
 		];
 
-		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' данные пользователя ":subject.login"';
+		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' пользователя ":subject.login"';
 	}
 
 }
