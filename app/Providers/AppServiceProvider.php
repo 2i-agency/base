@@ -6,6 +6,7 @@ use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
 use Chunker\Base\Providers\Traits\Migrator;
+use Chunker\Base\ViewComposers\ActivityLogComposer;
 use Chunker\Base\ViewComposers\VisibleRoleComposer;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
@@ -169,6 +170,10 @@ class AppServiceProvider extends ServiceProvider
 			'base::users.abilities',
 			'base::roles.form'
 		], RolesComposer::class);
+		view()->composer([
+			'base::users.activity-log',
+			'base::activity-log.list'
+		], ActivityLogComposer::class);
 
 		/** Публикация необходимых файлов */
 		$this->publish(static::ROOT . '/publishes/');

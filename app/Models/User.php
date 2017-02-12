@@ -12,6 +12,7 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -21,7 +22,16 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class User extends Authenticatable
 {
-	use BelongsToEditors, Comparable, Nullable, IsRelatedWith, LogsActivity;
+	use
+		BelongsToEditors,
+		Comparable,
+		Nullable,
+		IsRelatedWith,
+		LogsActivity,
+		CausesActivity {
+			CausesActivity::activity insteadof LogsActivity;
+			CausesActivity::activity as causesActivity;
+	}
 
 	/** @var string имя таблицы */
 	public $table = 'base_users';

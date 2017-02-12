@@ -16,14 +16,6 @@ class ActivityLogController extends Controller
 		$this->authorize('activity-log.view');
 		$activities = Activity::orderBy('id', 'desc')->paginate(30);
 
-		$actions = [
-			'created'  => 'success',
-			'updated'  => 'info',
-			'deleted'  => 'warning',
-			'restored' => 'success',
-			'error'    => 'danger'
-		];
-
-		return view('base::activity-log.list', compact('activities', 'actions'));
+		return view('base::activity-log.list', compact('activities'));
 	}
 }

@@ -161,14 +161,16 @@ class UserController extends Controller
 	public function authentications(User $user){
 		$this->authorize('users.view', $user);
 
-		$authentications = $user
-			->authentications()
-			->recent()
-			->paginate();
+		$activities = $user
+			->causesActivity()
+			->orderBy('id', 'desc')
+			->paginate(30);
+
+
 
 		return view(
-			'base::users.authentications',
-			compact('user', 'authentications')
+			'base::users.activity-log',
+			compact('user', 'activities')
 		);
 	}
 
