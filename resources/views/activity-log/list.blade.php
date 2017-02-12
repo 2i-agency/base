@@ -20,7 +20,7 @@
 
 					<tbody>
 						@foreach ($activities as $activity)
-							<tr>
+							<tr class="{{ isset($actions[$activity->log_name]) ? $actions[$activity->log_name] : NULL }}">
 
 								{{--Описание--}}
 								<td>{{ $activity->description }}</td>

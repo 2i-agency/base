@@ -452,4 +452,21 @@ class User extends Authenticatable
 		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' пользователя ":subject.login"';
 	}
 
+
+	/**
+	 * Возвращает имя лога
+	 *
+	 * @param string $eventName
+	 *
+	 * @return string
+	 */
+	public function getLogNameToUse(string $eventName = ''): string
+	{
+		if ($eventName == '') {
+			return config('laravel-activitylog.default_log_name');
+		} else {
+			return $eventName;
+		}
+	}
+
 }
