@@ -173,12 +173,13 @@ trait Directory
 	 */
 	function saveOne(Request $request) {
 		$this->authorize($this->abilities[ 'edit' ]);
-		/** Подставляем в условие для валидации ключ элемента */
-		$rule = isset($this->rules[ 'names.*' ]) ? $this->rules[ 'names.*' ] . $request->id : '';
 
 		$this->validate(
 			$request,
-			[ "name.*" => $rule ],
+			[
+				"name" => isset($this->rules[ 'name' ]) ? $this->rules[ 'name' ] . $request->slug : '',
+				"slug" => isset($this->rules[ 'slug' ]) ? $this->rules[ 'slug' ] . $request->slug : ''
+			],
 			$this->validateMessages);
 
 		$this->getModelById($request->id)->update($request->except([ '_method', '_token' ]));
