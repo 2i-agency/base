@@ -61,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
 				'translation.edit' => 'Редактирование перевода интерфейса',
 				'translation.view' => 'Просмотр перевода интерфейса',
 
+				'activity-log.view' => 'Просмотр аудита',
 			])
 			->registerAbilitiesViews([
 				'base::abilities.notices',
@@ -70,7 +71,8 @@ class AppServiceProvider extends ServiceProvider
 				'base::abilities.roles',
 				'base::abilities.redirects',
 				'base::abilities.languages',
-				'base::abilities.translation'
+				'base::abilities.translation',
+				'base::abilities.activity-log'
 			])
 			->registerSeeders([
 				'BaseAbilitiesSeeder',
@@ -108,6 +110,12 @@ class AppServiceProvider extends ServiceProvider
 					'icon'   => 'sliders',
 					'route'  => 'admin.settings',
 					'policy' => 'settings.view'
+				],
+				'activity-log'      => [
+					'name'   => 'Аудит действий',
+					'icon'   => 'info',
+					'route'  => 'admin.activity-log',
+					'policy' => 'activity-log.view'
 				]
 			]);
 
