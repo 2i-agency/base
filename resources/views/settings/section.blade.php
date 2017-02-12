@@ -42,7 +42,6 @@
 						<div class="form-group">
 
 							{{--Метка--}}
-							@include('base::utils.edit', [ 'element' => $setting, 'right' => true ])
 							<label>{{ $setting->title }}:</label>
 
 							@can('settings.edit')

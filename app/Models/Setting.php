@@ -5,6 +5,7 @@ namespace Chunker\Base\Models;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToUpdater;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Модель настроек
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Setting extends Model
 {
-	use BelongsToUpdater, Nullable;
+	use BelongsToUpdater, Nullable, LogsActivity;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_settings';
@@ -30,4 +31,21 @@ class Setting extends Model
 		'control_type',
 		'hint'
 	];
+
+
+	/**
+	 * Метод для замены стандартного описания действия
+	 *
+	 * @param string $eventName
+	 *
+	 * @return string
+	 */
+	public function getDescriptionForEvent(string $eventName): string
+	{
+		$actions = [
+			'updated' => 'отредактировал настройки'
+		];
+
+		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ': ":subject.title"';
+	}
 }
