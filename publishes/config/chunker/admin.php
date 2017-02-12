@@ -47,7 +47,9 @@ return [
 				'redirects',
 				'',
 				'notices-types',
-				'settings'
+				'settings',
+				'',
+				'activity-log'
 			]
 		]
 	],
