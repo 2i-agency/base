@@ -12,6 +12,7 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Модель пользователя
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class User extends Authenticatable
 {
-	use BelongsToEditors, Comparable, Nullable, IsRelatedWith;
+	use BelongsToEditors, Comparable, Nullable, IsRelatedWith, LogsActivity;
 
 	/** @var string имя таблицы */
 	public $table = 'base_users';
@@ -432,4 +433,23 @@ class User extends Authenticatable
 	public function isAdmin() {
 		return $this->id == 1 || $this->is_admin;
 	}
+
+
+	/**
+	 * Метод для замены стандартного описания действия
+	 *
+	 * @param string $eventName
+	 *
+	 * @return string
+	 */
+	public function getDescriptionForEvent(string $eventName): string
+	{
+		$actions = [
+			'created' => 'создал',
+			'updated' => 'отредактировал'
+		];
+
+		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' данные пользователя ":subject.login"';
+	}
+
 }
