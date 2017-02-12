@@ -98,7 +98,6 @@
 
 							{{--Ссылка на страницу редактирования--}}
 							<td class="text-right text-nowrap">
-								@include('base::utils.edit', ['element' => $user])
 
 								<a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-xs">
 									@can('users.edit')
