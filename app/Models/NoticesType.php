@@ -7,6 +7,7 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Модель типов уведомлений
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class NoticesType extends Model
 {
-	use Nullable, BelongsToEditors, BelongsToDeleter;
+	use Nullable, BelongsToEditors, BelongsToDeleter, LogsActivity;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_notices_types';
@@ -77,5 +78,24 @@ class NoticesType extends Model
 		});
 
 		parent::boot();
+	}
+
+
+	/**
+	 * Метод для замены стандартного описания действия
+	 *
+	 * @param string $eventName
+	 *
+	 * @return string
+	 */
+	public function getDescriptionForEvent(string $eventName): string
+	{
+		$actions = [
+			'created' => 'создал тип уведомлений',
+			'updated' => 'отредактировал данные типа уведомления',
+			'deleted' => 'удалил тип уведомлений'
+		];
+
+		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ': :subject.name';
 	}
 }

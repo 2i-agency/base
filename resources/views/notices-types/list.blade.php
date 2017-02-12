@@ -101,17 +101,6 @@
 								</td>
 							@endcan
 
-							{{--Информация о редактировании--}}
-							<td class="w1px">
-								@can('notices-types.edit')
-									<div class="form-control-static">
-										@include('base::utils.edit', ['element' => $notices_type])
-									</div>
-								@else
-									@include('base::utils.edit', ['element' => $notices_type])
-								@endcan
-							</td>
-
 						</tr>
 					@endforeach
 
