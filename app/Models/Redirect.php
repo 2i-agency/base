@@ -7,6 +7,7 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Database\Eloquent\Model;
 use League\Uri\Schemes\Http;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * Модель перенаправлений
@@ -15,7 +16,7 @@ use League\Uri\Schemes\Http;
  */
 class Redirect extends Model
 {
-	use Nullable, BelongsToEditors, BelongsToDeleter;
+	use Nullable, BelongsToEditors, BelongsToDeleter, LogsActivity;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_redirects';
@@ -68,5 +69,24 @@ class Redirect extends Model
 	 */
 	public function setFromAttribute($from){
 		$this->attributes[ 'from' ] = static::prepareFrom($from);
+	}
+
+
+	/**
+	 * Метод для замены стандартного описания действия
+	 *
+	 * @param string $eventName
+	 *
+	 * @return string
+	 */
+	public function getDescriptionForEvent(string $eventName): string
+	{
+		$actions = [
+			'created' => 'создал перенаправление',
+			'updated' => 'отредактировал данные перенаправления',
+			'deleted' => 'удалил перенаправление'
+		];
+
+		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ': :subject.from -> :subject.to';
 	}
 }

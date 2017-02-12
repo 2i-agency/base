@@ -110,7 +110,6 @@
 						@can('redirects.edit')
 							<th class="w1px"></th>
 						@endcan
-						<th class="w1px"></th>
 					</tr>
 				</thead>
 
@@ -217,17 +216,6 @@
 									</div>
 								</td>
 							@endcan
-
-							{{--Информация о редактировании--}}
-							<td>
-								@can('redirects.edit')
-									<div class="form-control-static">
-										@include('base::utils.edit', ['element' => $redirect])
-									</div>
-								@else
-									@include('base::utils.edit', ['element' => $redirect])
-								@endcan
-							</td>
 
 						</tr>
 					@endforeach
