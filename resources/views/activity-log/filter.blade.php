@@ -25,7 +25,7 @@
 		<select name="log_name" class="form-control">
 			<option value="">Все действия</option>
 			@foreach($actions as $action => $item)
-				<option value="{{ $action }}">{{ $item['name'] }}</option>
+				<option value="{{ $action }}" {{ request('log_name') == $action ? 'selected' : NULL }}>{{ $item['name'] }}</option>
 			@endforeach
 		</select>
 	</div>
@@ -36,7 +36,7 @@
 			<option value="">Все пользователи</option>
 			@if(isset($users))
 				@foreach($users as $user)
-					<option value="{{ $user->id }}">{{ $user->getName() }}</option>
+					<option value="{{ $user->id }}" {{ request('user') == $user->id ? 'selected' : NULL }}>{{ $user->getName() }}</option>
 				@endforeach
 			@endif
 		</select>
@@ -46,6 +46,9 @@
 	<div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
 		<select name="element" class="form-control">
 			<option value="">Все элементы</option>
+			@foreach(app('Packages')->getActivityElements() as $class => $activity_element)
+				<option value="{{ $class }}" {{ request('element') == $class ? 'selected' : NULL }}>{{ trans($activity_element) }}</option>
+			@endforeach
 		</select>
 	</div>
 

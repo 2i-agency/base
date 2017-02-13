@@ -29,6 +29,10 @@ class ActivityLogController extends Controller
 			$activities = $activities->where('created_at', '<=', Carbon::parse($request->published_until));
 		}
 
+		if (isset($request->log_name) && $request->log_name != '') {
+			$activities = $activities->where('log_name', $request->log_name);
+		}
+
 		if (isset($request->user) && $request->user != '') {
 			$activities = $activities->where('causer_id', $request->user);
 		}

@@ -5,6 +5,7 @@ namespace Chunker\Base\Providers;
 use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
+use Chunker\Base\Models\Role;
 use Chunker\Base\Providers\Traits\Migrator;
 use Chunker\Base\ViewComposers\ActivityLogComposer;
 use Chunker\Base\ViewComposers\VisibleRoleComposer;
@@ -118,6 +119,10 @@ class AppServiceProvider extends ServiceProvider
 					'route'  => 'admin.activity-log',
 					'policy' => 'activity-log.view'
 				]
+			])
+			->registerActivityElements([
+				User::class => 'activity-user',
+				Role::class => 'activity-role'
 			]);
 
 		/** Регистрация пакета */

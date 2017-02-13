@@ -97,6 +97,20 @@ class Manager
 
 
 	/**
+	 * Получение массива с элементами актисвности.
+	 * Если указан параметр $packageName,
+	 * возвращается элементы этого пакета или пакетов.
+	 *
+	 * @param string|array $packageName
+	 *
+	 * @return array
+	 */
+	public function getActivityElements($packageName = NULL){
+		return $this->collectDataFromPackages('activityElements', $packageName);
+	}
+
+
+	/**
 	 * Проверка активности пункта меню
 	 *
 	 * @param string $ability возможность по которой будет проходить поиск пункта меню

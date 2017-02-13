@@ -21,10 +21,12 @@ class UserListener
 		if ($event->isFailed) {
 			activity('auth-error')
 				->causedBy($event->user)
+				->performedOn($event->user)
 				->log('Провал аутентификации пользователя <b>' . $event->user->name . '</b>');
 		} else {
 			activity('auth-success')
 				->causedBy($event->user)
+				->performedOn($event->user)
 				->log('Успешная аутентификация пользователя <b>' . $event->user->name . '</b>');
 		}
 		// Добавление записи об аутентификации

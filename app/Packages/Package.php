@@ -24,6 +24,9 @@ class Package
 	/** @var array Пункты меню */
 	protected $menuItems = [];
 
+	/** @var array Пункты меню */
+	protected $activityElements = [];
+
 
 	/**
 	 * Доступ к свойствам,
