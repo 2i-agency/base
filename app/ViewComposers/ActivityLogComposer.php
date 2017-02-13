@@ -8,11 +8,11 @@ class ActivityLogComposer
 {
 	public function compose(View $view){
 		$actions = [
-			'created'  => 'success',
-			'updated'  => 'info',
-			'deleted'  => 'warning',
-			'restored' => 'success',
-			'error'    => 'danger'
+			'created'  => 'plus',
+			'updated'  => 'pencil',
+			'deleted'  => 'trash',
+			'restored' => 'reply',
+			'error'    => 'exclamation-circle'
 		];
 
 
