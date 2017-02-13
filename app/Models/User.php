@@ -27,11 +27,15 @@ class User extends Authenticatable
 		Comparable,
 		Nullable,
 		IsRelatedWith,
+		/**
+		 * В трейтах LogsActivity и CausesActivity одинаковые по названию методы,
+		 * поэтому методу, находящимуся в трейте CausesActivity присвоен псевдоним causesActivity
+		 */
 		LogsActivity,
 		CausesActivity {
 			CausesActivity::activity insteadof LogsActivity;
 			CausesActivity::activity as causesActivity;
-	}
+		}
 
 	/** @var string имя таблицы */
 	public $table = 'base_users';
@@ -78,14 +82,14 @@ class User extends Authenticatable
 
 			/** Если передана одна модель, оборачиаем её в коллекцию, для удобства */
 			if ($models instanceof Model) {
-				$models = (new Collection())->add($models);
+				$models = ( new Collection() )->add($models);
 			}
 
 			/** Проходимся по всем переданным моделям */
 			foreach ($models as $model) {
 
 				if (
-					($model instanceof User)
+					( $model instanceof User )
 					&& $model->id == \Auth::user()->id
 				) {
 					return true;
@@ -249,10 +253,10 @@ class User extends Authenticatable
 
 		/** Если есть связь хотя бы с одной возможностью из пространства имён */
 		if (
-			$this
-				->abilities()
-				->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
-				->count()
+		$this
+			->abilities()
+			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
+			->count()
 		) {
 			return true;
 		}
@@ -260,7 +264,7 @@ class User extends Authenticatable
 		/** Если есть агент с возможностью из пространства имён */
 		if (
 			$with_agents
-			 && $this
+			&& $this
 				->agents()
 				->where('ability_id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
 				->count()
@@ -295,9 +299,9 @@ class User extends Authenticatable
 
 		/** Если у пользователя есть связь с возможностью */
 		if ($this
-			->abilities()
-			->where('id', $ability)
-			->count()
+				->abilities()
+				->where('id', $ability)
+				->count()
 			&& !is_null($this->hasAccessModels($ability, $models))
 		) {
 			return true;
@@ -452,14 +456,13 @@ class User extends Authenticatable
 	 *
 	 * @return string
 	 */
-	public function getDescriptionForEvent(string $eventName): string
-	{
+	public function getDescriptionForEvent(string $eventName):string {
 		$actions = [
 			'created' => 'создал',
 			'updated' => 'отредактировал данные'
 		];
 
-		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' пользователя ":subject.login"';
+		return 'Пользователь ":causer.login" ' . $actions[ $eventName ] . ' пользователя ":subject.login"';
 	}
 
 
@@ -470,8 +473,7 @@ class User extends Authenticatable
 	 *
 	 * @return string
 	 */
-	public function getLogNameToUse(string $eventName = ''): string
-	{
+	public function getLogNameToUse(string $eventName = ''):string {
 		if ($eventName == '') {
 			return config('laravel-activitylog.default_log_name');
 		} else {
