@@ -9,11 +9,19 @@
 			<table class="table table-striped table-hover">
 				<tbody>
 				@foreach ($activities as $activity)
-					<tr>
-						@php($log_name = $activity->log_name)
+					<tr class="{{ $activity->log_name == 'auth-error' ? 'danger' : NULL }}">
 						{{--Иконка--}}
 						<td class="text-center w1px">
-							<span class="fa fa-{{ isset($actions[$log_name]) ? $actions[$log_name] : NULL }}"></span>
+							@if(isset($actions[$activity->log_name]))
+								<span
+									{{--Подсказка--}}
+									data-hover="tooltip"
+									title="{{ $actions[$activity->log_name]['name'] }}"
+									data-placement="right"
+
+									class="fa fa-{{ $actions[$activity->log_name]['icon'] }}"
+								></span>
+							@endif
 						</td>
 
 						{{--Время--}}
