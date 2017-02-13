@@ -28,7 +28,7 @@
 						<td class="w1px text-nowrap">{{ $activity->created_at }}</td>
 
 						{{--Описание--}}
-						<td>{{ $activity->description }}</td>
+						<td>{!! $activity->description  !!}</td>
 
 					</tr>
 				@endforeach
