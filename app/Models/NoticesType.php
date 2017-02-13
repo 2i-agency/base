@@ -96,7 +96,7 @@ class NoticesType extends Model
 			'deleted' => 'удалил тип уведомлений'
 		];
 
-		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ': :subject.name';
+		return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ': <b>:subject.name</b>';
 	}
 
 

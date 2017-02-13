@@ -220,9 +220,9 @@ class Role extends Model
 		];
 
 		if (User::count()) {
-			return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' ":subject.name"';
+			return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ' <b>:subject.name</b>';
 		} else {
-			return 'Создана роль :subject.name';
+			return 'Создана роль <b>:subject.name</b>';
 		}
 	}
 

@@ -48,7 +48,7 @@ class Setting extends Model
 			'updated' => 'отредактировал настройки'
 		];
 
-		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ': ":subject.title"';
+		return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ': <b>:subject.title</b>';
 	}
 
 

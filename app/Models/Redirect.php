@@ -87,7 +87,7 @@ class Redirect extends Model
 			'deleted' => 'удалил перенаправление'
 		];
 
-		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ': :subject.from -> :subject.to';
+		return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ': <b>:subject.from -> :subject.to</b>';
 	}
 
 

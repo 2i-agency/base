@@ -463,9 +463,9 @@ class User extends Authenticatable
 		];
 
 		if (User::count() > 1) {
-			return 'Пользователь ":causer.login" ' . $actions[ $eventName ] . ' пользователя ":subject.login"';
+			return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ' пользователя <b>:subject.login</b>';
 		} else {
-			return 'Создан пользователь :subject.login';
+			return 'Создан пользователь <b>:subject.login</b>';
 		}
 	}
 
