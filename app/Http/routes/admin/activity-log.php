@@ -4,7 +4,10 @@ Route::group([
 	'prefix' => 'activity'
 ], function(){
 
-	Route::get('/', [
+	Route::match([
+			'get', 'post'
+		],
+		'/', [
 		'as'   => 'admin.activity-log',
 		'uses' => 'ActivityLogController@index'
 	]);
