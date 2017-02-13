@@ -219,7 +219,11 @@ class Role extends Model
 			'deleted' => 'удалил роль'
 		];
 
-		return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' ":subject.name"';
+		if (User::count()) {
+			return 'Пользователь ":causer.login" ' . $actions[$eventName] . ' ":subject.name"';
+		} else {
+			return 'Создана роль :subject.name';
+		}
 	}
 
 
