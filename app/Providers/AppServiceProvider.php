@@ -166,14 +166,11 @@ class AppServiceProvider extends ServiceProvider
 		/** Регистрация композеров представлений */
 		view()->composer('base::template', LanguagesComposer::class);
 		view()->composer('base::users.list', VisibleRoleComposer::class);
+		view()->composer('base::activity-log.table', ActivityLogComposer::class);
 		view()->composer([
 			'base::users.abilities',
 			'base::roles.form'
 		], RolesComposer::class);
-		view()->composer([
-			'base::users.activity-log',
-			'base::activity-log.list'
-		], ActivityLogComposer::class);
 
 		/** Публикация необходимых файлов */
 		$this->publish(static::ROOT . '/publishes/');
