@@ -32,6 +32,8 @@ class Setting extends Model
 		'hint'
 	];
 
+	protected static $recordEvents = ['updated'];
+
 
 	/**
 	 * Метод для замены стандартного описания действия
