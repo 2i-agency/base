@@ -461,8 +461,9 @@ class User extends Authenticatable
 			'created' => 'создал',
 			'updated' => 'отредактировал данные'
 		];
-
-		return 'Пользователь ":causer.login" ' . $actions[ $eventName ] . ' пользователя ":subject.login"';
+		if (User::find(1)) {
+			return 'Пользователь ":causer.login" ' . $actions[ $eventName ] . ' пользователя ":subject.login"';
+		}
 	}
 
 
