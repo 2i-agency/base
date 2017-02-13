@@ -6,13 +6,14 @@ use Illuminate\Contracts\View\View;
 
 class ActivityLogComposer
 {
-	public function compose(View $view){
+	public function compose(View $view) {
 		$actions = [
-			'created'  => 'plus',
-			'updated'  => 'pencil',
-			'deleted'  => 'trash',
-			'restored' => 'reply',
-			'error'    => 'exclamation-circle'
+			'created'      => 'plus',
+			'updated'      => 'pencil',
+			'deleted'      => 'trash',
+			'restored'     => 'reply',
+			'auth-error'   => 'exclamation-circle',
+			'auth-success' => 'check-circle'
 		];
 
 
