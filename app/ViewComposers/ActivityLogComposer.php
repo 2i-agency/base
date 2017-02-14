@@ -24,14 +24,14 @@ class ActivityLogComposer
 				'icon' => 'reply',
 				'name' => 'Восстановление'
 			],
-			'auth-error'   => [
-				'icon' => 'sign-in',
-				'name' => 'Провал аутентификации'
-			],
-			'auth-success' => [
-				'icon' => 'sign-in',
-				'name' => 'Успешная аутентификация'
-			]
+//			'auth-error'   => [
+//				'icon' => 'sign-in',
+//				'name' => 'Провал аутентификации'
+//			],
+//			'auth-success' => [
+//				'icon' => 'sign-in',
+//				'name' => 'Успешная аутентификация'
+//			]
 		];
 
 

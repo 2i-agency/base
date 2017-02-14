@@ -19,15 +19,15 @@ class UserListener
 	public function onUserLogin($event){
 
 		if ($event->isFailed) {
-			activity('auth-error')
-				->causedBy($event->user)
-				->performedOn($event->user)
-				->log('Провал аутентификации пользователя <b>' . $event->user->getName() . '</b>');
+//			activity('auth-error')
+//				->causedBy($event->user)
+//				->performedOn($event->user)
+//				->log('Провал аутентификации пользователя <b>' . $event->user->getName() . '</b>');
 		} else {
-			activity('auth-success')
-				->causedBy($event->user)
-				->performedOn($event->user)
-				->log('Успешная аутентификация пользователя <b>' . $event->user->getName() . '</b>');
+//			activity('auth-success')
+//				->causedBy($event->user)
+//				->performedOn($event->user)
+//				->log('Успешная аутентификация пользователя <b>' . $event->user->getName() . '</b>');
 		}
 		// Добавление записи об аутентификации
 		$event

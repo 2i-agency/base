@@ -124,7 +124,7 @@ class AppServiceProvider extends ServiceProvider
 				]
 			])
 			->registerActivityElements([
-				User::class          => 'base::entities.user',
+//				User::class          => 'base::entities.user',
 				Role::class          => 'base::entities.role',
 				ModelRedirect::class => 'base::entities.redirect',
 				NoticesType::class   => 'base::entities.notice-type',
