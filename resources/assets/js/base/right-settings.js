@@ -1,36 +1,52 @@
 $(function () {
-	var	$button,
-		$container = $('#js-right-container'),
+	var	$container = $('#js-right-container'),
 		$body = $container.find('#js-right-body');
 
-	// Отправка запроса и получение ответа
-	function sent_data(url, data) {
-		$.ajax({
-			url: url,
-			type: 'post',
-			data: data,
+	initRightButton();
 
-			success: function (data) {
-				if (data != "") {
-					$body.html(data);
+	$container.on('show.bs.modal', function () {
+		initRightForm();
+	});
 
-					initForm();
-				}
+	$container.on('hidden.bs.modal', function () {
+		$body.html('');
+	});
+});
 
-			},
 
-			statusCode:{
-				403: function(){
-					$('#js-error-right').text('Вы не можете редактировать права').removeClass('hidden');
-				}
+// Отправка запроса и получение ответа
+function sentRightData(url, data) {
+	var $container = $('#js-right-container'),
+		$body = $container.find('#js-right-body');
+
+	$.ajax({
+		url: url,
+		type: 'post',
+		data: data,
+
+		success: function (data) {
+			if (data != "") {
+				$body.html(data);
+
+				initRightForm();
 			}
-		});
-	}
 
+		},
+
+		statusCode:{
+			403: function(){
+				$('#js-error-right').text('Вы не можете редактировать права').removeClass('hidden');
+			}
+		}
+	});
+}
+
+// Инициализация кнопок Настройки прав
+function initRightButton() {
 	$('.js-right-button').click(function () {
 		$button = $(this);
 		$('#js-error-right').addClass('hidden');
-		sent_data(
+		sentRightData(
 			$(this).data('url'),
 			{
 				'id': $(this).data('id'),
@@ -39,70 +55,61 @@ $(function () {
 			}
 		);
 	});
+}
 
+// Инициализация формы
+function initRightForm() {
+	// Скрываем уведомления
+	$('#js-error-right').addClass('hidden');
+	// Инициализируем подсказки в форме
+	$('[data-hover="tooltip"]').tooltip();
 
-	// Инициализация формы
-	function initForm() {
-		// Скрываем уведомления
-		$('#js-error-right').addClass('hidden');
-		// Инициализируем подсказки в форме
-		$('[data-hover="tooltip"]').tooltip();
+	// Добавление
+	$('#js-btn-add-right').click(function () {
 
-		// Добавление
-		$('#js-btn-add-right').click(function () {
+		sentRightData(
+			$('#js-add-right').data('url'),
+			{
+				'agent': $('#js-new-agent').val(),
+				'ability_agent': $('#js-new-ability').val(),
+				'ability': $button.data('ability'),
+				'id': $button.data('id'),
+				'model': $button.data('model')
+			}
+		);
 
-			sent_data(
-				$('#js-add-right').data('url'),
-				{
-					'agent': $('#js-new-agent').val(),
-					'ability_agent': $('#js-new-ability').val(),
-					'ability': $button.data('ability'),
-					'id': $button.data('id'),
-					'model': $button.data('model')
-				}
-			);
-
-		});
-
-		// Сохранение
-		$('.js-btn-update-right').click(function () {
-
-			sent_data(
-				$(this).data('url'),
-				{
-					'agent': $(this).data('agent'),
-					'ability_agent': $('#js-update-agent-' + $(this).data('agent')).val(),
-					'ability': $button.data('ability'),
-					'id': $button.data('id'),
-					'model': $button.data('model')
-				}
-			);
-
-		});
-
-		// Удаление
-		$('.js-btn-delete-right').click(function () {
-
-			sent_data(
-				$(this).data('url'),
-				{
-					'agent': $(this).data('agent'),
-					'ability_agent': $('#js-update-agent-' + $(this).data('agent')).val(),
-					'ability': $button.data('ability'),
-					'id': $button.data('id'),
-					'model': $button.data('model')
-				}
-			);
-
-		});
-
-	}
-
-	$container.on('show.bs.modal', function () {
-		initForm();
 	});
 
-	$container.on('hidden.bs.modal', function () {
-		$body.html('');
+	// Сохранение
+	$('.js-btn-update-right').click(function () {
+
+		sentRightData(
+			$(this).data('url'),
+			{
+				'agent': $(this).data('agent'),
+				'ability_agent': $('#js-update-agent-' + $(this).data('agent')).val(),
+				'ability': $button.data('ability'),
+				'id': $button.data('id'),
+				'model': $button.data('model')
+			}
+		);
+
 	});
-});
+
+	// Удаление
+	$('.js-btn-delete-right').click(function () {
+
+		sentRightData(
+			$(this).data('url'),
+			{
+				'agent': $(this).data('agent'),
+				'ability_agent': $('#js-update-agent-' + $(this).data('agent')).val(),
+				'ability': $button.data('ability'),
+				'id': $button.data('id'),
+				'model': $button.data('model')
+			}
+		);
+
+	});
+
+}
