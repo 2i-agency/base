@@ -1,8 +1,8 @@
 {{--Список уведомлений--}}
 @if ($activities->count())
-
+	@php($filter_fields = ['published_since', 'published_until', 'log_name', 'user', 'element'])
 	{{--Пагинатор--}}
-	{!! $activities->render() !!}
+	{!! $activities->appends(request()->only($filter_fields))->render() !!}
 
 	<div class="panel panel-default">
 		<div class="table-responsive">
@@ -39,7 +39,7 @@
 	</div>
 
 	{{--Пагинатор--}}
-	{!! $activities->render() !!}
+	{!! $activities->appends(request()->only($filter_fields))->render() !!}
 
 @else
 

@@ -58,7 +58,7 @@
 				<option
 					value="{{ $class }}"
 					{{ request('element') == $class ? 'selected' : NULL }}
-				>{{ trans_choice('activity::entities.' . $activity_element, 2) }}</option>
+				>{{ trans_choice($activity_element, 2) }}</option>
 			@endforeach
 		</select>
 	</div>
