@@ -4,16 +4,30 @@ namespace Chunker\Base\Http\Requests;
 
 use App\Http\Requests\Request;
 
+/**
+ * Валидация запросов на аутентификацию
+ *
+ * @package Chunker\Base\Http\Requests
+ */
 class AuthenticationRequest extends Request
 {
-	public function authorize() {
+	/**
+	 * Определяет, может ли пользователь сделать этот запрос
+	 *
+	 * @return bool
+	 */
+	public function authorize(){
 		return true;
 	}
 
-
-	public function rules() {
+	/**
+	 * Получить правила проверки, которые применяются к запросу
+	 *
+	 * @return array
+	 */
+	public function rules(){
 		return [
-			'login' => 'required|exists:base_users',
+			'login'    => 'required|exists:base_users',
 			'password' => 'required'
 		];
 	}

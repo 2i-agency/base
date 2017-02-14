@@ -1,34 +1,41 @@
 <?php
 
-/*
- * Перевод интерфеса
+/**
+ * Группа роутов для перевода интерфесов
  */
-
 Route::group([
 	'prefix' => 'translation'
-], function () {
+], function(){
 
-	// Список разделов
+	/**
+	 * Список разделов
+	 */
 	Route::get('/', [
 		'uses' => 'TranslationController@index',
-		'as' => 'admin.translation'
+		'as'   => 'admin.translation'
 	]);
 
-
+	/**
+	 * Группа роутов для манипуляций с отдельным разделом
+	 */
 	Route::group([
 		'prefix' => '{section}'
-	], function () {
+	], function(){
 
-		// Список элементов интерфейса раздела
+		/**
+		 * Список элементов интерфейса раздела
+		 */
 		Route::get('/', [
 			'uses' => 'TranslationController@section',
-			'as' => 'admin.translation.section'
+			'as'   => 'admin.translation.section'
 		]);
 
-		// Обновление перевода
+		/**
+		 * Обновление перевода
+		 */
 		Route::put('/', [
 			'uses' => 'TranslationController@save',
-			'as' => 'admin.translation.save'
+			'as'   => 'admin.translation.save'
 		]);
 
 	});

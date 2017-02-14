@@ -1,0 +1,62 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Chunker\Base\Libs\Columns;
+
+/**
+ * Миграция для таблицы представителя (роль или пользователь)
+ */
+class CreateBaseAgents extends Migration
+{
+	protected $table = 'base_agents';
+
+
+	public function up(){
+		Schema::create($this->table, function(Blueprint $table){
+
+			$table->comment = 'представители (роль или пользователь)';
+
+			/** Ключ */
+			Columns::id($table);
+
+			/** Ключ связанной модели роли или пользователя */
+			$table
+				->integer('agent_id')
+				->unsigned()
+				->index()
+				->comment('Ключ связанной модели');
+
+			/** Тип связанной модели роли или пользователя */
+			$table
+				->string('agent_type')
+				->index()
+				->comment('Тип связанной модели');
+
+			/** Ключ связанной модели */
+			$table
+				->integer('model_id')
+				->unsigned()
+				->index()
+				->comment('Ключ связанной модели');
+
+			/** Тип связанной модели */
+			$table
+				->string('model_type')
+				->index()
+				->comment('Тип связанной модели');
+
+			/** Ключ возможности */
+			$table
+				->string('ability_id')
+				->index()
+				->nullable()
+				->comment('Ключ возможности');
+		});
+	}
+
+
+	public function down(){
+		Schema::drop($this->table);
+	}
+}

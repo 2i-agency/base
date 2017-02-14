@@ -1,29 +1,42 @@
 <?php
 
-/*
- * Типы уведомлений
+/**
+ * Группа роутов для работы с типами уведомлений
  */
-
 Route::group([
 	'prefix' => 'notices-types'
-], function() {
+], function(){
 
-	// Список типов
+	/**
+	 * Список типов
+	 */
 	Route::get('/', [
-		'uses'  => 'NoticesTypeController@index',
-		'as'    => 'admin.notices-types'
+		'uses' => 'NoticesTypeController@index',
+		'as'   => 'admin.notices-types'
 	]);
 
-	// Добавление типа
+	/**
+	 * Добавление типа
+	 */
 	Route::post('store', [
-		'uses'  => 'NoticesTypeController@store',
-		'as'    => 'admin.notices-types.store'
+		'uses' => 'NoticesTypeController@store',
+		'as'   => 'admin.notices-types.store'
 	]);
 
-	// Сохранение типов
+	/**
+	 * Сохранение типов
+	 */
 	Route::put('save', [
-		'uses'  => 'NoticesTypeController@save',
-		'as'    => 'admin.notices-types.save'
+		'uses' => 'NoticesTypeController@save',
+		'as'   => 'admin.notices-types.save'
+	]);
+
+	/**
+	 * Сохранение типов
+	 */
+	Route::put('restore/{notices_type}', [
+		'uses' => 'NoticesTypeController@restore',
+		'as'   => 'admin.notices-types.restore'
 	]);
 
 });

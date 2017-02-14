@@ -4,21 +4,41 @@ namespace Chunker\Base\Http\Requests;
 
 use App\Http\Requests\Request;
 
+/**
+ * Валидация запросов на создание/редактирование ролей
+ *
+ * @package Chunker\Base\Http\Requests
+ */
 class RoleRequest extends Request
 {
-	public function authorize() {
+	/**
+	 * Определяет, может ли пользователь сделать этот запрос
+	 *
+	 * @return bool
+	 */
+	public function authorize(){
 		return true;
 	}
 
 
-	public function rules() {
+	/**
+	 * Получить правила проверки, которые применяются к запросу
+	 *
+	 * @return array
+	 */
+	public function rules(){
 		return [
 			'name' => 'required'
 		];
 	}
 
 
-	public function messages() {
+	/**
+	 * Получить сообщений валидации, которые применяются к запросу
+	 *
+	 * @return array
+	 */
+	public function messages(){
 		return [
 			'name.required' => 'Необходимо указать название роли'
 		];

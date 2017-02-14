@@ -4,24 +4,45 @@ namespace Chunker\Base\Listeners;
 
 use Carbon\Carbon;
 
+/**
+ * Класс слушателей событий пользователя
+ *
+ * @package Chunker\Base\Listeners
+ */
 class UserListener
 {
-	/*
-	 * При аутентификации пользователя
+	/**
+	 * Обработка события при попытке аутентификации пользователя
+	 *
+	 * @param $event
 	 */
-	public function onUserLogin($event) {
+	public function onUserLogin($event){
+
+		if ($event->isFailed) {
+			activity('auth-error')
+				->causedBy($event->user)
+				->performedOn($event->user)
+				->log('Провал аутентификации пользователя <b>' . $event->user->getName() . '</b>');
+		} else {
+			activity('auth-success')
+				->causedBy($event->user)
+				->performedOn($event->user)
+				->log('Успешная аутентификация пользователя <b>' . $event->user->getName() . '</b>');
+		}
 		// Добавление записи об аутентификации
 		$event
 			->user
 			->authentications()
-			->create(['is_failed' => $event->isFailed]);
+			->create([ 'is_failed' => $event->isFailed ]);
 	}
 
 
-	/*
-	 * При направлении запроса приложению от пользователя
+	/**
+	 * Обработка события при совершении действий пользователем
+	 *
+	 * @param $event
 	 */
-	public function onUserAppRequest($event) {
+	public function onUserAppRequest($event){
 		// Добавление данных в последнюю авторизацию, если таковая имеется
 		$authentications = $event
 			->user
@@ -31,15 +52,17 @@ class UserListener
 			$authentications
 				->latest('logged_in_at')
 				->first()
-				->update(['last_request_at' => Carbon::now()]);
+				->update([ 'last_request_at' => Carbon::now() ]);
 		}
 	}
 
 
-	/*
+	/**
 	 * Регистрация слушателей
+	 *
+	 * @param $events
 	 */
-	public function subscribe($events) {
+	public function subscribe($events){
 		$events->listen(
 			'Chunker\Base\Events\UserLoggedIn',
 			'Chunker\Base\Listeners\UserListener@onUserLogin'

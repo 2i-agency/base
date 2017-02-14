@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+/**
+ * Миграция для связующей таблицы типами уведомлений и ролями
+ */
+class CreateBaseNoticesUsers extends Migration
+{
+	protected $table = 'base_notices_users';
+
+
+	public function up(){
+		Schema::create($this->table, function(Blueprint $table){
+
+			$table->comment = 'Связи между уведомлениями и пользователями';
+
+			/** Ключ уведомления */
+			$table
+				->integer('notice_id')
+				->unsigned()
+				->index()
+				->comment('Ключ уведомления');
+
+			/** Ключ пользователя */
+			$table
+				->integer('user_id')
+				->unsigned()
+				->index()
+				->comment('Ключ пользователя');
+		});
+	}
+
+
+	public function down(){
+		Schema::drop($this->table);
+	}
+}

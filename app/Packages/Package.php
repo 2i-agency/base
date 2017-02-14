@@ -2,36 +2,49 @@
 
 namespace Chunker\Base\Packages;
 
-/*
+/**
  * Описание пакета Chunker
+ *
+ * @package Chunker\Base\Packages
  */
-
 class Package
 {
-	// Название пакета
+	/** @var string Название пакета */
 	protected $name;
 
-	// Возможности
+	/** @var array Возможности пакета */
 	protected $abilities = [];
 
-	// Представления для редактирования возможностей
+	/** @var array Представления для редактирования возможностей пакета */
 	protected $abilitiesViews = [];
 
-	// Посевщики
+	/** @var array Посевщики пакета */
 	protected $seeders = [];
 
+	/** @var array Пункты меню */
+	protected $menuItems = [];
 
-	/*
-	 * Доступ к свойствам, установка свойств базового типа, регистрация данных в свойствах-массивах
+	/** @var array Пункты меню */
+	protected $activityElements = [];
+
+
+	/**
+	 * Доступ к свойствам,
+	 * установка свойств базового типа,
+	 * регистрация данных в свойствах-массивах.
+	 *
+	 * @param string $method
+	 * @param array  $arguments
+	 *
+	 * @return $this|null
 	 */
-	public function __call($method, $arguments) {
+	public function __call($method, $arguments){
 		// Возможные действия
 		$actions = [
 			'get',
 			'register',
 			'set'
 		];
-
 
 		// Определение действия и названия свойства
 		foreach ($actions as $action) {
@@ -41,13 +54,11 @@ class Package
 			}
 		}
 
-
 		// Если свойство не определено, то и не определено и действие.
 		// Свойство также может не существовать
 		if (!isset($property) || !property_exists($this, $property)) {
 			return NULL;
 		}
-
 
 		// Выполнение действия
 		switch ($action) {
@@ -56,18 +67,17 @@ class Package
 				return $this->$property;
 
 			case 'register' :
-				if (is_array($arguments[0])) {
-					$this->$property = array_merge($this->$property, $arguments[0]);
+				if (is_array($arguments[ 0 ])) {
+					$this->$property = array_merge($this->$property, $arguments[ 0 ]);
 				} else {
-					$this->$property[] = $arguments[0];
+					$this->$property[] = $arguments[ 0 ];
 				}
 				break;
 
 			case 'set' :
-				$this->$property = $arguments[0];
+				$this->$property = $arguments[ 0 ];
 				break;
 		}
-
 
 		return $this;
 	}

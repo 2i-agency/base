@@ -21,21 +21,7 @@ $(function(){
 
 
 	// Позиционируемые элементы
-	$('.js-positionable').sortable({
-		update: function(e, ui) {
-			var $item = $(ui.item[0]),
-				$wrapper = $item.closest('.js-positionable');
-
-			$.ajax({
-				url: $wrapper.data('url'),
-				data: {
-					moved:	$item.data('id'),
-					prev:	$item.prev().data('id'),
-					next:	$item.next().data('id')
-				}
-			});
-		}
-	});
+	init_positionable('.js-positionable');
 
 
 	// Календарь

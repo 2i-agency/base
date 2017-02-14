@@ -2,64 +2,170 @@
 
 namespace Chunker\Base\Packages;
 
+use Chunker\Base\Models\Ability;
+
+/**
+ * Менеджер пакетов chunker
+ *
+ * @package Chunker\Base\Packages
+ */
 class Manager
 {
-	// Зарегистрированные пакеты
+	/** @var array Зарегистрированные пакеты */
 	protected $packages = [];
 
 
-	/*
+	/**
 	 * Регистрация пакета
+	 *
+	 * @param Package $package
+	 *
+	 * @return $this
 	 */
-	public function register(Package $package) {
-		$this->packages[$package->getName()] = $package;
+	public function register(Package $package){
+		$this->packages[ $package->getName() ] = $package;
+
 		return $this;
 	}
 
 
-	/*
-	 * Проверки регистрации пакета
+	/**
+	 * Проверка регистрации пакета
+	 *
+	 * @param string $packageName имя пакета
+	 *
+	 * @return bool
 	 */
-	public function isRegistered($packageName) {
+	public function isRegistered($packageName){
 		return array_key_exists($packageName, $this->packages);
 	}
 
 
-	/*
-	 * Зарегистрированные пакеты
+	/**
+	 * Получение массива зарегистрированных пакетов.
+	 * Если указан параметр $package, возвращается пакет с таким именем
+	 *
+	 * @param string $package
+	 *
+	 * @return array|mixed
 	 */
-	public function getPackages($package = NULL) {
-		return is_null($package) ? $this->packages : $this->packages[$package];
+	public function getPackages($package = NULL){
+		return is_null($package) ? $this->packages : $this->packages[ $package ];
 	}
 
 
-	/*
-	 * Возможности пакетов
+	/**
+	 * Получение массива возможностей пакетов.
+	 * Если указан параметр $packageName,
+	 * возвращается возможности этого пакета или пакетов.
+	 *
+	 * @param string|array $packageName
+	 *
+	 * @return array
 	 */
-	public function getAbilities($packageName = NULL) {
+	public function getAbilities($packageName = NULL){
 		return $this->collectDataFromPackages('ability', $packageName);
 	}
 
 
-	/*
-	 * Посевщики
+	/**
+	 * Получение массива с посевщиками пакетов.
+	 * Если указан параметр $packageName,
+	 * возвращается посевщики этого пакета или пакетов.
+	 *
+	 * @param string|array $packageName
+	 *
+	 * @return array
 	 */
-	public function getSeeders($packageName = NULL) {
+	public function getSeeders($packageName = NULL){
 		return $this->collectDataFromPackages('seeder', $packageName);
 	}
 
 
-	/*
-	 * Сбор данных из свойств объектов пакетов с помошью методов-геттеров
+	/**
+	 * Получение массива с пунктами меню.
+	 * Если указан параметр $packageName,
+	 * возвращается пункты этого пакета или пакетов.
+	 *
+	 * @param string|array $packageName
+	 *
+	 * @return array
 	 */
-	protected function collectDataFromPackages($property, $packageName = NULL) {
-		// Преобразования названия пакета в массив из одного элемента
-		if (!is_null($packageName) && !is_array($packageName)) {
-			$packageName = [$packageName];
+	public function getMenuItems($packageName = NULL){
+		return $this->collectDataFromPackages('menuItems', $packageName);
+	}
+
+
+	/**
+	 * Получение массива с элементами актисвности.
+	 * Если указан параметр $packageName,
+	 * возвращается элементы этого пакета или пакетов.
+	 *
+	 * @param string|array $packageName
+	 *
+	 * @return array
+	 */
+	public function getActivityElements($packageName = NULL){
+		return $this->collectDataFromPackages('activityElements', $packageName);
+	}
+
+
+	/**
+	 * Проверка активности пункта меню
+	 *
+	 * @param string $ability возможность по которой будет проходить поиск пункта меню
+	 *
+	 * @return bool
+	 */
+	public function isActiveSection($ability) {
+
+		foreach (config('chunker.admin.structure') as $parent) {
+
+			if (isset($parent[ 'children' ])) {
+
+				foreach ($parent[ 'children' ] as $child) {
+
+					if (is_array($child) || ( $child != '' )) {
+						if (is_string($child)) {
+							$child = $this->getMenuItems()[ $child ];
+						}
+
+						if (
+							!isset($child[ 'policy' ])
+							|| (
+								\Auth::user()->can($child[ 'policy' ])
+								&& Ability::detectNamespace($child[ 'policy' ]) == Ability::detectNamespace($ability)
+							)
+						) {
+							return true;
+						}
+					}
+
+				}
+
+			}
+
 		}
 
+		return false;
+	}
 
-		// Сбор данных
+
+	/**
+	 * Сбор данных из свойств объектов пакетов с помошью методов-геттеров
+	 *
+	 * @param string       $property
+	 * @param string|array $packageName
+	 *
+	 * @return array
+	 */
+	protected function collectDataFromPackages($property, $packageName = NULL){
+		// Преобразования названия пакета в массив из одного элемента
+		if (!is_null($packageName) && !is_array($packageName)) {
+			$packageName = [ $packageName ];
+		}
+
+		// Массив данных
 		$data = [];
 
 		foreach ($this->getPackages() as $package) {
@@ -74,7 +180,6 @@ class Manager
 				}
 			}
 		}
-
 
 		return $data;
 	}

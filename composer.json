@@ -6,7 +6,7 @@
 		{
 			"name": "Studio 2i",
 			"email": "mail@studio2i.ru",
-			"homepage": "studio2i.ru",
+			"homepage": "http://studio2i.ru",
 			"role": "Developer"
 		}
 	],
@@ -18,14 +18,9 @@
 		"sinergi/browser-detector": "~6.0",
 		"league/uri": "~4.1",
 		"asvae/laravel-api-tester": "~1.0",
-		"spatie/laravel-medialibrary": "~4.8"
+		"spatie/laravel-medialibrary": "~4.8",
+		"spatie/laravel-activitylog": "~1.11"
 	},
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/zedisdog/laravel-schema-extend.git"
-		}
-	],
 	"autoload": {
 		"psr-4": {
 			"Chunker\\Base\\": "app"
