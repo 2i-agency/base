@@ -9,6 +9,8 @@
 	{{--Хлебные крошки--}}
 	@include('base::users._breadcrumbs')
 
+	@include('base::activity-log.filter', ['action' => route('admin.users.activity-log', $user)])
+
 	{{--Табы--}}
 	@include('base::users._tabs')
 

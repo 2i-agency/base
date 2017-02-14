@@ -1,5 +1,5 @@
 {{--Форма поиска--}}
-<form class="row mb20px" action="{{ route('admin.activity-log') }}" method="post">
+<form class="row mb20px" action="{{ $action }}" method="post">
 	{!! csrf_field() !!}
 
 	{{--С--}}
@@ -31,16 +31,24 @@
 	</div>
 
 	{{--Пользователи--}}
-	<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-		<select name="user" class="form-control">
-			<option value="">Все пользователи</option>
-			@if(isset($users))
-				@foreach($users as $user)
-					<option value="{{ $user->id }}" {{ request('user') == $user->id ? 'selected' : NULL }}>{{ $user->getName() }}</option>
-				@endforeach
-			@endif
-		</select>
-	</div>
+	@if(isset($user))
+		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+			<select name="user" class="form-control" disabled>
+				<option value="{{ $user->id }}" {{ request('user') == $user->id ? 'selected' : NULL }}>{{ $user->getName() }}</option>
+			</select>
+		</div>
+	@else
+		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+			<select name="user" class="form-control">
+				<option value="">Все пользователи</option>
+				@if(isset($users))
+					@foreach($users as $user)
+						<option value="{{ $user->id }}" {{ request('user') == $user->id ? 'selected' : NULL }}>{{ $user->getName() }}</option>
+					@endforeach
+				@endif
+			</select>
+		</div>
+	@endif
 
 	{{--Элементы--}}
 	<div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">

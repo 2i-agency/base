@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Http\Controllers;
 
+use Carbon\Carbon;
 use Chunker\Base\Http\Controllers\Traits\AbilitiesLists;
 use Chunker\Base\Models\NoticesType;
 use Chunker\Base\Models\Role;
@@ -158,15 +159,28 @@ class UserController extends Controller
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function authentications(User $user){
+	public function activityLog(Request $request, User $user){
 		$this->authorize('users.view', $user);
 
-		$activities = $user
-			->causesActivity()
-			->orderBy('id', 'desc')
-			->paginate(30);
+		$activities = $user->causesActivity();
 
+		if (isset($request->published_since) && $request->published_since != '') {
+			$activities = $activities->where('created_at', '>=', Carbon::parse($request->published_since));
+		}
 
+		if (isset($request->published_until) && $request->published_until != '') {
+			$activities = $activities->where('created_at', '<=', Carbon::parse($request->published_until));
+		}
+
+		if (isset($request->log_name) && $request->log_name != '') {
+			$activities = $activities->where('log_name', $request->log_name);
+		}
+
+		if (isset($request->element) && $request->element != '') {
+			$activities = $activities->where('subject_type', $request->element);
+		}
+
+		$activities = $activities->orderBy('id', 'desc')->paginate(30);
 
 		return view(
 			'base::users.activity-log',

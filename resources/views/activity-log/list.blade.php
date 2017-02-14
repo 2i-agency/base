@@ -8,7 +8,7 @@
 
 	<h3>Аудит действий</h3>
 
-	@include('base::activity-log.filter')
+	@include('base::activity-log.filter', ['action' => route('admin.activity-log')])
 
 	@include('base::activity-log.table', ['activities' => $activities])
 

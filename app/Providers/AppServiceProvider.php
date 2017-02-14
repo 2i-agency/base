@@ -5,7 +5,9 @@ namespace Chunker\Base\Providers;
 use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
+use Chunker\Base\Models\NoticesType;
 use Chunker\Base\Models\Role;
+use Chunker\Base\Models\Setting;
 use Chunker\Base\Providers\Traits\Migrator;
 use Chunker\Base\ViewComposers\ActivityLogComposer;
 use Chunker\Base\ViewComposers\VisibleRoleComposer;
@@ -21,6 +23,7 @@ use Chunker\Base\ViewComposers\LanguagesComposer;
 use Chunker\Base\ViewComposers\RolesComposer;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use zedisdog\LaravelSchemaExtend\Schema;
+use Chunker\Base\Models\Redirect as ModelRedirect;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,8 +49,8 @@ class AppServiceProvider extends ServiceProvider
 				'settings.view' => 'Просмотр настроек',
 
 				'users.admin' => 'Администрирование пользователей',
-				'users.edit' => 'Редактирование других пользователей',
-				'users.view' => 'Просмотр пользователей',
+				'users.edit'  => 'Редактирование других пользователей',
+				'users.view'  => 'Просмотр пользователей',
 
 				'roles.admin' => 'Администрирование ролей',
 				'roles.edit'  => 'Редактирование ролей',
@@ -113,7 +116,7 @@ class AppServiceProvider extends ServiceProvider
 					'route'  => 'admin.settings',
 					'policy' => 'settings.view'
 				],
-				'activity-log'      => [
+				'activity-log'  => [
 					'name'   => 'Аудит действий',
 					'icon'   => 'info',
 					'route'  => 'admin.activity-log',
@@ -121,8 +124,11 @@ class AppServiceProvider extends ServiceProvider
 				]
 			])
 			->registerActivityElements([
-				User::class => 'activity-user',
-				Role::class => 'activity-role'
+				User::class          => 'activity-user',
+				Role::class          => 'activity-role',
+				ModelRedirect::class => 'activity-redirect',
+				NoticesType::class   => 'activity-notice-type',
+				Setting::class       => 'activity-setting'
 			]);
 
 		/** Регистрация пакета */

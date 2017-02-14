@@ -73,9 +73,12 @@ Route::group([
 		/**
 		 * Страница со списком аутентификаций
 		 */
-		Route::get('authentications', [
-			'uses' => 'UserController@authentications',
-			'as'   => 'admin.users.authentications'
+		Route::match([
+			'get', 'post'
+		],
+			'activity-log', [
+			'uses' => 'UserController@activityLog',
+			'as'   => 'admin.users.activity-log'
 		]);
 
 		/**
