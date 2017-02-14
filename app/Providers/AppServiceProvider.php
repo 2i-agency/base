@@ -124,11 +124,11 @@ class AppServiceProvider extends ServiceProvider
 				]
 			])
 			->registerActivityElements([
-				User::class          => 'activity-user',
-				Role::class          => 'activity-role',
-				ModelRedirect::class => 'activity-redirect',
-				NoticesType::class   => 'activity-notice-type',
-				Setting::class       => 'activity-setting'
+				User::class          => 'user',
+				Role::class          => 'role',
+				ModelRedirect::class => 'redirect',
+				NoticesType::class   => 'notice-type',
+				Setting::class       => 'setting'
 			]);
 
 		/** Регистрация пакета */
@@ -170,6 +170,7 @@ class AppServiceProvider extends ServiceProvider
 
 		/** Добавление файлов локализации в пространство имен */
 		$this->loadTranslationsFrom(resource_path('lang/vendor/chunker'), 'chunker');
+		$this->loadTranslationsFrom(static::ROOT . '/resources/lang', 'activity');
 
 		/** Объявление пространства имён представлений пакета */
 		$this->loadViewsFrom(static::ROOT . '/resources/views', 'base');

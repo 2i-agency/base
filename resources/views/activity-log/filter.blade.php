@@ -55,7 +55,10 @@
 		<select name="element" class="form-control">
 			<option value="">Все элементы</option>
 			@foreach(app('Packages')->getActivityElements() as $class => $activity_element)
-				<option value="{{ $class }}" {{ request('element') == $class ? 'selected' : NULL }}>{{ trans($activity_element) }}</option>
+				<option
+					value="{{ $class }}"
+					{{ request('element') == $class ? 'selected' : NULL }}
+				>{{ trans_choice('activity::entities.' . $activity_element, 2) }}</option>
 			@endforeach
 		</select>
 	</div>
