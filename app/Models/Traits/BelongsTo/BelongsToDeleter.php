@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 trait BelongsToDeleter
 {
-	use SoftDeletes;
 
 	/**
 	 * Пользователь-создатель

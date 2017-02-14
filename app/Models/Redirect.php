@@ -6,6 +6,7 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToDeleter;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Nullable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use League\Uri\Schemes\Http;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -16,10 +17,19 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class Redirect extends Model
 {
-	use Nullable, BelongsToEditors, BelongsToDeleter, LogsActivity;
+	use Nullable, BelongsToEditors, SoftDeletes, BelongsToDeleter, LogsActivity;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_redirects';
+
+	protected static $ignoreChangedAttributes = [
+		'created_at',
+		'updated_at',
+		'deleted_at',
+		'creator_id',
+		'updater_id',
+		'deleter_id'
+	];
 
 	/** @var array поля для массового присвоения атрибутов */
 	protected $fillable = [
@@ -35,7 +45,7 @@ class Redirect extends Model
 	];
 
 	/** @var array поля с датами */
-	protected $dates = ['deleted_at'];
+	protected $dates = [ 'deleted_at' ];
 
 	protected $ability = 'redirects';
 
@@ -47,7 +57,7 @@ class Redirect extends Model
 	 *
 	 * @return string
 	 */
-	public static function prepareFrom($from){
+	public static function prepareFrom($from) {
 		$uri = Http::createFromString($from);
 
 		$from = '/' . $uri
@@ -67,7 +77,7 @@ class Redirect extends Model
 	 *
 	 * @param string $from
 	 */
-	public function setFromAttribute($from){
+	public function setFromAttribute($from) {
 		$this->attributes[ 'from' ] = static::prepareFrom($from);
 	}
 
@@ -79,15 +89,15 @@ class Redirect extends Model
 	 *
 	 * @return string
 	 */
-	public function getDescriptionForEvent(string $eventName): string
-	{
+	public function getDescriptionForEvent(string $eventName):string {
 		$actions = [
-			'created' => 'создал перенаправление',
-			'updated' => 'отредактировал данные перенаправления',
-			'deleted' => 'удалил перенаправление'
+			'created'  => 'создал перенаправление',
+			'updated'  => 'отредактировал данные перенаправления',
+			'deleted'  => 'удалил перенаправление',
+			'restored' => 'восстановил перенаправление'
 		];
 
-		return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ': <b>:subject.from -> :subject.to</b>';
+		return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ': <b>:subject.from -> :subject.to</b>';
 	}
 
 
@@ -98,8 +108,7 @@ class Redirect extends Model
 	 *
 	 * @return string
 	 */
-	public function getLogNameToUse(string $eventName = ''): string
-	{
+	public function getLogNameToUse(string $eventName = ''):string {
 		if ($eventName == '') {
 			return config('laravel-activitylog.default_log_name');
 		} else {

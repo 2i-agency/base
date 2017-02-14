@@ -8,6 +8,7 @@ use Chunker\Base\Models\Traits\Comparable;
 use Chunker\Base\Models\Traits\IsRelatedWith;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -16,16 +17,25 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class Role extends Model
 {
-	use BelongsToEditors, Comparable, IsRelatedWith, BelongsToDeleter, LogsActivity;
+	use BelongsToEditors, Comparable, IsRelatedWith, SoftDeletes, BelongsToDeleter, LogsActivity;
 
 	/** @var string имя таблицы */
 	protected $table = 'base_roles';
+
+	protected static $ignoreChangedAttributes = [
+		'created_at',
+		'updated_at',
+		'deleted_at',
+		'creator_id',
+		'updater_id',
+		'deleter_id'
+	];
 
 	/** @var array поля для массового присвоения атрибутов */
 	protected $fillable = [ 'name' ];
 
 	/** @var array поля с датами */
-	protected $dates = ['deleted_at'];
+	protected $dates = [ 'deleted_at' ];
 
 	protected $ability = 'roles';
 
@@ -79,10 +89,10 @@ class Role extends Model
 
 		/** Если есть связь хотя бы с одной возможностью из пространства имён */
 		if (
-			$this
-				->abilities()
-				->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
-				->count()
+		$this
+			->abilities()
+			->where('id', 'LIKE', '%' . Ability::detectNamespace($abilityNamespace) . '.%')
+			->count()
 		) {
 			return true;
 		}
@@ -111,10 +121,10 @@ class Role extends Model
 	 */
 	public function hasAbility($ability, $models = NULL) {
 		if (
-			$this
-				->abilities()
-				->where('id', $ability)
-				->count()
+		$this
+			->abilities()
+			->where('id', $ability)
+			->count()
 		) {
 			return true;
 		}
@@ -143,7 +153,7 @@ class Role extends Model
 
 			/** Если передана одна модель, оборачиаем её в коллекцию, для удобства */
 			if ($models instanceof Model) {
-				$models = (new Collection())->add($models);
+				$models = ( new Collection() )->add($models);
 			}
 
 			/** Проходимся по всем переданным моделям */
@@ -165,7 +175,7 @@ class Role extends Model
 					/** Проверяем все связанные возможности */
 					foreach ($abilities as $value) {
 
-						if(is_null($value)) {
+						if (is_null($value)) {
 							return false;
 						}
 
@@ -211,16 +221,16 @@ class Role extends Model
 	 *
 	 * @return string
 	 */
-	public function getDescriptionForEvent(string $eventName): string
-	{
+	public function getDescriptionForEvent(string $eventName):string {
 		$actions = [
-			'created' => 'создал роль',
-			'updated' => 'отредактировал данные роли',
-			'deleted' => 'удалил роль'
+			'created'  => 'создал роль',
+			'updated'  => 'отредактировал данные роли',
+			'deleted'  => 'удалил роль',
+			'restored' => 'восстановил роль'
 		];
 
 		if (User::count()) {
-			return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ' <b>:subject.name</b>';
+			return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ' <b>:subject.name</b>';
 		} else {
 			return 'Создана роль <b>:subject.name</b>';
 		}
@@ -234,8 +244,7 @@ class Role extends Model
 	 *
 	 * @return string
 	 */
-	public function getLogNameToUse(string $eventName = ''): string
-	{
+	public function getLogNameToUse(string $eventName = ''):string {
 		if ($eventName == '') {
 			return config('laravel-activitylog.default_log_name');
 		} else {

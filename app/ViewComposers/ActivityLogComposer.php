@@ -20,6 +20,10 @@ class ActivityLogComposer
 				'icon' => 'trash',
 				'name' => 'Удаление'
 			],
+			'restored'      => [
+				'icon' => 'reply',
+				'name' => 'Восстановление'
+			],
 			'auth-error'   => [
 				'icon' => 'sign-in',
 				'name' => 'Провал аутентификации'

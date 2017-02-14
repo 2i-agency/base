@@ -40,6 +40,14 @@ class User extends Authenticatable
 	/** @var string имя таблицы */
 	public $table = 'base_users';
 
+	protected static $ignoreChangedAttributes = [
+		'created_at',
+		'updated_at',
+		'creator_id',
+		'updater_id',
+		'remember_token'
+	];
+
 	/** @var array поля принимающие null */
 	protected $nullable = [ 'name' ];
 
