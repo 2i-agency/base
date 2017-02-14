@@ -63,7 +63,12 @@
 					{{ $is_role ? $agent->agentable()->first()->name : $agent->agentable()->first()->getName() }}
 				</td>
 				<td>
-					<select class="form-control" name="new-ability" id="js-update-agent-{{ $agent->id }}">
+					<select
+						class="form-control"
+						name="new-ability"
+						id="js-update-agent-{{ $agent->id }}"
+					    {{ !$is_role && ($agent->agentable()->first() == \Auth::user()) ? 'disabled' : NULL }}
+					>
 						@include('base::utils.ability-trigger', [
 							'is_selected' => isset($agent->ability_id),
 							'ability' => '',
@@ -79,20 +84,22 @@
 					</select>
 				</td>
 				<td class="text-right">
-					<div class="btn-group">
-						<a
-							class="js-btn-update-right btn btn-primary"
-							href="#"
-							data-agent="{{ $agent->id }}"
-							data-url="{{ route('admin.rights.update') }}"
-						><span class="fa fa-floppy-o"></span></a>
-						<a
-							class="js-btn-delete-right btn btn-danger"
-							href="#"
-							data-agent="{{ $agent->id }}"
-							data-url="{{ route('admin.rights.delete') }}"
-						><span class="fa fa-trash"></span></a>
-					</div>
+					@unless(!$is_role && ($agent->agentable()->first() == \Auth::user()))
+						<div class="btn-group">
+							<a
+								class="js-btn-update-right btn btn-primary"
+								href="#"
+								data-agent="{{ $agent->id }}"
+								data-url="{{ route('admin.rights.update') }}"
+							><span class="fa fa-floppy-o"></span></a>
+							<a
+								class="js-btn-delete-right btn btn-danger"
+								href="#"
+								data-agent="{{ $agent->id }}"
+								data-url="{{ route('admin.rights.delete') }}"
+							><span class="fa fa-trash"></span></a>
+						</div>
+					@endunless
 				</td>
 			</tr>
 		@endforeach
