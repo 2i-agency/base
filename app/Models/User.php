@@ -462,10 +462,10 @@ class User extends Authenticatable
 			'updated' => 'отредактировал данные'
 		];
 
-		if (User::count() > 1) {
-			return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ' пользователя <b>:subject.login</b>';
+		if (User::find(1)) {
+			return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ' пользователя <b>' . $this->getName() . '</b>';
 		} else {
-			return 'Создан пользователь <b>:subject.login</b>';
+			return 'Создан пользователь <b>' . $this->getName() . '</b>';
 		}
 	}
 
