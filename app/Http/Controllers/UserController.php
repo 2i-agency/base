@@ -162,7 +162,7 @@ class UserController extends Controller
 	public function activityLog(Request $request, User $user){
 		$this->authorize('users.view', $user);
 
-		$activities = $user->causesActivity();
+		$activities = $user->activity();
 
 		if (isset($request->published_since) && $request->published_since != '') {
 			$activities = $activities->where('created_at', '>=', Carbon::parse($request->published_since));
