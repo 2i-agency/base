@@ -5,6 +5,7 @@ namespace Chunker\Base\Providers;
 use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
+use Chunker\Base\Models\Media;
 use Chunker\Base\Models\NoticesType;
 use Chunker\Base\Models\Role;
 use Chunker\Base\Models\Setting;
@@ -124,7 +125,7 @@ class AppServiceProvider extends ServiceProvider
 				]
 			])
 			->registerActivityElements([
-//				User::class          => 'base::entities.user',
+				//				User::class          => 'base::entities.user',
 				Role::class          => 'base::entities.role',
 				ModelRedirect::class => 'base::entities.redirect',
 				NoticesType::class   => 'base::entities.notice-type',
@@ -146,6 +147,11 @@ class AppServiceProvider extends ServiceProvider
 		config([ 'app.aliases.Gate' => Gate::class ]);
 		/** Заменяем стандартый класс Schema */
 		config([ 'app.aliases.Schema' => Schema::class ]);
+		/** Переопределяем модель в конфиге пакета медиа-библиотеке */
+		config([ 'media_model' => Media::class ]);
+		/** Переопределяем максимальный размер загружаемых файлов в конфиге пакета медиа-библиотеки */
+		config([ 'max_file_size' => detect_max_upload_file_size() ]);
+
 
 
 		/**
