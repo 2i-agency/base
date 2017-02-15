@@ -154,8 +154,6 @@ class AppServiceProvider extends ServiceProvider
 		config([ 'app.aliases.Schema' => Schema::class ]);
 		/** Переопределяем модель в конфиге пакета медиа-библиотеке */
 		config([ 'media_model' => Media::class ]);
-		/** Переопределяем максимальный размер загружаемых файлов в конфиге пакета медиа-библиотеки */
-		config([ 'max_file_size' => detect_max_upload_file_size() ]);
 
 
 
