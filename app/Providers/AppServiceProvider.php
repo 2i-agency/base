@@ -13,6 +13,7 @@ use Chunker\Base\Providers\Traits\Migrator;
 use Chunker\Base\ViewComposers\ActivityLogComposer;
 use Chunker\Base\ViewComposers\VisibleRoleComposer;
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
 use Chunker\Base\Packages\Manager;
@@ -140,11 +141,15 @@ class AppServiceProvider extends ServiceProvider
 		/** Установка формата времени по умолчанию */
 		Carbon::setToStringFormat('d.m.Y H:i');
 
+		/** Установка лимита на размер загружамего файла в Media */
+		config([ 'laravel-medialibrary.max_file_size' => UploadedFile::getMaxFilesize()]);
+
 		/** Локализация */
 		$this->app->setLocale('ru');
 
 		/** Заменяем стандартный класс Gate */
 		config([ 'app.aliases.Gate' => Gate::class ]);
+		
 		/** Заменяем стандартый класс Schema */
 		config([ 'app.aliases.Schema' => Schema::class ]);
 		/** Переопределяем модель в конфиге пакета медиа-библиотеке */
