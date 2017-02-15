@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Models\Traits;
 
+use Carbon\Carbon;
 use Chunker\Base\Models\Traits\Scopes\ScopeByPublicationTime;
 use Chunker\Base\Models\Traits\Scopes\ScopeNotPublished;
 use Chunker\Base\Models\Traits\Scopes\ScopePublished;
@@ -31,7 +32,7 @@ trait Publicable
 	 * @return bool
 	 */
 	public function isNotPublished(){
-		return is_null($this->published_at);
+		return Carbon::now()->lte(Carbon::parse($this->published_at));
 	}
 
 
