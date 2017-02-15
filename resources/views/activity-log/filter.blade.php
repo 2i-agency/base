@@ -33,19 +33,28 @@
 	{{--Пользователи--}}
 	@if(isset($user))
 		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-			<select name="user" class="form-control" disabled>
-				<option value="{{ $user->id }}" {{ request('user') == $user->id ? 'selected' : NULL }}>{{ $user->getName() }}</option>
+			<select name="causes" class="form-control" disabled>
+				<option value="{{ $user->id }}" {{ request('causes') == $user->id ? 'selected' : NULL }}>{{ $user->getName() }}</option>
 			</select>
 		</div>
 	@else
 		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-			<select name="user" class="form-control">
+			<select name="causes" class="form-control">
 				<option value="">Все пользователи</option>
-				@if(isset($users))
-					@foreach($users as $user)
-						<option value="{{ $user->id }}" {{ request('user') == $user->id ? 'selected' : NULL }}>{{ $user->getName() }}</option>
-					@endforeach
-				@endif
+				<optgroup label="Пользователи">
+					@if(isset($users))
+						@foreach($users as $user)
+							<option value="user:{{ $user->id }}" {{ request('causes') == 'user:' . $user->id ? 'selected' : NULL }}>{{ $user->getName() }}</option>
+						@endforeach
+					@endif
+				</optgroup>
+				<optgroup label="Роли">
+					@if(isset($roles))
+						@foreach($roles as $role)
+							<option value="role:{{ $role->id }}" {{ request('causes') == 'role:' . $role->id ? 'selected' : NULL }}>{{ $role->name }}</option>
+						@endforeach
+					@endif
+				</optgroup>
 			</select>
 		</div>
 	@endif

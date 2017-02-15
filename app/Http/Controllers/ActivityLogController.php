@@ -5,6 +5,7 @@ namespace Chunker\Base\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Chunker\Base\Http\Controllers\Traits\Pagination;
+use Chunker\Base\Models\Role;
 use Chunker\Base\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
@@ -17,7 +18,11 @@ class ActivityLogController extends Controller
 	public function index(Request $request) {
 		$this->authorize('activity-log.view');
 
-		$users = User::isRootAdmin()->get();
+		$activity_user = Activity::pluck('causer_id')->toArray();
+
+		$users = User::isRootAdmin()->whereIn('id', $activity_user)->get();
+
+		$roles = Role::get();
 
 		$activities = Activity::orderBy('id', 'desc');
 
@@ -33,8 +38,15 @@ class ActivityLogController extends Controller
 			$activities = $activities->where('log_name', $request->log_name);
 		}
 
-		if (isset($request->user) && $request->user != '') {
-			$activities = $activities->where('causer_id', $request->user);
+		if (isset($request->causes) && $request->causes != '') {
+			$causes = explode(':', $request->causes);
+
+			if (array_first($causes) == 'user') {
+				$activities = $activities->where('causer_id', array_last($causes));
+			} else {
+				$users_role = Role::find(array_last($causes))->users()->pluck('id')->toArray();
+				$activities = $activities->whereIn('causer_id', $users_role);
+			}
 		}
 
 		if (isset($request->element) && $request->element != '') {
@@ -43,6 +55,6 @@ class ActivityLogController extends Controller
 
 		$activities = $activities->paginate(30);
 
-		return view('base::activity-log.list', compact('activities', 'users'));
+		return view('base::activity-log.list', compact('activities', 'users', 'roles'));
 	}
 }
