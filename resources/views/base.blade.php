@@ -18,6 +18,11 @@
 	{{--Собственные оформление и поведение страницы--}}
 	<script src="{{ asset('admin/js/base.js') }}"></script>
 	<link rel="stylesheet" href="{{ asset('admin/css/base.css') }}">
+
+	@if (config('chunker.admin.editor.tinymce'))
+		<script src="{{ asset('tinymce/tinymce.js') }}"></script>
+	@endif
+
 	@yield('page.assets')
 
 	{{--Иконка админки--}}
