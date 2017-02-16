@@ -153,7 +153,7 @@ class AppServiceProvider extends ServiceProvider
 		/** Заменяем стандартый класс Schema */
 		config([ 'app.aliases.Schema' => Schema::class ]);
 		/** Переопределяем модель в конфиге пакета медиа-библиотеке */
-		config([ 'media_model' => Media::class ]);
+		config([ 'laravel-medialibrary.media_model' => Media::class ]);
 
 
 
