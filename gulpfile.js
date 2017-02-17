@@ -18,6 +18,9 @@ elixir(function(mix) {
 		// Шрифты Bootstrap
 		.copy('./node_modules/bootstrap-sass/assets/fonts', './publishes/public/admin/fonts')
 
+		// TinyMCE
+		.copy('./node_modules/tinymce', './publishes/public/tinymce')
+
 		// Стили страницы аутентификации
 		.sass('auth.scss', './publishes/public/admin/css/auth.css')
 

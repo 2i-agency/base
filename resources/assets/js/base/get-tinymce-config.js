@@ -38,4 +38,4 @@ function get_tinymce_config(data){
 
 
 	return config;
-};
+}

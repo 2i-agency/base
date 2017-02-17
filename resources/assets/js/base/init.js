@@ -150,4 +150,12 @@ $(function(){
 		}
 	});
 
+
+	/*
+	 * TinyMCE
+	 */
+	if (typeof tinymce !== "undefined") {
+		tinymce.init(get_tinymce_config());
+	}
+
 });

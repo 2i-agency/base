@@ -5,11 +5,14 @@
     "dev": "gulp watch"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^5.0.0"
+  },
+  "dependencies": {
+    "tinymce": "^4.5.3",
     "bootstrap-sass": "^3.0.0",
     "codemirror": "^5.18.2",
     "eonasdan-bootstrap-datetimepicker-npm": "^4.17.37",
-    "gulp": "^3.9.1",
-    "laravel-elixir": "^5.0.0",
     "moment": "^2.13.0"
   }
 }
