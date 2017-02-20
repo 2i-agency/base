@@ -48,7 +48,11 @@ class Setting extends Model
 			'updated' => 'отредактировал настройки'
 		];
 
-		return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ': <b>:subject.title</b>';
+		if (!is_null(\Auth::user())) {
+			return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ': <b>:subject.title</b>';
+		} else {
+			return '';
+		}
 	}
 
 

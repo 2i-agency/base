@@ -97,7 +97,11 @@ class Redirect extends Model
 			'restored' => 'восстановил перенаправление'
 		];
 
-		return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ': <b>:subject.from -> :subject.to</b>';
+		if (!is_null(\Auth::user())){
+			return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ': <b>:subject.from -> :subject.to</b>';
+		} else {
+			return '';
+		}
 	}
 
 

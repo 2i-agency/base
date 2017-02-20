@@ -229,10 +229,10 @@ class Role extends Model
 			'restored' => 'восстановил роль'
 		];
 
-		if (User::count()) {
+		if (!is_null(\Auth::user())) {
 			return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ' <b>:subject.name</b>';
 		} else {
-			return 'Создана роль <b>:subject.name</b>';
+			return '';
 		}
 	}
 

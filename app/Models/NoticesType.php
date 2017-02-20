@@ -101,7 +101,11 @@ class NoticesType extends Model
 			'restored' => 'восстановил тип уведомлений'
 		];
 
-		return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ': <b>:subject.name</b>';
+		if (!is_null(\Auth::user())){
+			return 'Пользователь <b>:causer.login</b> ' . $actions[ $eventName ] . ': <b>:subject.name</b>';
+		} else {
+			return '';
+		}
 	}
 
 
