@@ -38,9 +38,9 @@ return [
 			]
 		],
 		[
-			'name'      => 'Предприятие',
-			'icon'      => 'tasks',
-			'children'  => [
+			'name'     => 'Предприятие',
+			'icon'     => 'university',
+			'children' => [
 			]
 		],
 		[
@@ -87,14 +87,14 @@ return [
 	 * js  - Пути к JS-файлам для имитации поведения реальной страницы
 	 */
 	'editor'    => [
-		'css'       => [
+		'css'     => [
 			'https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css'
 		],
-		'js'        => [
+		'js'      => [
 			'https://yastatic.net/jquery/2.2.0/jquery.min.js',
 			'https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js'
 		],
-		'tinymce'   => true
+		'tinymce' => true
 	],
 
 
