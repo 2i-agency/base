@@ -38,6 +38,12 @@ return [
 			]
 		],
 		[
+			'name'      => 'Предприятие',
+			'icon'      => 'tasks',
+			'children'  => [
+			]
+		],
+		[
 			'name'     => 'Система',
 			'icon'     => 'cogs',
 			'children' => [
