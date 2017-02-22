@@ -142,19 +142,16 @@ class AppServiceProvider extends ServiceProvider
 		Carbon::setToStringFormat('d.m.Y H:i');
 
 		/** Установка лимита на размер загружамего файла в Media */
-		config([ 'laravel-medialibrary.max_file_size' => UploadedFile::getMaxFilesize()]);
+		config([ 'laravel-medialibrary.max_file_size' => UploadedFile::getMaxFilesize() ]);
 
 		/** Локализация */
 		$this->app->setLocale('ru');
 
 		/** Заменяем стандартный класс Gate */
 		config([ 'app.aliases.Gate' => Gate::class ]);
-		
+
 		/** Заменяем стандартый класс Schema */
 		config([ 'app.aliases.Schema' => Schema::class ]);
-		/** Переопределяем модель в конфиге пакета медиа-библиотеке */
-		config([ 'laravel-medialibrary.media_model' => Media::class ]);
-
 
 
 		/**
