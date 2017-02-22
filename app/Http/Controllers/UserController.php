@@ -87,9 +87,6 @@ class UserController extends Controller
 			'is_admin'
 		]));
 
-		/** Сохранение связей */
-		$user->roles()->sync($request->get('roles', []));
-
 		flash()->success('Пользователь <b>' . e($user->login) . '</b> добавлен');
 
 		return redirect()->route('admin.users.edit', $user);
@@ -142,9 +139,6 @@ class UserController extends Controller
 
 		/** Обновление */
 		$user->update($data);
-
-		/** Сохранение связей */
-		$user->roles()->sync($request->get('roles', []));
 
 		flash()->success('Данные пользователя <b>' . e($user->login) . '</b> сохранены');
 
