@@ -29,6 +29,9 @@ class NoticeController extends Controller
 			->whereHas('roles', function(Builder $query) use ($request){
 				$query->whereIn('id', $request->user()->roles()->pluck('id'));
 			})
+			->orWhereHas('users', function(Builder $query) use ($request){
+				$query->where('id', $request->user()->id);
+			})
 			->get([ 'id', 'name' ]);
 
 		/** @var Notice $notices Уведомления */
@@ -112,7 +115,6 @@ class NoticeController extends Controller
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function destroy(Request $request, Notice $notice){
-		$this->authorize('notices.edit');
 
 		$notice->users()->detach($request->user()->id);
 		if (!$notice->users()->count()) {

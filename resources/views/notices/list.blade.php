@@ -127,9 +127,7 @@
 						<th style="width: 150px;">Время</th>
 						<th>Содержимое</th>
 						<th class="w1px">Тип</th>
-						@can('notices.edit')
-							<th class="w1px"></th>
-						@endcan
+						<th class="w1px"></th>
 					</tr>
 					</thead>
 
@@ -156,15 +154,15 @@
 							</td>
 
 							{{--Кнопки--}}
-							@can('notices.edit')
-								<td class="text-right text-nowrap">
-									<form
-										method="POST"
-										action="{{ route('admin.notices.read', ['notice' => $notice]) }}"
-									>
-										{!! csrf_field() !!}
-										{!! method_field('PUT') !!}
+							<td class="text-right text-nowrap">
+								<form
+									method="POST"
+									action="{{ route('admin.notices.read', ['notice' => $notice]) }}"
+								>
+									{!! csrf_field() !!}
+									{!! method_field('PUT') !!}
 
+									@can('notices.edit')
 										{{--Кнопка отметки о прочтении--}}
 										@unless($notice->is_read)
 											<button type="submit" class="btn btn-xs btn-primary">
@@ -172,17 +170,17 @@
 												Отметить прочитанным
 											</button>
 										@endunless
+									@endcan
 
-										{{--Кнопка удаления--}}
-										@include('base::utils.buttons.delete', [
-											'size' => 'xs',
-											'url' => route('admin.notices.destroy', ['notice' => $notice])
-										])
+									{{--Кнопка удаления--}}
+									@include('base::utils.buttons.delete', [
+										'size' => 'xs',
+										'url' => route('admin.notices.destroy', ['notice' => $notice])
+									])
 
-									</form>
+								</form>
 
-								</td>
-							@endcan
+							</td>
 
 						</tr>
 					@endforeach

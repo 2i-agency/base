@@ -44,44 +44,56 @@ class Notice extends Model
 		return $this->belongsToMany(User::class, 'base_notices_users');
 	}
 
+	protected function getSubscribeUsers() {
+		$notice_type = $this->type;
+
+		if (is_null($notice_type)) {
+			return User::where('is_subscribed', 1)->get(['id', 'name', 'email' ]);
+		} else {
+			$users = $notice_type->users()->get(['id', 'name', 'email' ]);
+
+			foreach ($notice_type->roles()->get() as $role) {
+				foreach ($role->users()->where('is_subscribed', 1)->get(['id', 'name', 'email' ]) as $user) {
+					$users->push($user);
+				}
+			}
+
+			return $users->unique();
+		}
+	}
+
 
 	public static function boot() {
+
+		static::creating(function($instance) {
+			return (bool)$instance->getSubscribeUsers()->count();
+		});
 
 		/**
 		 * При создании уведомления его содержимое отправляется на почту подписанным пользователям
 		 */
 		static::created(function($instance) {
-			Mail::send(
-				[
-					'html' => 'base::mail.notice.html',
-					'text' => 'base::mail.notice.text'
-				],
-				[ 'content' => $instance->content ],
-				function(Message $mail) use ($instance) {
-					$users = User::where('is_subscribed', true);
+			$users = $instance->getSubscribeUsers();
 
-					// Фильтрация по ролям, подписанным на уведомления определенного типа
-					$type = $instance->type;
+			$users->each(function($user) use ($instance) {
 
-					if ($type) {
-						$users->whereHas('roles', function(Builder $query) use ($type) {
-							$query->whereIn('base_roles.id', $type->roles()->pluck('id'));
-						});
-					}
+				/** Прикрепление уведомления к пользователю */
+				$instance->users()->attach($user->id);
 
-					// Отправка всем подписанным пользователям
-					$users
-						->get(['id', 'name', 'email' ])
-						->each(function($user) use ($mail, $instance) {
-							/** Прикрепление уведомления к пользователю */
-							$instance->users()->attach($user->id);
-							/** Отправка письма */
-							$mail->to($user->email, $user->getName());
-						});
+				Mail::send(
+					[
+						'html' => 'base::mail.notice.html',
+						'text' => 'base::mail.notice.text'
+					],
+					[ 'content' => $instance->content ],
+					function(Message $mail) use ($user, $instance) {
 
-					// Тема
-					$mail->subject('Уведомление с сайта ' . host());
-				});
+						/** Отправка письма */
+						$mail
+							->to($user->email, $user->getName())
+							->subject('Уведомление с сайта ' . host());
+					});
+			});
 		});
 
 		static::deleted(function($instance){
