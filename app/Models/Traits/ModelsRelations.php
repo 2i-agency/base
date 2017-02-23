@@ -1,12 +1,12 @@
 <?php
-namespace chunker\base\app\Models\Traits;
+namespace Chunker\Base\Models\Traits;
 
-use chunker\base\app\Models\Agent;
+use Chunker\Base\Models\Agent;
 
 /**
  * Трейт для связи моделей с представителями
  *
- * @package chunker\base\app\Models\Traits
+ * @package Chunker\Base\Models\Traits
  */
 trait ModelsRelations
 {

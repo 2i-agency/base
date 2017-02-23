@@ -134,7 +134,7 @@ class RoleController extends Controller
 	/**
 	 * Восстановление роли
 	 *
-	 * @param Role $role
+	 * @param Request $request
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */

@@ -110,7 +110,8 @@ class NoticeController extends Controller
 	/**
 	 * Удаление уведомления
 	 *
-	 * @param Notice $notice
+	 * @param Request $request
+	 * @param Notice  $notice
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */

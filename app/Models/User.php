@@ -286,7 +286,8 @@ class User extends Authenticatable
 	/**
 	 * Проверяет существование возможности у самомго пользователя
 	 *
-	 * @param $ability
+	 * @param      $ability
+	 * @param null $models
 	 *
 	 * @return bool
 	 */
@@ -389,7 +390,9 @@ class User extends Authenticatable
 	/**
 	 * Определение административных прав доступа
 	 *
-	 * @param array|string $abilities возможность
+	 * @param mixed $abilities возможности
+	 * @param null  $models
+	 * @param bool  $and
 	 *
 	 * @return bool
 	 */
@@ -425,7 +428,7 @@ class User extends Authenticatable
 	/**
 	 * Заготовка запроса для исключения пользователя с id = 1 если запрашивает не он
 	 *
-	 * @param Builder $builder
+	 * @param Builder $query
 	 *
 	 * @return Builder
 	 */

@@ -115,7 +115,8 @@ class Role extends Model
 	/**
 	 * Проверка наличия возможности
 	 *
-	 * @param string $abilities возможности
+	 * @param mixed $ability
+	 * @param mixed $models
 	 *
 	 * @return bool
 	 */

@@ -61,9 +61,10 @@ class Ability extends Model
 	/**
 	 * Возвращает постфикс возможности администрирования
 	 *
+	 * @param      $ability
 	 * @param bool $with_dot указывает необходимость добавить перед постфиксом точку
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
 	public static function getAdminPostfix($ability, $with_dot = false) {
 		$admin_postfix = array_first(self::getPostfixes($ability));

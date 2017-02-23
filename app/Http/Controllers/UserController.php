@@ -149,7 +149,8 @@ class UserController extends Controller
 	/**
 	 * Лог аутентификаций пользователя
 	 *
-	 * @param User $user
+	 * @param Request $request
+	 * @param User    $user
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
