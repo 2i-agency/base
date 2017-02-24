@@ -16,8 +16,7 @@ function init_positionable(selector) {
 						next:	$item.next().data('id')
 					}
 				});
-			},
-			cancel: '.ui-state-disabled'
+			}
 		})
 		.disableSelection();
 }
