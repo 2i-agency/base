@@ -1,6 +1,5 @@
 {{--Форма поиска--}}
-<form class="row mb20px" action="{{ $action }}" method="post">
-	{!! csrf_field() !!}
+<form class="row mb20px" action="{{ $action }}" method="get">
 
 	{{--С--}}
 	<div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
