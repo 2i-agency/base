@@ -6,6 +6,7 @@ use Chunker\Base\Models\Traits\MediaConversions;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Storage;
@@ -17,7 +18,7 @@ use Storage;
  */
 class Language extends Model implements HasMediaConversions
 {
-	use BelongsToEditors, NodeTrait, HasMediaTrait, MediaConversions;
+	use BelongsToEditors, NodeTrait, HasMediaTrait, MediaConversions, LogsActivity;
 
 	/** @var string название таблицы */
 	protected $table = 'base_languages';
@@ -35,6 +36,11 @@ class Language extends Model implements HasMediaConversions
 	/** @var array поля для мутаторов */
 	protected $casts = [
 		'is_published' => 'boolean'
+	];
+
+	protected static $recordEvents = [
+		'created',
+		'updated'
 	];
 
 
@@ -55,6 +61,45 @@ class Language extends Model implements HasMediaConversions
 	 */
 	public function setLocaleAttribute($locale){
 		$this->attributes[ 'locale' ] = str_slug(mb_strlen(trim($locale)) ? $locale : $this->attributes[ 'name' ]);
+	}
+
+
+	/**
+	 * Метод для замены стандартного описания действия
+	 *
+	 * @param string $eventName
+	 *
+	 * @return string
+	 */
+	public function getDescriptionForEvent(string $eventName): string
+	{
+		$actions = [
+			'created' => 'создал',
+			'updated' => 'отредактировал'
+		];
+
+		if (\Auth::check()) {
+			return 'Пользователь <b>:causer.login</b> ' . $actions[$eventName] . ' <b>:subject.name</b> язык';
+		} else {
+			return '';
+		}
+	}
+
+
+	/**
+	 * Возвращает имя лога
+	 *
+	 * @param string $eventName
+	 *
+	 * @return string
+	 */
+	public function getLogNameToUse(string $eventName = ''): string
+	{
+		if ($eventName == '') {
+			return config('laravel-activitylog.default_log_name');
+		} else {
+			return $eventName;
+		}
 	}
 
 
