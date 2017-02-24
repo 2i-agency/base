@@ -50,7 +50,11 @@ class ActivityLogController extends Controller
 		}
 
 		if (isset($request->element) && $request->element != '') {
-			$activities = $activities->where('subject_type', $request->element);
+			if ($request->element == 'localization') {
+				$activities = $activities->where('properties', 'like', '%localization%');
+			} else {
+				$activities = $activities->where('subject_type', $request->element);
+			}
 		}
 
 		$activities = $activities->paginate(30);

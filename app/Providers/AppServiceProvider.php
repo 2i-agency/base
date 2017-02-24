@@ -5,7 +5,7 @@ namespace Chunker\Base\Providers;
 use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
-use Chunker\Base\Models\Media;
+use Chunker\Base\Models\Language;
 use Chunker\Base\Models\NoticesType;
 use Chunker\Base\Models\Role;
 use Chunker\Base\Models\Setting;
@@ -130,7 +130,9 @@ class AppServiceProvider extends ServiceProvider
 				Role::class          => 'base::entities.role',
 				ModelRedirect::class => 'base::entities.redirect',
 				NoticesType::class   => 'base::entities.notice-type',
-				Setting::class       => 'base::entities.setting'
+				Setting::class       => 'base::entities.setting',
+				Language::class      => 'base::entities.language',
+				'localization'       => 'base::entities.localization'
 			]);
 
 		/** Регистрация пакета */

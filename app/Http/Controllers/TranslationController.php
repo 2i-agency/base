@@ -98,6 +98,7 @@ class TranslationController extends Controller
 		$user = \Auth::user();
 		activity('updated')
 			->causedBy($user)
+			->withProperties(['localization' => true])
 			->log(
 				'Пользователь <b>'
 				. $user->getName()
