@@ -15,7 +15,7 @@ class TranslationController extends Controller
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function index(){
+	public function index() {
 		$this->authorize('translation.view');
 
 		return view('base::translation.sections');
@@ -29,7 +29,7 @@ class TranslationController extends Controller
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function section($section){
+	public function section($section) {
 		$this->authorize('translation.view');
 
 		$data = config('chunker.localization.interface')[ $section ];
@@ -80,7 +80,7 @@ class TranslationController extends Controller
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function save(Request $request, $section){
+	public function save(Request $request, $section) {
 		$this->authorize('translation.edit');
 
 		/** Перевод элементов */
@@ -94,6 +94,17 @@ class TranslationController extends Controller
 		/** Запись контента в файл */
 		$content = '<?php return ' . var_export($elements, true) . ';';
 		$disk->put($filename, $content);
+
+		$user = \Auth::user();
+		activity('updated')
+			->causedBy($user)
+			->log(
+				'Пользователь <b>'
+				. $user->getName()
+				. '</b> отредактировал перевод интерфейса раздела <b>'
+				. config('chunker.localization.interface.' . $section)[ 0 ]
+				. '</b>'
+			);
 
 		flash()->success('Перевод элементов сохранён');
 
