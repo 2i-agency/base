@@ -7,7 +7,7 @@
 		name="{{ $name }}"
 		value="{{ $value or NULL }}"
 		placeholder="{{ $placeholder or NULL }}"
-		{{ $required ? 'required' : NULL }}
+		{{ isset($required) && $required ? 'required' : NULL }}
 	>
 	<span class="input-group-addon">
 		<span class="fa fa-calendar"></span>
