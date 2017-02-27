@@ -16,7 +16,7 @@ trait Nullable
 		static::saving(function($model){
 			if (property_exists($model, 'nullable')) {
 				foreach ($model->nullable as $field) {
-					if (empty($model->{$field})) {
+					if (empty($model->{$field}) && !mb_strlen(trim($model->{$field}))) {
 						$model->{$field} = NULL;
 					}
 				}
