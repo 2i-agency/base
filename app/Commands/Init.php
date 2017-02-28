@@ -29,9 +29,17 @@ class Init extends Command
 	protected $description = 'Initialization of the Chunker';
 
 
+	protected $ignored_path = [
+		'/bower_components',
+		'/public/media',
+		'/storage/backups/',
+		'/storage/laravel-backups/'
+	];
+
+
 	protected function addLine($contents, $line) {
 		if (mb_strpos($contents, PHP_EOL . $line) === false) {
-			$contents .= PHP_EOL . $line . PHP_EOL;
+			$contents .= PHP_EOL . $line;
 		}
 
 		return $contents;
@@ -80,9 +88,9 @@ class Init extends Command
 				$contents = $disk->get('.gitignore');
 				$contents = trim($contents);
 
-				$contents = $this->addLine($contents, '/bower_components');
-				$contents = $this->addLine($contents, '/storage/backups/');
-				$contents = $this->addLine($contents, '/storage/laravel-backups/');
+				foreach ($this->ignored_path as $ignored_path) {
+					$contents = $this->addLine($contents, $ignored_path);
+				}
 
 				$disk->put('.gitignore', $contents);
 
