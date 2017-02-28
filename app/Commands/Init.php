@@ -29,6 +29,15 @@ class Init extends Command
 	protected $description = 'Initialization of the Chunker';
 
 
+	protected function addLine($contents, $line) {
+		if (mb_strpos($contents, PHP_EOL . $line) === false) {
+			$contents .= PHP_EOL . $line . PHP_EOL;
+		}
+
+		return $contents;
+	}
+
+
 	public function handle(){
 
 		// Флаг выполнения всех действий
@@ -66,13 +75,15 @@ class Init extends Command
 			// Обновление кеша автозагрузки классов
 			`composer dump-autoload`;
 
-			// Добавление в .gitignore папки с компонентами bower
+			// Добавление в .gitignore необходимых файлов
 			if ($disk->exists('.gitignore')) {
 				$contents = $disk->get('.gitignore');
 				$contents = trim($contents);
-				if (mb_strpos($contents, PHP_EOL . '/bower_components') === false) {
-					$contents .= PHP_EOL . '/bower_components' . PHP_EOL;
-				}
+
+				$contents = $this->addLine($contents, '/bower_components');
+				$contents = $this->addLine($contents, '/storage/backups/');
+				$contents = $this->addLine($contents, '/storage/laravel-backups/');
+
 				$disk->put('.gitignore', $contents);
 
 				$this->info('.gitignore modified');
