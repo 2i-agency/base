@@ -48,7 +48,7 @@ class Init extends Command
 
 
 	public function handle(){
-dd($this->option());
+
 		// Флаг выполнения всех действий
 		$do_all_actions = true;
 
