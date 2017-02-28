@@ -24,7 +24,8 @@ class Init extends Command
 {
 	/** @var string команда для консоли */
 	protected $signature = 'chunker:init
-		{--clean : Only delete unnecessary files}';
+		{--clean : Only delete unnecessary files}
+		{--not-force}';
 	/** @var string описание команды */
 	protected $description = 'Initialization of the Chunker';
 
@@ -47,7 +48,7 @@ class Init extends Command
 
 
 	public function handle(){
-
+dd($this->option());
 		// Флаг выполнения всех действий
 		$do_all_actions = true;
 
@@ -75,10 +76,9 @@ class Init extends Command
 			};
 		}
 
-
 		if ($do_all_actions) {
 			// Публикация ассетов пакетов
-			$this->call('vendor:publish', [ '--force' => true ]);
+			$this->call('vendor:publish', [ '--force' => !$this->option('not-force') ]);
 
 			// Обновление кеша автозагрузки классов
 			`composer dump-autoload`;
