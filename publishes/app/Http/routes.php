@@ -6,10 +6,10 @@
  * @var mixed $language модель/ключ локали
  */
 Route::group([
-	'prefix'     => '{language}',
+	'prefix'     => config('chunker.localization.multi') ? '{language}' : NULL,
 	'namespace'  => 'Site',
 	'middleware' => [ 'web' ]
-], function(){
+], function() {
 	/** Подключение роутов */
 	require_routes(__DIR__ . '/routes/site/');
 });
@@ -21,7 +21,7 @@ Route::group([
 	'prefix'     => config('chunker.admin.prefix', 'admin'),
 	'namespace'  => 'Admin',
 	'middleware' => [ 'admin' ]
-], function(){
+], function() {
 	/** Подключение роутов */
 	require_routes(__DIR__ . '/routes/admin/');
 });
