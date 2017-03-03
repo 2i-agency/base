@@ -14,38 +14,20 @@ class AuthServiceProvider extends ServiceProvider
 	protected $policies = [];
 
 
-	public function boot(GateContract $gate){
+	public function boot(GateContract $gate) {
 		$this->registerPolicies($gate);
 
 		/** Регистрация правил в соответствии с таблицей в базе */
 		if (Schema::hasTable(with(new Ability)->getTable())) {
 			foreach (Ability::pluck('id') as $ability) {
-				$gate->define($ability, function(User $user) use ($ability){
+				$gate->define($ability, function(User $user, $model) use ($ability) {
 					if (explode('.', $ability)[ 1 ] == 'view') {
-						return $user->hasAccess($ability);
+						return $user->hasAccess($ability, $model);
 					} else {
-						return $user->hasAbility($ability);
+						return $user->hasAbility($ability, $model);
 					}
 				});
 			}
 		}
-
-		/** Возможность просмотра пользователя */
-		$gate->define('users.view', function(User $user, User $editableUser = NULL){
-			if (is_null($editableUser)) {
-				return $user->hasAccess('users.view');
-			} else {
-				return $user->hasAccess('users.view') || $user->id == $editableUser->id;
-			}
-		});
-
-		/** Возможность редактирования пользователя */
-		$gate->define('users.edit', function(User $user, User $editableUser = NULL){
-			if (is_null($editableUser)) {
-				return $user->hasAbility('users.edit');
-			} else {
-				return $user->hasAbility('users.edit') || $user->id == $editableUser->id;
-			}
-		});
 	}
 }

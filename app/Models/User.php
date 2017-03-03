@@ -88,11 +88,12 @@ class User extends Authenticatable
 			/** Проходимся по всем переданным моделям */
 			foreach ($models as $model) {
 
-				if (
-					( $model instanceof User )
-					&& $model->id == \Auth::user()->id
-				) {
-					return true;
+				if ($model instanceof User) {
+					if ($model->id == \Auth::user()->id) {
+						return true;
+					} elseif (($model->id == 1) && (\Auth::user()->id != 1)) {
+						return NULL;
+					}
 				}
 
 				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
