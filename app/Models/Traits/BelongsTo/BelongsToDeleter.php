@@ -33,13 +33,16 @@ trait BelongsToDeleter
 		$ability = Ability::getAdminAbility($ability);
 
 		if (
-			\Auth::user()->hasAdminAccess($ability, $this)
-			|| \Auth
-				::user()
-				->agents()
-				->where('model_type', get_class($this))
-				->where('ability_id', $ability)
-				->count()
+			\Auth::check()
+			&& (
+				\Auth::user()->hasAdminAccess($ability, $this)
+				|| \Auth
+					::user()
+					->agents()
+					->where('model_type', get_class($this))
+					->where('ability_id', $ability)
+					->count()
+			)
 		) {
 			return $query->withTrashed();
 		}
