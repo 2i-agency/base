@@ -162,7 +162,7 @@ $(function(){
 	/*
 	 * Кнопки удаления
 	 */
-	$('.js-btn-delete').closest('form').submit(function() {
+	$('.js-btn-delete').click(function() {
 		return confirm('Вы уверены, что хотите удалить элемент?');
 	});
 
