@@ -158,4 +158,12 @@ $(function(){
 		tinymce.init(get_tinymce_config());
 	}
 
+
+	/*
+	 * Кнопки удаления
+	 */
+	$('.js-btn-delete').click(function() {
+		return confirm('Вы уверены, что хотите удалить элемент?');
+	});
+
 });

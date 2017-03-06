@@ -7,6 +7,7 @@
 	class="
 		btn
 		btn-danger
+		js-btn-delete
 		{{ isset($block) && $block ? 'btn-block' : NULL }}
 		{{ isset($size) ? 'btn-' . $size : NULL }}
 	"
