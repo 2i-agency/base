@@ -135,13 +135,12 @@ trait Directory
 		$model::destroy($keys_delete);
 
 		foreach ($names as $id => $name) {
-			$is_delete = in_array($id, $keys_delete);
 			$rule = isset($this->rules[ 'names.*' ]) ? $this->rules[ 'names.*' ] . $id : '';
 
-			if (!$is_delete) {
+			if (!in_array($id, $keys_delete)) {
 				$this->validate(
 					$request,
-					[ 'names.*' => $rule ],
+					[ 'names.' . $id => $rule ],
 					$this->validateMessages);
 				$model::find($id)->update([ 'name' => $name ]);
 			}
