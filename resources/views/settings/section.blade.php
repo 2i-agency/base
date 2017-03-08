@@ -51,9 +51,7 @@
 									<textarea
 										name="settings[{{ $setting->id }}]"
 										class="form-control"
-									><!--
-									 -->{{ $setting->value }}<!--
-								 --></textarea>
+									>{{ $setting->value }}</textarea>
 
 								{{--Переключатель--}}
 								@elseif($setting->control_type == 'radio')
