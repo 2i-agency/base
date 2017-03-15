@@ -110,6 +110,11 @@ class Manager
 	}
 
 
+	public function getBannersElements($packageName = NULL){
+		return $this->collectDataFromPackages('bannersElements', $packageName);
+	}
+
+
 	/**
 	 * Проверка активности пункта меню
 	 *

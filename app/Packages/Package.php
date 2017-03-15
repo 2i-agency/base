@@ -24,8 +24,11 @@ class Package
 	/** @var array Пункты меню */
 	protected $menuItems = [];
 
-	/** @var array Пункты меню */
+	/** @var array Сущности */
 	protected $activityElements = [];
+
+	/** @var array Элементы банеров */
+	protected $bannersElements = [];
 
 
 	/**
