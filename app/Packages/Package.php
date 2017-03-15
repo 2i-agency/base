@@ -27,7 +27,7 @@ class Package
 	/** @var array Сущности */
 	protected $activityElements = [];
 
-	/** @var array Элементы банеров */
+	/** @var array Элементы баннеров */
 	protected $bannersElements = [];
 
 
