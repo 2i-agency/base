@@ -97,7 +97,7 @@ trait Slugs
 						throw new \Error('Поле slug не может быть null. Модель ' . $class_name . ' (' . __CLASS__ . ') ');
 					}
 
-					$instance->slug = str_slug($slug);
+					$instance->slug = str_slug(((int)$instance->slug ? NULL : ($instance->id . '-') ) . $slug);
 				}
 
 			} else {
