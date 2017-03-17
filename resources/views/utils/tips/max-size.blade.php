@@ -1,0 +1,1 @@
+Максимальный размер: {{ bytes_convert(get_max_filesize()) }}
