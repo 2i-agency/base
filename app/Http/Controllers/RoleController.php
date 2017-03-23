@@ -68,6 +68,7 @@ class RoleController extends Controller
 		foreach (app()[ 'Packages' ]->getPackages() as $key => $package) {
 			$packages_abilities_views[$key] = $package->getAbilitiesViews();
 		}
+		array_forget($packages_abilities_views, 'front');
 
 		return view(
 			'base::roles.form',

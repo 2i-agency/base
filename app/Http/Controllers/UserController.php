@@ -237,6 +237,7 @@ class UserController extends Controller
 					$abilities[] = $ability;
 				}
 			}
+			array_forget($packages_abilities_views, 'front');
 
 			/** Синхронизация возможностей с пользователем */
 			$user->abilities()->sync($abilities);
