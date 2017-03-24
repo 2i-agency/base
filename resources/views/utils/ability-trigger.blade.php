@@ -1,4 +1,4 @@
 <option
-	value="{{ str_contains($ability, '.') ? $ability : 0 }}"
-    {{ $is_selected ? ' selected' : NULL }}
+	value="{{ str_contains($ability, '.') ? $ability : NULL }}"
+	{{ $is_selected ? ' selected' : NULL }}
 >{{ $label }}</option>

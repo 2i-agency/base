@@ -172,7 +172,7 @@ class Role extends Model
 
 					$abilities = $model
 						->agents()
-						->where('id', $this
+						->whereIn('id', $this
 							->agents()
 							->pluck('id')
 							->toArray()
