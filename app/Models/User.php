@@ -12,6 +12,7 @@ use Chunker\Base\Models\Traits\BelongsTo\BelongsToEditors;
 use Chunker\Base\Models\Traits\Comparable;
 use Auth;
 use Illuminate\Database\Eloquent\Collection;
+use Kalnoy\Nestedset\NodeTrait;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -96,14 +97,6 @@ class User extends Authenticatable
 					}
 				}
 
-				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
-				if (method_exists($model, 'newNestedSetQuery')) {
-					$result_ancestors = $this->hasAccessModels($ability, $model->getAncestors());
-					if ($result_ancestors) {
-						return true;
-					}
-				}
-
 				/** Если у модели есть связь с агентами */
 				if (method_exists($model, 'agents')) {
 					$abilities = $model
@@ -129,8 +122,28 @@ class User extends Authenticatable
 							/** Приоритет проверямеой выше чем переданной */
 							if (Ability::getPriority($value, $ability)) {
 								return true;
+							} else {
+								return false;
 							}
 
+						}
+					}
+				}
+
+				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
+				if (
+					in_array(
+						NodeTrait::class,
+						(new \ReflectionClass(get_class($model)))->getTraitNames()
+					)
+				) {
+					$ancestors = $model->getAncestors()->reverse();
+					foreach ($ancestors as $ancestor) {
+						$result_ancestors = $this->hasAccessModels($ability, $ancestor);
+						if ($result_ancestors) {
+							return true;
+						} elseif (!is_null($result_ancestors)) {
+							return false;
 						}
 					}
 				}

@@ -9,6 +9,7 @@ use Chunker\Base\Models\Traits\IsRelatedWith;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kalnoy\Nestedset\NodeTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -159,13 +160,6 @@ class Role extends Model
 
 			/** Проходимся по всем переданным моделям */
 			foreach ($models as $model) {
-				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
-				if (method_exists($model, 'newNestedSetQuery')) {
-					$result_ancestors = $this->hasAbility($ability, $model->getAncestors());
-					if ($result_ancestors) {
-						return true;
-					}
-				}
 
 				/** Если у модели есть связь с агентами */
 				if (method_exists($model, 'agents')) {
@@ -193,8 +187,28 @@ class Role extends Model
 							/** Приоритет проверямеой выше чем переданной */
 							if (Ability::getPriority($value, $ability)) {
 								return true;
+							} else {
+								return false;
 							}
 
+						}
+					}
+				}
+
+				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
+				if (
+					in_array(
+						NodeTrait::class,
+						( new \ReflectionClass(get_class($model)) )->getTraitNames()
+					)
+				) {
+					$ancestors = $model->getAncestors()->reverse();
+					foreach ($ancestors as $ancestor) {
+						$result_ancestors = $this->hasAbility($ability, $ancestor);
+						if ($result_ancestors) {
+							return true;
+						} elseif (!is_null($result_ancestors)) {
+							return false;
 						}
 					}
 				}
