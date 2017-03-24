@@ -159,6 +159,13 @@ class Role extends Model
 
 			/** Проходимся по всем переданным моделям */
 			foreach ($models as $model) {
+				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
+				if (method_exists($model, 'newNestedSetQuery')) {
+					$result_ancestors = $this->hasAbility($ability, $model->getAncestors());
+					if ($result_ancestors) {
+						return true;
+					}
+				}
 
 				/** Если у модели есть связь с агентами */
 				if (method_exists($model, 'agents')) {

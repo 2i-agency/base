@@ -357,7 +357,7 @@ class User extends Authenticatable
 		/** Проверяем возможности у ролей связанных с пользователем */
 		foreach ($this->roles()->get([ 'id' ]) as $role) {
 
-			if ($role->hasAbility($ability)) {
+			if ($role->hasAbility($ability, $models)) {
 				return true;
 			}
 		}
