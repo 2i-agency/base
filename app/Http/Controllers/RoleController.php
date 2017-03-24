@@ -26,7 +26,6 @@ class RoleController extends Controller
 					$abilities[] = $ability;
 				}
 			}
-			array_forget($packages_abilities_views, 'front');
 
 			/** Синхронизация возможностей с пользователем */
 			$role->abilities()->sync($abilities);
