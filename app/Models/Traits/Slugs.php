@@ -17,7 +17,7 @@ trait Slugs
 	 *
 	 * @return string текст сообщения
 	 */
-	protected static function getErrorMessage($attribute){
+	protected static function getErrorMessage($attribute) {
 		$class_name = __CLASS__;
 		$class_name = array_last(explode('\\', $class_name));
 
@@ -33,7 +33,7 @@ trait Slugs
 	 *
 	 * @throws \Error
 	 */
-	public function getRouteKeyName(){
+	public function getRouteKeyName() {
 		$is_slug = \Schema::hasColumn($this->table, 'slug');
 
 		if ($is_slug) {
@@ -55,8 +55,8 @@ trait Slugs
 	/**
 	 * Метод выполняющийся при загрузке трейта
 	 */
-	protected static function bootSlugs(){
-		self::saving(function($instance){
+	protected static function bootSlugs() {
+		self::saving(function($instance) {
 			if (isset($instance->fields_donor)) {
 
 				$is_slug = (bool)\DB
@@ -89,7 +89,21 @@ trait Slugs
 							}
 						}
 
-						$slug = $instance->id . '-' . $slug;
+						if ($instance->id) {
+							$id = $instance->id;
+						} else {
+							$id = array_first(
+								\DB::select(
+									'SHOW TABLE STATUS FROM `'
+									. env('DB_DATABASE')
+									. '` LIKE \''
+									. $instance->table
+									. '\''
+								)
+							)->Auto_increment;
+						}
+
+						$slug = $id . '-' . $slug;
 
 					}
 
