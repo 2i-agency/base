@@ -34,7 +34,8 @@ class Init extends Command
 		'/bower_components',
 		'/public/media',
 		'/storage/backups/',
-		'/storage/laravel-backups/'
+		'/storage/laravel-backups/',
+		'/storage/medialibrary/temp/'
 	];
 
 
