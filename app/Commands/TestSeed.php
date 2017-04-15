@@ -4,7 +4,6 @@ namespace Chunker\Base\Commands;
 
 use Chunker\Base\Models\Media;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * Команда для посева данных в БД
