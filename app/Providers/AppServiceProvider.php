@@ -2,6 +2,7 @@
 
 namespace Chunker\Base\Providers;
 
+use Chunker\Base\Commands\TestSeed;
 use Chunker\Base\Gate;
 use Chunker\Base\Commands\ReplaceRN;
 use Chunker\Base\Http\Middleware\Redirect;
@@ -86,6 +87,13 @@ class AppServiceProvider extends ServiceProvider
 				'BaseLanguagesSeeder',
 				'BaseSettingsSeeder',
 				'BaseUsersAndRolesSeeder'
+			])
+			->registerTestSeeders([
+				'BaseLanguagesTestSeeder',
+				'BaseSettingsTestSeeder',
+				'BaseUsersAndRolesTestSeeder',
+				'BaseNoticeAndNoticesTypeTestSeeder',
+				'BaseRedirectTestSeeder'
 			])
 			->registerMenuItems([
 				'users'         => [
@@ -228,6 +236,7 @@ class AppServiceProvider extends ServiceProvider
 			Init::class,
 			Seed::class,
 			ReplaceRN::class,
+			TestSeed::class,
 		]);
 
 		/** Регистрация классов для работы с пакетами */
