@@ -6,7 +6,7 @@ use Chunker\Base\Models\NoticesType;
 use Chunker\Base\Models\User;
 use Chunker\Base\Models\Role;
 
-class BaseNoticeAndNoticesTypeTestSeeder extends Seeder
+class BaseNoticesTypesTestSeeder extends Seeder
 {
 	/**
 	 * Получает случайный список ключей модели

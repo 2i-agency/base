@@ -6,7 +6,7 @@ use Chunker\Base\Models\Redirect;
 /**
  * Посев языков
  */
-class BaseRedirectTestSeeder extends Seeder
+class BaseRedirectsTestSeeder extends Seeder
 {
 	public function run(){
 
