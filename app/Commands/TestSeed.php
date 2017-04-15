@@ -2,7 +2,9 @@
 
 namespace Chunker\Base\Commands;
 
+use Chunker\Base\Models\Media;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Команда для посева данных в БД
@@ -30,7 +32,7 @@ class TestSeed extends Command
 		}
 
 		// Чистим таблицы
-		\DB::table('media')->truncate();
+		Media::truncate();
 		\DB::table('activity_log')->truncate();
 		\DB::table('base_authentications')->truncate();
 
