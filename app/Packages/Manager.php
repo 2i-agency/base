@@ -83,6 +83,20 @@ class Manager
 
 
 	/**
+	 * Получение массива с тестовыми посевщиками пакетов.
+	 * Если указан параметр $packageName,
+	 * возвращается посевщики этого пакета или пакетов.
+	 *
+	 * @param string|array $packageName
+	 *
+	 * @return array
+	 */
+	public function getTestSeeders($packageName = NULL){
+		return $this->collectDataFromPackages('testSeeders', $packageName);
+	}
+
+
+	/**
 	 * Получение массива с пунктами меню.
 	 * Если указан параметр $packageName,
 	 * возвращается пункты этого пакета или пакетов.

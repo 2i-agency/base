@@ -21,6 +21,9 @@ class Package
 	/** @var array Посевщики пакета */
 	protected $seeders = [];
 
+	/** @var array Тестовые посевщики пакета */
+	protected $testSeeders = [];
+
 	/** @var array Пункты меню */
 	protected $menuItems = [];
 
