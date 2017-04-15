@@ -80,6 +80,12 @@ trait Migrator
 					], $file);
 				}
 
+				if (file_exists($path . 'database/factories')) {
+					$this->publishes([
+						$path . 'database/factories/' => database_path('/factories/')
+					], $file);
+				}
+
 			} else {
 				$this->publishes([ $path . $file => base_path($file) ], $file);
 			}
