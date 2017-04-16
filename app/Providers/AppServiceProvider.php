@@ -91,9 +91,9 @@ class AppServiceProvider extends ServiceProvider
 			->registerTestSeeders([
 				'BaseLanguagesTestSeeder',
 				'BaseSettingsTestSeeder',
+				'BaseRedirectsTestSeeder',
 				'BaseUsersAndRolesTestSeeder',
-				'BaseNoticesAndNoticesTypesTestSeeder',
-				'BaseRedirectsTestSeeder'
+				'BaseNoticesAndNoticesTypesTestSeeder'
 			])
 			->registerMenuItems([
 				'users'         => [
