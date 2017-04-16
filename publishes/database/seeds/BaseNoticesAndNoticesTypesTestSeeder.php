@@ -6,7 +6,7 @@ use Chunker\Base\Models\NoticesType;
 use Chunker\Base\Models\User;
 use Chunker\Base\Models\Role;
 
-class BaseNoticesTypesTestSeeder extends Seeder
+class BaseNoticesAndNoticesTypesTestSeeder extends Seeder
 {
 	/**
 	 * Получает случайный список ключей модели
@@ -40,36 +40,32 @@ class BaseNoticesTypesTestSeeder extends Seeder
 			->each(function($noticeType) {
 
 				if (rand(0, 1)) {
+					$users = $this->getRandomIds(User::class);
 					$noticeType
 						->users()
-						->sync($this->getRandomIds(User::class));
+						->sync($users);
 				}
 
 				if (rand(0, 1)) {
+					$roles = $this->getRandomIds(Role::class);
 					$noticeType
 						->roles()
-						->sync($this->getRandomIds(Role::class));
+						->sync($roles);
 				}
 
 			});
 
-//		$count = rand(5, 10);
-//		factory(Notice::class, $count)
-//			->create()
-//			->each(function($notice) {
-//
-//				if (rand(0, 1)) {
-//					$notice
-//						->types()
-//						->sync($this->getRandomIds(NoticesType::class));
-//				}
-//
-//				if (rand(0, 1)) {
-//					$notice
-//						->users()
-//						->sync([ 1 ]);
-//				}
-//
-//			});
+		$count = rand(5, 15);
+		factory(Notice::class, $count)
+			->create()
+			->each(function($notice) {
+
+				if (rand(0, 1)) {
+					$notice->update([
+						'type_id' => NoticesType::orderByRaw('RAND()')->first()
+					]);
+				}
+
+			});
 	}
 }

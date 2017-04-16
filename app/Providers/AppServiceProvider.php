@@ -92,7 +92,7 @@ class AppServiceProvider extends ServiceProvider
 				'BaseLanguagesTestSeeder',
 				'BaseSettingsTestSeeder',
 				'BaseUsersAndRolesTestSeeder',
-				'BaseNoticesTypesTestSeeder',
+				'BaseNoticesAndNoticesTypesTestSeeder',
 				'BaseRedirectsTestSeeder'
 			])
 			->registerMenuItems([
