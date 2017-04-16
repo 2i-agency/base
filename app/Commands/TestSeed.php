@@ -13,7 +13,8 @@ use Illuminate\Console\Command;
 class TestSeed extends Command
 {
 	/** @var string конамда для консоли */
-	protected $signature = 'chunker:test-seed';
+	protected $signature = 'chunker:test-seed
+							{--y|yes} Выполнить посев без подтверждения';
 	/** @var string описание команды */
 	protected $description = 'Посев тестовых данных для пакетов Chunker';
 
@@ -25,9 +26,12 @@ class TestSeed extends Command
 			return false;
 		}
 
-		// Предупреждаем об очистке БД
-		if (!$this->confirm('База данных будет очищена. Вы действительно хотите продожить?')) {
-			return false;
+		if (!$this->option('yes')) {
+			$this->warn('База данных будет очищена!');
+			// Предупреждаем об очистке БД
+			if (!$this->confirm('Вы действительно хотите продожить?')) {
+				return false;
+			}
 		}
 
 		// Чистим таблицы
@@ -43,8 +47,10 @@ class TestSeed extends Command
 		// Сеям тестовые данные
 		if (count($seeders)) {
 			foreach ($seeders as $seeder) {
+				$this->line('<info>Сеем: </info>' . $seeder);
 				$this->callSilent('db:seed', [ '--class' => $seeder ]);
-				$this->line('<info>Посеяны: </info>' . $seeder);
+				$this->comment('Посеяно');
+				$this->line('------------------------------');
 			}
 
 			$this->info('Все данные посеяны.');
