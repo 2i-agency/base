@@ -34,6 +34,9 @@ class TestSeed extends Command
 			}
 		}
 
+		// Отключаем на время отправку писем
+		config(['mail.driver' => 'log']);
+
 		// Чистим таблицы
 		Media::truncate();
 		\DB::table('activity_log')->truncate();
