@@ -17,6 +17,8 @@ function get_tinymce_config(data){
 		link_title: false,
 		convert_urls: false,
 
+		image_dimensions: false,
+
 		menubar: false,
 
 		plugins: [

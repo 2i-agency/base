@@ -2,25 +2,25 @@
   "_args": [
     [
       {
-        "raw": "tinymce",
+        "raw": "tinymce@^4.5.3",
         "scope": null,
         "escapedName": "tinymce",
         "name": "tinymce",
-        "rawSpec": "",
-        "spec": "latest",
-        "type": "tag"
+        "rawSpec": "^4.5.3",
+        "spec": ">=4.5.3 <5.0.0",
+        "type": "range"
       },
-      "/home/artamonovi/sites/sandbox/chunker/base"
+      "/home/boldyreva/data/sites/sandbox/chunker/base"
     ]
   ],
-  "_from": "tinymce@latest",
-  "_id": "tinymce@4.5.3",
+  "_from": "tinymce@>=4.5.3 <5.0.0",
+  "_id": "tinymce@4.5.4",
   "_inCache": true,
   "_location": "/tinymce",
   "_nodeVersion": "7.2.1",
   "_npmOperationalInternal": {
-    "host": "packages-18-east.internal.npmjs.com",
-    "tmp": "tmp/tinymce-4.5.3.tgz_1485961520319_0.8871647722553462"
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/tinymce-4.5.4.tgz_1487854098802_0.5747569929808378"
   },
   "_npmUser": {
     "name": "ephox",
@@ -29,23 +29,22 @@
   "_npmVersion": "3.10.10",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "tinymce",
+    "raw": "tinymce@^4.5.3",
     "scope": null,
     "escapedName": "tinymce",
     "name": "tinymce",
-    "rawSpec": "",
-    "spec": "latest",
-    "type": "tag"
+    "rawSpec": "^4.5.3",
+    "spec": ">=4.5.3 <5.0.0",
+    "type": "range"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/tinymce/-/tinymce-4.5.3.tgz",
-  "_shasum": "1c9210e15d0575ff12eb941a87e6efff39824bd1",
+  "_resolved": "https://registry.npmjs.org/tinymce/-/tinymce-4.5.4.tgz",
+  "_shasum": "9aa472f44c73b210fbe731eddcfdf9d7929fae0f",
   "_shrinkwrap": null,
-  "_spec": "tinymce",
-  "_where": "/home/artamonovi/sites/sandbox/chunker/base",
+  "_spec": "tinymce@^4.5.3",
+  "_where": "/home/boldyreva/data/sites/sandbox/chunker/base",
   "bugs": {
     "url": "http://www.tinymce.com/develop/bugtracker.php"
   },
@@ -54,8 +53,8 @@
   "devDependencies": {},
   "directories": {},
   "dist": {
-    "shasum": "1c9210e15d0575ff12eb941a87e6efff39824bd1",
-    "tarball": "https://registry.npmjs.org/tinymce/-/tinymce-4.5.3.tgz"
+    "shasum": "9aa472f44c73b210fbe731eddcfdf9d7929fae0f",
+    "tarball": "https://registry.npmjs.org/tinymce/-/tinymce-4.5.4.tgz"
   },
   "keywords": [
     "editor",
@@ -81,5 +80,5 @@
   "optionalDependencies": {},
   "readme": "ERROR: No README data found!",
   "scripts": {},
-  "version": "4.5.3"
+  "version": "4.5.4"
 }
