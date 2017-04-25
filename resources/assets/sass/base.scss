@@ -164,3 +164,11 @@ p,
 .vertical-middle td {
 	vertical-align: middle !important;
 }
+
+.radio-inline label,
+.radio-inline input,
+.checkbox-inline label,
+.checkbox-inline input {
+	font-weight: normal !important;
+	cursor: pointer !important;
+}
