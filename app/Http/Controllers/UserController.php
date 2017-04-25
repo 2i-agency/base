@@ -77,15 +77,7 @@ class UserController extends Controller
 		$this->validate($request, $this->rules);
 
 		/** Создание объекта */
-		$user = User::create($request->only([
-			'login',
-			'password',
-			'email',
-			'name',
-			'is_subscribed',
-			'is_blocked',
-			'is_admin'
-		]));
+		$user = User::create($request->all());
 
 		flash()->success('Пользователь <b>' . e($user->login) . '</b> добавлен');
 
@@ -125,15 +117,7 @@ class UserController extends Controller
 		$this->validate($request, $this->rules);
 
 		/** Подготовка данных */
-		$data = $request->only([
-			'login',
-			'password',
-			'email',
-			'name',
-			'is_subscribed',
-			'is_blocked',
-			'is_admin'
-		]);
+		$data = $request->all();
 		$data[ 'is_blocked' ] = $user->isCanBeBlocked() ? $data[ 'is_blocked' ] : false;
 		$data[ 'is_admin' ] = $user->isCanBeAdminChanged() ? $data[ 'is_admin' ] : $user->isAdmin();
 

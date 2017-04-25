@@ -42,7 +42,11 @@ class User extends Authenticatable
 	];
 
 	/** @var array поля принимающие null */
-	protected $nullable = [ 'name' ];
+	protected $nullable = [
+		'name',
+		'phone',
+		'address',
+	];
 
 	/** @var array поля для массового присвоения атрибутов */
 	protected $fillable = [
@@ -50,6 +54,8 @@ class User extends Authenticatable
 		'password',
 		'email',
 		'name',
+		'phone',
+		'address',
 		'is_subscribed',
 		'is_blocked',
 		'is_admin'

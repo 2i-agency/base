@@ -1,0 +1,50 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+use Chunker\Base\Libs\Columns;
+
+/**
+ * Миграция для таблицы пользователей
+ */
+class AddPhoneEmailCodeFieldsToUsers extends Migration
+{
+	protected $table = 'base_users';
+
+
+	public function up() {
+		Schema::table($this->table, function(Blueprint $table) {
+
+			/** Телефон */
+			$table
+				->string('phone')
+				->nullable()
+				->index()
+				->comment('Телефон');
+
+			/** Адрес */
+			$table
+				->string('address')
+				->nullable()
+				->index()
+				->comment('Адрес');
+
+			/** Код подтверждения почты */
+			$table
+				->string('confirm_code')
+				->nullable()
+				->comment('Код подтверждения почты');
+		});
+	}
+
+
+	public function down() {
+		Schema::table($this->table, function(Blueprint $table) {
+			$table->dropColumn([
+				'phone',
+				'address',
+				'confirm_code'
+			]);
+		});
+	}
+}

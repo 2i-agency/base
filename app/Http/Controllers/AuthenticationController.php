@@ -21,12 +21,17 @@ class AuthenticationController extends Controller
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function login(AuthenticationRequest $request){
+	public function login(AuthenticationRequest $request) {
 		$credentials = $request->only([ 'login', 'password' ]);
 		$user = Auth::getProvider()->retrieveByCredentials($credentials);
 
 		/** Успешная аутентификация */
-		if ($user->isAdmin() && !$user->is_blocked && Auth::attempt($credentials, $request->has('remember'))) {
+		if (
+			$user->isAdmin()
+			&& !$user->is_blocked
+			&& is_null($user->confirm_code)
+			&& Auth::attempt($credentials, $request->has('remember'))
+		) {
 			event(new UserLoggedIn($user, false));
 
 			return back();
@@ -52,7 +57,7 @@ class AuthenticationController extends Controller
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function logout(){
+	public function logout() {
 		event(new UserRequestedApp(Auth::user()));
 		Auth::logout();
 
@@ -65,7 +70,7 @@ class AuthenticationController extends Controller
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function showResetPasswordForm(){
+	public function showResetPasswordForm() {
 		return view('base::auth.reset');
 	}
 
@@ -77,7 +82,7 @@ class AuthenticationController extends Controller
 	 *
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function resetPassword(Request $request){
+	public function resetPassword(Request $request) {
 		/** Валидация */
 		$this->validate($request, [
 			'login' => 'required'
@@ -107,7 +112,7 @@ class AuthenticationController extends Controller
 		Mail::send([
 			'html' => 'base::mail.notice.html',
 			'text' => 'base::mail.notice.text'
-		], [ 'content' => $content ], function(Message $message) use ($user){
+		], [ 'content' => $content ], function(Message $message) use ($user) {
 			$message
 				->to($user->email, $user->getName())
 				->subject('Новый пароль на сайте ' . config('app.url'));

@@ -65,6 +65,39 @@
 			autocomplete="off">
 	</div>
 
+	{{--Имя--}}
+	<div class="form-group">
+		<label>Имя:</label>
+		<input
+			type="text"
+			name="name"
+			value="{{ old('name') ?: (isset($user) ? $user->name : NULL) }}"
+			class="form-control"
+			autocomplete="off">
+	</div>
+
+	{{--Телефон--}}
+	<div class="form-group">
+		<label>Телефон:</label>
+		<input
+			type="text"
+			name="phone"
+			value="{{ old('phone') ?: (isset($user) ? $user->phone : NULL) }}"
+			class="form-control"
+			autocomplete="off">
+	</div>
+
+	{{--Адрес--}}
+	<div class="form-group">
+		<label>Адрес:</label>
+		<input
+			type="text"
+			name="address"
+			value="{{ old('address') ?: (isset($user) ? $user->address : NULL) }}"
+			class="form-control"
+			autocomplete="off">
+	</div>
+
 	{{--Отправка уведомлений--}}
 	<div class="form-group">
 		<label>Отправлять уведомления:</label>
