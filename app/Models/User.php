@@ -46,6 +46,8 @@ class User extends Authenticatable
 		'name',
 		'phone',
 		'address',
+		'address',
+		'confirm_code'
 	];
 
 	/** @var array поля для массового присвоения атрибутов */
@@ -56,6 +58,7 @@ class User extends Authenticatable
 		'name',
 		'phone',
 		'address',
+		'confirm_code',
 		'is_subscribed',
 		'is_blocked',
 		'is_admin'
