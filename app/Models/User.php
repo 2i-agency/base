@@ -46,7 +46,6 @@ class User extends Authenticatable
 		'name',
 		'phone',
 		'address',
-		'address',
 		'confirm_code'
 	];
 
