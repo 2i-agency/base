@@ -65,17 +65,6 @@
 			autocomplete="off">
 	</div>
 
-	{{--Имя--}}
-	<div class="form-group">
-		<label>Имя:</label>
-		<input
-			type="text"
-			name="name"
-			value="{{ old('name') ?: (isset($user) ? $user->name : NULL) }}"
-			class="form-control"
-			autocomplete="off">
-	</div>
-
 	{{--Телефон--}}
 	<div class="form-group">
 		<label>Телефон:</label>
