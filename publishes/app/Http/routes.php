@@ -8,7 +8,6 @@
 Route::group([
 	'prefix'     => config('chunker.localization.multi') ? '{language}' : NULL,
 	'namespace'  => 'Site',
-	'middleware' => [ 'web' ]
 ], function() {
 	/** Подключение роутов */
 	require_routes(__DIR__ . '/routes/site/');
