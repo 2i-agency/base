@@ -35,7 +35,8 @@ class Init extends Command
 		'/public/media',
 		'/storage/backups/',
 		'/storage/laravel-backups/',
-		'/storage/medialibrary/temp/'
+		'/storage/medialibrary/temp/',
+		'/npm-debug.log'
 	];
 
 
