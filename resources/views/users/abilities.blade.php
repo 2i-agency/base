@@ -27,12 +27,12 @@
 			<div class="list-group">
 				<div class="form-group list-group-item">
 					<label>Роли:</label>
-					<div>
+					@if(\Auth::user()->hasAdminAccess(['users', 'roles']))
+						<div>
 
-						@foreach ($_roles as $_role)
-							@php($checked = (isset($user) && $user->isRelatedWith('roles', $_role)) || in_array($_role->id, old('roles', [])))
-							<label class="checkbox-inline">
-								@if(\Auth::user()->hasAdminAccess(['users', 'roles']))
+							@foreach ($_roles as $_role)
+								@php($checked = (isset($user) && $user->isRelatedWith('roles', $_role)) || in_array($_role->id, old('roles', [])))
+								<label class="checkbox-inline">
 									<input
 										type="checkbox"
 										name="roles[]"
@@ -40,13 +40,24 @@
 										{{ $checked ? 'checked' : NULL }}
 									>
 									{{ $_role->name }}
-								@elseif($checked)
-									{{ $_role->name }}
-								@endif
-							</label>
-						@endforeach
+								</label>
+							@endforeach
 
-					</div>
+						</div>
+					@else
+						@foreach ($_roles as $_role)
+							@php
+								$checked = (
+									isset($user) && $user->isRelatedWith('roles', $_role)
+								)
+								|| in_array($_role->id, old('roles', []));
+
+								$roles_checked = [];
+							@endphp
+							{{ $roles_checked[] = $checked ? $_role->name : NULL }}
+						@endforeach
+						{{ implode(', ', $roles_checked) }}
+					@endif
 				</div>
 			</div>
 		@endif
