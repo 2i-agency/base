@@ -79,6 +79,9 @@ class Init extends Command
 		}
 
 		if ($do_all_actions) {
+			$disk->makeDirectory('app/Http/routes/admin');
+			$disk->makeDirectory('app/Http/routes/site');
+
 			// Публикация ассетов пакетов
 			$this->call('vendor:publish', [ '--force' => !$this->option('not-force') ]);
 
