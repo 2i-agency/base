@@ -29,6 +29,12 @@ class Init extends Command
 	/** @var string описание команды */
 	protected $description = 'Initialization of the Chunker';
 
+	protected $deleted_files = [
+		'database/migrations/2014_10_12_000000_create_users_table.php',
+		'database/migrations/2014_10_12_100000_create_password_resets_table.php',
+		'app/User.php',
+		'resources/view/welcome.blade.php',
+	];
 
 	protected $ignored_path = [
 		'/bower_components',
@@ -67,15 +73,16 @@ class Init extends Command
 
 		// Удаление ненужных файлов
 		if ($do_all_actions || $this->option('clean')) {
-			if ($disk->delete([
-				// Коробочные миграции и модели
-				'database/migrations/2014_10_12_000000_create_users_table.php',
-				'database/migrations/2014_10_12_100000_create_password_resets_table.php',
-				'app/User.php'
-			])
-			) {
-				$this->warn('Deleted unnecessary files');
-			};
+			foreach ($this->deleted_files as $deleted_file) {
+				if ($disk->delete($deleted_file)
+				) {
+					$this->line(
+						'<info>'
+						. pathinfo($deleted_file, PATHINFO_BASENAME)
+						. '</info> - <fg=yellow;options=bold>Deleted</>'
+					);
+				};
+			}
 		}
 
 		if ($do_all_actions) {
