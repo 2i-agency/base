@@ -2,11 +2,30 @@
 
 namespace Chunker\Base\Models\Traits;
 
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 trait ActivityLog
 {
 	use LogsActivity;
+
+
+	public function getLogs($method = 'get') {
+		return Activity
+			::where('subject_type', self::class)
+			->where('subject_id', $this->id)
+			->orderBy('created_at', 'desc')
+			->$method();
+	}
+
+
+	public function getLog($log = NULL) {
+		if (isset($log)) {
+			return Activity::find($log instanceof Activity ? $log->id : $log);
+		}
+
+		return NULL;
+	}
 
 
 	/**
