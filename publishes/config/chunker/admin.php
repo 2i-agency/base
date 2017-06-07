@@ -44,6 +44,12 @@ return [
 			]
 		],
 		[
+			'name' => 'Дизайн',
+			'icon' => 'magic',
+			'children' => [
+			]
+		],
+		[
 			'name'     => 'Система',
 			'icon'     => 'cogs',
 			'children' => [
