@@ -23,9 +23,10 @@ function get_tinymce_config(data){
 
 		plugins: [
 			"charmap code fullscreen image link media",
-			"nonbreaking paste searchreplace table lists"
+			"nonbreaking paste searchreplace table lists textcolor"
 		],
-		toolbar: "fullscreen undo redo | copy paste | removeformat | bold italic strikethrough | sup sub | alignleft aligncenter alignright | formatselect | bullist numlist outdent indent | table | link unlink | image media | charmap nonbreaking | searchreplace code"
+		toolbar: "fullscreen undo redo | copy paste | removeformat | bold italic strikethrough | sup sub | alignleft aligncenter alignright | forecolor backcolor | formatselect fontsizeselect | bullist numlist outdent indent | table | link unlink | image media | charmap nonbreaking | searchreplace code",
+		fontsize_formats: '10px 12px 14px 18px 24px 36px'
 	};
 
 
