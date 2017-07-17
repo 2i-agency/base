@@ -9,6 +9,13 @@ namespace Chunker\Base\Models\Traits;
  */
 trait Nullable
 {
+
+	/**
+	 * @var array
+	 */
+	protected $nullable = [];
+
+
 	/**
 	 * Обнуление атрибутов при сохранении
 	 */
