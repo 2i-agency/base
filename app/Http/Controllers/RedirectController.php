@@ -117,7 +117,6 @@ class RedirectController extends Controller
 
 		/** Удаление отмеченых элементов */
 		if ($request->has('delete')) {
-			$this->authorize('redirects.admin');
 			Redirect::destroy($request->get('delete'));
 		}
 
