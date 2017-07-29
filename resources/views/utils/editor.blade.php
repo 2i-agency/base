@@ -6,4 +6,5 @@
 	data-css="{{ json_encode(config('chunker.admin.editor.css')) }}"
 	data-js="{{ json_encode(config('chunker.admin.editor.js')) }}"
 	@if (isset($disabled) && $disabled) disabled @endif
+	@if (isset($required) && $required) required @endif
 >@if (isset($value)){!! htmlentities($value, ENT_QUOTES, 'UTF-8') !!}@endif</textarea>
