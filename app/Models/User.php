@@ -79,6 +79,9 @@ class User extends Authenticatable
 
 
 	public function getEmailAttribute() {
+		if (is_string($this->emails)) {
+			return $this->emails;
+		}
 		return count($this->emails) ? array_first($this->emails) : NULL;
 	}
 
