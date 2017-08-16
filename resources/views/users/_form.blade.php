@@ -44,14 +44,13 @@
 
 	{{--Электронный адрес--}}
 	<div class="form-group">
-		<label>Электронный адрес:</label>
-		<input
-			type="email"
-			name="email"
-			value="{{ old('email') ?: (isset($user) ? $user->email : NULL) }}"
+		<label>Электронные адреса:</label>
+		<textarea
+			name="emails"
+			rows="5"
 			class="form-control"
 			required
-			autocomplete="off">
+		>{{ old('email') ?: ((isset($user) && $user->emails) ? implode(PHP_EOL, $user->emails) : NULL) }}</textarea>
 	</div>
 
 	{{--Имя--}}

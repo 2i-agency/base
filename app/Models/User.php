@@ -53,7 +53,7 @@ class User extends Authenticatable
 	protected $fillable = [
 		'login',
 		'password',
-		'email',
+		'emails',
 		'name',
 		'phone',
 		'address',
@@ -73,8 +73,14 @@ class User extends Authenticatable
 	protected $casts = [
 		'is_subscribed' => 'boolean',
 		'is_blocked'    => true,
-		'is_admin'      => false
+		'is_admin'      => false,
+		'emails'        => 'array'
 	];
+
+
+	public function getEmailAttribute() {
+		return count($this->emails) ? array_first($this->emails) : NULL;
+	}
 
 
 	/**
@@ -472,5 +478,4 @@ class User extends Authenticatable
 	public function isAdmin() {
 		return $this->id == 1 || $this->is_admin;
 	}
-
 }

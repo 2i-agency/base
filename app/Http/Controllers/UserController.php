@@ -17,8 +17,7 @@ class UserController extends Controller
 	/** @var array массив правил для валидации */
 	protected $rules = [
 		'login'    => 'required|alpha_dash|max:20|unique:base_users,login',
-		'password' => 'sometimes|min:6',
-		'email'    => 'required|email|unique:base_users,email'
+		'password' => 'sometimes|min:6'
 	];
 
 
@@ -30,6 +29,17 @@ class UserController extends Controller
 			$data[ 'login' ] = trim(str_slug($data[ 'login' ]), '-_');
 			$request->replace($data);
 		}
+	}
+
+
+	protected function prepareEmails(string $emails):array {
+		$emails = explode(PHP_EOL, $emails);
+
+		foreach ($emails as &$email) {
+			$email = trim($email);
+		}
+
+		return $emails;
 	}
 
 
@@ -76,8 +86,11 @@ class UserController extends Controller
 		/** Валидация */
 		$this->validate($request, $this->rules);
 
+		$data = $request->all();
+		$data['emails'] = $this->prepareEmails($data['emails']);
+
 		/** Создание объекта */
-		$user = User::create($request->all());
+		$user = User::create($data);
 
 		flash()->success('Пользователь <b>' . e($user->login) . '</b> добавлен');
 
@@ -111,7 +124,6 @@ class UserController extends Controller
 
 		/** Подготовка правил. Добавление ключа модели в правила */
 		$this->rules[ 'login' ] .= ',' . $user->id;
-		$this->rules[ 'email' ] .= ',' . $user->id;
 
 		/** Валидация */
 		$this->validate($request, $this->rules);
@@ -120,6 +132,7 @@ class UserController extends Controller
 		$data = $request->all();
 		$data[ 'is_blocked' ] = $user->isCanBeBlocked() ? $data[ 'is_blocked' ] : false;
 		$data[ 'is_admin' ] = $user->isCanBeAdminChanged() ? $data[ 'is_admin' ] : $user->isAdmin();
+		$data['emails'] = $this->prepareEmails($data['emails']);
 
 		/** Обновление */
 		$user->update($data);
