@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Chunker\Base\Models\User;
 
 /**
  * Миграция для таблицы пользователей
@@ -30,6 +31,10 @@ class ChangeEmailFieldInUsers extends Migration
 			$table->renameColumn('email', 'emails');
 
 		});
+
+		foreach (\DB::table('base_users')->get() as $user) {
+			User::find($user->id)->update(['emails' => [$user->emails]]);
+		}
 	}
 
 
@@ -50,5 +55,16 @@ class ChangeEmailFieldInUsers extends Migration
 				->change();
 
 		});
+
+		foreach (\DB::table('base_users')->get() as $user) {
+			$string = $user->email;
+			$string = str_replace(['[', ']', '"'], '', $string);
+			$emails = explode(',', $string);
+			$email = array_first($emails);
+
+			\DB::table('base_users')
+				->where('id', $user->id)
+				->update(['email' => $email]);
+		}
 	}
 }
