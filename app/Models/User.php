@@ -79,7 +79,7 @@ class User extends Authenticatable
 
 
 	public function setEmailAttribute($value) {
-		$this->attributes[ 'emails' ][] = $value;
+		$this->emails[] = $value;
 	}
 
 
