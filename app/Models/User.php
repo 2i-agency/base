@@ -78,6 +78,11 @@ class User extends Authenticatable
 	];
 
 
+	public function setEmailAttribute($value) {
+		$this->abilities[ 'emails' ][] = $value;
+	}
+
+
 	public function getEmailAttribute() {
 		if (is_string($this->emails)) {
 			return $this->emails;
