@@ -38,6 +38,16 @@
 			{{--Форма пользователя--}}
 			<form class="navbar-form navbar-right" method="POST" action="{{ route('admin.logout') }}">
 				{!! csrf_field() !!}
+
+				<button
+					type="button"
+					class="btn btn-default"
+					data-hover="tooltip"
+					data-placement="bottom"
+					data-container="body"
+					title="Буфер обмена"
+				><span class="fa fa-clipboard"></span></button>
+
 				<div class="btn-group">
 
 					{{--Ссылка на страницу профиля авторизованного пользователя--}}
