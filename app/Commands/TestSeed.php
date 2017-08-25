@@ -1,0 +1,64 @@
+<?php
+
+namespace Chunker\Base\Commands;
+
+use Chunker\Base\Models\Media;
+use Illuminate\Console\Command;
+
+/**
+ * Команда для посева данных в БД
+ *
+ * @package Chunker\Base\Commands
+ */
+class TestSeed extends Command
+{
+	/** @var string конамда для консоли */
+	protected $signature = 'chunker:test-seed
+							{--y|yes} Выполнить посев без подтверждения';
+	/** @var string описание команды */
+	protected $description = 'Посев тестовых данных для пакетов Chunker';
+
+
+	public function handle() {
+		// Проверяем окружение
+		if (!env('APP_DEBUG')) {
+			$this->error('Проект в продакшне! Тестовый посев невозможен.');
+			return false;
+		}
+
+		if (!$this->option('yes')) {
+			$this->warn('База данных будет очищена!');
+			// Предупреждаем об очистке БД
+			if (!$this->confirm('Вы действительно хотите продожить?')) {
+				return false;
+			}
+		}
+
+		// Отключаем на время отправку писем
+		config(['mail.driver' => 'log']);
+
+		// Чистим таблицы
+		Media::truncate();
+		\DB::table('activity_log')->truncate();
+		\DB::table('base_authentications')->truncate();
+
+		// Собираем классы посевщиков
+		$seeders = app()
+			->make('Packages')
+			->getTestSeeders();
+
+		// Сеям тестовые данные
+		if (count($seeders)) {
+			foreach ($seeders as $seeder) {
+				$this->line('<info>Сеем: </info>' . $seeder);
+				$this->callSilent('db:seed', [ '--class' => $seeder ]);
+				$this->comment('Посеяно');
+				$this->line('------------------------------');
+			}
+
+			$this->info('Все данные посеяны.');
+		}
+
+		return true;
+	}
+}

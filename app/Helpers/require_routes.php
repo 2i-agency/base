@@ -9,8 +9,8 @@ function require_routes($path) {
 		$files = array_slice(scandir($path), 2);
 
 		foreach ($files as $file) {
-			if (is_file($path . $file)) {
-				require_once $path . $file;
+			if (is_file($path . $file) && $file != '.gitkeep') {
+				require_once( $path . $file );
 			}
 		}
 	}
