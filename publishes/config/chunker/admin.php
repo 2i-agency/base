@@ -35,18 +35,58 @@ return [
 			'name'     => 'Контент',
 			'icon'     => 'database',
 			'children' => [
+//				'articles',
+//				'articles-categories',
+//				'',
+//				'news',
+//				'news-rubrics',
+//				'',
+//				'events',
+//				'events-categories',
+//				'',
+//				'banners',
+//				'banners-categories',
+//				'banners-places',
+//				'',
+//				'grids',
+//				'',
+//				'houses-projects',
+//				'houses-projects-categories',
+//				'houses-projects-types',
+//				'houses-projects-technologies',
+//				'houses-projects-complectations',
+//				'',
+//				'reviews'
+			]
+		],
+		[
+			'name' => 'Магазин',
+			'icon' => 'shopping-cart',
+			'children' => [
+//				'products',
+//				'products-groups',
+//				'products-categories',
+//				'',
+//				'orders'
 			]
 		],
 		[
 			'name'     => 'Предприятие',
 			'icon'     => 'university',
 			'children' => [
+//				'contractors',
+//				'contractors-categories',
+//				'activity-scopes',
+//				'ad-sources'
 			]
 		],
+//		'mediamanager',
 		[
 			'name' => 'Дизайн',
 			'icon' => 'magic',
 			'children' => [
+//				'structure',
+//				'communities',
 			]
 		],
 		[
@@ -61,7 +101,9 @@ return [
 				'notices-types',
 				'settings',
 				'',
-				'activity-log'
+				'activity-log',
+//				'',
+//				'backups',
 			]
 		]
 	],
