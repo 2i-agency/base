@@ -48,12 +48,12 @@ class Notice extends Model
 		$notice_type = $this->type;
 
 		if (is_null($notice_type)) {
-			return User::where('is_subscribed', 1)->get(['id', 'name', 'email' ]);
+			return User::where('is_subscribed', 1)->get(['id', 'name', 'emails' ]);
 		} else {
-			$users = $notice_type->users()->get(['id', 'name', 'email' ]);
+			$users = $notice_type->users()->get(['id', 'name', 'emails' ]);
 
 			foreach ($notice_type->roles()->get() as $role) {
-				foreach ($role->users()->where('is_subscribed', 1)->get(['id', 'name', 'email' ]) as $user) {
+				foreach ($role->users()->where('is_subscribed', 1)->get(['id', 'name', 'emails' ]) as $user) {
 					$users->push($user);
 				}
 			}
@@ -87,11 +87,12 @@ class Notice extends Model
 					],
 					[ 'content' => $instance->content ],
 					function(Message $mail) use ($user, $instance) {
-
-						/** Отправка письма */
-						$mail
-							->to($user->email, $user->getName())
-							->subject('Уведомление с сайта ' . host());
+						foreach ($user->emails as $email) {
+							/** Отправка письма */
+							$mail
+								->to($email, $user->getName())
+								->subject('Уведомление с сайта ' . host());
+						}
 					});
 			});
 		});
