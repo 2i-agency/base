@@ -34,7 +34,7 @@ class AuthenticationController extends Controller
 		) {
 			event(new UserLoggedIn($user, false));
 
-			return back();
+			return redirect()->route('admin.notices');
 		} /** Аутентификация провалена */
 		else {
 			event(new UserLoggedIn($user, true));
