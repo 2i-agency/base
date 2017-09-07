@@ -8,6 +8,9 @@
 		value="{{ $value or NULL }}"
 		placeholder="{{ $placeholder or NULL }}"
 		{{ isset($required) && $required ? 'required' : NULL }}
+		@if(isset($format))
+			data-format="{{ $format }}"
+		@endif
 	>
 	<span class="input-group-addon">
 		<span class="fa fa-calendar"></span>
