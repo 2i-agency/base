@@ -27,7 +27,7 @@ $(function(){
 	// Календарь
 	$('.js-timepicker').each(function(num, elem) {
 		var $picker = $(elem),
-			format = $picker.find('input').data('format') || 'DD.MM.YYYY HH:mm';
+			format = $picker.data('format') || 'DD.MM.YYYY HH:mm';
 
 		$(elem).datetimepicker({
 			locale: 'ru',
