@@ -6,7 +6,7 @@
  * @param string $content
  * @param string $type
  */
-function notice($content, $type = NULL){
+function notice($content, $type = NULL, $users_ids = NULL){
 	if (is_object($type)) {
 		$type = $type->id;
 	} else {
@@ -18,9 +18,16 @@ function notice($content, $type = NULL){
 			}
 		}
 	}
-
-	\Chunker\Base\Models\Notice::create([
+	$attributes = [
 		'content' => $content,
 		'type_id' => $type
-	]);
+	];
+
+	$notice = new \Chunker\Base\Models\Notice($attributes);
+
+	if (isset($users_ids) && count($users_ids)) {
+		$notice->users_ids = $users_ids;
+	}
+
+	$notice->save();
 }

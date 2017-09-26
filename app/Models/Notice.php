@@ -24,6 +24,8 @@ class Notice extends Model
 		'type_id'
 	];
 
+	public $users_ids;
+
 
 	/**
 	 * Связь с типом уведомлений
@@ -44,16 +46,34 @@ class Notice extends Model
 		return $this->belongsToMany(User::class, 'base_notices_users');
 	}
 
-	protected function getSubscribeUsers() {
+	protected function getSubscribeUsers($users_ids = NULL) {
 		$notice_type = $this->type;
 
 		if (is_null($notice_type)) {
-			return User::where('is_subscribed', 1)->get(['id', 'name', 'emails' ]);
+			return User
+				::where('is_subscribed', 1)
+				->when(isset($users_ids) && count($users_ids), function($query) use ($users_ids) {
+					return $query->whereIn('id', $users_ids);
+				})
+				->get(['id', 'name', 'emails' ]);
 		} else {
-			$users = $notice_type->users()->get(['id', 'name', 'emails' ]);
+			$users = $notice_type
+				->users()
+				->when(isset($users_ids) && count($users_ids), function($query) use ($users_ids) {
+					return $query->whereIn('id', $users_ids);
+				})
+				->get(['id', 'name', 'emails' ]);
 
 			foreach ($notice_type->roles()->get() as $role) {
-				foreach ($role->users()->where('is_subscribed', 1)->get(['id', 'name', 'emails' ]) as $user) {
+				$_users = $role
+					->users()
+					->when(isset($users_ids) && count($users_ids), function($query) use ($users_ids) {
+						return $query->whereIn('id', $users_ids);
+					})
+					->where('is_subscribed', 1)
+					->get(['id', 'name', 'emails' ]);
+
+				foreach ($_users as $user) {
 					$users->push($user);
 				}
 			}
@@ -66,14 +86,14 @@ class Notice extends Model
 	public static function boot() {
 
 		static::creating(function($instance) {
-			return (bool)$instance->getSubscribeUsers()->count();
+			return (bool)$instance->getSubscribeUsers($instance->users_ids && count($instance->users_ids) ? $instance->users_ids : NULL)->count();
 		});
 
 		/**
 		 * При создании уведомления его содержимое отправляется на почту подписанным пользователям
 		 */
 		static::created(function($instance) {
-			$users = $instance->getSubscribeUsers();
+			$users = $instance->getSubscribeUsers($instance->users_ids && count($instance->users_ids) ? $instance->users_ids : NULL);
 
 			$users->each(function($user) use ($instance) {
 
