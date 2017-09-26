@@ -19,7 +19,8 @@
 		"league/uri": "~4.1",
 		"asvae/laravel-api-tester": "~1.0",
 		"spatie/laravel-medialibrary": "~4.8",
-		"spatie/laravel-activitylog": "~1.11"
+		"spatie/laravel-activitylog": "~1.11",
+		"doctrine/dbal": "~2.0"
 	},
 	"autoload": {
 		"psr-4": {
