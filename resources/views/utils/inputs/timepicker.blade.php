@@ -4,6 +4,12 @@
 	@if(isset($format))
 		data-format="{{ $format }}"
 	@endif
+	@if(isset($max_date))
+		data-max_date="{{ $max_date }}"
+	@endif
+	@if(isset($min_date))
+		data-min_date="{{ $min_date }}"
+	@endif
 >
 	<input
 		id="{{ $id or NULL }}"

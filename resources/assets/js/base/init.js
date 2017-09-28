@@ -27,11 +27,15 @@ $(function(){
 	// Календарь
 	$('.js-timepicker').each(function(num, elem) {
 		var $picker = $(elem),
-			format = $picker.data('format') || 'DD.MM.YYYY HH:mm';
+			format = $picker.data('format') || 'DD.MM.YYYY HH:mm',
+			max_date = $picker.data('max_date') || false,
+			min_date = $picker.data('min_date') || false;
 
 		$(elem).datetimepicker({
 			locale: 'ru',
 			format: format,
+			minDate: min_date,
+			maxDate: max_date,
 			showTodayButton: true,
 			showClear: true,
 			tooltips: {

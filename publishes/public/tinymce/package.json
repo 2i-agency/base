@@ -10,7 +10,7 @@
         "spec": ">=4.5.3 <5.0.0",
         "type": "range"
       },
-      "D:\\OpenServer\\domains\\sandbox.dev\\chunker\\base"
+      "/home/boldyreva/data/sites/sandbox3/chunker/base"
     ]
   ],
   "_from": "tinymce@>=4.5.3 <5.0.0",
@@ -44,7 +44,7 @@
   "_shasum": "7415559f266de24bea7e69d59e43e1e61e7d11a4",
   "_shrinkwrap": null,
   "_spec": "tinymce@^4.5.3",
-  "_where": "D:\\OpenServer\\domains\\sandbox.dev\\chunker\\base",
+  "_where": "/home/boldyreva/data/sites/sandbox3/chunker/base",
   "bugs": {
     "url": "http://www.tinymce.com/develop/bugtracker.php"
   },
