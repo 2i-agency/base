@@ -77,7 +77,7 @@
 
 	{{--Адрес--}}
 	<div class="form-group">
-		<label>Адрес:</label>
+		<label>Почтовый адрес:</label>
 		<input
 			type="text"
 			name="address"
