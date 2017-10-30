@@ -56,7 +56,12 @@ return [
 //				'houses-projects-technologies',
 //				'houses-projects-complectations',
 //				'',
-//				'reviews'
+//				'reviews',
+//				'',
+//				'privacy-policy',
+//				'',
+//				'realty-ads',
+//				'realty-sellers'
 			]
 		],
 		[
