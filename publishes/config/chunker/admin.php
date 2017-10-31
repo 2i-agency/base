@@ -60,7 +60,7 @@ return [
 //				'',
 //				'privacy-policy',
 //				'',
-//				'realty-ads',
+//				'realty-offers',
 //				'realty-sellers'
 			]
 		],
