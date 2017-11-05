@@ -20,8 +20,15 @@
 		"asvae/laravel-api-tester": "~1.0",
 		"spatie/laravel-medialibrary": "~4.8",
 		"spatie/laravel-activitylog": "~1.11",
-		"doctrine/dbal": "~2.0"
+		"doctrine/dbal": "~2.0",
+		"chunker/cases-names": "~1.0"
 	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@bitbucket.org:chunker/cases-names.git"
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"Chunker\\Base\\": "app"

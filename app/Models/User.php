@@ -4,6 +4,7 @@ namespace Chunker\Base\Models;
 
 use Chunker\Base\Models\Traits\IsRelatedWith;
 use Chunker\Base\Models\Traits\Nullable;
+use Chunker\NamesCases\CasableName;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -82,7 +83,7 @@ class User extends Authenticatable
 		if (is_array($this->emails)) {
 			$this->emails[] = $value;
 		} else {
-			$this->emails = [$value];
+			$this->emails = [ $value ];
 		}
 	}
 
@@ -91,7 +92,22 @@ class User extends Authenticatable
 		if (is_string($this->emails)) {
 			return $this->emails;
 		}
+
 		return count($this->emails) ? array_first($this->emails) : NULL;
+	}
+
+
+	/**
+	 * Склоняемое имя
+	 *
+	 * @return CasableName|null
+	 */
+	public function getNameAttribute() {
+		if ($this->attributes[ 'name' ]) {
+			return new CasableName($this->attributes[ 'name' ]);
+		} else {
+			return NULL;
+		}
 	}
 
 
@@ -118,7 +134,7 @@ class User extends Authenticatable
 				if ($model instanceof User) {
 					if ($model->id == \Auth::user()->id) {
 						return true;
-					} elseif (($model->id == 1) && (\Auth::user()->id != 1)) {
+					} elseif (( $model->id == 1 ) && ( \Auth::user()->id != 1 )) {
 						return NULL;
 					}
 				}
@@ -158,10 +174,10 @@ class User extends Authenticatable
 
 				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
 				if (
-					in_array(
-						NodeTrait::class,
-						(new \ReflectionClass(get_class($model)))->getTraitNames()
-					)
+				in_array(
+					NodeTrait::class,
+					( new \ReflectionClass(get_class($model)) )->getTraitNames()
+				)
 				) {
 					$ancestors = $model->getAncestors()->reverse();
 					foreach ($ancestors as $ancestor) {
