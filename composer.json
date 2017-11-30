@@ -21,12 +21,12 @@
 		"spatie/laravel-medialibrary": "~4.8",
 		"spatie/laravel-activitylog": "~1.11",
 		"doctrine/dbal": "~2.0",
-		"chunker/cases-names": "~1.0"
+		"chunker/names-cases": "~1.0"
 	},
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "git@bitbucket.org:chunker/cases-names.git"
+			"url": "git@bitbucket.org:chunker/names-cases.git"
 		}
 	],
 	"autoload": {
