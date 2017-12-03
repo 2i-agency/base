@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Traits;
+namespace Chunker\Base\Models\Traits;
 
 use Chunker\Base\Events\TranslationHasBeenSet;
 use Chunker\Base\Exceptions\AttributeIsNotTranslatable;
