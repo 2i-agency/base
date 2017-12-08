@@ -54,6 +54,14 @@ class Language extends Model implements HasMediaConversions
 	}
 
 
+	public static function getFirstLanguage() {
+		return self
+			::defaultOrder()
+			->where('is_published', true)
+			->first();
+	}
+
+
 	/**
 	 * Подготовка локали
 	 *
