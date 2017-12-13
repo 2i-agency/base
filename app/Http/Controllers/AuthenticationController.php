@@ -94,8 +94,8 @@ class AuthenticationController extends Controller
 		$login = trim($request->get('login'));
 		$user = User
 			::where('login', $login)
-			->orWhere('email', $login)
-			->first([ 'id', 'login', 'email' ]);
+			->orWhere('emails', 'like', '%' . $login . '%' )
+			->first();
 
 		/** Уведомление о неудачном поиске */
 		if (is_null($user)) {
