@@ -45,16 +45,12 @@
 
 						</div>
 					@else
+						@php($roles_checked = [])
 						@foreach ($_roles as $_role)
-							@php
-								$checked = (
-									isset($user) && $user->isRelatedWith('roles', $_role)
-								)
-								|| in_array($_role->id, old('roles', []));
 
-								$roles_checked = [];
-							@endphp
-							{{ $roles_checked[] = $checked ? $_role->name : NULL }}
+							@if((isset($user) && $user->isRelatedWith('roles', $_role)) || in_array($_role->id, old('roles', [])))
+								@php($roles_checked[] =  $_role->name)
+							@endif
 						@endforeach
 						{{ implode(', ', $roles_checked) }}
 					@endif
