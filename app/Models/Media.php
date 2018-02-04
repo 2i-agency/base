@@ -30,9 +30,11 @@ class Media extends BaseMedia
 			$manipulations = $conversion;
 		}
 
-		GlideImage::create($this->getPath())
-			->modify($manipulations)
-			->save($this->getPath());
+		if ($this->getTypeAttribute() == 'image') {
+			GlideImage::create($this->getPath())
+				->modify($manipulations)
+				->save($this->getPath());
+		}
 	}
 
 
