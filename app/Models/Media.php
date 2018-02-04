@@ -2,7 +2,9 @@
 
 namespace Chunker\Base\Models;
 
+use Chunker\Base\Libs\ConversionsManager;
 use Kalnoy\Nestedset\NodeTrait;
+use Spatie\Glide\GlideImage;
 use Spatie\MediaLibrary\Media as BaseMedia;
 
 /**
@@ -17,6 +19,21 @@ class Media extends BaseMedia
 
 	/** @var string имя таблицы */
 	protected $table = 'media';
+
+
+	public function conversionOriginal() {
+		$conversion = config('chunker.conversions.original');
+
+		if (is_string($conversion)) {
+			$manipulations = ConversionsManager::getConversion($conversion);
+		} else {
+			$manipulations = $conversion;
+		}
+
+		GlideImage::create($this->getPath())
+			->modify($manipulations)
+			->save($this->getPath());
+	}
 
 
 	/**
