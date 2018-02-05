@@ -23,6 +23,7 @@ class Media extends BaseMedia
 
 	public function conversionOriginal() {
 		$conversion = config('chunker.conversions.original');
+		$path = $this->getPath();
 
 		if (is_string($conversion)) {
 			$manipulations = ConversionsManager::getConversion($conversion);
@@ -30,10 +31,10 @@ class Media extends BaseMedia
 			$manipulations = $conversion;
 		}
 
-		if ($this->getTypeAttribute() == 'image') {
-			GlideImage::create($this->getPath())
+		if (file_exists($path) && $this->getTypeAttribute() == 'image') {
+			GlideImage::create($path)
 				->modify($manipulations)
-				->save($this->getPath());
+				->save($path);
 		}
 	}
 
