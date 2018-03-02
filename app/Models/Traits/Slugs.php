@@ -1,6 +1,7 @@
 <?php
 
 namespace Chunker\Base\Models\Traits;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Трейт для работы со слагами
@@ -49,6 +50,8 @@ trait Slugs
 			}
 
 		}
+
+		return $this->getKeyName();
 	}
 
 
@@ -56,7 +59,7 @@ trait Slugs
 	 * Метод выполняющийся при загрузке трейта
 	 */
 	protected static function bootSlugs() {
-		self::saving(function($instance) {
+		self::saving(function(Model $instance) {
 			if (isset($instance->fields_donor)) {
 
 				$is_slug = (bool)\DB
