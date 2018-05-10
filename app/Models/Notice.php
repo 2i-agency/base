@@ -100,7 +100,7 @@ class Notice extends Model
 				/** Прикрепление уведомления к пользователю */
 				$instance->users()->attach($user->id);
 
-				Mail::send(
+				Mail::queue(
 					[
 						'html' => 'base::mail.notice.html',
 						'text' => 'base::mail.notice.text'
