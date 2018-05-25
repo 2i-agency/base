@@ -27,7 +27,16 @@ class SettingController extends Controller
 		else {
 			$settings = Setting
 				::whereIn('id', config('chunker.admin.settings')[ $section ][ 'options' ])
-				->get();
+				->get()
+				->sortBy(function ($setting, $key) {
+					$settings = config('chunker.admin.settings');
+					$options = collect($settings)
+						->pluck('options')
+						->flatten()
+						->toArray();
+
+					return array_search($setting->id, $options);
+				});
 
 			return view(
 				'base::settings.section',
