@@ -91,6 +91,9 @@ class RedirectController extends Controller
 
 		/** Валидация */
 		foreach ($redirects as $redirect_id => $redirect_data) {
+			if (!key_exists('from', $redirect_data)) {
+				continue;
+			}
 			/** Добавление ключа модели в правила валидации */
 			$rules = $this->rules;
 			$rules[ 'from' ] = $rules[ 'from' ] . ',' . $redirect_id;
@@ -110,6 +113,9 @@ class RedirectController extends Controller
 
 		/** Обновление данных */
 		foreach ($redirects as $redirect_id => $redirect_data) {
+			if (!key_exists('from', $redirect_data)) {
+				continue;
+			}
 			Redirect
 				::find($redirect_id)
 				->update($redirect_data);
