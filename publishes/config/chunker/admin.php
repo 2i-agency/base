@@ -162,6 +162,13 @@ return [
 	 *
 	 */
 	'settings'  => [
+		'site' => [
+			'name'    => 'Сайт',
+			'icon'    => 'bookmark',
+			'options' => [
+				'site_name',
+			]
+		],
 		'mail' => [
 			'name'    => 'Электронная почта',
 			'icon'    => 'envelope',

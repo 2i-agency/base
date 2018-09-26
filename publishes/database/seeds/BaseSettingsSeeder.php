@@ -49,7 +49,15 @@ class BaseSettingsSeeder extends Seeder
 				'id'           => 'mail_encryption',
 				'title'        => 'Шифрование',
 				'control_type' => 'text'
-			]
+			],
+			/** Название сайта */
+			[
+				'id'           => 'site_name',
+				'title'        => 'Название сайта',
+				'control_type' => 'site',
+//				'value'        => '',
+//				'hint'         => 'Используется сайтом для отправки системных уведомлений'
+			],
 
 		];
 
