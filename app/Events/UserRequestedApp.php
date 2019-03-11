@@ -16,7 +16,7 @@ class UserRequestedApp extends Event
 	public $user;
 
 
-	public function __construct(User $user){
+	public function __construct(User $user = NULL){
 		$this->user = $user;
 	}
 }

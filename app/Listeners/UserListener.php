@@ -3,6 +3,7 @@
 namespace Chunker\Base\Listeners;
 
 use Carbon\Carbon;
+use Chunker\Base\Models\User;
 
 /**
  * Класс слушателей событий пользователя
@@ -44,15 +45,19 @@ class UserListener
 	 */
 	public function onUserAppRequest($event){
 		// Добавление данных в последнюю авторизацию, если таковая имеется
-		$authentications = $event
-			->user
-			->authentications();
+		$user = $event->user;
 
-		if ($authentications->count()) {
-			$authentications
-				->latest('logged_in_at')
-				->first()
-				->update([ 'last_request_at' => Carbon::now() ]);
+		if ($user && $user instanceof User) {
+			$authentications = $event
+				->user
+				->authentications();
+
+			if ($authentications->count()) {
+				$authentications
+					->latest('logged_in_at')
+					->first()
+					->update([ 'last_request_at' => Carbon::now() ]);
+			}
 		}
 	}
 
