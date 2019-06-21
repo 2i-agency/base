@@ -14,7 +14,7 @@
 	<input
 		id="{{ $id or NULL }}"
 		type="text"
-		class="form-control"
+		class="form-control {{ $classes or NULL }}"
 		name="{{ $name }}"
 		value="{{ $value or NULL }}"
 		placeholder="{{ $placeholder or NULL }}"
