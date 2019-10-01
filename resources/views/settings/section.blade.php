@@ -42,7 +42,7 @@
 						<div class="form-group">
 
 							{{--Метка--}}
-							<label>{{ $setting->title }}:</label>
+							<label>{!! $setting->title !!}:</label>
 
 							@can('settings.edit')
 
@@ -85,7 +85,7 @@
 
 								{{--Подсказка--}}
 								@if($setting->hint)
-									<div class="help-block">{{ $setting->hint }}</div>
+									<div class="help-block">{!! $setting->hint !!}</div>
 								@endif
 
 							@else
