@@ -111,7 +111,7 @@ class Notice extends Model
 							/** Отправка письма */
 							$mail
 								->to($email, $user->getName())
-								->subject('Уведомление с сайта ' . host());
+								->subject(setting('mail_author') ?: config('mail.from.name'));
 						}
 					});
 			});
