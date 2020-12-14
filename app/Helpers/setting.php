@@ -9,7 +9,7 @@
  * @return null|string
  */
 function setting($id, $default = NULL){
-	if (Schema::hasTable('settings')) {
+	if (Schema::hasTable('base_settings')) {
 		$setting = \Chunker\Base\Models\Setting::find($id);
 
 		return $setting && !empty($setting->value) ? $setting->value : $default;
