@@ -79,7 +79,7 @@ trait Slugs
 					if (!is_string($slug) || !strlen($slug)) {
 
 						if (is_string($instance->fields_donor)) {
-							$slug = $attributes[ $instance->fields_donor ];
+							$slug = $instance->getAttribute($instance->fields_donor);
 						} else {
 							foreach ($instance->fields_donor as $field_donor) {
 								if (strlen($instance->getAttribute($field_donor))) {
