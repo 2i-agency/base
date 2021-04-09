@@ -213,9 +213,7 @@ class AppServiceProvider extends ServiceProvider
 
 	public function register() {
 		/** Регистрания хелперов */
-		foreach (glob(self::ROOT . '/app/Helpers/*.php') as $filename) {
-			require_once $filename;
-		}
+		require_once self::ROOT . '/app/helpers.php';
 
 		/** Регистрация кастомного Gate */
 		$this->app->singleton(GateContract::class, function($app) {
