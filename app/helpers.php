@@ -214,3 +214,50 @@ if (!function_exists('setting')) {
 		return NULL;
 	}
 }
+
+
+if(!function_exists('get_trans_name_file')) {
+	/**
+	 * @param string|\Illuminate\Http\UploadedFile $file
+	 *
+	 * @return string
+	 */
+	function get_trans_name_file($file) {
+		if (is_string($file)) {
+			$extension = pathinfo($file, PATHINFO_EXTENSION);
+			$filename = pathinfo($file, PATHINFO_FILENAME);
+		} else {
+			$extension = mb_strtolower($file->getClientOriginalExtension());
+			$filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+		}
+
+		return str_slug($filename) . '.' . $extension;
+	}
+}
+
+
+if (!function_exists('format_price')) {
+	/**
+	 * @param string|float|integer $price
+	 * @param string               $currency
+	 *
+	 * @return string
+	 */
+	function format_price($price, int $decimals = 2, string $currency = '₽') {
+		$price = round($price, $decimals);
+
+		$whole = floor($price);
+
+		if ($price - $whole == 0) {
+			$decimals = 0;
+		}
+
+		$result = number_format($whole, $decimals, ',', ' ');
+
+		if ($currency && mb_strlen($currency)) {
+			$result .= ' ' . $currency;
+		}
+
+		return $result;
+	}
+}
