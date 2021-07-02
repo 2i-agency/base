@@ -27,6 +27,12 @@ return [
 			'h' => 1024
 		],
 
+		'original' => [
+			'w'   => 1300,
+			'h'   => 1300,
+			'fit' => 'max'
+		],
+
 		'thumb' => [
 			'w' => 500,
 			'h' => 500
@@ -51,6 +57,6 @@ return [
 		],
 	],
 
-	'original' => 'big'
+	'original' => 'original'
 
 ];
