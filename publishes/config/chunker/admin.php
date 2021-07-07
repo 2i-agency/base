@@ -13,6 +13,8 @@ return [
 	 */
 	'prefix'    => 'admin',
 
+
+	'notice-observer' => Chunker\Base\Observers\NoticeObserver::class,
 	/**
 	 *--------------------------------------------------------------------------
 	 * Структура меню

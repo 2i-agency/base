@@ -46,7 +46,7 @@ class Notice extends Model
 		return $this->belongsToMany(User::class, 'base_notices_users');
 	}
 
-	protected function getSubscribeUsers($users_ids = NULL) {
+	public function getSubscribeUsers($users_ids = NULL) {
 		$notice_type = $this->type;
 
 		if (is_null($notice_type)) {
@@ -80,47 +80,5 @@ class Notice extends Model
 
 			return $users->unique();
 		}
-	}
-
-
-	public static function boot() {
-
-		static::creating(function($instance) {
-			return (bool)$instance->getSubscribeUsers($instance->users_ids && count($instance->users_ids) ? $instance->users_ids : NULL)->count();
-		});
-
-		/**
-		 * При создании уведомления его содержимое отправляется на почту подписанным пользователям
-		 */
-		static::created(function($instance) {
-			$users = $instance->getSubscribeUsers($instance->users_ids && count($instance->users_ids) ? $instance->users_ids : NULL);
-
-			$users->each(function($user) use ($instance) {
-
-				/** Прикрепление уведомления к пользователю */
-				$instance->users()->attach($user->id);
-
-				Mail::queue(
-					[
-						'html' => 'base::mail.notice.html',
-						'text' => 'base::mail.notice.text'
-					],
-					[ 'content' => $instance->content ],
-					function(Message $mail) use ($user, $instance) {
-						foreach ($user->emails as $email) {
-							/** Отправка письма */
-							$mail
-								->to($email, $user->getName())
-								->subject(setting('mail_author') ?: config('mail.from.name'));
-						}
-					});
-			});
-		});
-
-		static::deleted(function($instance){
-			$instance->users()->detach();
-		});
-
-		parent::boot();
 	}
 }

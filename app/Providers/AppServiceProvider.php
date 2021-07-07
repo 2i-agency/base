@@ -2,31 +2,32 @@
 
 namespace Chunker\Base\Providers;
 
-use Chunker\Base\Commands\ConversionOriginalMedia;
-use Chunker\Base\Gate;
-use Chunker\Base\Commands\ReplaceRN;
-use Chunker\Base\Http\Middleware\Redirect;
-use Chunker\Base\Models\Language;
-use Chunker\Base\Models\NoticesType;
-use Chunker\Base\Models\Role;
-use Chunker\Base\Models\Setting;
-use Chunker\Base\Providers\Traits\Migrator;
-use Chunker\Base\ViewComposers\ActivityLogComposer;
-use Chunker\Base\ViewComposers\VisibleRoleComposer;
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\ServiceProvider;
 use Carbon\Carbon;
-use Chunker\Base\Packages\Manager;
-use Chunker\Base\Packages\Package;
+use Chunker\Base\Gate;
+use Chunker\Base\Models\Role;
+use Chunker\Base\Models\User;
 use Chunker\Base\Commands\Init;
 use Chunker\Base\Commands\Seed;
-use Chunker\Base\Models\User;
-use Chunker\Base\ViewComposers\LanguagesComposer;
-use Chunker\Base\ViewComposers\RolesComposer;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use Chunker\Base\Models\Notice;
+use Chunker\Base\Models\Setting;
+use Chunker\Base\Models\Language;
+use Illuminate\Http\UploadedFile;
+use Chunker\Base\Packages\Manager;
+use Chunker\Base\Packages\Package;
+use Chunker\Base\Commands\ReplaceRN;
+use Chunker\Base\Models\NoticesType;
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Support\ServiceProvider;
 use zedisdog\LaravelSchemaExtend\Schema;
+use Chunker\Base\Http\Middleware\Redirect;
+use Chunker\Base\Providers\Traits\Migrator;
+use Chunker\Base\ViewComposers\RolesComposer;
+use Chunker\Base\ViewComposers\LanguagesComposer;
+use Chunker\Base\Commands\ConversionOriginalMedia;
 use Chunker\Base\Models\Redirect as ModelRedirect;
+use Chunker\Base\ViewComposers\ActivityLogComposer;
+use Chunker\Base\ViewComposers\VisibleRoleComposer;
+use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -135,6 +136,9 @@ class AppServiceProvider extends ServiceProvider
 				Language::class      => 'base::entities.language',
 				'localization'       => 'base::entities.localization'
 			]);
+
+		$notice_observer = config('chunker.admin.notice-observer');
+		Notice::observe(new $notice_observer());
 
 		/** Регистрация пакета */
 		$this
