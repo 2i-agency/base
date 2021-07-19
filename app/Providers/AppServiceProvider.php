@@ -138,7 +138,9 @@ class AppServiceProvider extends ServiceProvider
 			]);
 
 		$notice_observer = config('chunker.admin.notice-observer');
-		Notice::observe(new $notice_observer());
+		if($notice_observer) {
+			Notice::observe(new $notice_observer());
+		}
 
 		/** Регистрация пакета */
 		$this
@@ -150,9 +152,6 @@ class AppServiceProvider extends ServiceProvider
 
 		/** Установка лимита на размер загружамего файла в Media */
 		config([ 'laravel-medialibrary.max_file_size' => UploadedFile::getMaxFilesize() ]);
-
-		/** Локализация */
-		$this->app->setLocale('ru');
 
 		/** Заменяем стандартный класс Gate */
 		config([ 'app.aliases.Gate' => Gate::class ]);
