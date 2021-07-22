@@ -1,6 +1,8 @@
 <?php
 
 namespace Chunker\Base\Models\Traits;
+
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -95,15 +97,9 @@ trait Slugs
 						if ($instance->id) {
 							$id = $instance->id;
 						} else {
-							$id = array_first(
-								\DB::select(
-									'SHOW TABLE STATUS FROM `'
-									. env('DB_DATABASE')
-									. '` LIKE \''
-									. $instance->table
-									. '\''
-								)
-							)->Auto_increment;
+							$query = sprintf('SHOW TABLE STATUS FROM `%s` LIKE \'%s\'', env('DB_DATABASE'), $instance->getTable());
+							$result = DB::select($query);
+							$id = array_first($result)->Auto_increment;
 						}
 
 						$slug = $id . '-' . $slug;
