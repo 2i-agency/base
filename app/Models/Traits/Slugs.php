@@ -37,17 +37,13 @@ trait Slugs
 	 * @throws \Error
 	 */
 	public function getRouteKeyName() {
-		$is_slug = \Schema::hasColumn($this->table, 'slug');
+		$is_slug = \Schema::hasColumn($this->getTable(), 'slug');
 
 		if ($is_slug) {
 
-			if (isset($this->field_config)) {
-
-				if (config($this->field_config)) {
-					return 'slug';
-				}
-
-			} else {
+			if (isset($this->field_config) && config($this->field_config, $this->field_config ?? false)) {
+				return 'slug';
+			} elseif(!isset($this->field_config)) {
 				throw new \Error(self::getErrorMessage('field_config'));
 			}
 
@@ -64,11 +60,11 @@ trait Slugs
 		self::saving(function(Model $instance) {
 			if (isset($instance->fields_donor)) {
 
-				$is_slug = (bool)\DB
+				$is_slug = (bool)DB
 					::table('information_schema.COLUMNS')
 					->select('*')
 					->where('TABLE_SCHEMA', env('DB_DATABASE'))
-					->where('TABLE_NAME', $instance->table)
+					->where('TABLE_NAME', $instance->getTable())
 					->where('COLUMN_NAME', 'slug')
 					->count();
 
