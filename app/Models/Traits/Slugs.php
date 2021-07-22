@@ -41,7 +41,13 @@ trait Slugs
 
 		if ($is_slug) {
 
-			if (isset($this->field_config) && config($this->field_config, $this->field_config ?? false)) {
+			if (
+				isset($this->field_config) &&
+				(
+					is_string($this->field_config) && config($this->field_config) ||
+					is_bool($this->field_config) && $this->field_config
+				)
+			) {
 				return 'slug';
 			} elseif(!isset($this->field_config)) {
 				throw new \Error(self::getErrorMessage('field_config'));
