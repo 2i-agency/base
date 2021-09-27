@@ -11,20 +11,18 @@ use Chunker\Base\Models\Role;
 class BaseUsersAndRolesSeeder extends Seeder
 {
 	public function run() {
-		/** Все доступные возможности */
+		$role = $this->seedengRole();
+		$this->seedingUsers($role);
+	}
+
+
+	protected function seedengRole():Role {
 		$abilities = array_keys(app('Packages')->getAbilities());
 
-		/** Добавление роли администратора */
-		$role_name = 'Администратор';
-		$role = Role::where('name', $role_name)->first();
+		/** @var Role $role */
+		$role = Role::firstOrCreate([ 'name' => 'Администратор' ]);
 
-		if (!$role) {
-			$role = Role::create([ 'name' => $role_name ]);
-		}
-
-		/** Настройка возможностей администратора */
-		$role->abilities()->sync([]);
-
+		$role->abilities()->detach();
 		foreach ($abilities as $ability) {
 			if (!$role->hasAccess($ability)) {
 				$role->abilities()->attach($ability);
@@ -32,22 +30,41 @@ class BaseUsersAndRolesSeeder extends Seeder
 			}
 		}
 
-		/** Добавление администратора */
-		$login = 'admin';
-		$user = User::where('login', $login)->first();
+		return $role;
+	}
 
-		if (!$user) {
-			$user = User::create([
-				'login'         => $login,
-				'password'      => '000000',
-				'email'         => 'mail@' . host(),
-				'name'          => 'Администратор',
-				'is_subscribed' => true,
-				'is_admin'      => true
-			]);
+
+	protected function seedingUsers(Role $role) {
+		if(app()->environment() === 'production' && User::count() == 0) {
+			$user = $this->createUser('2i', mb_substr(hash('md5', microtime()), 0, 12), 'Разработчик', 'mail@studio2i.ru', false);
+			$user->roles()->attach($role);
+			$user = $this->createUser('admin', mb_substr(hash('md5', microtime()), 0, 12), 'Администратор', 'mail@' . host());
+			$user->roles()->attach($role);
+		} elseif(app()->environment() !== 'production') {
+			/** @var User $user */
+			$user = User::where('login', 'admin')->first();
+
+			if (!$user) {
+				$user = $this->createUser('admin', '000000', 'Администратор', 'mail@' . host());
+			}
+
+			$user->roles()->detach();
+			$user->roles()->attach($role);
 		}
+	}
 
-		/** Сохранение связи с ролью */
-		$user->roles()->sync([ $role->id ]);
+
+	protected function createUser(string $login, string $password, string $name, string $email, bool $isSubscribed = true):User {
+		$user = User::create([
+			'login'         => $login,
+			'password'      => $password,
+			'email'         => $email,
+			'name'          => $name,
+			'is_subscribed' => $isSubscribed,
+			'is_admin'      => true
+		]);
+		echo sprintf('Пользователь: %s	Пароль: %s%s', $login, $password, PHP_EOL);
+
+		return $user;
 	}
 }
