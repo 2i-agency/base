@@ -169,6 +169,10 @@ return [
 			'icon'    => 'bookmark',
 			'options' => [
 				'site_name',
+				'site_name',
+				'meta_title',
+				'meta_keywords',
+				'meta_description',
 			]
 		],
 		'mail' => [
