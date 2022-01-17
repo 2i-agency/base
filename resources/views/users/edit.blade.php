@@ -23,6 +23,9 @@
 			@include('base::users._form')
 			<div class="panel-footer">
 				@include('base::utils.buttons.save')
+				@if(config('chunker.admin.can_user_delete'))
+					@include('base::utils.buttons.delete', ['url' => route('admin.users.delete', compact('user'))])
+				@endif
 			</div>
 		</form>
 	@else

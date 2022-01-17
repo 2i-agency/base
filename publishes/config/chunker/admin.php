@@ -15,6 +15,8 @@ return [
 
 
 	'notice-observer' => Chunker\Base\Observers\NoticeObserver::class,
+
+	'can_user_delete' => false,
 	/**
 	 *--------------------------------------------------------------------------
 	 * Структура меню

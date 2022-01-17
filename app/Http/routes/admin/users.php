@@ -57,9 +57,9 @@ Route::group([
 		/**
 		 * Удаление пользователя
 		 */
-		Route::delete('destroy', [
-			'uses' => 'UserController@destroy',
-			'as'   => 'admin.users.destroy'
+		Route::delete('delete', [
+			'uses' => 'UserController@delete',
+			'as'   => 'admin.users.delete'
 		]);
 
 		/**
