@@ -144,6 +144,12 @@ class UserController extends Controller
 
 
 	public function delete(User $user) {
+		if(User::count() == 1) {
+			flash()->error('Вы не можете удалить единственного пользователя.');
+
+			return back();
+		}
+
 		$user->delete();
 
 		return redirect()->route('admin.users');
