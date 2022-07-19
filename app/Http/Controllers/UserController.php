@@ -33,10 +33,15 @@ class UserController extends Controller
 
 
 	protected function prepareEmails(string $emails):array {
-		$emails = explode(PHP_EOL, $emails);
+		$request_emails = explode(PHP_EOL, $emails);
+		$emails = [];
 
-		foreach ($emails as &$email) {
+		foreach ($request_emails as $email) {
 			$email = trim($email);
+
+			if(mb_strlen($email)) {
+				$emails[] = $email;
+			}
 		}
 
 		return $emails;
