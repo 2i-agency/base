@@ -121,75 +121,54 @@ class User extends Authenticatable
 	 */
 	protected function hasAccessModels($ability, $models = NULL) {
 		/** Если передана модель или коллекция моделей */
-		if (!is_null($models)) {
+		if (is_null($models)) {
+			return false;
+		}
 
-			/** Если передана одна модель, оборачиаем её в коллекцию, для удобства */
-			if ($models instanceof Model) {
-				$models = ( new Collection() )->add($models);
+		/** Если передана одна модель, оборачиаем её в коллекцию, для удобства */
+		if ($models instanceof Model) {
+			$models = collect([ $models ]);
+		}
+
+		/** Проходимся по всем переданным моделям */
+		foreach ($models as $model) {
+
+			if ($model instanceof User) {
+				if ($model->id == \Auth::user()->id) {
+					return true;
+				}
+
+				if (( $model->id == 1 ) && (\Auth::user()->id != 1 )) {
+					return NULL;
+				}
 			}
 
-			/** Проходимся по всем переданным моделям */
-			foreach ($models as $model) {
+			/** Если у модели есть связь с агентами */
+			if (method_exists($model, 'agents')) {
+				$agent_ids = $this->agents()->pluck('id')->toArray();
+				$ability_ids = $model->agents()->whereIn('id', $agent_ids)->pluck('ability_id');
 
-				if ($model instanceof User) {
-					if ($model->id == \Auth::user()->id) {
-						return true;
-					} elseif (( $model->id == 1 ) && ( \Auth::user()->id != 1 )) {
+				/** Проверяем все связанные возможности */
+				foreach ($ability_ids as $ability_id) {
+
+					if (is_null($ability_id)) {
 						return NULL;
 					}
-				}
 
-				/** Если у модели есть связь с агентами */
-				if (method_exists($model, 'agents')) {
-					$abilities = $model
-						->agents()
-						->whereIn('id', $this
-							->agents()
-							->pluck('id')
-							->toArray()
-						)
-						->pluck('ability_id')
-						->toArray();
-
-					/** Проверяем все связанные возможности */
-					foreach ($abilities as $value) {
-
-						if (is_null($value)) {
-							return NULL;
-						}
-
-						/** Пространство имён проверяемой и переданной совпадают */
-						if (Ability::detectNamespace($value) == Ability::detectNamespace($ability)) {
-
-							/** Приоритет проверямеой выше чем переданной */
-							if (Ability::getPriority($value, $ability)) {
-								return true;
-							} else {
-								return false;
-							}
-
-						}
+					/** Пространство имён проверяемой и переданной совпадают */
+					if (Ability::detectNamespace($ability_id) == Ability::detectNamespace($ability)) {
+						/** Приоритет проверямеой выше чем переданной */
+						return Ability::getPriority($ability_id, $ability);
 					}
 				}
+			}
 
-				/** TODO Нужно лучше продумать логику проверки по родителям, с учётом настроек самого ребёнка */
-				if (
-				in_array(
-					NodeTrait::class,
-					( new \ReflectionClass(get_class($model)) )->getTraitNames()
-				)
-				) {
-					$ancestors = $model->getAncestors()->reverse();
-					foreach ($ancestors as $ancestor) {
-						$result_ancestors = $this->hasAccessModels($ability, $ancestor);
-						if ($result_ancestors) {
-							return true;
-						} elseif (!is_null($result_ancestors)) {
-							return false;
-						}
-					}
+			if (method_exists($model, 'getAncestors')) {
+				if($model->isRoot()) {
+					return false;
 				}
 
+				return $this->hasAccessModels($ability, $model->parent);
 			}
 		}
 
@@ -355,12 +334,8 @@ class User extends Authenticatable
 		}
 
 		/** Если у пользователя есть связь с возможностью */
-		if ($this
-				->abilities()
-				->where('id', $ability)
-				->count()
-			&& !is_null($this->hasAccessModels($ability, $models))
-		) {
+		$count_abilities = $this->abilities()->where('id', $ability)->count();
+		if ( $count_abilities && !is_null($this->hasAccessModels($ability, $models)) ) {
 			return true;
 		}
 
